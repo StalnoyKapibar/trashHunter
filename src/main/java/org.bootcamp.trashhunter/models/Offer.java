@@ -41,6 +41,17 @@ public class Offer {
     public Offer() {
     }
 
+    public Offer(Sender sender, long weight, long volume, long price, boolean isSorted, boolean isClosed, LocalDateTime creationDateTime, String description) {
+        this.sender = sender;
+        this.weight = weight;
+        this.volume = volume;
+        this.price = price;
+        this.isSorted = isSorted;
+        this.isClosed = isClosed;
+        this.creationDateTime = creationDateTime;
+        this.description = description;
+    }
+
     public Sender getSender() {
         return sender;
     }
