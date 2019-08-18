@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select email, password, true"
+                .usersByUsernameQuery("select email, password, enabled"
                         + " from user where email=?")
                 .authoritiesByUsernameQuery("select email, dtype "
                         + "from user where email=?")
@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/css/**","/js/**", "/images/**",
-                        "/index", "/", "/register", "/submit-registration").permitAll()
+                        "/index", "/", "/registration").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

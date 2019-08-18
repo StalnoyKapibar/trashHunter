@@ -1,6 +1,5 @@
 package org.bootcamp.trashhunter.services.tokens;
 
-import org.bootcamp.trashhunter.dao.token.BaseTokenDAO;
 import org.bootcamp.trashhunter.dao.token.VerificationTokenDAO;
 import org.bootcamp.trashhunter.models.token.VerificationToken;
 import org.springframework.beans.factory.annotation.Autowired;

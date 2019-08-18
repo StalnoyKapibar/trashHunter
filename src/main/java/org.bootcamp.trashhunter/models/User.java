@@ -1,7 +1,8 @@
 package org.bootcamp.trashhunter.models;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
@@ -23,10 +24,12 @@ public abstract class User {
 
     private LocalDate registrationDate;
 
-    private boolean enabled;
+//    @Column(columnDefinition = "TINYINT")
+//    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean enabled = true;
 
     public User() {
-        this.enabled = false;
+        this.enabled = true;
     }
 
     public User(String email, String name, String password, LocalDate registrationDate) {

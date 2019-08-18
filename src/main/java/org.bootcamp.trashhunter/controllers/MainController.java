@@ -1,5 +1,6 @@
 package org.bootcamp.trashhunter.controllers;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public ModelAndView index(Model model, String error, String logout, Principal user) {
+    public ModelAndView index(Model model, String error, String logout, Principal user, Authentication auth) {
         ModelAndView mv = new ModelAndView("/index");
         return mv;
     }
