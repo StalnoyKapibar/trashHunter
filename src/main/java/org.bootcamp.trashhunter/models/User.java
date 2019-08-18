@@ -22,6 +22,7 @@ public abstract class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private LocalDate registrationDate;
 
 //    @Column(columnDefinition = "TINYINT")
