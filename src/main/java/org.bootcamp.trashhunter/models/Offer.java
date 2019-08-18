@@ -10,8 +10,9 @@ public class Offer {
 
     @Id
     @GeneratedValue
-    public Long id;
+    private Long id;
 
     @Column(name = "name", unique = true)
     private String name;
+
 }
