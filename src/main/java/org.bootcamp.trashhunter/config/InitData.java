@@ -4,9 +4,8 @@ import org.bootcamp.trashhunter.services.impl.OfferService;
 import org.bootcamp.trashhunter.services.impl.SenderService;
 import org.bootcamp.trashhunter.services.impl.TakerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
+
 public class InitData {
 
     @Autowired

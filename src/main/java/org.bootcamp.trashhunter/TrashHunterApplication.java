@@ -8,11 +8,13 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class TrashHunterApplication {
 
-    @Bean(initMethod = "init")
-    public InitData  initData() { return new InitData();}
-
     public static void main(String[] args) {
         SpringApplication.run(TrashHunterApplication.class, args);
+    }
+
+    @Bean(initMethod = "init")
+    public InitData initData() {
+        return new InitData();
     }
 
 }
