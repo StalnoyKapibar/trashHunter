@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<th:block th:fragment="head">
+    <meta charset="UTF-8"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="/css/common_style.css" rel="stylesheet">
+</th:block>
+
+<th:block th:fragment="sidebar">
+    <div class="sidebar">
+        <ul sec:authorize="!isAuthenticated()">
+            <!--<th:block th:replace="fragments/sidebar_by_authority :: not_authority_sidebar"></th:block>-->
+            <li><a href="#"><span>Вecь мусор</span></a></li>
+        </ul>
+        <ul sec:authorize="hasRole('ROLE_SENDER')">
+            <!--<th:block th:replace="fragments/sidebar_by_authority :: sender_sidebar"></th:block>-->
+        </ul>
+        <ul sec:authorize="hasRole('ROLE_TAKER')">
+            <!--<th:block th:replace="fragments/sidebar_by_authority :: taker_sidebar"></th:block>-->
+        </ul>
+    </div>
+</th:block>
+
+<th:block th:fragment="nav">
+    <nav class="navbar navbar-expand-sm navbar-dark fixed-top">
+        <a class="navbar-brand" href="/">HlamITo</a>
+        <ul class="navbar-nav mr-auto">
+            <li sec:authorize="hasRole('ROLE_SENDER')">
+                <a href="#"><span>Добавить Мусор</span></a>
+            </li>
+            <li sec:authorize="hasRole('ROLE_TAKER')">
+
+            </li>
+        </ul>
+        <ul sec:authorize="!isAuthenticated()" class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    Войти
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="container" style="width: 330px">
+                        <form class="form-signin" method="post" action="/login">
+                            <p>
+                                <label for="j_username" class="sr-only">Логин:</label>
+                                <input type="text" id="j_username" name="j_username" class="form-control"
+                                       placeholder="User" required autofocus>
+                            </p>
+                            <p>
+                                <label for="j_password" class="sr-only">Пароль:</label>
+                                <input type="password" id="j_password" name="j_password" class="form-control"
+                                       placeholder="Password" required>
+                            </p>
+                            <button class="btn btn-md btn-primary btn-block" type="submit"
+                                    style="background-color: #7295b1; border-color: #7295b1">Войти
+                            </button>
+                        </form>
+                        <a href="/login" th:align="right" style="color:#7295b1;">Проблемы со входом?</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ul sec:authorize="isAuthenticated()" class="navbar-nav ml-auto">
+            <li sec:authorize="hasRole('ROLE_SENDER')" class="nav-item">
+                <i class="far fa-user"></i>
+                <a href="/user"><span sec:authentication="name"></span></a>
+
+            </li>
+            <li sec:authorize="hasRole('ROLE_TAKER')" class="nav-item">
+                <i class="far fa-user"></i>
+                <a href="/user"><span sec:authentication="name"></span></a>
+            </li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+                <i class="far fa-user"></i>
+                <a href="/user"><span>Admin</span></a>
+            </li>
+            <li class="nav-item">
+                <a href="/logout"><span>Logout</span></a>
+                <i class="fas fa-sign-out-alt"></i>
+            </li>
+        </ul>
+    </nav>
+</th:block>
+
+<!--<th:block th:fragment="rolsfunc">-->
+    <!--<div sec:authorize="isAuthenticated()">-->
+        <!--<div sec:authorize="hasRole('ROLE_ADMIN')">-->
+            <!--This content is only shown to administrators.-->
+        <!--</div>-->
+        <!--<div sec:authorize="hasRole('ROLE_USER')">-->
+            <!--This content is only shown to users.-->
+        <!--</div>-->
+        <!--<div sec:authorize="hasRole('ROLE_EMPLOYER')">-->
+            <!--This content is only shown to employers.-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</th:block>-->
+
+</body>
+</html>
