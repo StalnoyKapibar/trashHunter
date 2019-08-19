@@ -10,6 +10,23 @@
     <title>Title</title>
 </head>
 <body>
+<div  layout:fragment="content">
+    <div th:if="${user instanceof T(Taker)}">
 
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <div th:if="${#lists.isEmpty(currentSkills)}">
+        You don't have any skills
+    </div>
+   </div>
 </body>
 </html>
