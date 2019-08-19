@@ -11,8 +11,8 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
-    private User sender;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Sender sender;
 
     @Column(nullable = false)
     private long weight;
@@ -23,8 +23,8 @@ public class Offer {
     @Column(nullable = false)
     private long price;
 
-    @Column(nullable = false)
-    private TrashType trashType;
+//    @Column(nullable = false)
+//    private TrashType trashType;
 
     @Column(nullable = false)
     private boolean isSorted;
@@ -41,11 +41,22 @@ public class Offer {
     public Offer() {
     }
 
-    public User getSender() {
+    public Offer(Sender sender, long weight, long volume, long price, boolean isSorted, boolean isClosed, LocalDateTime creationDateTime, String description) {
+        this.sender = sender;
+        this.weight = weight;
+        this.volume = volume;
+        this.price = price;
+        this.isSorted = isSorted;
+        this.isClosed = isClosed;
+        this.creationDateTime = creationDateTime;
+        this.description = description;
+    }
+
+    public Sender getSender() {
         return sender;
     }
 
-    public void setSender(User sender) {
+    public void setSender(Sender sender) {
         this.sender = sender;
     }
 
@@ -81,13 +92,13 @@ public class Offer {
         this.price = price;
     }
 
-    public TrashType getTrashType() {
-        return trashType;
-    }
+//    public TrashType getTrashType() {
+//        return trashType;
+//    }
 
-    public void setTrashType(TrashType trashType) {
-        this.trashType = trashType;
-    }
+//    public void setTrashType(TrashType trashType) {
+//        this.trashType = trashType;
+//    }
 
     public boolean isSorted() {
         return isSorted;

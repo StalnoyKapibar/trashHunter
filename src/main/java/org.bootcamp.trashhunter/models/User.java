@@ -10,14 +10,14 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private String password;
 
     @Column
     private LocalDate registrationDate;
@@ -25,7 +25,7 @@ public abstract class User {
     public User() {
     }
 
-    public User(String password, String email, String name, LocalDate registrationDate) {
+    public User(String email, String name, String password, LocalDate registrationDate) {
         this.password = password;
         this.email = email;
         this.name = name;
