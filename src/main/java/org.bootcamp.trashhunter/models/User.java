@@ -25,12 +25,24 @@ public abstract class User {
     @Column(nullable = false)
     private LocalDate registrationDate;
 
+    @Lob
+    @Column(name="pic")
+    private byte[] pic;
+
 //    @Column(columnDefinition = "TINYINT")
 //    @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean enabled = true;
 
     public User() {
         this.enabled = true;
+    }
+
+    public byte[] getPic() {
+        return pic;
+    }
+
+    public void setPic(byte[] pic) {
+        this.pic = pic;
     }
 
     public User(String email, String name, String password, LocalDate registrationDate) {

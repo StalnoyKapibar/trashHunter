@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html   xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         layout:decorate="~{layouts/commonlayouts}"
         lang="en">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="/static/css/js/postrequest.js"></script>
     <title>Edit user</title>
 <head>
     <meta charset="UTF-8">
@@ -11,22 +15,131 @@
 </head>
 <body>
 <div  layout:fragment="content">
-    <div th:if="${user instanceof T(Taker)}">
+    <ul sec:authorize="hasAuthority('Sender')">
+        <form action="#" th:action="@{/edit}" method="post">
+            <div class="row">
+                <div class="col-xs-12 col-sm-9">
+                    <form class="form-horizontal">
+                        <div class="panel panel-default">
+                            <div class="panel-body text-center">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="img-circle profile-avatar" alt="User avatar">
+                            </div>
+                        </div>
+                        <form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+                            <div class="form-group">
+                                <label class="control-label" for="uploadfile">Upload File:</label>
+                                <input type="file" class="form-control" id="uploadfile" placeholder="Upload File"  name="uploadfile">
+                            </div>
+                            <button type="submit" class="btn btn-default" id="btnSubmit">Upload</button>
+                        </form>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">User info</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Location</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control">
+                                            <option selected="">Select country</option>
+                                            <option>Belgium</option>
+                                            <option>Canada</option>
+                                            <option>Denmark</option>
+                                            <option>Estonia</option>
+                                            <option>France</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Company name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Position</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-    </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">Contact info</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Work number</label>
+                                    <div class="col-sm-10">
+                                        <input type="tel" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Mobile number</label>
+                                    <div class="col-sm-10">
+                                        <input type="tel" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">E-mail address</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Work address</label>
+                                    <div class="col-sm-10">
+                                        <textarea rows="3" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">Security</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Current password</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">New password</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <div class="checkbox">
+                                            <input type="checkbox" id="checkbox_1">
+                                            <label for="checkbox_1">Make this account public</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="reset" class="btn btn-default">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </form>
+    </ul>
 
 
-
-
-
-
-
-
-
-
-    <div th:if="${#lists.isEmpty(currentSkills)}">
-        You don't have any skills
-    </div>
+    <ul sec:authorize="hasAuthority('Taker')">
+        <th:block th:replace="fragments/sidebar_by_authority :: taker_sidebar"></th:block>
+    </ul>
    </div>
 </body>
 </html>
