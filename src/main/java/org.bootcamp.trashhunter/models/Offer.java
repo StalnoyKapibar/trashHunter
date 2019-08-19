@@ -2,6 +2,7 @@ package org.bootcamp.trashhunter.models;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "offer")
@@ -12,7 +13,14 @@ public class Offer {
     private long id;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_fk", nullable = false)
     private Sender sender;
+
+    @ManyToMany
+    @JoinTable(name = "offers_takers",
+            joinColumns = @JoinColumn(name = "offer_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "taker_id", referencedColumnName = "id"))
+    private List<Taker> respondingTakers;
 
     @Column(nullable = false)
     private long weight;
@@ -130,5 +138,13 @@ public class Offer {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Taker> getRespondingTakers() {
+        return respondingTakers;
+    }
+
+    public void setRespondingTakers(List<Taker> respondingTakers) {
+        this.respondingTakers = respondingTakers;
     }
 }
