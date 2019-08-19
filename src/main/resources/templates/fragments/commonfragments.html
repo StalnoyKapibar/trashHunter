@@ -26,10 +26,10 @@
         <ul sec:authorize="!isAuthenticated()">
             <th:block th:replace="fragments/sidebar_by_authority :: not_authority_sidebar"></th:block>
         </ul>
-        <ul sec:authorize="hasRole('ROLE_SENDER')">
+        <ul sec:authorize="hasAuthority('Sender')">
             <th:block th:replace="fragments/sidebar_by_authority :: sender_sidebar"></th:block>
         </ul>
-        <ul sec:authorize="hasRole('ROLE_TAKER')">
+        <ul sec:authorize="hasAuthority('Taker')">
             <th:block th:replace="fragments/sidebar_by_authority :: taker_sidebar"></th:block>
         </ul>
     </div>
@@ -39,10 +39,10 @@
     <nav class="navbar navbar-expand-sm navbar-dark fixed-top">
         <a class="navbar-brand" href="/">Trash_Hunter</a>
         <ul class="navbar-nav mr-auto">
-        <li sec:authorize="hasRole('ROLE_SENDER')">
+        <li sec:authorize="hasAuthority('Sender')">
           <!--smthng must be here-->
         </li>
-        <li sec:authorize="hasRole('ROLE_TAKER')">
+        <li sec:authorize="hasAuthority('Taker')">
           <!--smthng must be here      -->
         </li>
         </ul>
@@ -74,18 +74,18 @@
             </li>
         </ul>
         <ul sec:authorize="isAuthenticated()" class="navbar-nav ml-auto">
-        <li sec:authorize="hasRole('ROLE_SENDER')" class="nav-item">
+        <li sec:authorize="hasAuthority('Sender')" class="nav-item">
         <i class="far fa-user"></i>
         <a href="/user"><span sec:authentication="name"></span></a>
         </li>
-        <li sec:authorize="hasRole('ROLE_TAKER')" class="nav-item">
+        <li sec:authorize="hasAuthority('Taker')" class="nav-item">
         <i class="far fa-user"></i>
         <a href="/user"><span sec:authentication="name"></span></a>
         </li>
-        <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
-        <i class="far fa-user"></i>
-        <a href="/user"><span>Admin</span></a>
-        </li>
+        <!--<li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item">-->
+        <!--<i class="far fa-user"></i>-->
+        <!--<a href="/user"><span>Admin</span></a>-->
+        <!--</li>-->
         <li class="nav-item">
         <a href="/logout"><span>Logout</span></a>
         <i class="fas fa-sign-out-alt"></i>
