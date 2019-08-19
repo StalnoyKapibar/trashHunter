@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Map</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <!--<script th:src="@{https://maps.googleapis.com/maps/api/js(key=${googleMapsApiKey}, callback='initMap')}"-->
+            <!--async defer></script>-->
+    <!--<script type="text/javascript" src="/js/map.js"></script>-->
+
+    <script>
+        var map;
+        var marker;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -25.363, lng: 131.044},
+                zoom: 12
+            });
+
+            var myLatLng = {lat: 55.752030, lng: 37.633685};
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Hello World!'
+            });
+        }
+
+        function test() {
+            alert("hello");
+
+        }
+
+        function showLabelOnMap(lat, lng) {
+            initMap();
+            map.setZoom(15);
+            map.setCenter(new google.maps.LatLng(lat, lng));
+            marker = new google.maps.Marker({
+                position: {lat: lat, lng: lng},
+                map: map,
+                title: "Hello world"
+            });
+        }
+
+        function getAddressByCoords(lat, lng) {
+            var address;
+            $.ajax({
+                url: "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=" + $("meta[name='apiKey']").attr("content"),
+                type: "GET",
+                async: false,
+                success: function (data) {
+                    address = data.results[0].formatted_address;
+                }
+            });
+            return address;
+        }
+
+        function getCoordsByAddress(address) {
+            var location;
+            $.ajax({
+                url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&language=ru&key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo",
+                type: "GET",
+                async: false,
+                success: function (data) {
+                    location = data.results[0].geometry.location;
+                }
+            });
+            return location;
+        }
+    </script>
+</head>
+<body>
+
+<a data-toggle="collapse" data-target="#map_collapse"> Показать на карте</a>
+<div id="map_collapse" class="collapsed collapse">
+    <div id="map" style="height: 300px"></div>
+</div>
+
+
+
+<!--<button th:onclick="alert('hello')"> Point </button>-->
+<!--<button th:onclick='showLabelOnMap(55.752030, 37.633685);'> Point </button>-->
+
+<!--<script> showLabelOnMap(55.752030, 37.633685)</script>-->
+<!--<script>-->
+    <!--let coord = getCoordsByAddress("Tallinn Estonia");-->
+    <!--//console.log(coord.lat);-->
+  <!--//  console.log(coord.lng);-->
+    <!--showLabelOnMap(coord.lat, coord.lng);-->
+
+
+<!--</script>-->
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&callback=initMap">
+</script>
+
+<script>
+    initMap();
+</script>
+
+
+</body>
+
+</html>
