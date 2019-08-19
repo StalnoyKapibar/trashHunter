@@ -3,6 +3,7 @@ package org.bootcamp.trashhunter.config;
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.Taker;
+import org.bootcamp.trashhunter.models.TrashType;
 import org.bootcamp.trashhunter.services.impl.OfferService;
 import org.bootcamp.trashhunter.services.impl.SenderService;
 import org.bootcamp.trashhunter.services.impl.TakerService;
@@ -50,7 +51,7 @@ public class InitData {
     }
 
     private void initOffers() {
-        Offer offer1 = new Offer(senderService.getById(1L),2L,2L,35L,true,false, LocalDateTime.now(),"Hay");
+        Offer offer1 = new Offer(senderService.getById(1L),2L,2L,35L, TrashType.METAL, true,false, LocalDateTime.now(),"Hay");
         offerService.add(offer1);
     }
 }

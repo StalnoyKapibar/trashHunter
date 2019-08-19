@@ -3,9 +3,78 @@ package org.bootcamp.trashhunter.dao.impl;
 
 import org.bootcamp.trashhunter.dao.AbstractDAO;
 import org.bootcamp.trashhunter.models.Offer;
+import org.bootcamp.trashhunter.models.TrashType;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository("offerDao")
 public class OfferDao extends AbstractDAO<Offer> {
+
+    @PersistenceContext
+    protected EntityManager entityManager;
+
+    /*
+      Example:
+      map.put("trashType", Arrays.asList(TrashType.METAL, TrashType.GLASS, TrashType.FOOD));
+      map.put("weight","15-20");
+      map.put("volume","30-45");
+      map.put("isSorted", "true");
+      map.put("isFree", "false");
+  */
+    public List<Offer> getFilterQuery(Map<String, Object> map) {
+
+        StringBuilder whereQuery = new StringBuilder();
+        whereQuery.append("SELECT * FROM offer WHERE is_closed=false");
+
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            switch (entry.getKey()) {
+                case "trashType":
+                    whereQuery.append(" AND (");
+                    String collect = ((List<TrashType>) entry.getValue()).stream()
+                            .map(value -> "trash_type='" + value + "'")
+                            .collect(Collectors.joining(" OR "));
+                    whereQuery.append(collect).append(")");
+                    break;
+                case "weight":
+                    whereQuery.append(" AND ");
+                    String[] weightValues = entry.getValue().toString().split("-");
+                    whereQuery.append(getBetweenQuery("weight", weightValues));
+                    break;
+                case "volume":
+                    whereQuery.append(" AND ");
+                    String[] volumeValues = entry.getValue().toString().split("-");
+                    whereQuery.append(getBetweenQuery("volume", volumeValues));
+                    break;
+                case "isSorted":
+                    whereQuery.append(" AND ");
+                    whereQuery.append("is_sorted=").append(entry.getValue());
+                    break;
+                case "isFree":
+                    whereQuery.append(" AND ");
+                    if (entry.getValue().equals("true")) {
+                        whereQuery.append("price=0");
+                    } else {
+                        whereQuery.append("price>0");
+                    }
+                    break;
+            }
+        }
+
+        return entityManager.createQuery(whereQuery.toString(), Offer.class).getResultList();
+    }
+
+    private String getBetweenQuery(String name, String[] array) {
+        StringBuilder query = new StringBuilder();
+        return query.append(name).append(" BETWEEN ")
+                .append(array[0])
+                .append(" AND ")
+                .append(array[1])
+                .toString();
+    }
 
 }

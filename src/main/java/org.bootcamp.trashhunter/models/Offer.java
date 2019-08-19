@@ -23,8 +23,9 @@ public class Offer {
     @Column(nullable = false)
     private long price;
 
-//    @Column(nullable = false)
-//    private TrashType trashType;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TrashType trashType;
 
     @Column(nullable = false)
     private boolean isSorted;
@@ -41,11 +42,12 @@ public class Offer {
     public Offer() {
     }
 
-    public Offer(Sender sender, long weight, long volume, long price, boolean isSorted, boolean isClosed, LocalDateTime creationDateTime, String description) {
+    public Offer(Sender sender, long weight, long volume, long price, TrashType trashType, boolean isSorted, boolean isClosed, LocalDateTime creationDateTime, String description) {
         this.sender = sender;
         this.weight = weight;
         this.volume = volume;
         this.price = price;
+        this.trashType = trashType;
         this.isSorted = isSorted;
         this.isClosed = isClosed;
         this.creationDateTime = creationDateTime;
@@ -92,13 +94,13 @@ public class Offer {
         this.price = price;
     }
 
-//    public TrashType getTrashType() {
-//        return trashType;
-//    }
+    public TrashType getTrashType() {
+        return trashType;
+    }
 
-//    public void setTrashType(TrashType trashType) {
-//        this.trashType = trashType;
-//    }
+    public void setTrashType(TrashType trashType) {
+        this.trashType = trashType;
+    }
 
     public boolean isSorted() {
         return isSorted;
