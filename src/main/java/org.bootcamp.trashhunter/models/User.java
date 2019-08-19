@@ -3,7 +3,8 @@ package org.bootcamp.trashhunter.models;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class User {
 
     @Id
