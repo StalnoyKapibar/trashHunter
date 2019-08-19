@@ -1,6 +1,7 @@
 package org.bootcamp.trashhunter.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
@@ -20,10 +21,12 @@ public abstract class User {
     @Column(nullable = false)
     private String password;
 
-    @Column
     private LocalDate registrationDate;
 
+    private boolean enabled;
+
     public User() {
+        this.enabled = false;
     }
 
     public User(String email, String name, String password, LocalDate registrationDate) {
@@ -73,4 +76,11 @@ public abstract class User {
         this.registrationDate = registrationDate;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 }
