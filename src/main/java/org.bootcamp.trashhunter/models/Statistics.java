@@ -6,7 +6,12 @@ import javax.persistence.*;
 @Table(name = "statisitcs")
 public class Statistics {
 
-    @OneToOne(cascade = {CascadeType.REFRESH})
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @OneToOne()
+    @PrimaryKeyJoinColumn
     private User user;
 
     @Column
@@ -23,6 +28,14 @@ public class Statistics {
 
 
     public Statistics() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public User getUser() {
