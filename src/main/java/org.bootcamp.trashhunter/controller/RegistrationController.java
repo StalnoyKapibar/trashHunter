@@ -40,10 +40,9 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public void registration(@RequestParam String email, @RequestParam  String password,
+    public String registration(@RequestParam String email, @RequestParam  String password,
                               @RequestParam  String name, @RequestParam  String role) {
         User registeredUser = null;
-
         if ("TAKER".equals(role)) {
             Taker taker = new Taker();
             taker.setEmail(email);
@@ -65,7 +64,9 @@ public class RegistrationController {
         VerificationToken verificationToken =
                 new VerificationToken(token, registeredUser, verificationTokenService.calculateExpiryDate());
         verificationTokenService.add(verificationToken);
-        mailService.sendMessage(registeredUser, verificationToken);
+        //сервис отключен, пока почту не разблокируют
+        //mailService.sendMessage(registeredUser, verificationToken);
+        return "complited_registration";
     }
 
     @GetMapping(value = "/activate/{token}")

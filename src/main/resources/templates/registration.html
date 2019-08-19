@@ -1,17 +1,88 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/commonlayouts}"
+        lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>MainPage</title>
 </head>
 <body>
-    <form action="/registration" method="post">
-        <input type="email" name="email" placeholder="email"><br>
-        <input type="password" name="password"  placeholder="password"><br>
-        <input type="text" name="name"  placeholder="name">
-        <input type="text" name="role"  placeholder="role">
-        <input type="hidden" th:attr="name=${_csrf.parameterName},value=${_csrf.token}"/>
-        <button type="submit">najat'</button>
-    </form>
+<div  layout:fragment="content">
+    <div class="container-fluid">
+        <div class="row" style="height: 40px"></div>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4" align="center" style="color: #7295B1">
+                <form action="/registration" method="post">
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <!--<label class="col-md-4 control-label">Логин (Email)</label>-->
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Введите Email"
+                                           name="email">
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="form-group">
+
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                    </div>
+                                    <input type="password" class="form-control"
+                                           placeholder="Введите пароль"
+                                           name="password" id="user_password">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                         <div class="inputGroupContainer">
+                             <div class="input-group">
+                                 <div class="input-group-prepend">
+                                     <span class="input-group-text"><i class="fas fa-plus-square"></i></span>
+                                 </div>
+                                 <input type="text" class="form-control"
+                                        placeholder="Введите ваше имя"
+                                        name="name" id="user_name">
+                             </div>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                            <!--<label class="col-md-4 control-label">Вид аккаунта</label>-->
+                            <div class=" selectContainer">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-list"></i></span>
+                                    </div>
+                                    <select name="role" id="role" class="form-control selectpicker"
+                                            required="required">
+                                        <option value="">Выберите роль</option>
+                                        <option value="SENDER">Сдатчик</option>
+                                        <option value="TAKER">Приемщик</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" align="center">
+                            <!--<label class=" control-label"></label>-->
+                            <button type="submit" class="btn btn-warning"
+                                    style="width: 250px;">
+                                Зарегистрироваться <i class="fas fa-paper-plane "></i>
+                            </button>
+                        </div>
+                    <input type="hidden" th:attr="name=${_csrf.parameterName},value=${_csrf.token}"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
