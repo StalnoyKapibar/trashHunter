@@ -9,4 +9,7 @@ public class MainController {
     public String ex() {
         return "index";
     }
+
+    @GetMapping("/sender_my_offers")
+    public String senderMyOffers() { return "sender/sender_my_offers";}
 }
