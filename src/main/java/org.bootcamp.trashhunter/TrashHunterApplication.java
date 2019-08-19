@@ -16,11 +16,11 @@ public class TrashHunterApplication {
     }
 
     //нужно раскоментить @Bean для создания таблиц
-    //после первого запуска закомментировать
-    //и изменить create на validate
-//    @Bean(initMethod = "init")
-//    @PostConstruct
-//    public InitData initData() {
-//        return new InitData();
-//    }
+
+    @Bean(initMethod = "init")
+    @PostConstruct
+    public InitData initData() {
+        return new InitData();
+    }
+
 }
