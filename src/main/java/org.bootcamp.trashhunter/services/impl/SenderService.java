@@ -12,6 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class SenderService extends AbstractService<Sender> {
 
     @Autowired
-    SenderDao dao;
+    private SenderDao dao;
 
 }
