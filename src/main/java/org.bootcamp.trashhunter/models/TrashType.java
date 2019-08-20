@@ -7,5 +7,9 @@ public enum TrashType {
     FOOD,
     PLASTIC,
     WOOD,
-    GLASS
+    GLASS;
+
+    public static TrashType getRandom() {
+        return values()[(int) (Math.random() * values().length)];
+    }
 }
