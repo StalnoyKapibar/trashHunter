@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html
+        xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layouts/commonlayouts}"
+        layout:decorator="layouts/commonlayouts" th:with="side='my_offers'"
         lang="en">
 <head>
     <title>MainPage</title>
