@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -26,4 +27,9 @@ public class OfferService extends AbstractService<Offer> {
         offer.setClosed(true);
         dao.update(offer);
     }
+    public List<Offer> getFilterQuery(Map<String, Object> map) {
+        return dao.getFilterQuery(map);
+    }
+
+
 }
