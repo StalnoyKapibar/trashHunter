@@ -1,9 +1,8 @@
-package org.bootcamp.trashhunter.controllers;
+package org.bootcamp.trashhunter.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,15 +35,9 @@ public class MainController {
                 return mv;
             }
         } else {
-            ModelAndView mv = new ModelAndView("index");
+            ModelAndView mv = new ModelAndView("map");
             return mv;
         }
     }
 
-
-    @GetMapping("/sender_my_offers")
-    public String senderMyOffers() {
-
-        return "sender/sender_my_offers";
-    }
 }

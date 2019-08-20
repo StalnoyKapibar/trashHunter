@@ -53,11 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/**" ).permitAll();
-//                .antMatchers("/registration").anonymous()
-//                .antMatchers("/", "/api/tags/**", "/api/vacancies/**", "/css/*", "/static/js/*", "/vacancy/**").permitAll();
-//                .antMatchers("/admin/**").access("hasAnyRole('Taker','Sender')").anyRequest().authenticated();
-       http.csrf().disable();
+                .antMatchers("/registration").anonymous()
+                .antMatchers("/", "/api/offer/**", "/css/*", "/js/*", "/img/*", "/activate/*").permitAll()
+                .antMatchers("/admin/**").access("hasAnyRole('Taker','Sender')").anyRequest().authenticated();
     }
 
 
