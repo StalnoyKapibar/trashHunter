@@ -29,7 +29,6 @@ public class InitData {
     private void init() {
         initSenders();
         initTakers();
-        initOffers();
         initRandomOffers(40);
     }
 
@@ -53,12 +52,6 @@ public class InitData {
 
     }
 
-    private void initOffers() {
-        Offer offer1 = new Offer(senderService.getById(1L), 2L, 2L, 35L, TrashType.METAL, true, false,
-                LocalDateTime.now(), "Hay", new Coordinates(33.3, 55.5));
-        offerService.add(offer1);
-    }
-
     private void initRandomOffers(int quantity) {
         double seed;
         Sender randomSender;
@@ -67,6 +60,7 @@ public class InitData {
         long randomPrice;
         TrashType randomTrashType;
         boolean randomIsSorted;
+        boolean randomIsActive;
         boolean randomIsClosed;
         LocalDateTime randomDate;
         String randomDescription;
@@ -92,6 +86,7 @@ public class InitData {
             randomPrice = (long) (seed * maxPrice);
             randomTrashType = TrashType.getRandom();
             randomIsSorted = seed < 0.5;
+            randomIsActive = seed < 0.5;
             randomIsClosed = false;
             randomDate = LocalDateTime.now();
             randomDescription = "this is offer number " + i;
@@ -100,7 +95,7 @@ public class InitData {
             randomCoordinates = new Coordinates(randomLatitude, randomLongitude);
 
             Offer randomOffer = new Offer(randomSender, randomWeight, randomVolume, randomPrice, randomTrashType,
-                    randomIsSorted, randomIsClosed, randomDate, randomDescription, randomCoordinates);
+                    randomIsSorted, randomIsActive, randomIsClosed, randomDate, randomDescription, randomCoordinates);
             offerService.add(randomOffer);
         }
     }
