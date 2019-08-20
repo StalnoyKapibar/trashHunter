@@ -37,6 +37,7 @@ src/main/resources/hibernate.properties
 ## File-based project format:
 *.ipr
 *.iws
+*.zip
 
 ## Plugin-specific files:
 

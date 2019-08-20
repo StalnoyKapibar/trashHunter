@@ -37,38 +37,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .failureUrl("/login?error")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .permitAll();
+
+        http.logout()
+                .permitAll()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login?logout")
+                .invalidateHttpSession(true);
 
         http
                 .authorizeRequests()
-                .antMatchers("/css/**","/js/**", "/images/**",
-                        "/index", "/", "/register", "/submit-registration").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/index")
-                .failureUrl("/login?error")
-                .permitAll()
-                .and()
-                .logout()
-                .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
-                .permitAll();
-//                .and()
-//                .rememberMe()
-//                //.key("my-secure-key")
-//                .rememberMeCookieName("my-remember-me-cookie")
-//                .tokenRepository(persistentTokenRepository())
-//                .tokenValiditySeconds(24 * 60 * 60)
-//                .and()
-//                .exceptionHandling();
-
-
-
+                .antMatchers("/registration").anonymous()
+                .antMatchers("/", "/api/tags/**", "/api/vacancies/**", "/css/*", "/js/*", "/vacancy/**").permitAll()
+                .antMatchers("/admin/**").access("hasAnyRole('Taker','Sender')").anyRequest().authenticated();
     }
+
 
 //    PersistentTokenRepository persistentTokenRepository(){
 //        JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
