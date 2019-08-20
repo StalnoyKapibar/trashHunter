@@ -18,9 +18,11 @@
             var geocoder = new google.maps.Geocoder;
 
             var saintp = {lat: 59.938942, lng: 30.3149875};
+            var viborg = {lat: 60.713795766116014, lng: 28.752464489753493};
+
             var map = new google.maps.Map(document.getElementById('map'), {
-                center: saintp,
-                zoom: 10,
+                center: viborg,
+                zoom: 12,
                 gestureHandling: 'cooperative',
                 streetViewControl: false
             });
@@ -74,11 +76,11 @@
                 infowindowContent.children['place-address'].textContent = address;
                 infowindow.open(map, marker);
 
-
             });
 
             google.maps.event.addListener(map, 'click', function (event) {
                 var latlng = event.latLng;
+                console.log("lat: " + latlng.lat() + ", lng: " + latlng.lng());
 
                 geocoder.geocode({'location': latlng}, function(results, status) {
                     if (status === 'OK') {
@@ -91,16 +93,13 @@
                             infowindow.setContent(results[0].formatted_address);
                             infowindow.open(map, marker);
                         } else {
-                            window.alert('No results found');
+                            window.alert('Адрес не найден');
                         }
                     } else {
                         window.alert('Geocoder failed due to: ' + status);
                     }
                 });
-
-                //infowindow.open(map, this);
             });
-
 
             function createMarker(coords) {
                 marker = new google.maps.Marker({
