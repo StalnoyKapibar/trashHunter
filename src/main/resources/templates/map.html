@@ -4,109 +4,149 @@
 <head>
     <meta charset="UTF-8">
     <title>Map</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" href="map.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <!--<script th:src="@{https://maps.googleapis.com/maps/api/js(key=${googleMapsApiKey}, callback='initMap')}"-->
-            <!--async defer></script>-->
-    <!--<script type="text/javascript" src="/js/map.js"></script>-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&libraries=places&callback=initMap"
+            async defer></script>
 
+    <!--</script>-->
     <script>
-        var map;
-        var marker;
-        var hj;
-
         function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: -25.363, lng: 131.044},
-                zoom: 12
-            });
+            var geocoder = new google.maps.Geocoder;
 
-            var myLatLng = {lat: 55.752030, lng: 37.633685};
+            var saintp = {lat: 59.938942, lng: 30.3149875};
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: saintp,
+                zoom: 10,
+                gestureHandling: 'cooperative',
+                streetViewControl: false
+            });
+            var card = document.getElementById('pac-card');
+            var input = document.getElementById('pac-input');
+
+            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
+
+            var autocomplete = new google.maps.places.Autocomplete(input);
+
+            var infowindow = new google.maps.InfoWindow();
+            var infowindowContent = document.getElementById('infowindow-content');
+            infowindow.setContent(infowindowContent);
             var marker = new google.maps.Marker({
-                position: myLatLng,
                 map: map,
-                title: 'Hello World!'
+                anchorPoint: new google.maps.Point(0, -29)
             });
-        }
 
-        function test() {
-            alert("hello");
-
-        }
-
-        function showLabelOnMap(lat, lng) {
-            initMap();
-            map.setZoom(15);
-            map.setCenter(new google.maps.LatLng(lat, lng));
-            marker = new google.maps.Marker({
-                position: {lat: lat, lng: lng},
-                map: map,
-                title: "Hello world"
-            });
-        }
-
-        function getAddressByCoords(lat, lng) {
-            var address;
-            $.ajax({
-                url: "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&key=" + $("meta[name='apiKey']").attr("content"),
-                type: "GET",
-                async: false,
-                success: function (data) {
-                    address = data.results[0].formatted_address;
+            autocomplete.addListener('place_changed', function () {
+                infowindow.close();
+                marker.setVisible(false);
+                var place = autocomplete.getPlace();
+                if (!place.geometry) {
+                    // User entered the name of a Place that was not suggested and
+                    // pressed the Enter key, or the Place Details request failed.
+                    window.alert("По адресу ничего не найдено: '" + place.name + "'");
+                    return;
                 }
-            });
-            return address;
-        }
 
-        function getCoordsByAddress(address) {
-            var location;
-            $.ajax({
-                url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&language=ru&key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo",
-                type: "GET",
-                async: false,
-                success: function (data) {
-                    location = data.results[0].geometry.location;
+                // If the place has a geometry, then present it on a map.
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(17);
                 }
-            });
-            return location;
-        }
+                marker.setPosition(place.geometry.location);
+                marker.setVisible(true);
 
-        function goToEnteredCoordinates() {
-            var addr = $("#address_input").val();
-            var coords = getCoordsByAddress(addr);
-            showLabelOnMap(coords.lat, coords.lng);
+                var address = '';
+                if (place.address_components) {
+                    address = [
+                        (place.address_components[0] && place.address_components[0].short_name || ''),
+                        (place.address_components[1] && place.address_components[1].short_name || ''),
+                        (place.address_components[2] && place.address_components[2].short_name || '')
+                    ].join(' ');
+                }
+
+                infowindowContent.children['place-icon'].src = place.icon;
+                infowindowContent.children['place-name'].textContent = place.name;
+                infowindowContent.children['place-address'].textContent = address;
+                infowindow.open(map, marker);
+
+
+            });
+
+            google.maps.event.addListener(map, 'click', function (event) {
+                var latlng = event.latLng;
+
+                geocoder.geocode({'location': latlng}, function(results, status) {
+                    if (status === 'OK') {
+                        if (results[0]) {
+                            map.setZoom(17);
+                            var marker = new google.maps.Marker({
+                                position: latlng,
+                                map: map
+                            });
+                            infowindow.setContent(results[0].formatted_address);
+                            infowindow.open(map, marker);
+                        } else {
+                            window.alert('No results found');
+                        }
+                    } else {
+                        window.alert('Geocoder failed due to: ' + status);
+                    }
+                });
+
+                //infowindow.open(map, this);
+            });
+
+
+            function createMarker(coords) {
+                marker = new google.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+            }
+
+            function deleteMarker() {
+                marker.setView(false);
+            }
+
         }
     </script>
+
 </head>
 <body>
 
-<a data-toggle="collapse" data-target="#map_collapse"> Показать на карте</a>
+<div class="pac-card" id="pac-card">
+    <div>
+        <div id="title">
+            Поиск по адресу:
+        </div>
+    </div>
+    <div id="pac-container">
+        <input id="pac-input" type="text"
+               placeholder="Введите адрес">
+    </div>
+</div>
+<div id="map"></div>
+<div id="infowindow-content">
+    <img src="" width="16" height="16" id="place-icon">
+    <span id="place-name" class="title"></span><br>
+    <span id="place-address"></span>
+</div>
+
+
+<!--
+Простой поиск
 <div id="map_collapse" class="collapsed collapse">
     <div id="map" style="height: 300px"></div>
 </div>
 
 <input id="address_input" style="width: 400px">
-<button id="search_btn" onclick="goToEnteredCoordinates()">Найти</button>
-
-<!--<button th:onclick="alert('hello')"> Point </button>-->
-<!--<button th:onclick='showLabelOnMap(55.752030, 37.633685);'> Point </button>-->
-
-<!--<script> showLabelOnMap(55.752030, 37.633685)</script>-->
-<!--<script>-->
-    <!--let coord = getCoordsByAddress("Tallinn Estonia");-->
-    <!--//console.log(coord.lat);-->
-  <!--//  console.log(coord.lng);-->
-    <!--showLabelOnMap(coord.lat, coord.lng);-->
-
-
-<!--</script>-->
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&callback=initMap">
-</script>
-
-<script>
-    initMap();
-</script>
-
+<button id="search_btn" onclick="searchByAddress()">Найти</button>
+-->
 
 </body>
 

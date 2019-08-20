@@ -1,5 +1,7 @@
 package org.bootcamp.trashhunter.models;
 
+import org.bootcamp.trashhunter.embedded.Coordinates;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,6 +36,9 @@ public class Offer {
 //    @Column(nullable = false)
 //    private TrashType trashType;
 
+    @Embedded
+    private Coordinates coordinates;
+
     @Column(nullable = false)
     private boolean isSorted;
 
@@ -49,7 +54,8 @@ public class Offer {
     public Offer() {
     }
 
-    public Offer(Sender sender, long weight, long volume, long price, boolean isSorted, boolean isClosed, LocalDateTime creationDateTime, String description) {
+    public Offer(Sender sender, long weight, long volume, long price, boolean isSorted, boolean isClosed,
+                 LocalDateTime creationDateTime, String description, Coordinates coordinates) {
         this.sender = sender;
         this.weight = weight;
         this.volume = volume;
@@ -58,6 +64,7 @@ public class Offer {
         this.isClosed = isClosed;
         this.creationDateTime = creationDateTime;
         this.description = description;
+        this.coordinates = coordinates;
     }
 
     public Sender getSender() {
@@ -107,6 +114,15 @@ public class Offer {
 //    public void setTrashType(TrashType trashType) {
 //        this.trashType = trashType;
 //    }
+
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
 
     public boolean isSorted() {
         return isSorted;
