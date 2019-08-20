@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html
+        xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layouts/commonlayouts}"
+        layout:decorator="layouts/commonlayouts" th:with="side='my_offers'"
         lang="en">
 <head>
-    <title>Sender</title>
+    <title>MainPage</title>
 </head>
 <body>
 <div  layout:fragment="content">
@@ -13,7 +14,9 @@
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4" align="center" style="color: #7295B1">
-                <span style="font-size: 25px"> Привет ,Сдатчик!</span><br>
+                <span style="font-size: 25px">Добро Пожаловать! </span><hr>
+                <span style="font-size: 25px">ваши офферы</span>
+
             </div>
         </div>
     </div>

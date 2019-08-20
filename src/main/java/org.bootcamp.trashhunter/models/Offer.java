@@ -1,7 +1,10 @@
 package org.bootcamp.trashhunter.models;
 
+import org.bootcamp.trashhunter.embedded.Coordinates;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "offer")
@@ -12,7 +15,14 @@ public class Offer {
     private long id;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_fk", nullable = false)
     private Sender sender;
+
+    @ManyToMany
+    @JoinTable(name = "offers_takers",
+            joinColumns = @JoinColumn(name = "offer_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "taker_id", referencedColumnName = "id"))
+    private List<Taker> respondingTakers;
 
     @Column(nullable = false)
     private long weight;
@@ -26,6 +36,9 @@ public class Offer {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TrashType trashType;
+
+    @Embedded
+    private Coordinates coordinates;
 
     @Column(nullable = false)
     private boolean isSorted;
@@ -42,7 +55,8 @@ public class Offer {
     public Offer() {
     }
 
-    public Offer(Sender sender, long weight, long volume, long price, TrashType trashType, boolean isSorted, boolean isClosed, LocalDateTime creationDateTime, String description) {
+    public Offer(Sender sender, long weight, long volume, long price, TrashType trashType, boolean isSorted,
+                 boolean isClosed, LocalDateTime creationDateTime, String description, Coordinates coordinates) {
         this.sender = sender;
         this.weight = weight;
         this.volume = volume;
@@ -52,6 +66,7 @@ public class Offer {
         this.isClosed = isClosed;
         this.creationDateTime = creationDateTime;
         this.description = description;
+        this.coordinates = coordinates;
     }
 
     public Sender getSender() {
@@ -102,6 +117,15 @@ public class Offer {
         this.trashType = trashType;
     }
 
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
     public boolean isSorted() {
         return isSorted;
     }
@@ -132,5 +156,13 @@ public class Offer {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Taker> getRespondingTakers() {
+        return respondingTakers;
+    }
+
+    public void setRespondingTakers(List<Taker> respondingTakers) {
+        this.respondingTakers = respondingTakers;
     }
 }
