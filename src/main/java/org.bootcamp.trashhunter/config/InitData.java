@@ -61,6 +61,7 @@ public class InitData {
 
     private void initRandomOffers(int quantity) {
         double seed;
+        double seed2;
         Sender randomSender;
         long randomWeight;
         long randomVolume;
@@ -85,6 +86,7 @@ public class InitData {
 
         for (int i = 0; i < quantity; i++) {
             seed = Math.random();
+            seed2 = Math.random();
 
             randomSender = senderService.getById(1 + (long) (seed * numOfSenders));
             randomWeight = (long) (seed * maxWeight);
@@ -96,7 +98,7 @@ public class InitData {
             randomDate = LocalDateTime.now();
             randomDescription = "this is offer number " + i;
             randomLatitude = minLatitude + seed * (maxLatitude - minLatitude);
-            randomLongitude = minLongitude + seed * (maxLongitude - minLongitude);
+            randomLongitude = minLongitude + seed2 * (maxLongitude - minLongitude);
             randomCoordinates = new Coordinates(randomLatitude, randomLongitude);
 
             Offer randomOffer = new Offer(randomSender, randomWeight, randomVolume, randomPrice, randomTrashType,

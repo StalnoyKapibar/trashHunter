@@ -4,7 +4,7 @@ function initMap() {
     var saintp = {lat: 59.938942, lng: 30.3149875};
     var map = new google.maps.Map(document.getElementById('map'), {
         center: saintp,
-        zoom: 13,
+        zoom: 12,
         gestureHandling: 'cooperative',
         streetViewControl: false
     });
@@ -114,6 +114,14 @@ function initMap() {
         marker.setView(false);
     }
 
+    function createInfoOfferTable(tableID) {
+        var tableRef = document.getElementById(tableID);
+        var newRow = tableRef.insertRow(0);
+        var newCell = newRow.insertCell(0);
+        var newText = document.createTextNode('New top row');
+        newCell.appendChild(newText);
+    }
+
     function setMarkers() {
         $.ajax({
             url: "/offer/coordinates",
@@ -121,12 +129,35 @@ function initMap() {
             type: "GET",
             async: false,
             success: function (data) {
-                var tags = "";
                 $.each(data, function (key, value) {
                     marker = new google.maps.Marker({
-                        position: {lat: value.latitude, lng: value.longitude},
+                        position: {lat: value.coordinates.latitude, lng: value.coordinates.longitude},
                         map: map,
-                        title: "Hello world"
+                        title: "",
+                    });
+                    marker.addListener('click', function() {
+                        $.ajax({
+                            url: "/offer/" + value.id,
+                            dataType: "json",
+                            type: "GET",
+                            async: false,
+                            success: function (data) {
+                                var tableRef = document.getElementById('offerInfoTable');
+                                $("#offerInfoTable tr").remove();
+                                $.each(data, function (key, value) {
+                                    if (key != 'coordinates' && key != 'id') {
+                                        var newRow = tableRef.insertRow();
+                                        var newCell = newRow.insertCell();
+                                        var newText = document.createTextNode(key);
+                                        newCell.appendChild(newText);
+
+                                        var newCell = newRow.insertCell();
+                                        var newText = document.createTextNode(value);
+                                        newCell.appendChild(newText);
+                                    }
+
+                                });
+                            }});
                     });
 
                 })
