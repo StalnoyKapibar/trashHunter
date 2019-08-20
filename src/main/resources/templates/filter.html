@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Filter</title>
+    <style>
+        .category1, .category2{
+            float:left !important;
+            margin: 0 !important;
+            padding:0 !important;
+            clear:none !important;
+        }
+    </style>
+</head>
+<body>
+    <th:block th:fragment="filter">
+        <h3>Фильтрация</h3>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="" id="METAL">
+            <label class="form-check-label" for="METAL">
+                Металл
+            </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="" id="PAPER">
+            <label class="form-check-label" for="PAPER">
+                Бумага
+            </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="" id="FOOD">
+            <label class="form-check-label" for="FOOD">
+                Пищевые отходы
+            </label>
+        </div>
+        <br>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="" id="WOOD">
+            <label class="form-check-label" for="WOOD">
+                Дерево
+            </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="" id="PLASTIC">
+            <label class="form-check-label" for="PLASTIC">
+                Пластик
+            </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="" id="GLASS">
+            <label class="form-check-label" for="GLASS">
+                Стекло
+            </label>
+        </div>
+
+        <div class="col-auto my-1">
+            <label class="mr-sm-2" for="isSorted">Вес: </label>
+            <form class="form-inline">
+                <label class="mr-sm-2 ml-1" for="weightFrom"> от </label>
+                <input name="weightFrom" style="width: 35%" id="weightFrom"
+                       class="form-control" type="number">
+                <label class="mr-sm-2 ml-1" for="weightTo"> до </label>
+                <input name="weightTo" style="width: 35%" id="weightTo"
+                       class="form-control" type="number">
+                <label class="mr-sm-2 ml-1"> кг </label>
+            </form>
+        </div>
+
+        <div class="col-auto my-1">
+            <label class="mr-sm-2" for="isSorted">Объем: </label>
+            <form class="form-inline">
+                <label class="mr-sm-2 ml-1" for="volumeFrom"> от </label>
+                <input name="volumeFrom" style="width: 35%" id="volumeFrom"
+                       class="form-control" type="number">
+                <label class="mr-sm-2 ml-1" for="volumeTo"> до </label>
+                <input name="volumeFrom" style="width: 35%" id="volumeTo"
+                       class="form-control" type="number">
+                <label class="mr-sm-2 ml-1"> м³ </label>
+            </form>
+        </div>
+
+        <div class="col-auto my-1">
+            <label class="mr-sm-2" for="isSorted">Вид сортировки: </label>
+            <select name="isSorted" id="isSorted" class="form-control selectpicker"
+                    required="required">
+                <option value="">Любой</option>
+                <option value="true">Сортированное</option>
+                <option value="false">Несортированное</option>
+            </select>
+        </div>
+
+        <div class="col-auto my-1">
+            <label class="mr-sm-2" for="isSorted">Сделка: </label>
+            <select name="isFree" id="isFree" class="form-control selectpicker"
+                    required="required">
+                <option value="">Все</option>
+                <option value="true">Бесплатная</option>
+                <option value="false">Платная</option>
+            </select>
+        </div>
+
+
+        <button type="button" class="btn btn-primary" onclick="doFilter()">Вперед</button>
+    </th:block>
+</body>
+</html>

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html
+<html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/commonlayouts}"
       lang="en">
 <head>
     <title>MainPage</title>
+    <script type="text/javascript" src="/js/trash_filter.js"></script>
 </head>
 <body>
 <div  layout:fragment="content">
@@ -14,8 +15,8 @@
             <div class="col-sm-4"></div>
             <div class="col-sm-4" align="center" style="color: #7295B1">
                 <span style="font-size: 25px">Добро Пожаловать! </span><hr>
-                <span style="font-size: 25px">залогинтесь или пройдите регистрацию</span>
-
+                <span style="font-size: 25px">залогинтесь или пройдите регистрацию</span><hr>
+                <th:block th:replace="filter :: filter"></th:block>
             </div>
         </div>
     </div>
