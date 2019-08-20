@@ -33,8 +33,9 @@ public class Offer {
     @Column(nullable = false)
     private long price;
 
-//    @Column(nullable = false)
-//    private TrashType trashType;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TrashType trashType;
 
     @Embedded
     private Coordinates coordinates;
@@ -54,12 +55,12 @@ public class Offer {
     public Offer() {
     }
 
-    public Offer(Sender sender, long weight, long volume, long price, boolean isSorted, boolean isClosed,
-                 LocalDateTime creationDateTime, String description, Coordinates coordinates) {
+    public Offer(Sender sender, long weight, long volume, long price, TrashType trashType, boolean isSorted, boolean isClosed, LocalDateTime creationDateTime, String description, Coordinates coordinates) {
         this.sender = sender;
         this.weight = weight;
         this.volume = volume;
         this.price = price;
+        this.trashType = trashType;
         this.isSorted = isSorted;
         this.isClosed = isClosed;
         this.creationDateTime = creationDateTime;
@@ -107,13 +108,13 @@ public class Offer {
         this.price = price;
     }
 
-//    public TrashType getTrashType() {
-//        return trashType;
-//    }
+    public TrashType getTrashType() {
+        return trashType;
+    }
 
-//    public void setTrashType(TrashType trashType) {
-//        this.trashType = trashType;
-//    }
+    public void setTrashType(TrashType trashType) {
+        this.trashType = trashType;
+    }
 
 
     public Coordinates getCoordinates() {
