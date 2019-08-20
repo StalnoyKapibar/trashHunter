@@ -24,7 +24,7 @@ public class EditUserController  {
     public ModelAndView index(Model model, String error, String logout, Principal user) {
         String email = user.getName();
         User user1 = userService.findByEmail(email);
-        ModelAndView mv = new ModelAndView("/editUser");
+        ModelAndView mv = new ModelAndView("/edit_user");
 
         if( user1 != null && user1.getClass() == Sender.class) {
             Sender sender = (Sender) user1;
