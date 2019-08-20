@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.controllers;
+package org.bootcamp.trashhunter.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -36,7 +36,7 @@ public class MainController {
                 return mv;
             }
         } else {
-            ModelAndView mv = new ModelAndView("index");
+            ModelAndView mv = new ModelAndView("map");
             return mv;
         }
     }
