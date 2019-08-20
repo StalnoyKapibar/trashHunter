@@ -26,7 +26,6 @@ public class MapController {
     @Autowired
     private OfferService offerService;
 
-
     @RequestMapping("/map")
     public String map(Model model) throws ParserConfigurationException, SAXException, IOException, org.xml.sax.SAXException, URISyntaxException {
         List<Offer> offerList = offerService.getAll();
