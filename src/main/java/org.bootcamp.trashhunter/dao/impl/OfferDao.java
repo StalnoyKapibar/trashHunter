@@ -35,7 +35,7 @@ public class OfferDao extends AbstractDAO<Offer> {
             switch (entry.getKey()) {
                 case "trashType":
                     whereQuery.append(" AND (");
-                    String collect = ((List<TrashType>) entry.getValue()).stream()
+                    String collect = ((List<String>) entry.getValue()).stream()
                             .map(value -> "o.trashType='" + value + "'")
                             .collect(Collectors.joining(" OR "));
                     whereQuery.append(collect).append(")");
