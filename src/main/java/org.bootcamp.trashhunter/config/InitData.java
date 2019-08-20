@@ -54,6 +54,8 @@ public class InitData {
 
     private void initRandomOffers(int quantity) {
         double seed;
+        double seed1;
+
         Sender randomSender;
         long randomWeight;
         long randomVolume;
@@ -79,14 +81,14 @@ public class InitData {
 
         for (int i = 0; i < quantity; i++) {
             seed = Math.random();
-
+            seed1 = Math.random();
             randomSender = senderService.getById(1 + (long) (seed * numOfSenders));
             randomWeight = (long) (seed * maxWeight);
             randomVolume = (long) (seed * maxVolume);
             randomPrice = (long) (seed * maxPrice);
             randomTrashType = TrashType.getRandom();
             randomIsSorted = seed < 0.5;
-            randomIsActive = seed < 0.5;
+            randomIsActive = seed1 < 0.5;
             randomIsClosed = false;
             randomDate = LocalDateTime.now();
             randomDescription = "this is offer number " + i;

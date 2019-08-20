@@ -142,7 +142,7 @@ public class Offer {
     }
 
     public void setActive(boolean active) {
-        isClosed = active;
+        isActive= active;
     }
 
     public boolean isClosed() {
