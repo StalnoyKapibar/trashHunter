@@ -1,7 +1,6 @@
 package org.bootcamp.trashhunter.controller;
 
 import jdk.internal.org.xml.sax.SAXException;
-import org.bootcamp.trashhunter.embedded.Coordinates;
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.services.impl.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +8,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.List;
-import java.net.URL;
 import java.util.List;
 
 
@@ -43,18 +38,6 @@ public class MapController {
     public String map2(Model model) {
         model.addAttribute("googleMapsApiKey", googleMapsApiKey);
         return "map_geo";
-
-    }
-
-    @RequestMapping("/offer/coordinates")
-    @ResponseBody
-    public List<Coordinates> geoCoordinates(Model model) {
-        return Arrays.asList(
-                new Coordinates(60.111732, 30.267616),
-                new Coordinates(60.111533, 30.265730),
-                new Coordinates(60.107563, 30.268029)
-
-        );
 
     }
 

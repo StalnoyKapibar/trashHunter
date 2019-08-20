@@ -29,7 +29,6 @@ public class InitData {
     private void init() {
         initSenders();
         initTakers();
-        initOffers();
         initRandomOffers(40);
     }
 
@@ -53,20 +52,16 @@ public class InitData {
 
     }
 
-    private void initOffers() {
-        Offer offer1 = new Offer(senderService.getById(1L), 2L, 2L, 35L, TrashType.METAL, true, false,
-                LocalDateTime.now(), "Hay", new Coordinates(33.3, 55.5));
-        offerService.add(offer1);
-    }
-
     private void initRandomOffers(int quantity) {
         double seed;
+        double seed2;
         Sender randomSender;
         long randomWeight;
         long randomVolume;
         long randomPrice;
         TrashType randomTrashType;
         boolean randomIsSorted;
+        boolean randomIsActive;
         boolean randomIsClosed;
         LocalDateTime randomDate;
         String randomDescription;
@@ -85,6 +80,7 @@ public class InitData {
 
         for (int i = 0; i < quantity; i++) {
             seed = Math.random();
+            seed2 = Math.random();
 
             randomSender = senderService.getById(1 + (long) (seed * numOfSenders));
             randomWeight = (long) (seed * maxWeight);
@@ -92,15 +88,16 @@ public class InitData {
             randomPrice = (long) (seed * maxPrice);
             randomTrashType = TrashType.getRandom();
             randomIsSorted = seed < 0.5;
+            randomIsActive = seed < 0.5;
             randomIsClosed = false;
             randomDate = LocalDateTime.now();
             randomDescription = "this is offer number " + i;
             randomLatitude = minLatitude + seed * (maxLatitude - minLatitude);
-            randomLongitude = minLongitude + seed * (maxLongitude - minLongitude);
+            randomLongitude = minLongitude + seed2 * (maxLongitude - minLongitude);
             randomCoordinates = new Coordinates(randomLatitude, randomLongitude);
 
             Offer randomOffer = new Offer(randomSender, randomWeight, randomVolume, randomPrice, randomTrashType,
-                    randomIsSorted, randomIsClosed, randomDate, randomDescription, randomCoordinates);
+                    randomIsSorted, randomIsActive, randomIsClosed, randomDate, randomDescription, randomCoordinates);
             offerService.add(randomOffer);
         }
     }

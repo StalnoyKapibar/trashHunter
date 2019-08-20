@@ -21,4 +21,19 @@ public class OfferService extends AbstractService<Offer> {
         return dao.getFilterQuery(map);
     }
 
+    public List<Offer> getOffersBySenderId(Long id) {
+        return dao.getOffersBySenderId(id);
+    }
+
+    public void confirmOffer(Long id) {
+        Offer offer = dao.getById(id);
+        offer.setActive(false);
+        offer.setClosed(true);
+        dao.update(offer);
+    }
+    public List<Offer> getFilterQuery(Map<String, Object> map) {
+        return dao.getFilterQuery(map);
+    }
+
+
 }
