@@ -130,10 +130,11 @@ function initMap() {
             async: false,
             success: function (data) {
                 $.each(data, function (key, value) {
+                    console.log(value);
                     marker = new google.maps.Marker({
                         position: {lat: value.coordinates.latitude, lng: value.coordinates.longitude},
                         map: map,
-                        title: "",
+                        title: value.trashType,
                     });
                     marker.addListener('click', function() {
                         $.ajax({
