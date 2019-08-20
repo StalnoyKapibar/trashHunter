@@ -1,10 +1,8 @@
-package org.bootcamp.trashhunter.controller;
+package org.bootcamp.trashhunter.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,7 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class MyController {
 
     @GetMapping(value = "/updatePassword")
-    public ModelAndView updatePassword(WebRequest request, Model model) {
-        return new ModelAndView ("UpdatePassword");
+    public ModelAndView updatePasswordPage(WebRequest request, Model model) {
+        return new ModelAndView("updatePassword");
     }
+
+
 }
