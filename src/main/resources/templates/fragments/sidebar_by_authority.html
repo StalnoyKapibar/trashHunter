@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<th:block th:fragment="not_authority_sidebar">
+    <li><a href="#"><span>весь мусор</span></a></li>
+</th:block>
+
+<th:block th:fragment="sender_sidebar">
+    <li><a href="#"><span>Карта</span></a></li>
+    <li><a href="/index"><span>Моя страница</span></a></li>
+    <li><a href="/sender/my_offers"><span>Мои заказы</span></a></li>
+    <li><a href="#"><span>Активные заказы</span></a></li>
+    <li><a href="#"><span>Добавить заказ</span></a></li>
+</th:block>
+
+<th:block th:fragment="taker_sidebar">
+    <li><a href="#"><span>Карта</span></a></li>
+    <li><a href="#"><span>Моя страница</span></a></li>
+    <li><a href="#"><span>Мои заказы</span></a></li>
+    <li><a href="#"><span>Друзья Сендеры(избраные)</span></a></li>
+</th:block>
+
+</body>

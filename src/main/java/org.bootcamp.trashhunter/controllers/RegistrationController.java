@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Controller
@@ -33,18 +34,13 @@ public class RegistrationController {
     @Autowired
     VerificationTokenService verificationTokenService;
 
-    @GetMapping("/")
-    public String getMain() {
-        return "mainpage";
-    }
-
     @GetMapping("/registration")
     public String getRegistrationPage() {
         return "registration";
     }
 
-    @PostMapping(value = "/registration")
-    public void registratrion(@RequestParam String email, @RequestParam  String password,
+    @PostMapping("/registration")
+    public String registration(@RequestParam String email, @RequestParam  String password,
                               @RequestParam  String name, @RequestParam  String role) {
         User registeredUser = null;
         if ("TAKER".equals(role)) {
@@ -52,6 +48,7 @@ public class RegistrationController {
             taker.setEmail(email);
             taker.setName(name);
             taker.setPassword(password);
+            taker.setRegistrationDate(LocalDate.now());
             takerService.add(taker);
             registeredUser = taker;
         } else if ("SENDER".equals(role)) {
@@ -59,6 +56,7 @@ public class RegistrationController {
             sender.setEmail(email);
             sender.setName(name);
             sender.setPassword(password);
+            sender.setRegistrationDate(LocalDate.now());
             senderService.add(sender);
             registeredUser = sender;
         }
@@ -66,7 +64,9 @@ public class RegistrationController {
         VerificationToken verificationToken =
                 new VerificationToken(token, registeredUser, verificationTokenService.calculateExpiryDate());
         verificationTokenService.add(verificationToken);
-        mailService.sendMessage(registeredUser, verificationToken);
+        //сервис отключен, пока почту не разблокируют
+        //mailService.sendMessage(registeredUser, verificationToken);
+        return "complited_registration";
     }
 
     @GetMapping(value = "/activate/{token}")
