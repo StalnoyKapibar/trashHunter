@@ -44,6 +44,9 @@ public class Offer {
     private boolean isSorted;
 
     @Column(nullable = false)
+    private boolean isActive;
+
+    @Column(nullable = false)
     private boolean isClosed;
 
     @Column(nullable = false)
@@ -55,13 +58,14 @@ public class Offer {
     public Offer() {
     }
 
-    public Offer(Sender sender, long weight, long volume, long price, TrashType trashType, boolean isSorted, boolean isClosed, LocalDateTime creationDateTime, String description, Coordinates coordinates) {
+    public Offer(Sender sender, long weight, long volume, long price, TrashType trashType, boolean isSorted, boolean isActive, boolean isClosed, LocalDateTime creationDateTime, String description, Coordinates coordinates) {
         this.sender = sender;
         this.weight = weight;
         this.volume = volume;
         this.price = price;
         this.trashType = trashType;
         this.isSorted = isSorted;
+        this.isActive = isActive;
         this.isClosed = isClosed;
         this.creationDateTime = creationDateTime;
         this.description = description;
@@ -131,6 +135,14 @@ public class Offer {
 
     public void setSorted(boolean sorted) {
         isSorted = sorted;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isClosed = active;
     }
 
     public boolean isClosed() {

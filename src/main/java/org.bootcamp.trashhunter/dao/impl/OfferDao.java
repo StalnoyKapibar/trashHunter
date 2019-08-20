@@ -68,6 +68,14 @@ public class OfferDao extends AbstractDAO<Offer> {
         return entityManager.createQuery(whereQuery.toString(), Offer.class).getResultList();
     }
 
+    public List<Offer> getOffersBySenderId(Long senderId) {
+        return
+                entityManager
+                        .createQuery("SELECT t FROM Offer t WHERE t.sender.id = :id", Offer.class)
+                        .setParameter("id", senderId)
+                        .getResultList();
+    }
+
     private String getBetweenQuery(String name, String[] array) {
         StringBuilder query = new StringBuilder();
         return query.append(name).append(" BETWEEN ")
@@ -76,5 +84,6 @@ public class OfferDao extends AbstractDAO<Offer> {
                 .append(array[1])
                 .toString();
     }
+
 
 }

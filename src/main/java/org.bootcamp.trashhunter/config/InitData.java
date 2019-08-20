@@ -52,7 +52,7 @@ public class InitData {
     }
 
     private void initOffers() {
-        Offer offer1 = new Offer(senderService.getById(1L),2L,2L,35L,TrashType.METAL ,true,false, LocalDateTime.now(),"Hay",new Coordinates(33.3, 55.5));
+        Offer offer1 = new Offer(senderService.getById(1L),2L,2L,35L,TrashType.METAL ,true,false,false, LocalDateTime.now(),"Hay",new Coordinates(33.3, 55.5));
         offerService.add(offer1);
     }
 }
