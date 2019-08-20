@@ -55,9 +55,7 @@ public class Offer {
     public Offer() {
     }
 
-    public Offer(Sender sender, long weight, long volume, long price, TrashType trashType, boolean isSorted, boolean isClosed, LocalDateTime creationDateTime, String description) {
-    public Offer(Sender sender, long weight, long volume, long price, boolean isSorted, boolean isClosed,
-                 LocalDateTime creationDateTime, String description, Coordinates coordinates) {
+    public Offer(Sender sender, long weight, long volume, long price, TrashType trashType, boolean isSorted, boolean isClosed, LocalDateTime creationDateTime, String description, Coordinates coordinates) {
         this.sender = sender;
         this.weight = weight;
         this.volume = volume;

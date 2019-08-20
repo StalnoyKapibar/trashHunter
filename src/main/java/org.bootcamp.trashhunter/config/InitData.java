@@ -42,18 +42,17 @@ public class InitData {
     }
 
     private void initTakers() {
-        Taker taker1 = new Taker("taker1@mail.ru", "Yura", "taker1",LocalDate.now());
+        Taker taker1 = new Taker("taker1@mail.ru", "Yura", "taker1", LocalDate.now());
         takerService.add(taker1);
-        Taker taker2 = new Taker("taker2@mail.ru", "Matvey", "taker2",LocalDate.now());
+        Taker taker2 = new Taker("taker2@mail.ru", "Matvey", "taker2", LocalDate.now());
         takerService.add(taker2);
-        Taker taker3 = new Taker("taker3@mail.ru", "Denis", "taker3",LocalDate.now());
+        Taker taker3 = new Taker("taker3@mail.ru", "Denis", "taker3", LocalDate.now());
         takerService.add(taker3);
 
     }
 
     private void initOffers() {
-        Offer offer1 = new Offer(senderService.getById(1L),2L,2L,35L, TrashType.METAL, true,false, LocalDateTime.now(),"Hay");
-        Offer offer1 = new Offer(senderService.getById(1L),2L,2L,35L,true,false, LocalDateTime.now(),"Hay", new Coordinates(33.3, 55.5));
+        Offer offer1 = new Offer(senderService.getById(1L),2L,2L,35L,TrashType.METAL ,true,false, LocalDateTime.now(),"Hay",new Coordinates(33.3, 55.5));
         offerService.add(offer1);
     }
 }
