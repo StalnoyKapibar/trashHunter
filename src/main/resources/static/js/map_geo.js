@@ -7,7 +7,7 @@ function initMap() {
     var viborg = {lat: 60.70768064991953, lng: 28.753881993229232};
     map = new google.maps.Map(document.getElementById('map'), {
         center: viborg,
-        zoom: 12,
+        zoom: 13,
         gestureHandling: 'cooperative',
         streetViewControl: false
     });
@@ -90,9 +90,29 @@ function initMap() {
 
 function drawPoints(data) {
     $.each(data, function (id, offer) {
+        console.log(offer);
+        let url = null;
+        if (offer.trashType == 'PAPER') {
+            url = "/img/paper.png";
+        } else if (offer.trashType == 'WOOD') {
+            url = "/img/wood.png";
+        } else if (offer.trashType == 'METAL') {
+            url = "/img/metall.png";
+        } else if (offer.trashType == 'PLASTIC') {
+            url = "/img/plastic.png";
+        } else if (offer.trashType == 'GLASS') {
+            url = "/img/glass.png";
+        } else if (offer.trashType == 'FOOD') {
+            url = "/img/food.png";
+        } else {
+            url = "/img/blank.png";
+        }
         var marker = new google.maps.Marker({
             position: {lat: offer.coordinates.latitude, lng: offer.coordinates.longitude},
-            map: map
+            map: map,
+            icon: {
+               url: url
+            }
         });
         markers.push(marker);
         marker.addListener('click', function() {
