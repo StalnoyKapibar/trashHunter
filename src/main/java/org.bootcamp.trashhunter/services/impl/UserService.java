@@ -16,6 +16,10 @@ public class UserService extends AbstractService<User> {
         return dao.findByEmail(email);
     }
 
+    public User findById(long id) {
+        return dao.findById(id);
+    }
+
     public String encoder64(String string) { return  dao.base64Encoder(string);
     }
 }

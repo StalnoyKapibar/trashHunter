@@ -23,25 +23,14 @@ public class FileUploadController {
         String email = user.getName();
         User user1 = userService.findByEmail(email);
 
-        if( user1 != null && user1.getClass() == Sender.class) {
-            Sender sender = (Sender) user1;
-            try {
-                byte[] photo = image.getBytes();
-                sender.setPic(photo);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-                userService.update(sender);
-        } else if (user1 != null && user1.getClass() == Taker.class) {
-            Taker taker = (Taker) user1;
-            try {
-                byte[] photo = image.getBytes();
-                taker.setPic(photo);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            userService.update(taker);
+        try {
+            byte[] photo = image.getBytes();
+            user1.setPic(photo);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        userService.update(user1);
+
         MultipartFile multipartFile = image;
         System.out.println(image.toString());
 

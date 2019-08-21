@@ -12,13 +12,8 @@ import java.security.Principal;
 @Controller
 public class MainController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView login(Model model, String error, String logout, Principal user) {
-
-        ModelAndView mv = new ModelAndView("/index");
-        if (user != null) {
-            return mv;
-        }
-        return new ModelAndView("/login");
+    public String login() {
+        return "/login";
     }
 
 
