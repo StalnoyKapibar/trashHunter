@@ -1,6 +1,6 @@
 package org.bootcamp.trashhunter.dto;
 
-import org.bootcamp.trashhunter.embedded.Coordinates;
+import org.bootcamp.trashhunter.models.embedded.Coordinates;
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.TrashType;
 
