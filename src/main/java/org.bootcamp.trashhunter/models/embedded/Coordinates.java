@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.embedded;
+package org.bootcamp.trashhunter.models.embedded;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
