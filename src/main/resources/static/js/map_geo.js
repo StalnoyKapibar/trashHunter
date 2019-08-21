@@ -74,47 +74,6 @@ function initMap() {
         newCell.appendChild(newText);
     }
 
-    // function setMarkers() {
-    //     $.ajax({
-    //         url: "/offer/coordinates",
-    //         dataType: "json",
-    //         type: "GET",
-    //         async: false,
-    //         success: function (data) {
-    //             $.each(data, function (key, value) {
-    //                 marker = new google.maps.Marker({
-    //                     position: {lat: value.coordinates.latitude, lng: value.coordinates.longitude},
-    //                     map: map,
-    //                     title: "",
-    //                 });
-    //                 marker.addListener('click', function() {
-    //                     $.ajax({
-    //                         url: "/offer/" + value.id,
-    //                         dataType: "json",
-    //                         type: "GET",
-    //                         async: false,
-    //                         success: function (data) {
-    //                             var tableRef = document.getElementById('offerInfoTable');
-    //                             $("#offerInfoTable tr").remove();
-    //                             $.each(data, function (key, value) {
-    //                                 if (key != 'coordinates' && key != 'id') {
-    //                                     var newRow = tableRef.insertRow();
-    //                                     var newCell = newRow.insertCell();
-    //                                     var newText = document.createTextNode(key);
-    //                                     newCell.appendChild(newText);
-    //
-    //                                     var newCell = newRow.insertCell();
-    //                                     var newText = document.createTextNode(value);
-    //                                     newCell.appendChild(newText);
-    //                                 }
-    //
-    //                             });
-    //                         }});
-    //                 });
-    //
-    //             })
-    //         }});
-    // }
     function setMarkers() {
         $.ajax({
             url: "/api/offer",

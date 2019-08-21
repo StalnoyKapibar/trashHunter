@@ -64,8 +64,7 @@ public class RegistrationController {
         VerificationToken verificationToken =
                 new VerificationToken(token, registeredUser, verificationTokenService.calculateExpiryDate());
         verificationTokenService.add(verificationToken);
-        //сервис отключен, пока почту не разблокируют
-        //mailService.sendMessage(registeredUser, verificationToken);
+        mailService.sendMessage(registeredUser, verificationToken);
         return "complited_registration";
     }
 
