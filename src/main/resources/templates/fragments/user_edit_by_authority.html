@@ -37,9 +37,9 @@
                                             </div>
                                             <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                                                 <div class="text-center text-sm-left mb-2 mb-sm-0">
-                                                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">John Smith</h4>
-                                                    <p class="mb-0">@johnny.s</p>
-                                                    <div class="text-muted"><small>Last seen 2 hours ago</small></div>
+                                                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap"><span th:text="${user.name}"></span></h4>
+                                                    <p class="mb-0"><span th:text="${user.email}"></span></p>
+<!--                                                    <div class="text-muted"><small>Last seen 2 hours ago</small></div>-->
                                                     <div class="mt-2">
                                                         <div class="custom-file">
                                                             <input type="file" class="custom-file-input" name="inputName" id="uploadimage" enctype="multipart/form-data">
