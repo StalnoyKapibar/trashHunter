@@ -1,49 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Map</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
 
-    <link rel="stylesheet" type="text/css" href="map.css">
+    <link rel="stylesheet" type="text/css" href="/css/map_geo.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script type="text/javascript" src="/js/map_geo.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&libraries=places&callback=initMap"
             async defer></script>
 
 </head>
 <body>
-
-<div class="pac-card" id="pac-card">
-    <div>
-        <div id="title">
-            Поиск по адресу:
+<th:block th:fragment="map">
+    <div class="pac-card" id="pac-card">
+        <div>
+            <div id="title">
+                Поиск по адресу:
+            </div>
+        </div>
+        <div id="pac-container">
+            <input id="pac-input" type="text"
+                   placeholder="Введите адрес">
         </div>
     </div>
-    <div id="pac-container">
-        <input id="pac-input" type="text"
-               placeholder="Введите адрес">
+    <div id="map"></div>
+    <div id="infowindow-content">
+        <img src="" width="16" height="16" id="place-icon">
+        <span id="place-name" class="title"></span><br>
+        <span id="place-address"></span>
     </div>
-</div>
-<div id="map"></div>
-<div id="infowindow-content">
-    <img src="" width="16" height="16" id="place-icon">
-    <span id="place-name" class="title"></span><br>
-    <span id="place-address"></span>
-</div>
-
-
-<!--
-Простой поиск
-<div id="map_collapse" class="collapsed collapse">
-    <div id="map" style="height: 300px"></div>
-</div>
-
-<input id="address_input" style="width: 400px">
-<button id="search_btn" onclick="searchByAddress()">Найти</button>
--->
-
+</th:block>
 </body>
 
 </html>
