@@ -1,4 +1,4 @@
-function validatePass() {
+function validatePass(id) {
     var oldPass = document.getElementById("oldPassword").value;
     var newPass = document.getElementById("newPassword").value;
     var repeatPass = document.getElementById("repeatPassword").value;
@@ -14,11 +14,16 @@ function validatePass() {
         var json = JSON.stringify(passChange);
         $.ajax({
             type: "POST",
-            contentType: "application/json",
-            url: "http://localhost:8080/succChange",
+            //contentType: "json",
+            url: "/succChange/succChange",
             dataType: "json",
             data: json,
-
+            success: function (e) {
+                alert(e);
+            },
+            error: function (e) {
+                alert('error');
+            }
         });
 
     }
