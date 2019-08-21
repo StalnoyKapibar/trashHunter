@@ -8,8 +8,8 @@
 <th:block th:fragment="head">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!--    <meta name="_csrf" th:content="${_csrf.token}"/>-->
-<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
@@ -19,6 +19,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/c5edb0b5a3.js"></script>
     <link rel="stylesheet" href="/css/common_style.css">
+    <script src="/js/postrequest.js"></script>
+
 
 </th:block>
 
@@ -35,6 +37,19 @@
         </ul>
     </div>
 </th:block>
+
+<th:block th:fragment="edit_bar">
+    <div class="edit_bar">
+        <ul sec:authorize="hasAuthority('Sender')">
+            <th:block th:replace="fragments/user_edit_by_authority :: sender_edit_bar"></th:block>
+        </ul>
+        <ul sec:authorize="hasAuthority('Taker')">
+            <th:block th:replace="fragments/sidebar_by_authority :: taker_sidebar"></th:block>
+        </ul>
+    </div>
+</th:block>
+
+
 
 <th:block th:fragment="nav">
     <nav class="navbar navbar-expand-sm navbar-dark fixed-top">

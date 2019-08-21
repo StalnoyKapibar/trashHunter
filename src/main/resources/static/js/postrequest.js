@@ -1,41 +1,32 @@
-function fire_ajax_submit(userId) {
-
-    let form = $('#fileUploadForm')[0];
-
-    let data = new FormData(form);
-
-    data.append("CustomField", "This is some extra data, testing");
-
-    $("#imageSubmit").prop("disabled", true);
-
-
+$(document).ready(() => {
+    $("#btnSubmit").click((event) => {
+        //stop submit the form, we will post it manually.
+        event.preventDefault();
+        doAjax();
+    });
+});
+function doAjax() {
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    var input = $("#uploadimage");
+    var data = new FormData;
+    data.append('img', input.prop('files')[0]);
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
-        url: '/upload/img',
+        url: "/editPhoto",
         data: data,
-        //http://api.jquery.com/jQuery.ajax/
-        //https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
         processData: false, //prevent jQuery from automatically transforming the data into a query string
         contentType: false,
         cache: false,
-        timeout: 600000,
-        success: function (data, textStatus, xhr) {
-
-            $("#result").text(data);
-            console.log("SUCCESS : ", data);
-            $("#imageSubmit").prop("disabled", false);
-
-            if (xhr.status === 205) {
-                reloadImage(userId);
-            }
+        beforeSend: function (request) {
+            request.setRequestHeader(header, token);
         },
-        error: function (xhr, textStatus, error) {
-            $("#result").text(error.responseText);
-            console.log("ERROR : ", error);
-            $("#imageSubmit").prop("disabled", false);
+        success: (data) => {
+            alert(data);
+        },
+        error: (e) => {
+            alert(e.responseText);
         }
-
     });
-
 }

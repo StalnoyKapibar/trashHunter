@@ -5,7 +5,9 @@ import org.bootcamp.trashhunter.models.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
+import java.util.Base64;
 
 @Repository
 public class UserDao extends AbstractDAO<User> {
@@ -17,9 +19,12 @@ public class UserDao extends AbstractDAO<User> {
                 .getSingleResult();
     }
 
-    public void uploadPic(MultipartFile file ) {
+    public String base64Encoder(String string) {
+        Base64.Encoder encoder = Base64.getEncoder();
+        String encodedString = encoder.encodeToString(
+                string.getBytes(StandardCharsets.UTF_8) );
 
-
+        return encodedString;
     }
 
 

@@ -15,4 +15,7 @@ public class UserService extends AbstractService<User> {
     public User findByEmail(String email) {
         return dao.findByEmail(email);
     }
+
+    public String encoder64(String string) { return  dao.base64Encoder(string);
+    }
 }
