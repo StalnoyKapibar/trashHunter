@@ -1,5 +1,6 @@
 package org.bootcamp.trashhunter.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.bootcamp.trashhunter.embedded.Coordinates;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class Offer {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_fk", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Sender sender;
 
     @ManyToMany

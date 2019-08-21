@@ -23,4 +23,9 @@ public class OfferRestController {
         }
         return offerService.getFilterQuery(map);
     }
+
+    @GetMapping
+    public List<Offer> getMeeting() {
+        return offerService.getAll();
+    }
 }

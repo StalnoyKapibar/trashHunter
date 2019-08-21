@@ -1,9 +1,12 @@
+var map;
+var markers = [];
+
 function initMap() {
     var geocoder = new google.maps.Geocoder;
 
-    var saintp = {lat: 59.938942, lng: 30.3149875};
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: saintp,
+    var viborg = {lat: 60.70768064991953, lng: 28.753881993229232};
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: viborg,
         zoom: 12,
         gestureHandling: 'cooperative',
         streetViewControl: false
@@ -63,57 +66,6 @@ function initMap() {
 
     setMarkers();
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            map.setCenter(pos);
-        }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-        });
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-    }
-
-    google.maps.event.addListener(map, 'click', function (event) {
-        var latlng = event.latLng;
-
-        geocoder.geocode({'location': latlng}, function(results, status) {
-            if (status === 'OK') {
-                if (results[0]) {
-                    map.setZoom(17);
-                    var marker = new google.maps.Marker({
-                        position: latlng,
-                        map: map
-                    });
-                    infowindow.setContent(results[0].formatted_address);
-                    infowindow.open(map, marker);
-                } else {
-                    window.alert('No results found');
-                }
-            } else {
-                window.alert('Geocoder failed due to: ' + status);
-            }
-        });
-
-        //infowindow.open(map, this);
-    });
-
-
-    function createMarker(coords) {
-        marker = new google.maps.Marker({
-            map: map,
-            position: coords
-        });
-    }
-
-    function deleteMarker() {
-        marker.setView(false);
-    }
-
     function createInfoOfferTable(tableID) {
         var tableRef = document.getElementById(tableID);
         var newRow = tableRef.insertRow(0);
@@ -122,46 +74,89 @@ function initMap() {
         newCell.appendChild(newText);
     }
 
+    // function setMarkers() {
+    //     $.ajax({
+    //         url: "/offer/coordinates",
+    //         dataType: "json",
+    //         type: "GET",
+    //         async: false,
+    //         success: function (data) {
+    //             $.each(data, function (key, value) {
+    //                 marker = new google.maps.Marker({
+    //                     position: {lat: value.coordinates.latitude, lng: value.coordinates.longitude},
+    //                     map: map,
+    //                     title: "",
+    //                 });
+    //                 marker.addListener('click', function() {
+    //                     $.ajax({
+    //                         url: "/offer/" + value.id,
+    //                         dataType: "json",
+    //                         type: "GET",
+    //                         async: false,
+    //                         success: function (data) {
+    //                             var tableRef = document.getElementById('offerInfoTable');
+    //                             $("#offerInfoTable tr").remove();
+    //                             $.each(data, function (key, value) {
+    //                                 if (key != 'coordinates' && key != 'id') {
+    //                                     var newRow = tableRef.insertRow();
+    //                                     var newCell = newRow.insertCell();
+    //                                     var newText = document.createTextNode(key);
+    //                                     newCell.appendChild(newText);
+    //
+    //                                     var newCell = newRow.insertCell();
+    //                                     var newText = document.createTextNode(value);
+    //                                     newCell.appendChild(newText);
+    //                                 }
+    //
+    //                             });
+    //                         }});
+    //                 });
+    //
+    //             })
+    //         }});
+    // }
     function setMarkers() {
         $.ajax({
-            url: "/offer/coordinates",
+            url: "/api/offer",
             dataType: "json",
             type: "GET",
+            contentType: "application/json; charset=utf-8",
             async: false,
             success: function (data) {
-                $.each(data, function (key, value) {
-                    marker = new google.maps.Marker({
-                        position: {lat: value.coordinates.latitude, lng: value.coordinates.longitude},
-                        map: map,
-                        title: "",
-                    });
-                    marker.addListener('click', function() {
-                        $.ajax({
-                            url: "/offer/" + value.id,
-                            dataType: "json",
-                            type: "GET",
-                            async: false,
-                            success: function (data) {
-                                var tableRef = document.getElementById('offerInfoTable');
-                                $("#offerInfoTable tr").remove();
-                                $.each(data, function (key, value) {
-                                    if (key != 'coordinates' && key != 'id') {
-                                        var newRow = tableRef.insertRow();
-                                        var newCell = newRow.insertCell();
-                                        var newText = document.createTextNode(key);
-                                        newCell.appendChild(newText);
-
-                                        var newCell = newRow.insertCell();
-                                        var newText = document.createTextNode(value);
-                                        newCell.appendChild(newText);
-                                    }
-
-                                });
-                            }});
-                    });
-
-                })
-            }});
+                drawPoints(data);
+            }
+        });
     }
+}
 
+function drawPoints(data) {
+    $.each(data, function (id, offer) {
+        var marker = new google.maps.Marker({
+            position: {lat: offer.coordinates.latitude, lng: offer.coordinates.longitude},
+            map: map
+        });
+        markers.push(marker);
+        marker.addListener('click', function() {
+            var tableRef = document.getElementById('offerInfoTable');
+            $("#offerInfoTable tr").remove();
+            $.each(offer, function (key, value) {
+                if (key != 'coordinates' && key != 'id') {
+                    var newRow = tableRef.insertRow();
+                    var newCell = newRow.insertCell();
+                    var newText = document.createTextNode(key);
+                    newCell.appendChild(newText);
+
+                    var newCell = newRow.insertCell();
+                    var newText = document.createTextNode(value);
+                    newCell.appendChild(newText);
+                }
+            });
+        });
+    });
+}
+
+function deleteMarkers() {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+    }
 }

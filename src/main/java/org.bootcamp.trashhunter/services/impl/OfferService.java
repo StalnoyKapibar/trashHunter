@@ -31,9 +31,4 @@ public class OfferService extends AbstractService<Offer> {
         offer.setClosed(true);
         dao.update(offer);
     }
-    public List<Offer> getFilterQuery(Map<String, Object> map) {
-        return dao.getFilterQuery(map);
-    }
-
-
 }

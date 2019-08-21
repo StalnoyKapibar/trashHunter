@@ -2,7 +2,6 @@ const header = $("meta[name='_csrf_header']").attr("content");
 const token = $("meta[name='_csrf']").attr("content");
 
 function doFilter(){
-    let trashType = [];
     $('input[type=checkbox]').each(function () {
         if (this.checked) {
             trashType.push($(this).attr("id"))
@@ -43,7 +42,9 @@ function doFilter(){
             return request.setRequestHeader(header, token);
         },
         success: function (data) {
-            console.log(data);
+            deleteMarkers();
+            drawPoints(data);
         }
     });
 }
+
