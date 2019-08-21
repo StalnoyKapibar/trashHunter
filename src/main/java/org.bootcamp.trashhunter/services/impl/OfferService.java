@@ -17,6 +17,10 @@ public class OfferService extends AbstractService<Offer> {
     @Autowired
     private OfferDao dao;
 
+    public List<Offer> getFilterQuery(Map<String, Object> map) {
+        return dao.getFilterQuery(map);
+    }
+
     public List<Offer> getOffersBySenderId(Long id) {
         return dao.getOffersBySenderId(id);
     }
@@ -27,9 +31,4 @@ public class OfferService extends AbstractService<Offer> {
         offer.setClosed(true);
         dao.update(offer);
     }
-    public List<Offer> getFilterQuery(Map<String, Object> map) {
-        return dao.getFilterQuery(map);
-    }
-
-
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Map</title>
@@ -15,35 +15,25 @@
 
 </head>
 <body>
-
-<div class="pac-card" id="pac-card">
-    <div>
-        <div id="title">
-            Поиск по адресу:
+<th:block th:fragment="map">
+    <div class="pac-card" id="pac-card">
+        <div>
+            <div id="title">
+                Поиск по адресу:
+            </div>
+        </div>
+        <div id="pac-container">
+            <input id="pac-input" type="text"
+                   placeholder="Введите адрес">
         </div>
     </div>
-    <div id="pac-container">
-        <input id="pac-input" type="text"
-               placeholder="Введите адрес">
+    <div id="map"></div>
+    <div id="infowindow-content">
+        <img src="" width="16" height="16" id="place-icon">
+        <span id="place-name" class="title"></span><br>
+        <span id="place-address"></span>
     </div>
-</div>
-<div id="map"></div>
-<div id="infowindow-content">
-    <img src="" width="16" height="16" id="place-icon">
-    <span id="place-name" class="title"></span><br>
-    <span id="place-address"></span>
-</div>
-
-<div class="container">
-    <div class="row">
-        <table class="table table-dark" id="offerInfoTable">
-             <tr>
-               <td></td>
-             </tr>
-        </table>
-    </div>
-</div>
-
+</th:block>
 </body>
 
 </html>
