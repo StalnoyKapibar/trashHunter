@@ -36,7 +36,7 @@ public class RegistrationController {
 
     @GetMapping("/registration")
     public String getRegistrationPage() {
-        return "registration";
+        return "registration/registration";
     }
 
     @PostMapping("/registration")
@@ -65,7 +65,7 @@ public class RegistrationController {
                 new VerificationToken(token, registeredUser, verificationTokenService.calculateExpiryDate());
         verificationTokenService.add(verificationToken);
         mailService.sendMessage(registeredUser, verificationToken);
-        return "complited_registration";
+        return "registration/complited_registration";
     }
 
     @GetMapping(value = "/activate/{token}")
@@ -80,6 +80,6 @@ public class RegistrationController {
         } else {
             model.addAttribute("complete", false);
         }
-        return "confirm_registration";
+        return "registration/confirm_registration";
     }
 }
