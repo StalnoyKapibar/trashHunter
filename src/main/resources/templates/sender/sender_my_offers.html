@@ -77,33 +77,15 @@
                             <th>id</th>
                             <th>Вес</th>
                             <th>Объем</th>
-                            <th>Цена</th>
-                            <th>Тип мусора</th>
+                            <!--<th>Цена</th>-->
+                            <!--<th>Тип мусора</th>-->
                             <th>Активность</th>
                             <th>Состояние</th>
                             <th>Подтверждение</th>
                         </tr>
                         </thead>
                         <tbody align="center">
-                        <tr th:each="offer : ${offers}">
-                            <td th:text="${offer.id}"></td>
-                            <td th:text="${offer.weight}"></td>
-                            <td th:text="${offer.volume}"></td>
-                            <td th:text="${offer.price}"></td>
-                            <td th:text="${offer.trashType}"></td>
-                            <td th:text="${offer.active}"></td>
-                            <td th:text="${offer.closed}"></td>
-                            <td>
-                                <button th:onclick="'confirmOffer(\'' + ${offer.id} + '\');'" type="button"
-                                        class="btn btn-primary">Подтвердить
-                                </button>
-                            </td>
-                            <!--<button th:onclick="'deleteEmployer(\'' + ${employerUser.id} + '\');'" type="button"-->
-                            <!--class="btn btn-primary">-->
-                            <!--Delete Employer-->
-                            <!--</button>-->
-                            <!--</td>-->
-                        </tr>
+                            <!--Loaded from offer.js getTable()-->
                         </tbody>
                     </table>
                 </div>
