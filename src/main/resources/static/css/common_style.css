@@ -4,7 +4,7 @@ body {
 
 /*Navbar style*/
 .navbar {
-    background-color: #7295b1;
+    background-color: #4d90fe;
 }
 
 .navbar a {
@@ -64,7 +64,7 @@ li {
 }
 
 .sidebar li :hover {
-    color: #4177A3;
+    color: #4d90fe;
 }
 
 /*Content style*/
@@ -127,7 +127,7 @@ li {
     bottom: 5%;
     font-size: 20px;
     font-weight: bold;
-    color: #7295b1;
+    color: #4d90fe;
 }
 
 .vacancyTags {
