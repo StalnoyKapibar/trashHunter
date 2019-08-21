@@ -1,6 +1,3 @@
-const header = $("meta[name='_csrf_header']").attr("content");
-const token = $("meta[name='_csrf']").attr("content");
-
 function doFilter(){
     let trashType = [];
     $('input[type=checkbox]').each(function () {
@@ -39,9 +36,6 @@ function doFilter(){
         async: false,
         dataType: "json",
         data: JSON.stringify(filter),
-        beforeSend: function (request) {
-            return request.setRequestHeader(header, token);
-        },
         success: function (data) {
             deleteMarkers();
             drawPoints(data);

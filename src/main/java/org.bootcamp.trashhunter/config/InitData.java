@@ -1,6 +1,6 @@
 package org.bootcamp.trashhunter.config;
 
-import org.bootcamp.trashhunter.embedded.Coordinates;
+import org.bootcamp.trashhunter.models.embedded.Coordinates;
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.Taker;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Random;
 
 
 public class InitData {

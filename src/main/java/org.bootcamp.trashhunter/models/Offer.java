@@ -1,7 +1,7 @@
 package org.bootcamp.trashhunter.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.bootcamp.trashhunter.embedded.Coordinates;
+import org.bootcamp.trashhunter.models.embedded.Coordinates;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
