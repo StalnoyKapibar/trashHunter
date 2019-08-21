@@ -178,4 +178,17 @@ public class Offer {
     public void setRespondingTakers(List<Taker> respondingTakers) {
         this.respondingTakers = respondingTakers;
     }
+
+    @Override
+    public String toString() {
+        return
+                "{id: " + id +
+                ", weight: " + weight +
+                ", volume: " + volume +
+                ", price: " + price +
+                ", trashType: " + trashType +
+                ", isSorted: " + isSorted +
+                ", isActive: " + isActive +
+                ", isClosed: " + isClosed +'}';
+    }
 }

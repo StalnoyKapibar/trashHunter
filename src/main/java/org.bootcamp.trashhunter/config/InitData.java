@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class InitData {
@@ -92,11 +94,13 @@ public class InitData {
             randomDate = LocalDateTime.now();
             randomDescription = "this is offer number " + i;
             randomLatitude = minLatitude + seed * (maxLatitude - minLatitude);
-            randomLongitude = minLongitude + seed2 * (maxLongitude - minLongitude);
+            randomLongitude = minLongitude + seed1 * (maxLongitude - minLongitude);
             randomCoordinates = new Coordinates(randomLatitude, randomLongitude);
 
             Offer randomOffer = new Offer(randomSender, randomWeight, randomVolume, randomPrice, randomTrashType,
                     randomIsSorted, randomIsActive, randomIsClosed, randomDate, randomDescription, randomCoordinates);
+            List<Taker> takers = takerService.getAll();
+            randomOffer.setRespondingTakers(takers);
             offerService.add(randomOffer);
         }
     }
