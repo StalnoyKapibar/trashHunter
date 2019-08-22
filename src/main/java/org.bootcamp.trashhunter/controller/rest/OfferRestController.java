@@ -18,7 +18,7 @@ public class OfferRestController {
 
     @PostMapping
     public List<Offer> getMeeting(@RequestBody Map<String, Object> map) {
-        if (map.size()==0) {
+        if (map.size() == 0) {
             return offerService.getAll();
         }
         return offerService.getFilterQuery(map);

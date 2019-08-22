@@ -24,13 +24,12 @@ public class MapController {
     @Autowired
     private OfferService offerService;
 
+    //todo reduce
     @RequestMapping("/map")
     public String map(Model model) throws ParserConfigurationException, SAXException, IOException, org.xml.sax.SAXException, URISyntaxException {
         List<Offer> offerList = offerService.getAll();
-
         model.addAttribute("offerList", offerList);
         model.addAttribute("googleMapsApiKey", googleMapsApiKey);
-
         return "map";
     }
 
@@ -38,8 +37,6 @@ public class MapController {
     public String map2(Model model) {
         model.addAttribute("googleMapsApiKey", googleMapsApiKey);
         return "map_geo";
-
     }
-
 
 }

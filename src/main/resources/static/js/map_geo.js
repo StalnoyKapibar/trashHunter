@@ -2,6 +2,7 @@ var map;
 var markers = [];
 
 function initMap() {
+    //todo
     var geocoder = new google.maps.Geocoder;
 
     var viborg = {lat: 60.70768064991953, lng: 28.753881993229232};
@@ -9,12 +10,15 @@ function initMap() {
         center: viborg,
         zoom: 13,
         gestureHandling: 'cooperative',
-        streetViewControl: false
+        streetViewControl: false,
+        mapTypeControl: false
     });
     var card = document.getElementById('pac-card');
     var input = document.getElementById('pac-input');
+    var filter = document.getElementById('filter-container');
 
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(filter);
 
     var autocomplete = new google.maps.places.Autocomplete(input);
 
