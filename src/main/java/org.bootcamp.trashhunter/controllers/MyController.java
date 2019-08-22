@@ -1,6 +1,6 @@
 package org.bootcamp.trashhunter.controllers;
 
-import org.bootcamp.trashhunter.services.impl.UserService;
+import org.bootcamp.trashhunter.services.abstraction.UserServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +12,7 @@ import java.security.Principal;
 public class MyController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceI userService;
 
     @GetMapping(value = "/update_password")
     public String updatePasswordPage(Model model, Principal principal) {

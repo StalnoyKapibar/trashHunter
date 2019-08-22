@@ -1,9 +1,9 @@
-package org.bootcamp.trashhunter.controller;
+package org.bootcamp.trashhunter.controllers;
 
 import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.models.User;
-import org.bootcamp.trashhunter.services.impl.UserServiceImpl;
+import org.bootcamp.trashhunter.services.abstraction.UserServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,22 +18,24 @@ import java.security.Principal;
 public class EditUserController  {
 
     @Autowired
-    UserServiceImpl userServiceImpl;
+    UserServiceI userServiceImpl;
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public ModelAndView edit(Model model, Principal user) {
         String email = user.getName();
         User user1 = userServiceImpl.findByEmail(email);
-        ModelAndView mv = new ModelAndView("edit_user2_test");
+        ModelAndView modelAndView = new ModelAndView();
 
         if( user1 != null && user1.getClass() == Sender.class) {
+            modelAndView.setViewName("/sender/sender_edit_user");
             Sender sender = (Sender) user1;
             model.addAttribute("user", sender);
         } else if (user1 != null && user1.getClass() == Taker.class) {
+            modelAndView.setViewName("/taker/taker_edit_user");
             Taker taker = (Taker) user1;
-            mv.addObject("user", taker);
+            model.addAttribute("user", taker);
         }
-        return mv;
+        return modelAndView;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)

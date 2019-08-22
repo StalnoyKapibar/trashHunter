@@ -2,7 +2,7 @@ package org.bootcamp.trashhunter.services.impl.tokens;
 
 
 
-import org.bootcamp.trashhunter.dao.impl.token.BaseTokenDAOImpl;
+import org.bootcamp.trashhunter.dao.impl.abstraction.BaseTokenDAO;
 import org.bootcamp.trashhunter.models.token.BaseToken;
 import org.bootcamp.trashhunter.services.AbstractService;
 
@@ -11,9 +11,9 @@ import java.util.Date;
 
 public abstract class BaseTokenService<T extends BaseToken> extends AbstractService<T> {
 
-    protected final BaseTokenDAOImpl<T> baseTokenDAO;
+    protected final BaseTokenDAO<T> baseTokenDAO;
 
-    public BaseTokenService(BaseTokenDAOImpl<T> baseTokenDAO) {
+    public BaseTokenService(BaseTokenDAO<T> baseTokenDAO) {
         this.baseTokenDAO = baseTokenDAO;
     }
 

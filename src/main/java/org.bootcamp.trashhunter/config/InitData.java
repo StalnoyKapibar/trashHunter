@@ -2,27 +2,25 @@ package org.bootcamp.trashhunter.config;
 
 import org.bootcamp.trashhunter.models.*;
 import org.bootcamp.trashhunter.models.embedded.Coordinates;
-import org.bootcamp.trashhunter.services.impl.OfferServiceImpl;
-import org.bootcamp.trashhunter.services.impl.SenderServiceImpl;
-import org.bootcamp.trashhunter.services.impl.TakerServiceImpl;
+import org.bootcamp.trashhunter.services.abstraction.OfferServiceI;
+import org.bootcamp.trashhunter.services.abstraction.SenderServiceI;
+import org.bootcamp.trashhunter.services.abstraction.TakerServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 public class InitData {
 
     @Autowired
-    OfferServiceImpl offerServiceImpl;
+    OfferServiceI offerServiceImpl;
 
     @Autowired
-    SenderServiceImpl senderServiceImpl;
+    SenderServiceI senderServiceImpl;
 
     @Autowired
-    TakerServiceImpl takerServiceImpl;
+    TakerServiceI takerServiceImpl;
 
     private void init() {
         initSenders();

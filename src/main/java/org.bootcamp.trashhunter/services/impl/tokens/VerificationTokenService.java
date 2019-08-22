@@ -1,6 +1,6 @@
 package org.bootcamp.trashhunter.services.impl.tokens;
 
-import org.bootcamp.trashhunter.dao.impl.token.VerificationTokenDAOImpl;
+import org.bootcamp.trashhunter.dao.impl.abstraction.VerificationTokenDAO;
 import org.bootcamp.trashhunter.models.token.VerificationToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class VerificationTokenService extends BaseTokenService<VerificationToken> {
 
     @Autowired
-    public VerificationTokenService(VerificationTokenDAOImpl verificationTokenDAO) {
+    public VerificationTokenService(VerificationTokenDAO verificationTokenDAO) {
         super(verificationTokenDAO);
     }
 
