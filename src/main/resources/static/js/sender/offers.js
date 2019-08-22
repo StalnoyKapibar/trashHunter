@@ -28,26 +28,61 @@ function getTable(check) {
                             '<div class="col-sm-12">'+
                                 '<div class="container-fluid cards">'+
                                     '<div class="card" >'+
-                                        '<div class="card-header"style="background-color: blanchedalmond">'+
-                                            'Header'+
-                                        '</div>'+
-                                        '<div class="card-body"style="background-color: aliceblue">';
-                                             JSON.parse(offer, function (key, value) {
-                                                if (key != "") {
-                                                offerRow +=  ' ! ' + value + ' ! ';
+                                        '<div class="card-header" style="background-color: #7295b1">';
+                                            JSON.parse(offer, function (key, value) {
+                                                if (key == "id"){
+                                                    offerRow+= ' Заказ№ ' + value + ' ';
                                                 }
-                offerRow +=             '</div>'+
-                                        '<div class="card-footer" style="background-color: orange">'+
-                                            '<button class="btn btn-warning">'+
-                                                Перейти +
-                                            '</button>' +
-                                        '</div>'+
+                                                if (key == "weight") {
+                                                 offerRow +=  ' вес: ' + value + 'кг ';
+                                                }
+                                                if (key == "volume") {
+                                                 offerRow +=  ' объем: ' + value + 'м³ ';
+                                                }if (key == "price") {
+                                                 offerRow +=  ' цена: ' + value + 'руб ';
+                                                }if (key == "trashType") {
+                                                 offerRow +=  ' тип мусора ' + value;
+                                                        // '</div>'+
+                                                     // '<div class="card-body"style="background-color: aliceblue">';
+                                                }
+                                                if (key == "isActive"){
+                                                    if (value == "false"){
+                                                        offerRow += '</div>'+
+                                                            + '<div class="card-body" style="background-color: aliceblue">' +
+                                                                'На предложение пока никто не откликнулся :('
+                                                            +'</div>';
+                                                    } else {
+                                                        offerRow += '</div>' +
+                                                        '<div class="card-body" style="background-color: aliceblue">';
+                                                        $.each(takers, function (i, taker) {
+                                                            offerRow += '<div class="row">'+
+                                                                '<div class="col-sm-1"></div>'+
+                                                                '<div class="col-sm-6">' + taker.name +'</div>'+
+                                                                '<div class="col-sm-2">'+
+                                                                '<button class="btn btn-primary" onclick="confirmOffer(taker.id)">' +
+                                                                     +" Подвтведрдить "+
+                                                                '</button>' +
+                                                                '</div>'+
+                                                                // '<div class="col-sm-2">'+
+                                                                // '<button class="btn btn-default">' +
+                                                                // +'Чат'+
+                                                                // '</button>' +
+                                                                // '</div>'+
+                                                                '<div class="col-sm-1"></div>'+
+                                                                '</div>';
+                                                            ;
+                                                        });
+                                                        offerRow += '</div>';
+                                                    }
+                                                }
+                                             });
+                offerRow +=
                                     '</div>' +
                                 '</div>'+
                             '</div>' +
                         '</div>'
                     '</div>';
-                });
+
                 offerRow+='<br>';
                 // $.each(takers, function (i,taker) {
                 //     offerRow+= taker.name +';';
