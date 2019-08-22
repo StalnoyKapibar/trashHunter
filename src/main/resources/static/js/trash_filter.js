@@ -43,3 +43,12 @@ function doFilter(){
     });
 }
 
+function openFilter() {
+    document.getElementById("filter").style.height = "400px";
+    document.getElementById("filter-open-btn").style.height = "0";
+}
+
+function closeFilter() {
+    document.getElementById("filter").style.height = "0";
+    document.getElementById("filter-open-btn").style.height = "50px";
+}
