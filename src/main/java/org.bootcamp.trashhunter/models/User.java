@@ -25,6 +25,9 @@ public abstract class User {
     @Column(nullable = false)
     private LocalDate registrationDate;
 
+    @Column
+    private String aboutUser;
+
     @Lob
     @Column(name="pic")
     private byte[] pic;
@@ -51,6 +54,10 @@ public abstract class User {
         this.name = name;
         this.registrationDate = registrationDate;
     }
+
+    public String getAboutUser() { return aboutUser; }
+
+    public void setAboutUser(String aboutUser) { this.aboutUser = aboutUser; }
 
     public long getId() {
         return id;
