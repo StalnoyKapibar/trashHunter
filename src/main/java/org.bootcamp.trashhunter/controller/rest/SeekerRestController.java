@@ -26,7 +26,6 @@ public class SeekerRestController {
         List<Offer> offers = offerService.getOffersBySenderId(1L);
         List<Offer> offers1 =  offers.stream().sorted(Comparator.comparing(Offer::isActive)).collect(Collectors.toList());
         model.addAttribute("offers",offerService.getOffersBySenderId(1L));
-
         return "sender/sender_my_offers";
     }
 

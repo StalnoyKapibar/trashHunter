@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.services;
+package org.bootcamp.trashhunter.services.impl;
 
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.token.VerificationToken;

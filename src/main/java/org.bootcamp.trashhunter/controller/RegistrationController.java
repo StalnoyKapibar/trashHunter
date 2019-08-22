@@ -4,10 +4,10 @@ import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.token.VerificationToken;
-import org.bootcamp.trashhunter.services.MailService;
+import org.bootcamp.trashhunter.services.impl.MailService;
 import org.bootcamp.trashhunter.services.impl.SenderService;
 import org.bootcamp.trashhunter.services.impl.TakerService;
-import org.bootcamp.trashhunter.services.tokens.VerificationTokenService;
+import org.bootcamp.trashhunter.services.impl.tokens.VerificationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +41,8 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String registration(@RequestParam String email, @RequestParam  String password,
-                              @RequestParam  String name, @RequestParam  String role) {
+                               @RequestParam  String name, @RequestParam  String role) {
+        // todo duplicate
         User registeredUser = null;
         if ("TAKER".equals(role)) {
             Taker taker = new Taker();
@@ -60,11 +61,13 @@ public class RegistrationController {
             senderService.add(sender);
             registeredUser = sender;
         }
+
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken =
                 new VerificationToken(token, registeredUser, verificationTokenService.calculateExpiryDate());
         verificationTokenService.add(verificationToken);
         mailService.sendMessage(registeredUser, verificationToken);
+
         return "registration/complited_registration";
     }
 

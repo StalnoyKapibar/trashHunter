@@ -1,8 +1,8 @@
-package org.bootcamp.trashhunter.services.tokens;
+package org.bootcamp.trashhunter.services.impl.tokens;
 
 
 
-import org.bootcamp.trashhunter.dao.token.BaseTokenDAO;
+import org.bootcamp.trashhunter.dao.impl.token.BaseTokenDAO;
 import org.bootcamp.trashhunter.models.token.BaseToken;
 import org.bootcamp.trashhunter.services.AbstractService;
 
