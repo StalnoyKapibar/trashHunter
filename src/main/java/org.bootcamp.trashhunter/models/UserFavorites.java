@@ -8,42 +8,32 @@ public class UserFavorites {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	@Column(name = "userboss_id")
-	private long userBoss;
+	private Long userBoss;
 
 	@Column(name = "usersubject_id")
-	private long userSubject;
+	private Long userSubject;
 
 	public UserFavorites(){}
 
-	public UserFavorites(long userBoss, long userSubject) {
+	public UserFavorites(Long userBoss, Long userSubject) {
 		this.userBoss = userBoss;
 		this.userSubject = userSubject;
 	}
 
-	public long getId() {
-		return id;
-	}
+	public Long getId() {return id;}
 
-	public void setId(long id) {
-		this.id = id;
-	}
+	public void setId(Long id) {this.id = id;}
 
-	public long getUserBoss() {
-		return userBoss;
-	}
+	public Long getUserBoss() {return userBoss;}
 
-	public void setUserBoss(long userBoss) {
-		this.userBoss = userBoss;
-	}
+	public void setUserBoss(Long userBoss) {this.userBoss = userBoss;}
 
-	public long getUserSubject() {
+	public Long getUserSubject() {
 		return userSubject;
 	}
 
-	public void setUserSubject(long userSubject) {
-		this.userSubject = userSubject;
-	}
+	public void setUserSubject(Long userSubject) {this.userSubject = userSubject;}
 }
