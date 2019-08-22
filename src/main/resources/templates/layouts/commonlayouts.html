@@ -6,13 +6,17 @@
     <!--<link rel="stylesheet" href="css/loader.css">-->
 </head>
 <body>
+
 <th:block th:replace="fragments/commonfragments :: nav"></th:block>
 <div class="container-fluid">
     <div class="row">
-        <th:block th:replace="fragments/commonfragments :: sidebar"></th:block>
-        <div class="main-block chromeFix" layout:fragment="content"></div>
+        <!--<th:block th:replace="fragments/commonfragments :: sidebar"></th:block>-->
+        <div class="col-sm-12 chromeFix" style="padding: 0px" layout:fragment="content"></div>
     </div>
 </div>
-</body>
 
+<th:block th:replace="fragments/commonfragments :: scripts"></th:block>
+<!--<div class="container-fluid" layout:fragment="content-script">-->
+<!--</div>-->
+</body>
 </html>

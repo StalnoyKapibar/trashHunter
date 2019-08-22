@@ -1,6 +1,6 @@
 package org.bootcamp.trashhunter.services;
 
-import org.bootcamp.trashhunter.dao.AbstractDAO;
+import org.bootcamp.trashhunter.dao.impl.AbstractDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;

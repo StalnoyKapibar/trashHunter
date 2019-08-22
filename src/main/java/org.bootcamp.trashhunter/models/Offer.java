@@ -1,7 +1,11 @@
 package org.bootcamp.trashhunter.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.bootcamp.trashhunter.models.embedded.Coordinates;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "offer")
@@ -12,7 +16,15 @@ public class Offer {
     private long id;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_fk", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Sender sender;
+
+    @ManyToMany
+    @JoinTable(name = "offers_takers",
+            joinColumns = @JoinColumn(name = "offer_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "taker_id", referencedColumnName = "id"))
+    private List<Taker> respondingTakers;
 
     @Column(nullable = false)
     private long weight;
@@ -23,14 +35,19 @@ public class Offer {
     @Column(nullable = false)
     private long price;
 
-//    @Column(nullable = false)
-//    private TrashType trashType;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TrashType trashType;
+
+    @Embedded
+    private Coordinates coordinates;
 
     @Column(nullable = false)
     private boolean isSorted;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private boolean isClosed;
+    private OfferStatus status;
 
     @Column(nullable = false)
     private LocalDateTime creationDateTime;
@@ -41,15 +58,18 @@ public class Offer {
     public Offer() {
     }
 
-    public Offer(Sender sender, long weight, long volume, long price, boolean isSorted, boolean isClosed, LocalDateTime creationDateTime, String description) {
+    public Offer(Sender sender, long weight, long volume, long price, TrashType trashType,
+                 boolean isSorted, OfferStatus status, LocalDateTime creationDateTime, String description, Coordinates coordinates) {
         this.sender = sender;
         this.weight = weight;
         this.volume = volume;
         this.price = price;
+        this.trashType = trashType;
         this.isSorted = isSorted;
-        this.isClosed = isClosed;
+        this.status = status;
         this.creationDateTime = creationDateTime;
         this.description = description;
+        this.coordinates = coordinates;
     }
 
     public Sender getSender() {
@@ -92,13 +112,21 @@ public class Offer {
         this.price = price;
     }
 
-//    public TrashType getTrashType() {
-//        return trashType;
-//    }
+    public TrashType getTrashType() {
+        return trashType;
+    }
 
-//    public void setTrashType(TrashType trashType) {
-//        this.trashType = trashType;
-//    }
+    public void setTrashType(TrashType trashType) {
+        this.trashType = trashType;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
 
     public boolean isSorted() {
         return isSorted;
@@ -108,12 +136,12 @@ public class Offer {
         isSorted = sorted;
     }
 
-    public boolean isClosed() {
-        return isClosed;
+    public OfferStatus getStatus() {
+        return status;
     }
 
-    public void setClosed(boolean closed) {
-        isClosed = closed;
+    public void setStatus(OfferStatus status) {
+        this.status = status;
     }
 
     public LocalDateTime getCreationDateTime() {
@@ -131,4 +159,13 @@ public class Offer {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public List<Taker> getRespondingTakers() {
+        return respondingTakers;
+    }
+
+    public void setRespondingTakers(List<Taker> respondingTakers) {
+        this.respondingTakers = respondingTakers;
+    }
+
 }

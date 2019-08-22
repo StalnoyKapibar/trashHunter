@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import javax.annotation.PostConstruct;
 
 @SpringBootApplication
@@ -14,10 +15,12 @@ public class TrashHunterApplication {
         SpringApplication.run(TrashHunterApplication.class, args);
     }
 
-// Нужно раскоментить @Bean для создания таблиц:
-//    @Bean(initMethod = "init")
-//    @PostConstruct
-//    public InitData initData() {
-//        return new InitData();
-//    }
+    //нужно раскоментить @Bean для создания таблиц
+
+    @Bean(initMethod = "init")
+    @PostConstruct
+    public InitData initData() {
+        return new InitData();
+    }
+
 }

@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.dao;
+package org.bootcamp.trashhunter.dao.impl;
 
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.UserFavorites;

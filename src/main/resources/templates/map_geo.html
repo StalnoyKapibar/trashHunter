@@ -4,27 +4,32 @@
       layout:decorate="~{layouts/commonlayouts}"
       lang="en">
 <head>
-    <title>MainPage</title>
+    <title>Map</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+
     <link rel="stylesheet" type="text/css" href="/css/map_geo.css">
-    <link rel="stylesheet" type="text/css" href="/css/filter.css">
     <script type="text/javascript" src="/js/trash_filter.js"></script>
     <script type="text/javascript" src="/js/map_geo.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&libraries=places&callback=initMap"
             async defer></script>
 </head>
 <body>
-<div layout:fragment="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-9" align="center" style="color: #7295B1; padding: 0px">
-                <th:block th:replace="map_geo :: map"></th:block>
-                <th:block th:replace="filter :: filter"></th:block>
-            </div>
-            <div class="col-sm-3" style="padding: 0">
-                <th:block th:replace="filter :: markerinfo"></th:block>
-            </div>
+<th:block th:fragment="map">
+    <div class="pac-card" id="pac-card">
+        <div id="title">
+            Поиск по адресу:
+        </div>
+        <div id="pac-container">
+            <input id="pac-input" type="text" placeholder="Введите адрес">
         </div>
     </div>
-</div>
+    <div id="map"></div>
+    <div id="infowindow-content">
+        <img src="" width="16" height="16" id="place-icon">
+        <span id="place-name" class="title"></span><br>
+        <span id="place-address"></span>
+    </div>
+</th:block>
 </body>
+
 </html>
