@@ -20,8 +20,8 @@ public class SenderRestController {
     @Autowired
     private OfferService offerService;
 
-    @GetMapping(value = "/my_offers/{check}",  produces = "application/json")
-    public Map<Offer, List<Taker>> senderMyOffers(@PathVariable String check) {
+    @GetMapping(value = "/my_offers",  produces = "application/json")
+    public Map<Offer, List<Taker>> senderMyOffers() {
          return offerService.getOffersBySenderIdActiveFirst(1L);
 
 

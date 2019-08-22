@@ -2,7 +2,7 @@ $(document).ready(function () {
     // 'use strict';
     // feather.replace();
 
-    getTable('all');
+    getTable();
     // $('#sortBy option').each(function () {
     //     var param = $(this);
     //     if (location.href.indexOf(param.val()) !== -1) {
@@ -12,98 +12,95 @@ $(document).ready(function () {
 
 });
 
-function getTable(check) {
-
+function getTable() {
+    let offerId;
     $.ajax({
-        url: "/api/sender/my_offers/" + check,
+        url: "/api/sender/my_offers",
         type: "GET",
         success: function (result) {
             let res = result;
             $('#employerTable tbody').empty();
             $.each(result, function (offer, takers) {
 
-                var offerRow=
-                    '<div class="container-fluid">'+
-                        '<div class="row">'+
-                            '<div class="col-sm-12">'+
-                                '<div class="container-fluid cards">'+
-                                    '<div class="card" >'+
-                                        '<div class="card-header" style="background-color: #7295b1">';
-                                            JSON.parse(offer, function (key, value) {
-                                                if (key == "id"){
-                                                    offerRow+= ' Заказ№ ' + value + ' ';
-                                                }
-                                                if (key == "weight") {
-                                                 offerRow +=  ' вес: ' + value + 'кг ';
-                                                }
-                                                if (key == "volume") {
-                                                 offerRow +=  ' объем: ' + value + 'м³ ';
-                                                }if (key == "price") {
-                                                 offerRow +=  ' цена: ' + value + 'руб ';
-                                                }if (key == "trashType") {
-                                                 offerRow +=  ' тип мусора ' + value;
-                                                        // '</div>'+
-                                                     // '<div class="card-body"style="background-color: aliceblue">';
-                                                }
-                                                if (key == "isActive"){
-                                                    if (value == "false"){
-                                                        offerRow += '</div>'+
-                                                            + '<div class="card-body" style="background-color: aliceblue">' +
-                                                                'На предложение пока никто не откликнулся :('
-                                                            +'</div>';
-                                                    } else {
-                                                        offerRow += '</div>' +
-                                                        '<div class="card-body" style="background-color: aliceblue">';
-                                                        $.each(takers, function (i, taker) {
-                                                            offerRow += '<div class="row">'+
-                                                                '<div class="col-sm-1"></div>'+
-                                                                '<div class="col-sm-6">' + taker.name +'</div>'+
-                                                                '<div class="col-sm-2">'+
-                                                                '<button class="btn btn-primary" onclick="confirmOffer(taker.id)">' +
-                                                                     +" Подвтведрдить "+
-                                                                '</button>' +
-                                                                '</div>'+
-                                                                // '<div class="col-sm-2">'+
-                                                                // '<button class="btn btn-default">' +
-                                                                // +'Чат'+
-                                                                // '</button>' +
-                                                                // '</div>'+
-                                                                '<div class="col-sm-1"></div>'+
-                                                                '</div>';
-                                                            ;
-                                                        });
-                                                        offerRow += '</div>';
-                                                    }
-                                                }
-                                             });
-                offerRow +=
+                var offerRow =
+                    '<div class="container-fluid">' +
+                    '<div class="row">' +
+                    '<div class="col-sm-2"></div>'+
+                    '<div class="col-sm-10">' +
+                    '<div class="container-fluid cards">' +
+                    '<div class="card" >' +
+                    '<div class="card-header" style="background-color: #7295b1">';
+                JSON.parse(offer, function (key, value) {
+                    if (key == "id") {
+                        offerId = value;
+                        offerRow += ' Заказ№ ' + value + ' ';
+                    }
+                    if (key == "weight") {
+                        offerRow += ' вес: ' + value + 'кг ';
+                    }
+                    if (key == "volume") {
+                        offerRow += ' объем: ' + value + 'м³ ';
+                    }
+                    if (key == "price") {
+                        offerRow += ' цена: ' + value + 'руб ';
+                    }
+                    if (key == "trashType") {
+                        offerRow += ' тип мусора ' + value;
+                        // '</div>'+
+                        // '<div class="card-body"style="background-color: aliceblue">';
+                    }
+                    if (key == "isActive") {
+                        if (value == "false") {
+                            offerRow += '</div>' +
+                                +'<div class="card-body" style="background-color: aliceblue">' +
+                                'На предложение пока никто не откликнулся :('
+                                + '</div>';
+                        } else {
+                            offerRow += '</div>' +
+                                '<div class="card-body" style="background-color: aliceblue">';
+                            $.each(takers, function (i, taker) {
+                                offerRow += '<div class="row" style="margin-bottom: 1%">' +
+                                    '<div class="col-sm-1"></div>' +
+                                    '<div class="col-sm-7">' + taker.name + ' ' +
+                                    taker.email +
                                     '</div>' +
-                                '</div>'+
-                            '</div>' +
-                        '</div>'
-                    '</div>';
+                                    '<button class="btn btn-primary col-sm-1"' +
+                                    ' style="margin-right: 1%"' +
+                                    'onclick="confirmOffer(' + taker.id +',' + offerId + ')">' +
+                                    + 'Подвтведрдить' +
+                                    '</button>' +
+                                    '<a href="/chat" class="btn btn-secondary col-sm-1" >' +
+                                    +'Чат' +
+                                    '</a>' +
+                                    '<div class="col-sm-1"></div>' +
+                                    '</div>';
+                                ;
+                            });
+                            offerRow += '</div>';
+                        }
+                    }
 
-                offerRow+='<br>';
-                // $.each(takers, function (i,taker) {
-                //     offerRow+= taker.name +';';
-                // })
-                // offerRow+='</td>';
+                });
+                offerRow += '<div class="card-footer" style="background-color: #7295b1">'+
+                    '<div class="row">' +
+                    '<div class="col-sm-9"></div>'+
+                    '<button class="btn btn-info col-sm-1" style="margin-right: 1% " onclick="(' + offerId + '" >' +
+                    +'<span>change</span>' +
+                    '</button>' +
+                    '<button class="btn btn-info col-sm-1" onclick="deleteOffer(' + offerId+ ')" >' +
+                    +'delete' +
+                    '</button>' +
+                    '</div>'+
+                    '<div class="col-sm-1"></div>' +'</div>';
+                offerRow +=
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>'
+                '</div>';
 
+                offerRow += '<br>';
 
-
-                // var userRow = '<tr>' +
-                //     '<td>' + offer.id + '</td>' +
-                //     '<td>' + offer.weight + '</td>' +
-                //     '<td>' + offer.volume + '</td>' +
-                //     '<td>' + offer.price + '</td>' +
-                //     '<td>' + offer.trashType + '</td>' +
-                //     '<td>' + offer.active + '</td>' +
-                //     '<td>' + offer.closed + '</td>' +
-                //     '<td>' +
-                //     '<button type="button" class="btn btn-primary" onclick="confirmOffer(' + offer.id + ')" >Подтвердить' +
-                //     '</button>' +
-                //     '</tr>';
-                // offerRow += '</tr>';
 
                 $('#employerTable tbody').append(offerRow);
 
@@ -116,24 +113,27 @@ function getTable(check) {
     });
 }
 
-
-// $("#sortBy").change(function () {
-//     var direction = $("#sortBy option:selected").val();
-//     location.href = '/sender/my_offers/';
-//     alert(direction);
-// });
-
-function sort() {
-    if (document.getElementById('sort').checked) {
-        $('#sort').addClass("is-valid");
-        $('#employerTable tbody').empty();
-        getTable('active');
-
-    } else {
-        $('#sort').removeClass("is-valid");
-        $('#employerTable tbody').empty();
-        getTable('all');
-    }
+// function sort() {
+//     if (document.getElementById('sort').checked) {
+//         $('#sort').addClass("is-valid");
+//         $('#employerTable tbody').empty();
+//         getTable('active');
+//
+//     } else {
+//         $('#sort').removeClass("is-valid");
+//         $('#employerTable tbody').empty();
+//         getTable('all');
+//     }
+// }
+function offerDelete(offerId) {
+    $.ajax({
+        url: '/api/s/confirmOffer/' + id,
+        type: 'GET',
+        success: function () {
+            $('#employerTable tbody').empty();
+            getTablle();
+        }
+    });
 }
 
 function confirmOffer(id) {
@@ -141,13 +141,8 @@ function confirmOffer(id) {
         url: '/api/sender/confirmOffer/' + id,
         type: 'GET',
         success: function () {
-            if (document.getElementById('sort').checked) {
-                $('#employerTable tbody').empty();
-                getTable('active');
-            } else {
-                $('#employerTable tbody').empty();
-                getTable('all');
-            }
+            $('#employerTable tbody').empty();
+            getTablle();
         }
     });
 }
