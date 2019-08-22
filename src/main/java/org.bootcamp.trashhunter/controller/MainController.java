@@ -11,9 +11,10 @@ import java.security.Principal;
 
 @Controller
 public class MainController {
+
+//    todo:alls23
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(Model model, String error, String logout, Principal user) {
-
         ModelAndView mv = new ModelAndView("/index");
         if (user != null) {
             return mv;
@@ -24,7 +25,7 @@ public class MainController {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView index(Authentication authentication) {
-
+//        todo
         if (authentication.isAuthenticated()) {
             String role = authentication.getAuthorities().iterator().next().getAuthority();
             if (role.equals("Sender")) {

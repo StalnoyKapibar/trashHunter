@@ -1,6 +1,6 @@
 package org.bootcamp.trashhunter.controller;
 
-import org.bootcamp.trashhunter.dto.OfferDto;
+import org.bootcamp.trashhunter.models.dto.OfferDto;
 import org.bootcamp.trashhunter.services.impl.OfferService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,10 +18,10 @@ public class RestMapController {
         this.offerService = offerService;
     }
 
+    //todo
     @GetMapping("/offer/coordinates")
     public List<OfferDto> geoCoordinates() {
-        return offerService.getAll().stream()
-                .map(OfferDto::getDtoIdCoordTrash).collect(Collectors.toList());
+        return offerService.getAll().stream().map(OfferDto::getDtoIdCoordTrash).collect(Collectors.toList());
     }
 
     @GetMapping("/offer/{id}")

@@ -2,6 +2,7 @@ var map;
 var markers = [];
 
 function initMap() {
+    //todo
     var geocoder = new google.maps.Geocoder;
 
     var viborg = {lat: 60.70768064991953, lng: 28.753881993229232};
