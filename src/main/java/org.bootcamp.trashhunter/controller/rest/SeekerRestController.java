@@ -1,8 +1,7 @@
 package org.bootcamp.trashhunter.controller.rest;
 
 import org.bootcamp.trashhunter.models.Offer;
-import org.bootcamp.trashhunter.models.Sender;
-import org.bootcamp.trashhunter.services.impl.OfferService;
+import org.bootcamp.trashhunter.services.abstraction.OfferServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,18 +18,18 @@ import java.util.stream.Collectors;
 public class SeekerRestController {
 
     @Autowired
-    OfferService offerService;
+    OfferServiceI offerServiceImpl;
 
     @GetMapping("/my_offers")
     public String senderMyOffers(Model model) {
-        List<Offer> offers = offerService.getOffersBySenderId(1L);
+        List<Offer> offers = offerServiceImpl.getOffersBySenderId(1L);
         List<Offer> offers1 =  offers.stream().sorted(Comparator.comparing(Offer::getStatus)).collect(Collectors.toList());
-        model.addAttribute("offers",offerService.getOffersBySenderId(1L));
+        model.addAttribute("offers", offerServiceImpl.getOffersBySenderId(1L));
         return "sender/sender_my_offers";
     }
 
     @GetMapping("/confirmOffer/{id}")
     public void senderMyOffers(Model model, @PathVariable Long id) {
-        offerService.confirmOffer(id);
+        offerServiceImpl.confirmOffer(id);
     }
 }

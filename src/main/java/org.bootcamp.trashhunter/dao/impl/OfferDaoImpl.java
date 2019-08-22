@@ -1,6 +1,8 @@
 package org.bootcamp.trashhunter.dao.impl;
 
 
+import org.bootcamp.trashhunter.dao.impl.abstraction.AbstractDao;
+import org.bootcamp.trashhunter.dao.impl.abstraction.OfferDao;
 import org.bootcamp.trashhunter.models.Offer;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository("offerDao")
-public class OfferDao extends AbstractDAO<Offer> {
+public class OfferDaoImpl extends AbstractDAOImpl<Offer> implements OfferDao {
 
     @PersistenceContext
     protected EntityManager entityManager;
@@ -24,6 +26,7 @@ public class OfferDao extends AbstractDAO<Offer> {
       map.put("isSorted", "true");
       map.put("isFree", "false");
   */
+
     public List<Offer> getFilterQuery(Map<String, Object> map) {
 
         StringBuilder whereQuery = new StringBuilder();
@@ -65,6 +68,7 @@ public class OfferDao extends AbstractDAO<Offer> {
 
         return entityManager.createQuery(whereQuery.toString(), Offer.class).getResultList();
     }
+
 
     public List<Offer> getOffersBySenderId(Long senderId) {
         return

@@ -1,12 +1,12 @@
-package org.bootcamp.trashhunter.controllers;
+package org.bootcamp.trashhunter.controller;
 
 import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.token.VerificationToken;
-import org.bootcamp.trashhunter.services.impl.MailService;
-import org.bootcamp.trashhunter.services.impl.SenderService;
-import org.bootcamp.trashhunter.services.impl.TakerService;
+import org.bootcamp.trashhunter.services.abstraction.MailServiceI;
+import org.bootcamp.trashhunter.services.abstraction.SenderServiceI;
+import org.bootcamp.trashhunter.services.abstraction.TakerServiceI;
 import org.bootcamp.trashhunter.services.impl.tokens.VerificationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,13 +23,13 @@ import java.util.UUID;
 public class RegistrationController {
 
     @Autowired
-    private MailService mailService;
+    private MailServiceI mailServiceI;
 
     @Autowired
-    private TakerService takerService;
+    private TakerServiceI takerServiceImpl;
 
     @Autowired
-    private SenderService senderService;
+    private SenderServiceI senderServiceImpl;
 
     @Autowired
     VerificationTokenService verificationTokenService;
@@ -50,7 +50,7 @@ public class RegistrationController {
             taker.setName(name);
             taker.setPassword(password);
             taker.setRegistrationDate(LocalDate.now());
-            takerService.add(taker);
+            takerServiceImpl.add(taker);
             registeredUser = taker;
         } else if ("SENDER".equals(role)) {
             Sender sender = new Sender();
@@ -58,7 +58,7 @@ public class RegistrationController {
             sender.setName(name);
             sender.setPassword(password);
             sender.setRegistrationDate(LocalDate.now());
-            senderService.add(sender);
+            senderServiceImpl.add(sender);
             registeredUser = sender;
         }
 
@@ -66,7 +66,7 @@ public class RegistrationController {
         VerificationToken verificationToken =
                 new VerificationToken(token, registeredUser, verificationTokenService.calculateExpiryDate());
         verificationTokenService.add(verificationToken);
-        mailService.sendMessage(registeredUser, verificationToken);
+        mailServiceI.sendMessage(registeredUser, verificationToken);
 
         return "registration/complited_registration";
     }

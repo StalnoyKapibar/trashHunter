@@ -2,9 +2,9 @@ package org.bootcamp.trashhunter.config;
 
 import org.bootcamp.trashhunter.models.*;
 import org.bootcamp.trashhunter.models.embedded.Coordinates;
-import org.bootcamp.trashhunter.services.impl.OfferService;
-import org.bootcamp.trashhunter.services.impl.SenderService;
-import org.bootcamp.trashhunter.services.impl.TakerService;
+import org.bootcamp.trashhunter.services.impl.OfferServiceImpl;
+import org.bootcamp.trashhunter.services.impl.SenderServiceImpl;
+import org.bootcamp.trashhunter.services.impl.TakerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -14,13 +14,13 @@ import java.time.LocalDateTime;
 public class InitData {
 
     @Autowired
-    OfferService offerService;
+    OfferServiceImpl offerServiceImpl;
 
     @Autowired
-    SenderService senderService;
+    SenderServiceImpl senderServiceImpl;
 
     @Autowired
-    TakerService takerService;
+    TakerServiceImpl takerServiceImpl;
 
     private void init() {
         initSenders();
@@ -30,21 +30,21 @@ public class InitData {
 
     private void initSenders() {
         Sender sender1 = new Sender("sender1@mail.ru", "Mixa", "sender1", LocalDate.now());
-        senderService.add(sender1);
+        senderServiceImpl.add(sender1);
         Sender sender2 = new Sender("sender2@mail.ru", "Max", "sender2", LocalDate.now());
-        senderService.add(sender2);
+        senderServiceImpl.add(sender2);
         Sender sender3 = new Sender("sender3@mail.ru", "Ivan", "sender3", LocalDate.now());
-        senderService.add(sender3);
+        senderServiceImpl.add(sender3);
 
     }
 
     private void initTakers() {
         Taker taker1 = new Taker("taker1@mail.ru", "Yura", "taker1", LocalDate.now());
-        takerService.add(taker1);
+        takerServiceImpl.add(taker1);
         Taker taker2 = new Taker("taker2@mail.ru", "Matvey", "taker2", LocalDate.now());
-        takerService.add(taker2);
+        takerServiceImpl.add(taker2);
         Taker taker3 = new Taker("taker3@mail.ru", "Denis", "taker3", LocalDate.now());
-        takerService.add(taker3);
+        takerServiceImpl.add(taker3);
 
     }
 
@@ -64,7 +64,7 @@ public class InitData {
         double randomLongitude;
         Coordinates randomCoordinates;
 
-        long numOfSenders = senderService.getAll().size();
+        long numOfSenders = senderServiceImpl.getAll().size();
         double maxWeight = 1000.0;
         double maxVolume = 100.0;
         double maxPrice = 100000.0;
@@ -77,7 +77,7 @@ public class InitData {
             seed = Math.random();
             seed2 = Math.random();
 
-            randomSender = senderService.getById(1 + (long) (seed * numOfSenders));
+            randomSender = senderServiceImpl.getById(1 + (long) (seed * numOfSenders));
             randomWeight = (long) (seed * maxWeight);
             randomVolume = (long) (seed * maxVolume);
             randomPrice = (long) (seed * maxPrice);
@@ -92,7 +92,7 @@ public class InitData {
 
             Offer randomOffer = new Offer(randomSender, randomWeight, randomVolume, randomPrice, randomTrashType,
                     randomIsSorted, randomStatus, randomDate, randomDescription, randomCoordinates);
-            offerService.add(randomOffer);
+            offerServiceImpl.add(randomOffer);
         }
     }
 }

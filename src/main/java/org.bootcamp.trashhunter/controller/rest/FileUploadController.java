@@ -1,8 +1,6 @@
 package org.bootcamp.trashhunter.controller.rest;
-import org.bootcamp.trashhunter.models.Sender;
-import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.models.User;
-import org.bootcamp.trashhunter.services.impl.UserService;
+import org.bootcamp.trashhunter.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +14,12 @@ import java.security.Principal;
 public class FileUploadController {
 
     @Autowired
-    UserService userService;
+    UserServiceImpl userServiceImpl;
 
     @RequestMapping(value = "/editPhoto", method = RequestMethod.POST)
     public @ResponseBody ResponseEntity updateSeekerPhoto(@RequestParam(value = "img") MultipartFile image, Principal user) {
         String email = user.getName();
-        User user1 = userService.findByEmail(email);
+        User user1 = userServiceImpl.findByEmail(email);
 
         try {
             byte[] photo = image.getBytes();
@@ -29,7 +27,7 @@ public class FileUploadController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        userService.update(user1);
+        userServiceImpl.update(user1);
 
         MultipartFile multipartFile = image;
         System.out.println(image.toString());

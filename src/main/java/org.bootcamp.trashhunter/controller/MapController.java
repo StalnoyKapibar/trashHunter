@@ -2,7 +2,7 @@ package org.bootcamp.trashhunter.controller;
 
 import jdk.internal.org.xml.sax.SAXException;
 import org.bootcamp.trashhunter.models.Offer;
-import org.bootcamp.trashhunter.services.impl.OfferService;
+import org.bootcamp.trashhunter.services.impl.OfferServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -22,12 +22,12 @@ public class MapController {
     private String googleMapsApiKey;
 
     @Autowired
-    private OfferService offerService;
+    private OfferServiceImpl offerServiceImpl;
 
     //todo reduce
     @RequestMapping("/map")
     public String map(Model model) throws ParserConfigurationException, SAXException, IOException, org.xml.sax.SAXException, URISyntaxException {
-        List<Offer> offerList = offerService.getAll();
+        List<Offer> offerList = offerServiceImpl.getAll();
         model.addAttribute("offerList", offerList);
         model.addAttribute("googleMapsApiKey", googleMapsApiKey);
         return "map";

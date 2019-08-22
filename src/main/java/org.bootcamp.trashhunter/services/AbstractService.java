@@ -1,47 +1,56 @@
 package org.bootcamp.trashhunter.services;
 
-import org.bootcamp.trashhunter.dao.impl.AbstractDAO;
+import org.bootcamp.trashhunter.dao.impl.AbstractDAOImpl;
+import org.bootcamp.trashhunter.services.abstraction.AbstractServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Transactional
-public abstract class AbstractService<T> {
+public abstract class AbstractService<T> implements AbstractServiceI<T> {
 
     @Autowired
-    protected AbstractDAO<T> abstractDAO;
+    protected AbstractDAOImpl<T> abstractDAOImpl;
 
+    @Override
     public void add(T entity) {
-        abstractDAO.add(entity);
+        abstractDAOImpl.add(entity);
     }
 
+    @Override
     public void update(T entity) {
-        abstractDAO.update(entity);
+        abstractDAOImpl.update(entity);
     }
 
+    @Override
     public List<T> getAll() {
-        return abstractDAO.getAll();
+        return abstractDAOImpl.getAll();
     }
 
+    @Override
     public List<T> getAllWithLimit(int limit) {
-        return abstractDAO.getAllWithLimit(limit);
+        return abstractDAOImpl.getAllWithLimit(limit);
     }
 
+    @Override
     public T getByFieldNameAndValue(String name, Object object){
-        return abstractDAO.getByFieldNameAndValue(name,object);
+        return abstractDAOImpl.getByFieldNameAndValue(name,object);
     }
 
+    @Override
     public T getById(Long id) {
-        return abstractDAO.getById(id);
+        return abstractDAOImpl.getById(id);
     }
 
+    @Override
     public void delete(T entity) {
-        abstractDAO.delete(entity);
+        abstractDAOImpl.delete(entity);
     }
 
+    @Override
     public void deleteById(Long id) {
-        abstractDAO.deleteById(id);
+        abstractDAOImpl.deleteById(id);
     }
 
 }

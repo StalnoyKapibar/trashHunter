@@ -12,12 +12,10 @@ import java.security.Principal;
 @Controller
 public class MainController {
 
-//    todo:alls23
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
         return "/login";
     }
-
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView index(Authentication authentication) {

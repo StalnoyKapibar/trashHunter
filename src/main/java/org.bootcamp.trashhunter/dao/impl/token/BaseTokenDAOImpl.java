@@ -1,9 +1,9 @@
 package org.bootcamp.trashhunter.dao.impl.token;
 
-import org.bootcamp.trashhunter.dao.impl.AbstractDAO;
+import org.bootcamp.trashhunter.dao.impl.AbstractDAOImpl;
 import org.bootcamp.trashhunter.models.token.BaseToken;
 
-public class BaseTokenDAO<T extends BaseToken> extends AbstractDAO<T> {
+public class BaseTokenDAOImpl<T extends BaseToken> extends AbstractDAOImpl<T> {
 
     public T findByToken(String token) {
         return entityManager
