@@ -3,7 +3,7 @@ package org.bootcamp.trashhunter.controllers;
 import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.models.User;
-import org.bootcamp.trashhunter.services.abstraction.UserServiceI;
+import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +18,12 @@ import java.security.Principal;
 public class EditUserController  {
 
     @Autowired
-    UserServiceI userServiceImpl;
+    UserService userService;
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public ModelAndView edit(Model model, Principal user) {
         String email = user.getName();
-        User user1 = userServiceImpl.findByEmail(email);
+        User user1 = userService.findByEmail(email);
         ModelAndView modelAndView = new ModelAndView();
 
         if( user1 != null && user1.getClass() == Sender.class) {
@@ -37,16 +37,15 @@ public class EditUserController  {
         }
         return modelAndView;
     }
-
+        // Vremeno!
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public ModelAndView saveEditedUser(@RequestParam String name, Principal user,
                                        @RequestParam String about) {
         String emails = user.getName();
-        User user1 = userServiceImpl.findByEmail(emails);
+        User user1 = userService.findByEmail(emails);
         user1.setName(name);
         user1.setAboutUser(about);
-        userServiceImpl.update(user1);
-
+        userService.update(user1);
         ModelAndView mv = new ModelAndView("redirect:/edit");
 
         return mv;

@@ -1,7 +1,7 @@
 package org.bootcamp.trashhunter.controllers.rest;
 
 import org.bootcamp.trashhunter.models.Offer;
-import org.bootcamp.trashhunter.services.abstraction.OfferServiceI;
+import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import java.util.Map;
 public class OfferRestController {
 
     @Autowired
-    private OfferServiceI offerService;
+    private OfferService offerService;
 
     @GetMapping("/deleteOffer/{offerId}")
     public void deleteOffer(@PathVariable Long offerId){

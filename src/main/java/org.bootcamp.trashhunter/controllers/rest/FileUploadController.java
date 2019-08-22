@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.controller.rest;
+package org.bootcamp.trashhunter.controllers.rest;
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

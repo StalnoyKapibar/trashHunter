@@ -27,7 +27,7 @@
 
             <div class="col">
                 <div class="row">
-                    <div class="col mb-4">
+                    <div class="col mb-5">
                         <div class="card">
                             <div class="card-body">
                                 <div class="e-profile">
@@ -92,7 +92,7 @@
                                                             <div class="col mb-3">
                                                                 <div class="form-group">
                                                                     <label>About</label>
-                                                                    <textarea class="form-control" rows="5" name="about" maxlength="120" th:attr="value = ${user.aboutUser}"></textarea>
+                                                                    <textarea class="form-control" rows="5" name="about" type="text" maxlength="120" th:field="${user.aboutUser}"></textarea>
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -1,7 +1,7 @@
 package org.bootcamp.trashhunter.controllers;
 
 import org.bootcamp.trashhunter.models.User;
-import org.bootcamp.trashhunter.services.abstraction.UserServiceI;
+import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserRestController {
 
     @Autowired
-    private UserServiceI userService;
+    private UserService userService;
 
 
     @PostMapping("/change")

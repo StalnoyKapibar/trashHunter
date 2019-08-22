@@ -2,7 +2,7 @@ package org.bootcamp.trashhunter.services.abstraction;
 
 import java.util.List;
 
-public interface AbstractServiceI<T> {
+public interface AbstractService<T> {
     void add(T entity);
 
     void update(T entity);

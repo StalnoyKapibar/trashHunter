@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.controller;
+package org.bootcamp.trashhunter.controllers;
 
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.services.impl.UserServiceImpl;
@@ -18,12 +18,12 @@ public class AvatarLoadController {
 
 
     @Autowired
-    UserServiceImpl userServiceImpl;
+    UserServiceImpl userService;
 
     @RequestMapping(value = "/image",  produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<byte[]> getImage(Model model, String error, String logout, Principal user) {
         String email = user.getName();
-        User user1 = userServiceImpl.findByEmail(email);
+        User user1 = userService.findByEmail(email);
         byte[] image = user1.getPic();
 
         final HttpHeaders headers = new HttpHeaders();

@@ -2,7 +2,7 @@ package org.bootcamp.trashhunter.services.impl;
 
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.token.VerificationToken;
-import org.bootcamp.trashhunter.services.abstraction.MailServiceI;
+import org.bootcamp.trashhunter.services.abstraction.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 @Service
-public class MailServiceImpl implements MailServiceI {
+public class MailServiceImpl implements MailService {
 
     @Value("${spring.mail.username}")
     private String username;

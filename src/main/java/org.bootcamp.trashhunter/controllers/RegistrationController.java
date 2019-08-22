@@ -1,12 +1,12 @@
-package org.bootcamp.trashhunter.controller;
+package org.bootcamp.trashhunter.controllers;
 
 import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.token.VerificationToken;
-import org.bootcamp.trashhunter.services.abstraction.MailServiceI;
-import org.bootcamp.trashhunter.services.abstraction.SenderServiceI;
-import org.bootcamp.trashhunter.services.abstraction.TakerServiceI;
+import org.bootcamp.trashhunter.services.abstraction.MailService;
+import org.bootcamp.trashhunter.services.abstraction.SenderService;
+import org.bootcamp.trashhunter.services.abstraction.TakerService;
 import org.bootcamp.trashhunter.services.impl.tokens.VerificationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,13 +23,13 @@ import java.util.UUID;
 public class RegistrationController {
 
     @Autowired
-    private MailServiceI mailServiceI;
+    private MailService mailService;
 
     @Autowired
-    private TakerServiceI takerServiceImpl;
+    private TakerService takerServiceImpl;
 
     @Autowired
-    private SenderServiceI senderServiceImpl;
+    private SenderService senderServiceImpl;
 
     @Autowired
     VerificationTokenService verificationTokenService;
@@ -66,7 +66,7 @@ public class RegistrationController {
         VerificationToken verificationToken =
                 new VerificationToken(token, registeredUser, verificationTokenService.calculateExpiryDate());
         verificationTokenService.add(verificationToken);
-        mailServiceI.sendMessage(registeredUser, verificationToken);
+        mailService.sendMessage(registeredUser, verificationToken);
 
         return "registration/complited_registration";
     }
