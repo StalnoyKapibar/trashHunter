@@ -21,14 +21,41 @@ function getTable(check) {
             let res = result;
             $('#employerTable tbody').empty();
             $.each(result, function (offer, takers) {
-                var userRow = '<tr>'
-                JSON.parse(offer, function (key,value) {
-                    userRow+='<td>' + value + '</td>';
+
+                var offerRow=
+                    '<div class="container-fluid">'+
+                        '<div class="row">'+
+                            '<div class="col-sm-12">'+
+                                '<div class="container-fluid cards">'+
+                                    '<div class="card" >'+
+                                        '<div class="card-header"style="background-color: blanchedalmond">'+
+                                            'Header'+
+                                        '</div>'+
+                                        '<div class="card-body"style="background-color: aliceblue">';
+                                             JSON.parse(offer, function (key, value) {
+                                                if (key != "") {
+                                                offerRow +=  ' ! ' + value + ' ! ';
+                                                }
+                offerRow +=             '</div>'+
+                                        '<div class="card-footer" style="background-color: orange">'+
+                                            '<button class="btn btn-warning">'+
+                                                Перейти +
+                                            '</button>' +
+                                        '</div>'+
+                                    '</div>' +
+                                '</div>'+
+                            '</div>' +
+                        '</div>'
+                    '</div>';
                 });
-                // JSON.parse('{"1": 1, "2": 2, "3": {"4": 4, "5": {"6": 6}}}', function(k, v) {
-                //     console.log(k); // пишем имя текущего свойства, последним именем будет ""
-                //     return v;       // возвращаем неизменённое значение свойства
-                // });
+                offerRow+='<br>';
+                // $.each(takers, function (i,taker) {
+                //     offerRow+= taker.name +';';
+                // })
+                // offerRow+='</td>';
+
+
+
                 // var userRow = '<tr>' +
                 //     '<td>' + offer.id + '</td>' +
                 //     '<td>' + offer.weight + '</td>' +
@@ -41,9 +68,9 @@ function getTable(check) {
                 //     '<button type="button" class="btn btn-primary" onclick="confirmOffer(' + offer.id + ')" >Подтвердить' +
                 //     '</button>' +
                 //     '</tr>';
-                userRow+='</tr>';
+                // offerRow += '</tr>';
 
-                $('#employerTable tbody').append(userRow);
+                $('#employerTable tbody').append(offerRow);
 
             });
 

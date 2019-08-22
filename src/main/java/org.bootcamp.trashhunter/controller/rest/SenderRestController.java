@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +22,8 @@ public class SenderRestController {
 
     @GetMapping(value = "/my_offers/{check}",  produces = "application/json")
     public Map<Offer, List<Taker>> senderMyOffers(@PathVariable String check) {
-        return offerService.getOffersBySenderIdActiveFirst(1L);
+         return offerService.getOffersBySenderIdActiveFirst(1L);
+
 
 //            List<Offer> offers1 =
 //                    offers
