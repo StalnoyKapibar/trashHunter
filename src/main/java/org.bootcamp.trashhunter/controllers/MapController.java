@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.controller;
+package org.bootcamp.trashhunter.controllers;
 
 import jdk.internal.org.xml.sax.SAXException;
 import org.bootcamp.trashhunter.models.Offer;
@@ -24,7 +24,7 @@ public class MapController {
     @Autowired
     private OfferServiceImpl offerServiceImpl;
 
-    //todo reduce
+    //todo reduce (will be done after merge by Matvey
     @RequestMapping("/map")
     public String map(Model model) throws ParserConfigurationException, SAXException, IOException, org.xml.sax.SAXException, URISyntaxException {
         List<Offer> offerList = offerServiceImpl.getAll();

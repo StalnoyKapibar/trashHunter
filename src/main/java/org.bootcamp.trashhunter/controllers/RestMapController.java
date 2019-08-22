@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.controller;
+package org.bootcamp.trashhunter.controllers;
 
 import org.bootcamp.trashhunter.models.dto.OfferDto;
 import org.bootcamp.trashhunter.services.impl.OfferServiceImpl;
@@ -18,7 +18,7 @@ public class RestMapController {
         this.offerServiceImpl = offerServiceImpl;
     }
 
-    //todo
+    //todo (will be done after Matvey merge)
     @GetMapping("/offer/coordinates")
     public List<OfferDto> geoCoordinates() {
         return offerServiceImpl.getAll().stream().map(OfferDto::getDtoIdCoordTrash).collect(Collectors.toList());

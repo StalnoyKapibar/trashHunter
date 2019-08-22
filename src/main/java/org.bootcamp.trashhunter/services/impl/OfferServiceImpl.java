@@ -4,6 +4,7 @@ import org.bootcamp.trashhunter.dao.impl.OfferDaoImpl;
 import org.bootcamp.trashhunter.dao.impl.abstraction.OfferDao;
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.OfferStatus;
+import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.services.AbstractService;
 import org.bootcamp.trashhunter.services.abstraction.OfferServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,8 @@ public class OfferServiceImpl extends AbstractService<Offer> implements OfferSer
         return dao.getFilterQuery(map);
     }
 
-    @Override
-    public List<Offer> getOffersBySenderId(Long id) {
-        return dao.getOffersBySenderId(id);
+    public Map<Offer,List<Taker>> getOffersBySenderIdActiveFirst(Long id) {
+        return dao.getOffersBySenderIdActiveFirst(id);
     }
 
     @Override

@@ -4,10 +4,12 @@ package org.bootcamp.trashhunter.dao.impl;
 import org.bootcamp.trashhunter.dao.impl.abstraction.AbstractDao;
 import org.bootcamp.trashhunter.dao.impl.abstraction.OfferDao;
 import org.bootcamp.trashhunter.models.Offer;
+import org.bootcamp.trashhunter.models.Taker;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -69,13 +71,16 @@ public class OfferDaoImpl extends AbstractDAOImpl<Offer> implements OfferDao {
         return entityManager.createQuery(whereQuery.toString(), Offer.class).getResultList();
     }
 
-
-    public List<Offer> getOffersBySenderId(Long senderId) {
-        return
-                entityManager
-                        .createQuery("SELECT t FROM Offer t WHERE t.sender.id = :id", Offer.class)
-                        .setParameter("id", senderId)
-                        .getResultList();
+    public Map<Offer, List<Taker>> getOffersBySenderIdActiveFirst(Long senderId) {
+        Map<Offer, List<Taker>> map = new LinkedHashMap<>();
+        List<Offer> offers = entityManager
+                .createQuery("SELECT t FROM Offer t WHERE t.sender.id = :id ORDER BY t.offerStatus ", Offer.class)
+                .setParameter("id", senderId)
+                .getResultList();
+        for (Offer offer : offers) {
+            map.put(offer, offer.getRespondingTakers());
+        }
+        return map;
     }
 
     private String getBetweenQuery(String name, String[] array) {
