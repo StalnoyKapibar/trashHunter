@@ -1,17 +1,24 @@
+var map;
+var markers = [];
+
 function initMap() {
+    //todo
     var geocoder = new google.maps.Geocoder;
 
-    var saintp = {lat: 59.938942, lng: 30.3149875};
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: saintp,
+    var viborg = {lat: 60.70768064991953, lng: 28.753881993229232};
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: viborg,
         zoom: 13,
         gestureHandling: 'cooperative',
-        streetViewControl: false
+        streetViewControl: false,
+        mapTypeControl: false
     });
     var card = document.getElementById('pac-card');
     var input = document.getElementById('pac-input');
+    var filter = document.getElementById('filter-container');
 
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(filter);
 
     var autocomplete = new google.maps.places.Autocomplete(input);
 
@@ -63,74 +70,76 @@ function initMap() {
 
     setMarkers();
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            map.setCenter(pos);
-        }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-        });
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-    }
-
-    google.maps.event.addListener(map, 'click', function (event) {
-        var latlng = event.latLng;
-
-        geocoder.geocode({'location': latlng}, function(results, status) {
-            if (status === 'OK') {
-                if (results[0]) {
-                    map.setZoom(17);
-                    var marker = new google.maps.Marker({
-                        position: latlng,
-                        map: map
-                    });
-                    infowindow.setContent(results[0].formatted_address);
-                    infowindow.open(map, marker);
-                } else {
-                    window.alert('No results found');
-                }
-            } else {
-                window.alert('Geocoder failed due to: ' + status);
-            }
-        });
-
-        //infowindow.open(map, this);
-    });
-
-
-    function createMarker(coords) {
-        marker = new google.maps.Marker({
-            map: map,
-            position: coords
-        });
-    }
-
-    function deleteMarker() {
-        marker.setView(false);
+    function createInfoOfferTable(tableID) {
+        var tableRef = document.getElementById(tableID);
+        var newRow = tableRef.insertRow(0);
+        var newCell = newRow.insertCell(0);
+        var newText = document.createTextNode('New top row');
+        newCell.appendChild(newText);
     }
 
     function setMarkers() {
         $.ajax({
-            url: "/offer/coordinates",
+            url: "/api/offer",
             dataType: "json",
             type: "GET",
+            contentType: "application/json; charset=utf-8",
             async: false,
             success: function (data) {
-                var tags = "";
-                $.each(data, function (key, value) {
-                    marker = new google.maps.Marker({
-                        position: {lat: value.latitude, lng: value.longitude},
-                        map: map,
-                        title: "Hello world"
-                    });
-
-                })
-            }});
+                drawPoints(data);
+            }
+        });
     }
+}
 
+function drawPoints(data) {
+    $.each(data, function (id, offer) {
+        console.log(offer);
+        let url = null;
+        if (offer.trashType == 'PAPER') {
+            url = "/img/paper.png";
+        } else if (offer.trashType == 'WOOD') {
+            url = "/img/wood.png";
+        } else if (offer.trashType == 'METAL') {
+            url = "/img/metall.png";
+        } else if (offer.trashType == 'PLASTIC') {
+            url = "/img/plastic.png";
+        } else if (offer.trashType == 'GLASS') {
+            url = "/img/glass.png";
+        } else if (offer.trashType == 'FOOD') {
+            url = "/img/food.png";
+        } else {
+            url = "/img/blank.png";
+        }
+        var marker = new google.maps.Marker({
+            position: {lat: offer.coordinates.latitude, lng: offer.coordinates.longitude},
+            map: map,
+            icon: {
+               url: url
+            }
+        });
+        markers.push(marker);
+        marker.addListener('click', function() {
+            var tableRef = document.getElementById('offerInfoTable');
+            $("#offerInfoTable tr").remove();
+            $.each(offer, function (key, value) {
+                if (key != 'coordinates' && key != 'id') {
+                    var newRow = tableRef.insertRow();
+                    var newCell = newRow.insertCell();
+                    var newText = document.createTextNode(key);
+                    newCell.appendChild(newText);
+
+                    var newCell = newRow.insertCell();
+                    var newText = document.createTextNode(value);
+                    newCell.appendChild(newText);
+                }
+            });
+        });
+    });
+}
+
+function deleteMarkers() {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+    }
 }

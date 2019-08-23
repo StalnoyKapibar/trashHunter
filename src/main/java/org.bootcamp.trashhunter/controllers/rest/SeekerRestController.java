@@ -24,9 +24,8 @@ public class SeekerRestController {
     @GetMapping("/my_offers")
     public String senderMyOffers(Model model) {
         List<Offer> offers = offerService.getOffersBySenderId(1L);
-        List<Offer> offers1 =  offers.stream().sorted(Comparator.comparing(Offer::isActive)).collect(Collectors.toList());
+        List<Offer> offers1 =  offers.stream().sorted(Comparator.comparing(Offer::getStatus)).collect(Collectors.toList());
         model.addAttribute("offers",offerService.getOffersBySenderId(1L));
-
         return "sender/sender_my_offers";
     }
 

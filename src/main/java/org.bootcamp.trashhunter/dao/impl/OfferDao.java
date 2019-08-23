@@ -1,9 +1,7 @@
 package org.bootcamp.trashhunter.dao.impl;
 
 
-import org.bootcamp.trashhunter.dao.AbstractDAO;
 import org.bootcamp.trashhunter.models.Offer;
-import org.bootcamp.trashhunter.models.TrashType;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -29,13 +27,13 @@ public class OfferDao extends AbstractDAO<Offer> {
     public List<Offer> getFilterQuery(Map<String, Object> map) {
 
         StringBuilder whereQuery = new StringBuilder();
-        whereQuery.append("SELECT o FROM Offer o JOIN FETCH o.sender WHERE o.isClosed=false");
+        whereQuery.append("SELECT o FROM Offer o JOIN FETCH o.sender WHERE o.status<>'COMPLETE'");
 
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             switch (entry.getKey()) {
                 case "trashType":
                     whereQuery.append(" AND (");
-                    String collect = ((List<TrashType>) entry.getValue()).stream()
+                    String collect = ((List<String>) entry.getValue()).stream()
                             .map(value -> "o.trashType='" + value + "'")
                             .collect(Collectors.joining(" OR "));
                     whereQuery.append(collect).append(")");

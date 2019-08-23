@@ -1,6 +1,7 @@
 package org.bootcamp.trashhunter.models;
 
-import org.bootcamp.trashhunter.embedded.Coordinates;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.bootcamp.trashhunter.models.embedded.Coordinates;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ public class Offer {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_fk", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Sender sender;
 
     @ManyToMany
@@ -43,11 +45,9 @@ public class Offer {
     @Column(nullable = false)
     private boolean isSorted;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private boolean isActive;
-
-    @Column(nullable = false)
-    private boolean isClosed;
+    private OfferStatus status;
 
     @Column(nullable = false)
     private LocalDateTime creationDateTime;
@@ -58,15 +58,15 @@ public class Offer {
     public Offer() {
     }
 
-    public Offer(Sender sender, long weight, long volume, long price, TrashType trashType, boolean isSorted, boolean isActive, boolean isClosed, LocalDateTime creationDateTime, String description, Coordinates coordinates) {
+    public Offer(Sender sender, long weight, long volume, long price, TrashType trashType,
+                 boolean isSorted, OfferStatus status, LocalDateTime creationDateTime, String description, Coordinates coordinates) {
         this.sender = sender;
         this.weight = weight;
         this.volume = volume;
         this.price = price;
         this.trashType = trashType;
         this.isSorted = isSorted;
-        this.isActive = isActive;
-        this.isClosed = isClosed;
+        this.status = status;
         this.creationDateTime = creationDateTime;
         this.description = description;
         this.coordinates = coordinates;
@@ -120,7 +120,6 @@ public class Offer {
         this.trashType = trashType;
     }
 
-
     public Coordinates getCoordinates() {
         return coordinates;
     }
@@ -137,20 +136,12 @@ public class Offer {
         isSorted = sorted;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public OfferStatus getStatus() {
+        return status;
     }
 
-    public void setActive(boolean active) {
-        isClosed = active;
-    }
-
-    public boolean isClosed() {
-        return isClosed;
-    }
-
-    public void setClosed(boolean closed) {
-        isClosed = closed;
+    public void setStatus(OfferStatus status) {
+        this.status = status;
     }
 
     public LocalDateTime getCreationDateTime() {
@@ -176,4 +167,5 @@ public class Offer {
     public void setRespondingTakers(List<Taker> respondingTakers) {
         this.respondingTakers = respondingTakers;
     }
+
 }

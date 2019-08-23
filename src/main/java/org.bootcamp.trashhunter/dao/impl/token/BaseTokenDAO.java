@@ -1,6 +1,6 @@
-package org.bootcamp.trashhunter.dao.token;
+package org.bootcamp.trashhunter.dao.impl.token;
 
-import org.bootcamp.trashhunter.dao.AbstractDAO;
+import org.bootcamp.trashhunter.dao.impl.AbstractDAO;
 import org.bootcamp.trashhunter.models.token.BaseToken;
 
 public class BaseTokenDAO<T extends BaseToken> extends AbstractDAO<T> {
