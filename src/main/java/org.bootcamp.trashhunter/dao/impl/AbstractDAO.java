@@ -50,6 +50,10 @@ public abstract class AbstractDAO<T>  {
         entityManager.remove(entity);
     }
 
+//    public void deleteById(Long id) {
+//        entityManager.createQuery("SELECT e FROM" + clazz.getName() + "WHERE e.id = :param", clazz).
+//    }
+
     public void deleteById(Long id) {
         T entity = getById(id);
         delete(entity);

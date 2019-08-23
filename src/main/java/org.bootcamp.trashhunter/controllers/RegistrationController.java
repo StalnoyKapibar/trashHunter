@@ -42,7 +42,7 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String registration(@RequestParam String email, @RequestParam  String password,
                                @RequestParam  String name, @RequestParam  String role) {
-        // todo duplicate
+        // todo duplicate( will be done after merge by Matvey)
         User registeredUser = null;
         if ("TAKER".equals(role)) {
             Taker taker = new Taker();

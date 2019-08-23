@@ -4,7 +4,7 @@ public enum OfferStatus {
 
     OPEN,
     SEARCHING,
-    TAKEN,
+    ACTIVE,
     COMPLETE;
 
     public static OfferStatus getRandom() {
