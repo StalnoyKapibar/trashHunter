@@ -1,16 +1,17 @@
 package org.bootcamp.trashhunter.services;
 
 import org.bootcamp.trashhunter.dao.impl.AbstractDAOImpl;
+import org.bootcamp.trashhunter.dao.impl.abstraction.AbstractDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Transactional
-public abstract class AbstractService<T> implements org.bootcamp.trashhunter.services.abstraction.AbstractService<T> {
+public abstract class AbstractService<T> implements AbstractDao<T>{
 
     @Autowired
-    protected AbstractDAOImpl<T> abstractDAOImpl;
+    protected AbstractDao<T> abstractDAOImpl;
 
     @Override
     public void add(T entity) {
