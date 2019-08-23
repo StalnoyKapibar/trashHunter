@@ -4,6 +4,7 @@ import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.services.impl.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,19 +24,15 @@ public class SenderRestController {
     @GetMapping(value = "/my_offers",  produces = "application/json")
     public Map<Offer, List<Taker>> senderMyOffers() {
          return offerService.getOffersBySenderIdActiveFirst(1L);
-
-
-//            List<Offer> offers1 =
-//                    offers
-//                            .stream()
-//                            .sorted(Comparator.comparing(Offer::isActive).reversed())
-//                            .collect(Collectors.toList());
-//            return offers1;
-//
     }
 
-    @GetMapping("/confirmOffer/{id}")
-    public void confirmMyOffers(@PathVariable Long id) {
-        offerService.confirmOffer(id);
+    @GetMapping("/confirmOffer/{takerId}/{offerId}")
+    public void confirmMyOffers(@PathVariable Long takerId, @PathVariable Long offerId) {
+        offerService.confirmOffer(takerId,offerId);
+    }
+
+    @GetMapping("/deleteOffer/{id}")
+    public void deleteOffer(@PathVariable Long id) {
+        offerService.deleteById(id);
     }
 }

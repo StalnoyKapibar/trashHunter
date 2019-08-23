@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,9 @@ public class OfferService extends AbstractService<Offer> {
     @Autowired
     private OfferDao dao;
 
+    @Autowired
+    private TakerService takerService;
+
     public List<Offer> getFilterQuery(Map<String, Object> map) {
         return dao.getFilterQuery(map);
     }
@@ -27,9 +31,13 @@ public class OfferService extends AbstractService<Offer> {
         return dao.getOffersBySenderIdActiveFirst(id);
     }
 
-    public void confirmOffer(Long id) {
-        Offer offer = dao.getById(id);
-        offer.setStatus(OfferStatus.COMPLETE);
+    public void confirmOffer(Long takerId, Long offerId) {
+        Offer offer = dao.getById(offerId);
+        offer.setStatus(OfferStatus.TAKEN);
+        List<Taker> takers = new ArrayList<>();
+        takers.add(takerService.getById(takerId));
+        offer.setRespondingTakers(takers);
+        // оповестить тейкера в чате
         dao.update(offer);
     }
 }

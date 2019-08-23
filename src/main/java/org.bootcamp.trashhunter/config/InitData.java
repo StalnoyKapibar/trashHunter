@@ -117,7 +117,9 @@ public class InitData {
 
             Offer randomOffer = new Offer(randomSender, randomWeight, randomVolume, randomPrice, randomTrashType,
                     randomIsSorted, randomStatus, randomDate, randomDescription, randomCoordinates);
+            randomOffer.setRespondingTakers(takerService.getAll());
             offerService.add(randomOffer);
         }
+        offerService.deleteById(1L);
     }
 }
