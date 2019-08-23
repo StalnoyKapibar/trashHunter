@@ -12,22 +12,24 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/succChange")
+@RequestMapping("/api/")
 public class UserRestController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/succChange")
-    @ResponseStatus(HttpStatus.OK)
-    public void changeUserPassword(@RequestParam("new_pass") String password,
-                                   @RequestParam("old_pass") String oldPassword) {
 
+    @PostMapping("/change")
+    public ResponseEntity changeUserPassword(@RequestParam("new_pass") String password,
+                                             @RequestParam("old_pass") String oldPassword) {
         User user = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-
+        //todo encoder
+        if (!user.getPassword().equals(oldPassword)) {
+            return new ResponseEntity(HttpStatus.BAD_GATEWAY);
+        }
         user.setPassword(password);
         userService.update(user);
-
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }
