@@ -17,10 +17,18 @@
 <div align="center">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-12">
-				<h3>Hello Favorites</h3>
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<h3>My Favorites</h3>
+				<h3 th:text="${boss.name}"></h3>
 
-				<table border="1px">
+<!--++++++++++++++++++++-->
+<!-- EditModalPage START-->
+<div class="tab-content" id="pills-tabContent" style="margin: 0; padding: 0">
+	<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" >
+		<div class="table-responsive" style="background-color: white; padding: 10px 20px">
+			<table class="table table-borderless table-striped table-hover table-condensed" style="background-color: white">
+				<thead>
 					<tr>
 						<th>id</th>
 						<th>email</th>
@@ -28,38 +36,64 @@
 						<th>password</th>
 						<th>registrationDate</th>
 						<th>enabled</th>
-
-						<th>id</th>
-						<th>email</th>
-						<th>name</th>
-						<th>password</th>
-						<th>registrationDate</th>
-						<th>enabled</th>
+						<th>button</th>
 					</tr>
-
+				</thead>
+				<tbody>
 					<span th:each="uf : ${ufDto}">
 						<tr>
-							<td th:text="${uf.userboss.id}"></td>
-							<td th:text="${uf.userboss.email}"></td>
-							<td th:text="${uf.userboss.name}"></td>
-							<td th:text="${uf.userboss.password}"></td>
-							<td th:text="${uf.userboss.registrationDate}"></td>
-							<td th:text="${uf.userboss.enabled}"></td>
-
 							<td th:text="${uf.usersubject.id}"></td>
 							<td th:text="${uf.usersubject.email}"></td>
 							<td th:text="${uf.usersubject.name}"></td>
 							<td th:text="${uf.usersubject.password}"></td>
 							<td th:text="${uf.usersubject.registrationDate}"></td>
 							<td th:text="${uf.usersubject.enabled}"></td>
-						</tr>
-					</span>
-				</table>
+							<td>
+								<a href="#" class="btn btn-primary btn-md " role="button" data-toggle="modal" th:data-target="'#mod' + ${uf.usersubject.id}">info</a>
+							</td>
 
+<!--///////////-->
+<!--START Modal-->
+<div th:id="'mod' + ${uf.usersubject.id}" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" style="text-align: left">Модальное окно</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+			</div>
+			<div class="modal-body" align="center">
+
+				<span th:text="${uf.usersubject.id}" />
+				<span th:text="${uf.usersubject.name}" />
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" style="text-align: right">Закрыть</button>
 			</div>
 		</div>
 	</div>
 </div>
+<!--FINISH Modal-->
+<!--////////////-->
+
+						</tr>
+					</span>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<!-- EditModalPage FINISH -->
+<!--++++++++++++++++++++++-->
+
+			</div>
+			<div class="col-md-3"></div>
+		</div>
+	</div>
+</div>
+
+
+
 
 </body>
 </html>

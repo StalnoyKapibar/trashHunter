@@ -44,16 +44,18 @@ public class FavoritesController {
 
 // I get the Users list by id from the listFav list:
 		List<User> listUsers = userDao.getUsersFriendsListByUsersId(listFav);
-
 // I create a list of Users using UserFavoritesDTO:
 		List<UserFavoritesDTO> ufDto = new ArrayList<>();
 		for (User lu : listUsers) {
 			ufDto.add(new UserFavoritesDTO(userBoss, lu));
 		}
 
+
+
 // Print ModelAndView for favorites.html:
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("favorites");
+		modelAndView.addObject("boss", ufDto.get(0).getUserboss());
 		modelAndView.addObject("ufDto", ufDto);
 		return modelAndView;
 	}

@@ -1,6 +1,5 @@
 package org.bootcamp.trashhunter.dao.impl;
 
-import org.bootcamp.trashhunter.dao.AbstractDAO;
 import org.bootcamp.trashhunter.models.User;
 import org.springframework.stereotype.Repository;
 import javax.persistence.Query;
@@ -10,7 +9,6 @@ import java.util.List;
 public class UserDao extends AbstractDAO<User> {
 
 	public List<User> getUsersFriendsListByUsersId(List<Long> id) {
-		//HQL
 		Query query = entityManager.createQuery("from User where id IN (:paramId)");
 		query.setParameter("paramId", id);
 		List<User> list = query.getResultList();
