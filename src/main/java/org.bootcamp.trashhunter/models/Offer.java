@@ -47,7 +47,7 @@ public class Offer {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private OfferStatus status;
+    private OfferStatus offerStatus;
 
     @Column(nullable = false)
     private LocalDateTime creationDateTime;
@@ -59,14 +59,14 @@ public class Offer {
     }
 
     public Offer(Sender sender, long weight, long volume, long price, TrashType trashType,
-                 boolean isSorted, OfferStatus status, LocalDateTime creationDateTime, String description, Coordinates coordinates) {
+                 boolean isSorted, OfferStatus offerStatus, LocalDateTime creationDateTime, String description, Coordinates coordinates) {
         this.sender = sender;
         this.weight = weight;
         this.volume = volume;
         this.price = price;
         this.trashType = trashType;
         this.isSorted = isSorted;
-        this.status = status;
+        this.offerStatus = offerStatus;
         this.creationDateTime = creationDateTime;
         this.description = description;
         this.coordinates = coordinates;
@@ -137,11 +137,11 @@ public class Offer {
     }
 
     public OfferStatus getStatus() {
-        return status;
+        return offerStatus;
     }
 
-    public void setStatus(OfferStatus status) {
-        this.status = status;
+    public void setStatus(OfferStatus offerStatus) {
+        this.offerStatus = offerStatus;
     }
 
     public LocalDateTime getCreationDateTime() {

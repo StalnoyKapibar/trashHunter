@@ -1,16 +1,12 @@
 package org.bootcamp.trashhunter.dao.impl;
 
 
-import org.bootcamp.trashhunter.dao.AbstractDAO;
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.Taker;
-import org.bootcamp.trashhunter.models.TrashType;
-import org.codehaus.groovy.util.ListHashMap;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,7 +71,7 @@ public class OfferDao extends AbstractDAO<Offer> {
     public Map<Offer, List<Taker>> getOffersBySenderIdActiveFirst(Long senderId) {
         Map<Offer, List<Taker>> map = new LinkedHashMap<>();
         List<Offer> offers = entityManager
-                .createQuery("SELECT t FROM Offer t WHERE t.sender.id = :id ORDER BY t.isActive DESC ", Offer.class)
+                .createQuery("SELECT t FROM Offer t WHERE t.sender.id = :id ORDER BY t.isActive ", Offer.class)
                 .setParameter("id", senderId)
                 .getResultList();
         for (Offer offer : offers) {
