@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/commonlayouts}"
+        lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Conformation status</title>
 </head>
 <body>
-    <H2 th:text="${complete}"></H2>
+<div  layout:fragment="content">
+    <div class="container-fluid">
+        <div class="row" style="height: 40px"></div>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4" align="center" style="color: #7295B1">
+                <span th:if="${complete}" style="font-size: 25px">Вы успешно подтвердили свой аккаунт</span>
+                <span th:if="not ${complete}" style="font-size: 25px">Произошла ошибки. Токен не найден или уже недействителен</span>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

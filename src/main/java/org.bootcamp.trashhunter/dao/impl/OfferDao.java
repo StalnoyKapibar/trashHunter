@@ -29,7 +29,7 @@ public class OfferDao extends AbstractDAO<Offer> {
     public List<Offer> getFilterQuery(Map<String, Object> map) {
 
         StringBuilder whereQuery = new StringBuilder();
-        whereQuery.append("SELECT o FROM Offer o JOIN FETCH o.sender WHERE o.status<>'COMPLETE'");
+        whereQuery.append("SELECT o FROM Offer o JOIN FETCH o.sender WHERE o.offerStatus<>'COMPLETE'");
 
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             switch (entry.getKey()) {

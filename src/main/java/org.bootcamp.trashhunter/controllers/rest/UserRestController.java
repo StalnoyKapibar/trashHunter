@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.controllers;
+package org.bootcamp.trashhunter.controllers.rest;
 
 import org.apache.coyote.Response;
 import org.bootcamp.trashhunter.models.User;
