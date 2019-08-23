@@ -9,13 +9,12 @@ import org.bootcamp.trashhunter.models.TrashType;
 import org.bootcamp.trashhunter.services.impl.OfferService;
 import org.bootcamp.trashhunter.services.impl.SenderService;
 import org.bootcamp.trashhunter.services.impl.TakerService;
+import org.bootcamp.trashhunter.services.impl.UserFavoritesService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class InitData {
 
@@ -28,10 +27,29 @@ public class InitData {
     @Autowired
     TakerService takerService;
 
+	@Autowired
+	UserFavoritesService userFavoritesService;
+
     private void init() {
         initSenders();
         initTakers();
         initRandomOffers(40);
+		initUserFavorites();
+    }
+
+    private void initUserFavorites() {
+        UserFavorites uf1 = new UserFavorites(1L, 4L);
+        userFavoritesService.add(uf1);
+        UserFavorites uf2 = new UserFavorites(1L, 5L);
+        userFavoritesService.add(uf2);
+        UserFavorites uf3 = new UserFavorites(2L, 5L);
+        userFavoritesService.add(uf3);
+        UserFavorites uf4 = new UserFavorites(6L, 1L);
+        userFavoritesService.add(uf4);
+        UserFavorites uf5 = new UserFavorites(1L, 6L);
+        userFavoritesService.add(uf5);
+        UserFavorites uf6 = new UserFavorites(5L, 2L);
+        userFavoritesService.add(uf6);
     }
 
     private void initSenders() {
@@ -41,7 +59,6 @@ public class InitData {
         senderService.add(sender2);
         Sender sender3 = new Sender("sender3@mail.ru", "Ivan", "sender3", LocalDate.now());
         senderService.add(sender3);
-
     }
 
     private void initTakers() {
@@ -51,7 +68,6 @@ public class InitData {
         takerService.add(taker2);
         Taker taker3 = new Taker("taker3@mail.ru", "Denis", "taker3", LocalDate.now());
         takerService.add(taker3);
-
     }
 
     private void initRandomOffers(int quantity) {

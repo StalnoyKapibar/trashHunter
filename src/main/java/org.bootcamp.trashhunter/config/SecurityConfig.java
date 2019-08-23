@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/registration").anonymous()
-                .antMatchers("/", "/api/tags/**", "/api/vacancies/**", "/css/*", "/js/*", "/vacancy/**" ).permitAll()
+                .antMatchers("/", "/api/tags/**", "/api/vacancies/**", "/css/*", "/js/*", "/vacancy/**", "/favorites", "404").permitAll()
                 .antMatchers("/admin/**").access("hasAnyRole('Taker','Sender')").anyRequest().authenticated()
                 .antMatchers("/update_password", "api/change").access("hasAnyRole('User')").anyRequest().authenticated()
                 .antMatchers("/", "/api/offer/**", "/css/*", "/js/*", "/img/*", "/activate/*").permitAll()
