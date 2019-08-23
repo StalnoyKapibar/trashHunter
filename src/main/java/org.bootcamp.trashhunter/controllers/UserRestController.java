@@ -23,7 +23,6 @@ public class UserRestController {
     public ResponseEntity changeUserPassword(@RequestParam("new_pass") String password,
                                              @RequestParam("old_pass") String oldPassword) {
         User user = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-        //todo encoder
         if (!user.getPassword().equals(oldPassword)) {
             return new ResponseEntity(HttpStatus.BAD_GATEWAY);
         }
