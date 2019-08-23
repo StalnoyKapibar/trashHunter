@@ -5,8 +5,14 @@ function doFilter(){
             trashType.push($(this).attr("id"))
         }
     });
-    let weight = $("#weightFrom").val() + "-" + $("#weightTo").val();
-    let volume = $("#volumeFrom").val() + "-" + $("#volumeTo").val();
+    let weightFrom = $("#weightFrom").val();
+    let weightTo = $("#weightTo").val();
+    let weight = weightFrom + "-" + weightTo;
+
+    let volumeFrom = $("#volumeFrom").val();
+    let volumeTo = $("#volumeTo").val();
+    let volume = volumeFrom + "-" + volumeTo;
+
     let isSorted = $("#isSorted option:selected").attr("value");
     let isFree = $("#isFree option:selected").attr("value");
 
@@ -14,10 +20,10 @@ function doFilter(){
     if (trashType.length!==0) {
         filter["trashType"] = trashType;
     }
-    if (weight.length>=2) {
+    if (weight.length>=2 && (weightFrom !== "" || weightFrom !== "")) {
         filter["weight"] = weight;
     }
-    if (volume.length>=2) {
+    if (volume.length>=2 && (volumeFrom !== "" || volumeFrom !== "")) {
         filter["volume"] = volume;
     }
     if (isSorted!=="") {

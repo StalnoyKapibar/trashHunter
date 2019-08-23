@@ -1,7 +1,6 @@
 package org.bootcamp.trashhunter.models;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
@@ -24,17 +23,21 @@ public abstract class User {
     @Column(nullable = false)
     private LocalDate registrationDate;
 
+    @Column(nullable = false)
+    private String city;
+
     private boolean enabled;
 
     public User() {
         this.enabled = false;
     }
 
-    public User(String email, String name, String password, LocalDate registrationDate) {
+    public User(String email, String name, String password, LocalDate registrationDate, String city) {
         this.password = password;
         this.email = email;
         this.name = name;
         this.registrationDate = registrationDate;
+        this.city = city;
     }
 
     public long getId() {
@@ -83,5 +86,13 @@ public abstract class User {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }
