@@ -1,23 +1,50 @@
 <!DOCTYPE html>
 <html
+        xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         layout:decorate="~{layouts/commonlayouts}"
         lang="en">
 <head>
-    <title>Sender</title>
+    <title>SenderOffers</title>
 </head>
 <body>
-<div  layout:fragment="content">
-    <div class="container-fluid">
-        <div class="row" style="height: 40px"></div>
+<div layout:fragment="content">
+
+    <div class="container">
         <div class="row">
             <div class="col-sm-4"></div>
-            <div class="col-sm-4" align="center" style="color: #7295B1">
-                <span style="font-size: 25px"> Привет , Повелитель!</span><br>
+            <div class="col-sm-4">
+                <h2>Мои Предложения</h2>
+            </div>
+            <div class="col-sm-4"></div>
+
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="table-responsive">
+                <table id="employerTable" class="table table-striped table-sm table-bordered sort-order"
+                       cellspacing="0"
+                       width="100%">
+                    <tbody align="center">
+                    <!--Loaded from offer.js getTable()-->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+
 </div>
+<div  layout:fragment="localscripts">
+    <script src="/js/sender/offers.js"></script>
+</div>
+<!--<th:block th:replace="fragments/commonfragments :: scripts">-->
+<!--</th:block>-->
+
+<!--<div layout:insert="scripts">-->
+    <!--<div> <h1>jopa</h1></div>-->
+
+<!--</div>-->
 </body>
 </html>

@@ -19,6 +19,14 @@ public class OfferRestController {
     @PostMapping
     public List<Offer> getOffers(@RequestBody Map<String, Object> map) {
         if (map.size() == 0) {
+    @GetMapping("/deleteOffer/{offerId}")
+    public void deleteOffer(@PathVariable Long offerId){
+        offerService.deleteById(offerId);
+    }
+
+    @PostMapping("/getMeeting")
+    public List<Offer> getMeeting(@RequestBody Map<String, Object> map) {
+        if (map.size() == 0) {
             return offerService.getAll();
         }
         return offerService.getFilterQuery(map);

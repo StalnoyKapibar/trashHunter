@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.dao;
+package org.bootcamp.trashhunter.dao.impl;
 
 import org.springframework.stereotype.Repository;
 
@@ -49,6 +49,10 @@ public abstract class AbstractDAO<T>  {
     public void delete(T entity) {
         entityManager.remove(entity);
     }
+
+//    public void deleteById(Long id) {
+//        entityManager.createQuery("SELECT e FROM" + clazz.getName() + "WHERE e.id = :param", clazz).
+//    }
 
     public void deleteById(Long id) {
         T entity = getById(id);

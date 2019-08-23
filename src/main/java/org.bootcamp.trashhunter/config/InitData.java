@@ -1,5 +1,6 @@
 package org.bootcamp.trashhunter.config;
 
+import org.bootcamp.trashhunter.models.*;
 import org.bootcamp.trashhunter.models.embedded.Coordinates;
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.Sender;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class InitData {
@@ -53,15 +56,16 @@ public class InitData {
 
     private void initRandomOffers(int quantity) {
         double seed;
+        double seed1;
         double seed2;
+
         Sender randomSender;
         long randomWeight;
         long randomVolume;
         long randomPrice;
         TrashType randomTrashType;
         boolean randomIsSorted;
-        boolean randomIsActive;
-        boolean randomIsClosed;
+        OfferStatus randomStatus;
         LocalDateTime randomDate;
         String randomDescription;
         double randomLatitude;
@@ -79,6 +83,7 @@ public class InitData {
 
         for (int i = 0; i < quantity; i++) {
             seed = Math.random();
+            seed1 = Math.random();
             seed2 = Math.random();
 
             randomSender = senderService.getById(1 + (long) (seed * numOfSenders));
@@ -87,16 +92,15 @@ public class InitData {
             randomPrice = (long) (seed * maxPrice);
             randomTrashType = TrashType.getRandom();
             randomIsSorted = seed < 0.5;
-            randomIsActive = seed < 0.5;
-            randomIsClosed = false;
+            randomStatus = OfferStatus.getRandom();
             randomDate = LocalDateTime.now();
             randomDescription = "this is offer number " + i;
             randomLatitude = minLatitude + seed * (maxLatitude - minLatitude);
-            randomLongitude = minLongitude + seed2 * (maxLongitude - minLongitude);
+            randomLongitude = minLongitude + seed1 * (maxLongitude - minLongitude);
             randomCoordinates = new Coordinates(randomLatitude, randomLongitude);
 
             Offer randomOffer = new Offer(randomSender, randomWeight, randomVolume, randomPrice, randomTrashType,
-                    randomIsSorted, randomIsActive, randomIsClosed, randomDate, randomDescription, randomCoordinates);
+                    randomIsSorted, randomStatus, randomDate, randomDescription, randomCoordinates);
             offerService.add(randomOffer);
         }
     }
