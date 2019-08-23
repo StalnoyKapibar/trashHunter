@@ -1,6 +1,7 @@
 package org.bootcamp.trashhunter.config;
 
 
+import org.bootcamp.trashhunter.models.UserFavorites;
 import org.bootcamp.trashhunter.models.OfferStatus;
 import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.Taker;
