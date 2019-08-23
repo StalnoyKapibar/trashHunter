@@ -33,11 +33,31 @@ public class OfferService extends AbstractService<Offer> {
 
     public void confirmOffer(Long takerId, Long offerId) {
         Offer offer = dao.getById(offerId);
-        offer.setStatus(OfferStatus.TAKEN);
+        offer.setOfferStatus(OfferStatus.TAKEN);
         List<Taker> takers = new ArrayList<>();
         takers.add(takerService.getById(takerId));
         offer.setRespondingTakers(takers);
         // оповестить тейкера в чате
+        dao.update(offer);
+    }
+
+    public void cancelOffer(Long offerId){
+        Offer offer = dao.getById(offerId);
+        offer.setOfferStatus(OfferStatus.OPEN);
+        offer.setRespondingTakers(new ArrayList<>());
+        dao.update(offer);
+    }
+
+    public void makeCompleteOffer(Long offerId){
+        Offer offer = dao.getById(offerId);
+        offer.setOfferStatus(OfferStatus.COMPLETE);
+        offer.setRespondingTakers(new ArrayList<>());
+        dao.update(offer);
+    }
+
+    public void restoreOffer(Long offerId){
+        Offer offer = dao.getById(offerId);
+        offer.setOfferStatus(OfferStatus.OPEN);
         dao.update(offer);
     }
 }

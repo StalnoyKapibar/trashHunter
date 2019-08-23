@@ -15,6 +15,8 @@ import org.bootcamp.trashhunter.services.impl.UserFavoritesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InitData {
 
@@ -117,9 +119,15 @@ public class InitData {
 
             Offer randomOffer = new Offer(randomSender, randomWeight, randomVolume, randomPrice, randomTrashType,
                     randomIsSorted, randomStatus, randomDate, randomDescription, randomCoordinates);
-            randomOffer.setRespondingTakers(takerService.getAll());
+            if (randomOffer.getOfferStatus().equals(OfferStatus.ACTIVE)) {
+                randomOffer.setRespondingTakers(takerService.getAll());
+            }
+            if (randomOffer.getOfferStatus().equals(OfferStatus.TAKEN)){
+                List<Taker> takers = new ArrayList<>();
+                takers.add(takerService.getById(4L));
+                randomOffer.setRespondingTakers(takers);
+            }
             offerService.add(randomOffer);
         }
-        offerService.deleteById(1L);
     }
 }
