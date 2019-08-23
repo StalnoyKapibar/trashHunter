@@ -71,7 +71,7 @@ public class OfferDao extends AbstractDAO<Offer> {
     public Map<Offer, List<Taker>> getOffersBySenderIdActiveFirst(Long senderId) {
         Map<Offer, List<Taker>> map = new LinkedHashMap<>();
         List<Offer> offers = entityManager
-                .createQuery("SELECT t FROM Offer t WHERE t.sender.id = :id ORDER BY t.offerStatus ", Offer.class)
+                .createQuery("SELECT t FROM Offer t WHERE t.sender.id = :id ORDER BY FIELD (t.offerStatus,'ACTIVE','TAKEN','OPEN','COMPLETE')", Offer.class)
                 .setParameter("id", senderId)
                 .getResultList();
         for (Offer offer : offers) {
