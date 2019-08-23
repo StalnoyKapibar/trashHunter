@@ -27,11 +27,11 @@ public class EditUserController  {
         ModelAndView modelAndView = new ModelAndView();
 
         if( user1 != null && user1.getClass() == Sender.class) {
-            modelAndView.setViewName("/sender/sender_edit_user");
+            modelAndView.setViewName("sender/sender_edit_user");
             Sender sender = (Sender) user1;
             model.addAttribute("user", sender);
         } else if (user1 != null && user1.getClass() == Taker.class) {
-            modelAndView.setViewName("/taker/taker_edit_user");
+            modelAndView.setViewName("taker/taker_edit_user");
             Taker taker = (Taker) user1;
             model.addAttribute("user", taker);
         }
