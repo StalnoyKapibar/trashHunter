@@ -15,7 +15,7 @@ function getTable() {
                     if (key == "id") {
                         offerId = value;
                         offerRow +=
-                            '<div class="container-fluid">' +
+                            '<div class="container-fluid" id="offer' + offerId +'">' +
                             '<div class="row">' +
                             '<div class="col-sm-1"></div>'+
                             '<div class="col-sm-10">' +
@@ -141,9 +141,6 @@ function getTable() {
                     '</div>'+
                 '</div>';
 
-                offerRow += '<br>';
-
-
                 $('#employerTable tbody').append(offerRow);
 
             });
@@ -160,9 +157,10 @@ function deleteOffer(offerId) {
         url: '/api/sender/deleteOffer/' + offerId,
         type: 'GET',
         success: function () {
-            $('#employerTable tbody').empty();
-            getTable();
-            // $(offerId).slideDown({opacity: "show"}, "slow");
+            //$('#employerTable tbody').empty();
+            //getTable();
+            let string = '#offer'+offerId;
+             $(string).hide();
         }
     });
 }
