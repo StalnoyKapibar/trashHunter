@@ -1,5 +1,6 @@
 package org.bootcamp.trashhunter.config;
 
+import org.bootcamp.trashhunter.models.*;
 import org.bootcamp.trashhunter.models.embedded.Coordinates;
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.Sender;
@@ -56,6 +57,7 @@ public class InitData {
     private void initRandomOffers(int quantity) {
         double seed;
         double seed1;
+        double seed2;
 
         Sender randomSender;
         long randomWeight;
@@ -63,8 +65,7 @@ public class InitData {
         long randomPrice;
         TrashType randomTrashType;
         boolean randomIsSorted;
-        boolean randomIsActive;
-        boolean randomIsClosed;
+        OfferStatus randomStatus;
         LocalDateTime randomDate;
         String randomDescription;
         double randomLatitude;
@@ -83,14 +84,15 @@ public class InitData {
         for (int i = 0; i < quantity; i++) {
             seed = Math.random();
             seed1 = Math.random();
+            seed2 = Math.random();
+
             randomSender = senderService.getById(1 + (long) (seed * numOfSenders));
             randomWeight = (long) (seed * maxWeight);
             randomVolume = (long) (seed * maxVolume);
             randomPrice = (long) (seed * maxPrice);
             randomTrashType = TrashType.getRandom();
             randomIsSorted = seed < 0.5;
-            randomIsActive = seed1 < 0.5;
-            randomIsClosed = false;
+            randomStatus = OfferStatus.getRandom();
             randomDate = LocalDateTime.now();
             randomDescription = "this is offer number " + i;
             randomLatitude = minLatitude + seed * (maxLatitude - minLatitude);
@@ -98,9 +100,7 @@ public class InitData {
             randomCoordinates = new Coordinates(randomLatitude, randomLongitude);
 
             Offer randomOffer = new Offer(randomSender, randomWeight, randomVolume, randomPrice, randomTrashType,
-                    randomIsSorted, randomIsActive, randomIsClosed, randomDate, randomDescription, randomCoordinates);
-            List<Taker> takers = takerService.getAll();
-            randomOffer.setRespondingTakers(takers);
+                    randomIsSorted, randomStatus, randomDate, randomDescription, randomCoordinates);
             offerService.add(randomOffer);
         }
     }

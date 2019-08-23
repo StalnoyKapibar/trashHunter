@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.dao;
+package org.bootcamp.trashhunter.dao.impl;
 
 import org.springframework.stereotype.Repository;
 

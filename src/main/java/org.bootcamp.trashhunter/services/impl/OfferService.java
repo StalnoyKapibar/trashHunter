@@ -28,8 +28,7 @@ public class OfferService extends AbstractService<Offer> {
 
     public void confirmOffer(Long id) {
         Offer offer = dao.getById(id);
-        offer.setActive(false);
-        offer.setClosed(true);
+        offer.setStatus(OfferStatus.COMPLETE);
         dao.update(offer);
     }
 }
