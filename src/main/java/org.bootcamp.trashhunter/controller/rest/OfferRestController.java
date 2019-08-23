@@ -17,15 +17,15 @@ public class OfferRestController {
     private OfferService offerService;
 
     @PostMapping
-    public List<Offer> getMeeting(@RequestBody Map<String, Object> map) {
-        if (map.size()==0) {
+    public List<Offer> getOffers(@RequestBody Map<String, Object> map) {
+        if (map.size() == 0) {
             return offerService.getAll();
         }
         return offerService.getFilterQuery(map);
     }
 
     @GetMapping
-    public List<Offer> getMeeting() {
+    public List<Offer> getAllOffers() {
         return offerService.getAll();
     }
 }
