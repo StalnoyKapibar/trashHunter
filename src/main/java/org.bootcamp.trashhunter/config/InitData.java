@@ -1,11 +1,8 @@
 package org.bootcamp.trashhunter.config;
 
+//import org.bootcamp.trashhunter.models.*;
 import org.bootcamp.trashhunter.models.*;
 import org.bootcamp.trashhunter.models.embedded.Coordinates;
-import org.bootcamp.trashhunter.models.Offer;
-import org.bootcamp.trashhunter.models.Sender;
-import org.bootcamp.trashhunter.models.Taker;
-import org.bootcamp.trashhunter.models.TrashType;
 import org.bootcamp.trashhunter.services.impl.OfferService;
 import org.bootcamp.trashhunter.services.impl.SenderService;
 import org.bootcamp.trashhunter.services.impl.TakerService;
@@ -13,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class InitData {
@@ -101,7 +96,9 @@ public class InitData {
 
             Offer randomOffer = new Offer(randomSender, randomWeight, randomVolume, randomPrice, randomTrashType,
                     randomIsSorted, randomStatus, randomDate, randomDescription, randomCoordinates);
+            randomOffer.setRespondingTakers(takerService.getAll());
             offerService.add(randomOffer);
         }
+        offerService.deleteById(1L);
     }
 }

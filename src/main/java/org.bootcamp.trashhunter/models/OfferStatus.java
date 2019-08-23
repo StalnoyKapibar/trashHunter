@@ -3,8 +3,8 @@ package org.bootcamp.trashhunter.models;
 public enum OfferStatus {
 
     OPEN,
-    SEARCHING,
     ACTIVE,
+    TAKEN,
     COMPLETE;
 
     public static OfferStatus getRandom() {

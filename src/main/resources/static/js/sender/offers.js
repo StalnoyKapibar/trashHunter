@@ -25,11 +25,11 @@ function getTable() {
                 var offerRow =
                     '<div class="container-fluid">' +
                     '<div class="row">' +
-                    '<div class="col-sm-2"></div>'+
+                    '<div class="col-sm-1"></div>'+
                     '<div class="col-sm-10">' +
                     '<div class="container-fluid cards">' +
-                    '<div class="card" >' +
-                    '<div class="card-header" style="background-color: #7295b1">';
+                    '<div class="card" style="margin-bottom: 1%" >' +
+                    '<div class="card-header" style="color: white; background-color: #7295b1">';
                 JSON.parse(offer, function (key, value) {
                     if (key == "id") {
                         offerId = value;
@@ -46,7 +46,12 @@ function getTable() {
                     }
                     if (key == "trashType") {
                         offerRow += ' тип мусора ' + value;
-
+                    // <div class="input-group mb-2">
+                    //         <div class="input-group-prepend">
+                    //         <div class="input-group-text">@</div>
+                    //         </div>
+                    //         <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username">
+                    //         </div>
                     }
                     if (key == "offerStatus") {
                         if (value == "ACTIVE") {
@@ -55,16 +60,16 @@ function getTable() {
                             $.each(takers, function (i, taker) {
                                 offerRow += '<div class="row" style="margin-bottom: 1%">' +
                                     '<div class="col-sm-1"></div>' +
-                                    '<div class="col-sm-7">' + taker.name + ' ' +
+                                    '<div class="col-sm-7">'
+                                    + taker.name + ' ' +
                                     taker.email +
                                     '</div>' +
-                                    '<button class="btn btn-primary col-sm-1"' +
-                                    ' style="margin-right: 1%"' +
+                                    '<button class="btn btn-primary btn-icon "' +
                                     'onclick="confirmOffer(' + taker.id +',' + offerId + ')">' +
-                                    + 'Подвтведрдить' +
+                                     '<span class="icon"><i class="fas fa-check"></i></span>подтвердить' +
                                     '</button>' +
-                                    '<a href="/chat" class="btn btn-secondary col-sm-1" >' +
-                                    +'Чат' +
+                                    '<a href="/chat" class="btn btn-info btn-icon " >' +
+                                    '<span class="icon"><i class="fas fa-download"></i></span>чат' +
                                     '</a>' +
                                     '<div class="col-sm-1"></div>' +
                                     '</div>';
@@ -73,7 +78,7 @@ function getTable() {
                             offerRow += '</div>';
                         } else {
                             offerRow += '</div>' +
-                                +'<div class="card-body" style="background-color: aliceblue">' +
+                                '<div class="card-body" style="background-color: aliceblue">' +
                                 'На предложение пока никто не откликнулся :('
                                 + '</div>';
                         }
@@ -82,20 +87,24 @@ function getTable() {
                 });
                 offerRow += '<div class="card-footer" style="background-color: #7295b1">'+
                     '<div class="row">' +
-                    '<div class="col-sm-9"></div>'+
-                    '<button class="btn btn-info col-sm-1" style="margin-right: 1% " onclick="(' + offerId + '" >' +
-                    +'<span>change</span>' +
+                    '<div class="col-sm-10"></div>'+
+                    '<button class="btn btn-light btn-circle"' +
+                    'data-toggle="tooltip" data-placement="bottom" title="Радактировать предложение"' +
+                    'style="margin-right: 1% " onclick=edit"(' + offerId + ')">' +
+                    '<i class="fas fa-edit"></i>' +
                     '</button>' +
-                    '<button class="btn btn-info col-sm-1" onclick="deleteOffer(' + offerId+ ')" >' +
-                    +'delete' +
+                    '<button class="btn btn-light btn-circle "'+
+                    'data-toggle="tooltip" data-placement="bottom" title="удалить предложение"'+
+                    'onclick="deleteOffer(' + offerId + ')">'+
+                    '<i class="fas fa-trash"></i>' +
                     '</button>' +
                     '</div>'+
-                    '<div class="col-sm-1"></div>' +'</div>';
+                    '</div>';
                 offerRow +=
                     '</div>' +
                     '</div>' +
                     '</div>' +
-                    '</div>'
+                    '</div>'+
                 '</div>';
 
                 offerRow += '<br>';
@@ -124,24 +133,24 @@ function getTable() {
 //         getTable('all');
 //     }
 // }
-function offerDelete(offerId) {
+function deleteOffer(offerId) {
     $.ajax({
-        url: '/api/s/confirmOffer/' + id,
+        url: '/api/sender/deleteOffer/' + offerId,
         type: 'GET',
         success: function () {
             $('#employerTable tbody').empty();
-            getTablle();
+            getTable();
         }
     });
 }
 
-function confirmOffer(id) {
+function confirmOffer(takerId, offerId) {
     $.ajax({
-        url: '/api/sender/confirmOffer/' + id,
+        url: '/api/sender/confirmOffer/' + takerId + '/' + offerId,
         type: 'GET',
         success: function () {
             $('#employerTable tbody').empty();
-            getTablle();
+            getTable();
         }
     });
 }
