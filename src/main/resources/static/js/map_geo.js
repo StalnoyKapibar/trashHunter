@@ -3,29 +3,31 @@ var markers = [];
 
 function initMap() {
     //todo
-    var geocoder = new google.maps.Geocoder;
+    let geocoder = new google.maps.Geocoder;
 
-    var viborg = {lat: 60.70768064991953, lng: 28.753881993229232};
+    let viborg = {lat: 60.70768064991953, lng: 28.753881993229232};
     map = new google.maps.Map(document.getElementById('map'), {
         center: viborg,
         zoom: 13,
         gestureHandling: 'cooperative',
         streetViewControl: false,
-        mapTypeControl: false
+        mapTypeControl: false,
+        mapTypeId: 'hybrid'
     });
-    var card = document.getElementById('pac-card');
-    var input = document.getElementById('pac-input');
-    var filter = document.getElementById('filter-container');
+
+    let card = document.getElementById('pac-card');
+    let input = document.getElementById('pac-input');
+    let filter = document.getElementById('filter-container');
 
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(filter);
 
-    var autocomplete = new google.maps.places.Autocomplete(input);
+    let autocomplete = new google.maps.places.Autocomplete(input);
 
-    var infowindow = new google.maps.InfoWindow();
-    var infowindowContent = document.getElementById('infowindow-content');
+    let infowindow = new google.maps.InfoWindow();
+    let infowindowContent = document.getElementById('infowindow-content');
     infowindow.setContent(infowindowContent);
-    var marker = new google.maps.Marker({
+    let marker = new google.maps.Marker({
         map: map,
         anchorPoint: new google.maps.Point(0, -29)
     });
@@ -33,7 +35,7 @@ function initMap() {
     autocomplete.addListener('place_changed', function () {
         infowindow.close();
         marker.setVisible(false);
-        var place = autocomplete.getPlace();
+        let place = autocomplete.getPlace();
         if (!place.geometry) {
             // User entered the name of a Place that was not suggested and
             // pressed the Enter key, or the Place Details request failed.
@@ -51,7 +53,7 @@ function initMap() {
         marker.setPosition(place.geometry.location);
         marker.setVisible(true);
 
-        var address = '';
+        let address = '';
         if (place.address_components) {
             address = [
                 (place.address_components[0] && place.address_components[0].short_name || ''),
@@ -64,17 +66,21 @@ function initMap() {
         infowindowContent.children['place-name'].textContent = place.name;
         infowindowContent.children['place-address'].textContent = address;
         infowindow.open(map, marker);
-
-
     });
 
     setMarkers();
 
+    // Create myGeolocation button
+    let centerControlDiv = document.createElement('div');
+    let centerControl = new CenterControl(centerControlDiv, map);
+    centerControlDiv.index = 1;
+    map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(centerControlDiv);
+
     function createInfoOfferTable(tableID) {
-        var tableRef = document.getElementById(tableID);
-        var newRow = tableRef.insertRow(0);
-        var newCell = newRow.insertCell(0);
-        var newText = document.createTextNode('New top row');
+        let tableRef = document.getElementById(tableID);
+        let newRow = tableRef.insertRow(0);
+        let newCell = newRow.insertCell(0);
+        let newText = document.createTextNode('New top row');
         newCell.appendChild(newText);
     }
 
@@ -111,7 +117,7 @@ function drawPoints(data) {
         } else {
             url = "/img/blank.png";
         }
-        var marker = new google.maps.Marker({
+        let marker = new google.maps.Marker({
             position: {lat: offer.coordinates.latitude, lng: offer.coordinates.longitude},
             map: map,
             icon: {
@@ -120,17 +126,17 @@ function drawPoints(data) {
         });
         markers.push(marker);
         marker.addListener('click', function() {
-            var tableRef = document.getElementById('offerInfoTable');
+            let tableRef = document.getElementById('offerInfoTable');
             $("#offerInfoTable tr").remove();
             $.each(offer, function (key, value) {
                 if (key != 'coordinates' && key != 'id') {
-                    var newRow = tableRef.insertRow();
-                    var newCell = newRow.insertCell();
-                    var newText = document.createTextNode(key);
+                    let newRow = tableRef.insertRow();
+                    let newCell = newRow.insertCell();
+                    let newText = document.createTextNode(key);
                     newCell.appendChild(newText);
 
-                    var newCell = newRow.insertCell();
-                    var newText = document.createTextNode(value);
+                    newCell = newRow.insertCell();
+                    newText = document.createTextNode(value);
                     newCell.appendChild(newText);
                 }
             });
@@ -139,7 +145,74 @@ function drawPoints(data) {
 }
 
 function deleteMarkers() {
-    for (var i = 0; i < markers.length; i++) {
+    for (let i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
     }
+}
+
+// Button "Find my location"
+function findMyCoordinates() {
+    let mycoord = null;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            mycoord = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            // return pos;
+/*
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Location found.');
+            infoWindow.open(map);
+            map.setCenter(pos);
+*/
+        }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+
+    return mycoord;
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+    }
+
+}
+
+function CenterControl(controlDiv, map) {
+    // Set CSS for the control border.
+    let controlUI = document.createElement('div');
+    controlUI.style.backgroundColor = '#fff';
+    controlUI.style.border = '2px solid #fff';
+    controlUI.style.borderRadius = '3px';
+    controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+    controlUI.style.cursor = 'pointer';
+    controlUI.style.marginBottom = '22px';
+    controlUI.style.textAlign = 'center';
+    controlUI.style.paddingRight = '5px';
+    controlUI.title = 'Определить местоположение';
+    controlDiv.appendChild(controlUI);
+
+    // Set CSS for the control interior.
+    let controlText = document.createElement('div');
+    controlText.style.color = 'rgb(25,25,25)';
+    controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+    controlText.style.fontSize = '16px';
+    controlText.style.lineHeight = '38px';
+    controlText.style.paddingLeft = '5px';
+    controlText.style.paddingRight = '5px';
+    controlText.innerHTML = 'Center Map';
+    controlUI.appendChild(controlText);
+
+    // Setup the click event listeners: simply set the map to Chicago.
+    controlUI.addEventListener('click', function() {
+        map.setCenter(findMyCoordinates());
+    });
 }
