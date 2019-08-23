@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.controller.rest;
+package org.bootcamp.trashhunter.controllers.rest;
 
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.TrashType;
@@ -16,16 +16,14 @@ public class OfferRestController {
     @Autowired
     private OfferService offerService;
 
-    @PostMapping
-    public List<Offer> getOffers(@RequestBody Map<String, Object> map) {
-        if (map.size() == 0) {
+
     @GetMapping("/deleteOffer/{offerId}")
     public void deleteOffer(@PathVariable Long offerId){
         offerService.deleteById(offerId);
     }
 
-    @PostMapping("/getMeeting")
-    public List<Offer> getMeeting(@RequestBody Map<String, Object> map) {
+    @PostMapping
+    public List<Offer> getOffersWithFilterMap(@RequestBody Map<String, Object> map) {
         if (map.size() == 0) {
             return offerService.getAll();
         }
@@ -33,7 +31,7 @@ public class OfferRestController {
     }
 
     @GetMapping
-    public List<Offer> getAllOffers() {
+    public List<Offer> getMeeting() {
         return offerService.getAll();
     }
 }

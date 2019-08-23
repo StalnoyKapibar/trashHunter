@@ -1,12 +1,11 @@
-package org.bootcamp.trashhunter.controller;
+package org.bootcamp.trashhunter.controllers;
 
 import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.token.VerificationToken;
-import org.bootcamp.trashhunter.services.MailService;
 import org.bootcamp.trashhunter.services.impl.UserService;
-import org.bootcamp.trashhunter.services.tokens.VerificationTokenService;
+import org.bootcamp.trashhunter.services.impl.tokens.VerificationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Controller
 public class RegistrationController {

@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.controller.rest;
+package org.bootcamp.trashhunter.controllers.rest;
 
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.Taker;
