@@ -1,9 +1,100 @@
 var map;
 var markers = [];
+var infoWindow;
+var geocoder;
 
 function initMap() {
     //todo
-    let geocoder = new google.maps.Geocoder;
+    geocoder = new google.maps.Geocoder;
+    let styledMapType = new google.maps.StyledMapType(
+        [
+            {
+                "elementType": "geometry",
+                "stylers": [{"color": "#f5f5f5"}]
+            },
+            {
+                "elementType": "labels.icon",
+                "stylers": [{"visibility": "off"}]
+            },
+            {
+                "elementType": "labels.text.fill",
+                "stylers": [{"color": "#616161"}]
+            },
+            {
+                "elementType": "labels.text.stroke",
+                "stylers": [{"color": "#f5f5f5"}]
+            },
+            {
+                "featureType": "administrative.land_parcel", "elementType": "labels.text.fill",
+                "stylers": [{"color": "#bdbdbd"}]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [{"color": "#eeeeee"}]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "labels.text.fill",
+                "stylers": [{"color": "#757575"}]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "geometry",
+                "stylers": [{"color": "#0adc51"}]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "labels.text.fill",
+                "stylers": [{"color": "#9e9e9e"}]
+            },
+            {
+                "featureType": "road",
+                "elementType": "geometry",
+                "stylers": [{"color": "#ffc107"}]
+            },
+            {
+                "featureType": "road.arterial",
+                "elementType": "labels.text.fill",
+                "stylers": [{"color": "#757575"}]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry",
+                "stylers": [{"color": "#ff9907"}]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "labels.text.fill",
+                "stylers": [{"color": "#616161"}]
+            },
+            {
+                "featureType": "road.local",
+                "elementType": "labels.text.fill",
+                "stylers": [{"color": "#9e9e9e"}]
+            },
+            {
+                "featureType": "transit.line",
+                "elementType": "geometry",
+                "stylers": [{"color": "#e5e5e5"}]
+            },
+            {
+                "featureType": "transit.station",
+                "elementType": "geometry",
+                "stylers": [{"color": "#eeeeee"}]
+            },
+            {
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [{"color": "#4d90fe"}]
+                // /* water color styled map: 007bff*/
+            },
+            {
+                "featureType": "water",
+                "elementType": "labels.text.fill",
+                "stylers": [{"color": "#9e9e9e"}]
+            }
+        ], {name: 'Styled Map'});
 
     let viborg = {lat: 60.70768064991953, lng: 28.753881993229232};
     map = new google.maps.Map(document.getElementById('map'), {
@@ -11,9 +102,17 @@ function initMap() {
         zoom: 13,
         gestureHandling: 'cooperative',
         streetViewControl: false,
-        mapTypeControl: false,
-        mapTypeId: 'hybrid'
+        // mapTypeControl: false,
+        // mapTypeId: 'hybrid'
+        mapTypeControlOptions: {
+            position: google.maps.ControlPosition.BOTTOM_LEFT,
+            mapTypeIds: ['hybrid', 'styled_map']
+        }
     });
+
+    //Associate the styled map with the MapTypeId and set it to display.
+    map.mapTypes.set('styled_map', styledMapType);
+    map.setMapTypeId('styled_map');
 
     let card = document.getElementById('pac-card');
     let input = document.getElementById('pac-input');
@@ -24,16 +123,16 @@ function initMap() {
 
     let autocomplete = new google.maps.places.Autocomplete(input);
 
-    let infowindow = new google.maps.InfoWindow();
+    infoWindow = new google.maps.InfoWindow();
     let infowindowContent = document.getElementById('infowindow-content');
-    infowindow.setContent(infowindowContent);
+    infoWindow.setContent(infowindowContent);
     let marker = new google.maps.Marker({
         map: map,
         anchorPoint: new google.maps.Point(0, -29)
     });
 
     autocomplete.addListener('place_changed', function () {
-        infowindow.close();
+        infoWindow.close();
         marker.setVisible(false);
         let place = autocomplete.getPlace();
         if (!place.geometry) {
@@ -61,11 +160,11 @@ function initMap() {
                 (place.address_components[2] && place.address_components[2].short_name || '')
             ].join(' ');
         }
-
+        infoWindow.setContent(infowindowContent);
         infowindowContent.children['place-icon'].src = place.icon;
         infowindowContent.children['place-name'].textContent = place.name;
         infowindowContent.children['place-address'].textContent = address;
-        infowindow.open(map, marker);
+        infoWindow.open(map, marker);
     });
 
     setMarkers();
@@ -75,27 +174,27 @@ function initMap() {
     let centerControl = new CenterControl(centerControlDiv, map);
     centerControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(centerControlDiv);
+}
 
-    function createInfoOfferTable(tableID) {
-        let tableRef = document.getElementById(tableID);
-        let newRow = tableRef.insertRow(0);
-        let newCell = newRow.insertCell(0);
-        let newText = document.createTextNode('New top row');
-        newCell.appendChild(newText);
-    }
+function createInfoOfferTable(tableID) {
+    let tableRef = document.getElementById(tableID);
+    let newRow = tableRef.insertRow(0);
+    let newCell = newRow.insertCell(0);
+    let newText = document.createTextNode('New top row');
+    newCell.appendChild(newText);
+}
 
-    function setMarkers() {
-        $.ajax({
-            url: "/api/offer",
-            dataType: "json",
-            type: "GET",
-            contentType: "application/json; charset=utf-8",
-            async: false,
-            success: function (data) {
-                drawPoints(data);
-            }
-        });
-    }
+function setMarkers() {
+    $.ajax({
+        url: "/api/offer",
+        dataType: "json",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        success: function (data) {
+            drawPoints(data);
+        }
+    });
 }
 
 function drawPoints(data) {
@@ -121,11 +220,11 @@ function drawPoints(data) {
             position: {lat: offer.coordinates.latitude, lng: offer.coordinates.longitude},
             map: map,
             icon: {
-               url: url
+                url: url
             }
         });
         markers.push(marker);
-        marker.addListener('click', function() {
+        marker.addListener('click', function () {
             let tableRef = document.getElementById('offerInfoTable');
             $("#offerInfoTable tr").remove();
             $.each(offer, function (key, value) {
@@ -150,42 +249,6 @@ function deleteMarkers() {
     }
 }
 
-// Button "Find my location"
-function findMyCoordinates() {
-    let mycoord = null;
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            mycoord = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            // return pos;
-/*
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
-            map.setCenter(pos);
-*/
-        }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-        });
-    } else {
-        // Browser doesn't support Geolocation
-        handleLocationError(false, infoWindow, map.getCenter());
-    }
-
-    return mycoord;
-
-    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-            'Error: The Geolocation service failed.' :
-            'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
-    }
-
-}
-
 function CenterControl(controlDiv, map) {
     // Set CSS for the control border.
     let controlUI = document.createElement('div');
@@ -196,7 +259,7 @@ function CenterControl(controlDiv, map) {
     controlUI.style.cursor = 'pointer';
     controlUI.style.marginBottom = '22px';
     controlUI.style.textAlign = 'center';
-    controlUI.style.paddingRight = '5px';
+    controlUI.style.marginRight = '10px';
     controlUI.title = 'Определить местоположение';
     controlDiv.appendChild(controlUI);
 
@@ -208,11 +271,39 @@ function CenterControl(controlDiv, map) {
     controlText.style.lineHeight = '38px';
     controlText.style.paddingLeft = '5px';
     controlText.style.paddingRight = '5px';
-    controlText.innerHTML = 'Center Map';
+    controlText.innerHTML = 'Find Me';
     controlUI.appendChild(controlText);
 
-    // Setup the click event listeners: simply set the map to Chicago.
-    controlUI.addEventListener('click', function() {
-        map.setCenter(findMyCoordinates());
+    controlUI.addEventListener('click', function () {
+        setMyCoordinates();
     });
+}
+
+// Button "Find my location"
+function setMyCoordinates() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            let pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Location found.');
+            infoWindow.open(map);
+            map.setCenter(pos);
+        }, function () {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+    }
 }

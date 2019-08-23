@@ -7,10 +7,7 @@
     <title>MainPage</title>
     <link rel="stylesheet" type="text/css" href="/css/map_geo.css">
     <link rel="stylesheet" type="text/css" href="/css/filter.css">
-    <script type="text/javascript" src="/js/trash_filter.js"></script>
-    <script type="text/javascript" src="/js/map_geo.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&libraries=places&callback=initMap"
-            async defer></script>
+
 </head>
 <body>
 <div layout:fragment="content">
@@ -25,10 +22,14 @@
             </div>
         </div>
     </div>
+</div>
 
-    <script th:include="fragments/commonfragments :: scripts"></script>
-    <script type="text/javascript" src="/js/lib/maks.js"></script>
-
+<div layout:fragment="localscripts">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&libraries=places&callback=initMap"
+            async defer></script>
+    <script type="text/javascript" src="/js/styled_map.js"></script>
+    <script type="text/javascript" src="/js/trash_filter.js"></script>
+    <script type="text/javascript" src="/js/map_geo.js"></script>
 </div>
 
 

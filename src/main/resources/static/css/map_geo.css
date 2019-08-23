@@ -23,6 +23,7 @@ html, body {
 
 #infowindow-content {
     display: none;
+    color: #000;
 }
 
 #map #infowindow-content {
@@ -79,3 +80,4 @@ html, body {
     font-weight: 500;
     padding: 6px 12px;
 }
+
