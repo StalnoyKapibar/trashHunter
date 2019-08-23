@@ -1,15 +1,5 @@
 $(document).ready(function () {
-    // 'use strict';
-    // feather.replace();
-
     getTable();
-    // $('#sortBy option').each(function () {
-    //     var param = $(this);
-    //     if (location.href.indexOf(param.val()) !== -1) {
-    //         param.prop('selected', true);
-    //     }
-    // });
-
 });
 
 function getTable() {
@@ -18,7 +8,6 @@ function getTable() {
         url: "/api/sender/my_offers",
         type: "GET",
         success: function (result) {
-            let res = result;
             $('#employerTable tbody').empty();
             $.each(result, function (offer, takers) {
 
@@ -60,9 +49,16 @@ function getTable() {
                             $.each(takers, function (i, taker) {
                                 offerRow += '<div class="row" style="margin-bottom: 1%">' +
                                     '<div class="col-sm-1"></div>' +
-                                    '<div class="col-sm-7">'
-                                    + taker.name + ' ' +
-                                    taker.email +
+                                    '<div class="input-group col-sm-3">' +
+                                    '<div class="input-group-prepend">'+
+                                    '<span class="input-group-text"><i class="fas fa-user"></i></span>'+ '</div>'+
+                                    '<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="'+
+                                    taker.name +'" disabled>' + '</div>' +
+                                    '<div class="input-group col-sm-4">' +
+                                    '<div class="input-group-prepend">'+
+                                    '<span class="input-group-text"><i class="fas fa-envelope"></i></span>'+ '</div>'+
+                                    '<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="'
+                                    + taker.email+'" disabled>' +
                                     '</div>' +
                                     '<button class="btn btn-primary btn-icon "' +
                                     'onclick="confirmOffer(' + taker.id +',' + offerId + ')">' +
@@ -121,18 +117,6 @@ function getTable() {
     });
 }
 
-// function sort() {
-//     if (document.getElementById('sort').checked) {
-//         $('#sort').addClass("is-valid");
-//         $('#employerTable tbody').empty();
-//         getTable('active');
-//
-//     } else {
-//         $('#sort').removeClass("is-valid");
-//         $('#employerTable tbody').empty();
-//         getTable('all');
-//     }
-// }
 function deleteOffer(offerId) {
     $.ajax({
         url: '/api/sender/deleteOffer/' + offerId,
