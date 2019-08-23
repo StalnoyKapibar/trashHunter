@@ -1,21 +1,20 @@
 package org.bootcamp.trashhunter.config;
 
-import org.bootcamp.trashhunter.models.*;
-import org.bootcamp.trashhunter.models.embedded.Coordinates;
-import org.bootcamp.trashhunter.models.Offer;
+
+import org.bootcamp.trashhunter.models.UserFavorites;
+import org.bootcamp.trashhunter.models.OfferStatus;
 import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.models.TrashType;
+import org.bootcamp.trashhunter.models.Offer;
+import org.bootcamp.trashhunter.models.embedded.Coordinates;
 import org.bootcamp.trashhunter.services.impl.OfferService;
 import org.bootcamp.trashhunter.services.impl.SenderService;
 import org.bootcamp.trashhunter.services.impl.TakerService;
+import org.bootcamp.trashhunter.services.impl.UserFavoritesService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class InitData {
 
@@ -28,30 +27,47 @@ public class InitData {
     @Autowired
     TakerService takerService;
 
+	@Autowired
+	UserFavoritesService userFavoritesService;
+
     private void init() {
         initSenders();
         initTakers();
         initRandomOffers(40);
+		initUserFavorites();
+    }
+
+    private void initUserFavorites() {
+        UserFavorites uf1 = new UserFavorites(1L, 4L);
+        userFavoritesService.add(uf1);
+        UserFavorites uf2 = new UserFavorites(1L, 5L);
+        userFavoritesService.add(uf2);
+        UserFavorites uf3 = new UserFavorites(2L, 5L);
+        userFavoritesService.add(uf3);
+        UserFavorites uf4 = new UserFavorites(6L, 1L);
+        userFavoritesService.add(uf4);
+        UserFavorites uf5 = new UserFavorites(1L, 6L);
+        userFavoritesService.add(uf5);
+        UserFavorites uf6 = new UserFavorites(5L, 2L);
+        userFavoritesService.add(uf6);
     }
 
     private void initSenders() {
-        Sender sender1 = new Sender("sender1@mail.ru", "Mixa", "sender1", LocalDate.now());
+        Sender sender1 = new Sender("sender1@mail.ru", "Mixa", "sender1", LocalDate.now(), "Viborg, Russia");
         senderService.add(sender1);
-        Sender sender2 = new Sender("sender2@mail.ru", "Max", "sender2", LocalDate.now());
+        Sender sender2 = new Sender("sender2@mail.ru", "Max", "sender2", LocalDate.now(), "Viborg, Russia");
         senderService.add(sender2);
-        Sender sender3 = new Sender("sender3@mail.ru", "Ivan", "sender3", LocalDate.now());
+        Sender sender3 = new Sender("sender3@mail.ru", "Ivan", "sender3", LocalDate.now(), "Viborg, Russia");
         senderService.add(sender3);
-
     }
 
     private void initTakers() {
-        Taker taker1 = new Taker("taker1@mail.ru", "Yura", "taker1", LocalDate.now());
+        Taker taker1 = new Taker("taker1@mail.ru", "Yura", "taker1", LocalDate.now(), "Viborg, Russia");
         takerService.add(taker1);
-        Taker taker2 = new Taker("taker2@mail.ru", "Matvey", "taker2", LocalDate.now());
+        Taker taker2 = new Taker("taker2@mail.ru", "Matvey", "taker2", LocalDate.now(), "Viborg, Russia");
         takerService.add(taker2);
-        Taker taker3 = new Taker("taker3@mail.ru", "Denis", "taker3", LocalDate.now());
+        Taker taker3 = new Taker("taker3@mail.ru", "Denis", "taker3", LocalDate.now(), "Viborg, Russia");
         takerService.add(taker3);
-
     }
 
     private void initRandomOffers(int quantity) {

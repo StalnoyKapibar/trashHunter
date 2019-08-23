@@ -2,10 +2,24 @@ var map;
 var markers = [];
 var infoWindow;
 var geocoder;
+var city = $("meta[name='defined_city']").attr("content");
+var latitude;
+var longitude;
+
+
+function codeAddress() {
+    geocoder = new google.maps.Geocoder;
+     geocoder.geocode({'address': city}, function (results, status) {
+         if (status == google.maps.GeocoderStatus.OK) {
+             latitude = results[0].geometry.location.lat();
+             longitude = results[0].geometry.location.lng();
+             initMap();
+         }
+     });
+}
+
 
 function initMap() {
-    //todo
-    geocoder = new google.maps.Geocoder;
     let styledMapType = new google.maps.StyledMapType(
         [
             {
@@ -96,10 +110,14 @@ function initMap() {
             }
         ], {name: 'Styled Map'});
 
-    let viborg = {lat: 60.70768064991953, lng: 28.753881993229232};
+    if(latitude===undefined){
+        codeAddress();
+    }
+    var viborg = {lat: latitude, lng: longitude};
+
     map = new google.maps.Map(document.getElementById('map'), {
         center: viborg,
-        zoom: 13,
+        zoom: 14,
         gestureHandling: 'cooperative',
         streetViewControl: false,
         // mapTypeControl: false,
@@ -199,7 +217,6 @@ function setMarkers() {
 
 function drawPoints(data) {
     $.each(data, function (id, offer) {
-        console.log(offer);
         let url = null;
         if (offer.trashType == 'PAPER') {
             url = "/img/paper.png";
@@ -220,7 +237,7 @@ function drawPoints(data) {
             position: {lat: offer.coordinates.latitude, lng: offer.coordinates.longitude},
             map: map,
             icon: {
-                url: url
+               url: url
             }
         });
         markers.push(marker);

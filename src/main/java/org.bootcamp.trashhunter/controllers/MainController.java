@@ -1,44 +1,59 @@
-package org.bootcamp.trashhunter.controller;
+package org.bootcamp.trashhunter.controllers;
 
+import org.bootcamp.trashhunter.services.impl.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 
 @Controller
 public class MainController {
 
-//    todo:alls23
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView login(Model model, String error, String logout, Principal user) {
-        ModelAndView mv = new ModelAndView("/index");
-        if (user != null) {
-            return mv;
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/")
+    public String main(@RequestParam(value = "city", required = false) String city, Model model, Principal principal){
+        if (principal != null) {
+            String userCity = userService.findByEmail(principal.getName()).getCity();
+            model.addAttribute("city", !userCity.isEmpty() ? userCity : "Москва, Россия" );
+            return "index";
         }
-        return new ModelAndView("/login");
+        if (city == null) {
+            return "welcome";
+        }
+        model.addAttribute("city", city);
+        return "index";
     }
 
+    @GetMapping(value = "/login")
+    public String login(Model model, Principal user) {
+        return "login";
+    }
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public ModelAndView index(Authentication authentication) {
-//        todo
+    @GetMapping(value = "/index")
+    public String mainPage(Authentication authentication) {
         if (authentication.isAuthenticated()) {
             String role = authentication.getAuthorities().iterator().next().getAuthority();
             if (role.equals("Sender")) {
-                ModelAndView mv = new ModelAndView("sender/sender_page");
-                return mv;
+                return  "sender/sender_page";
+
             } else {
-                ModelAndView mv = new ModelAndView("taker/taker_page");
-                return mv;
+                return  "taker/taker_page";
             }
         } else {
-            ModelAndView mv = new ModelAndView("map");
-            return mv;
+            return "map";
         }
     }
 
+    @GetMapping(value = "/update_password")
+    public String updatePasswordPage(Model model, Principal principal) {
+
+        return "update_password";
+
+    }
 }
