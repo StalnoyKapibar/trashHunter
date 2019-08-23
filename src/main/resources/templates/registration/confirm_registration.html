@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/commonlayouts}"
+        lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Успешная регистрация</title>
+
+
 </head>
-<body>
-    <H2 th:text="${complete}"></H2>
+<br>
+
+<div  layout:fragment="content">
+    </br></br></br>
+    <span th:if="${complete}">
+    <div class="container">
+        <div class="card text-white bg-success mb-12" style="max-width: 80rem;">
+            <div class="card-header"><H2>Поздравляем</H2></div>
+            <div class="card-body">
+                <h5 class="card-title">Регистрация прошла успешно.</h5>
+                <p class="card-text">Воспользуйтесь навигацией в верхней части сайта для работы с заказом.</p>
+            </div>
+        </div>
+    </div>
+        </span>
+    <span th:if="not ${complete}">
+    <div class="container">
+        <div class="card text-white bg-danger mb-3" style="max-width: 80rem;">
+            <div class="card-header"><H2>Упс..</H2></div>
+            <div class="card-body">
+                <h5 class="card-title">Что-то пошло не так.</h5>
+                <p class="card-text"></p>
+            </div>
+        </div>
+    </div>
+        </span>
+</div>
 </body>
 </html>
