@@ -46,16 +46,10 @@ function getTable() {
                     }
                     if (key == "trashType") {
                         offerRow += ' тип мусора ' + value;
-                        // '</div>'+
-                        // '<div class="card-body"style="background-color: aliceblue">';
+
                     }
-                    if (key == "isActive") {
-                        if (value == "false") {
-                            offerRow += '</div>' +
-                                +'<div class="card-body" style="background-color: aliceblue">' +
-                                'На предложение пока никто не откликнулся :('
-                                + '</div>';
-                        } else {
+                    if (key == "offerStatus") {
+                        if (value == "ACTIVE") {
                             offerRow += '</div>' +
                                 '<div class="card-body" style="background-color: aliceblue">';
                             $.each(takers, function (i, taker) {
@@ -77,6 +71,11 @@ function getTable() {
                                 ;
                             });
                             offerRow += '</div>';
+                        } else {
+                            offerRow += '</div>' +
+                                +'<div class="card-body" style="background-color: aliceblue">' +
+                                'На предложение пока никто не откликнулся :('
+                                + '</div>';
                         }
                     }
 
