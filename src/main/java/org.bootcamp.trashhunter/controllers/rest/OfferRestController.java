@@ -16,7 +16,6 @@ public class OfferRestController {
     @Autowired
     private OfferService offerService;
 
-
     @GetMapping("/deleteOffer/{offerId}")
     public void deleteOffer(@PathVariable Long offerId){
         offerService.deleteById(offerId);
