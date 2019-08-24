@@ -6,6 +6,7 @@ var city = $("meta[name='defined_city']").attr("content");
 var latitude;
 var longitude;
 
+codeAddress();
 
 function codeAddress() {
     geocoder = new google.maps.Geocoder;
@@ -20,6 +21,9 @@ function codeAddress() {
 
 
 function initMap() {
+    if(latitude===undefined){
+        codeAddress();
+    }
     let styledMapType = new google.maps.StyledMapType(
         [
             {
@@ -110,9 +114,6 @@ function initMap() {
             }
         ], {name: 'Styled Map'});
 
-    if(latitude===undefined){
-        codeAddress();
-    }
     var viborg = {lat: latitude, lng: longitude};
 
     map = new google.maps.Map(document.getElementById('map'), {
