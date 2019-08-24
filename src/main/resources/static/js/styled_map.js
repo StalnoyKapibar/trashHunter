@@ -1,0 +1,4 @@
+var styledMapType;
+function initMap() {
+
+}

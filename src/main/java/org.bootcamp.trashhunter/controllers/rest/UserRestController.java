@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.controllers;
+package org.bootcamp.trashhunter.controllers.rest;
 
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.services.abstraction.UserService;

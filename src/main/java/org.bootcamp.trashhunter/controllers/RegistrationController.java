@@ -27,12 +27,14 @@ public class RegistrationController {
 
     @Autowired
     private TakerService takerServiceImpl;
+    private UserService userService;
 
     @Autowired
     private SenderService senderServiceImpl;
 
     @Autowired
     VerificationTokenService verificationTokenService;
+    private VerificationTokenService verificationTokenService;
 
     @GetMapping("/registration")
     public String getRegistrationPage() {
@@ -40,35 +42,17 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String registration(@RequestParam String email, @RequestParam  String password,
-                               @RequestParam  String name, @RequestParam  String role) {
-        // todo duplicate( will be done after merge by Matvey)
+    public String registration(@RequestParam String email, @RequestParam  String password, @RequestParam  String name,
+                               @RequestParam  String role, @RequestParam  String city) {
         User registeredUser = null;
         if ("TAKER".equals(role)) {
-            Taker taker = new Taker();
-            taker.setEmail(email);
-            taker.setName(name);
-            taker.setPassword(password);
-            taker.setRegistrationDate(LocalDate.now());
-            takerServiceImpl.add(taker);
-            registeredUser = taker;
+            registeredUser = new Taker(email, name, password, LocalDate.now(), city);
         } else if ("SENDER".equals(role)) {
-            Sender sender = new Sender();
-            sender.setEmail(email);
-            sender.setName(name);
-            sender.setPassword(password);
-            sender.setRegistrationDate(LocalDate.now());
-            senderServiceImpl.add(sender);
-            registeredUser = sender;
+            registeredUser = new Sender(email, name, password, LocalDate.now() ,city);
         }
-
-        String token = UUID.randomUUID().toString();
-        VerificationToken verificationToken =
-                new VerificationToken(token, registeredUser, verificationTokenService.calculateExpiryDate());
-        verificationTokenService.add(verificationToken);
-        mailService.sendMessage(registeredUser, verificationToken);
-
-        return "registration/complited_registration";
+        userService.add(registeredUser);
+        verificationTokenService.sendToken(registeredUser);
+        return "registration/completed_registration";
     }
 
     @GetMapping(value = "/activate/{token}")

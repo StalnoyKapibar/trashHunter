@@ -24,8 +24,24 @@ public class SenderRestController {
          return offerService.getOffersBySenderIdActiveFirst(1L);
     }
 
-    @GetMapping("/confirmOffer/{id}")
-    public void confirmMyOffers(@PathVariable Long id) {
-        offerService.confirmOffer(id);
+    @GetMapping("/confirmOffer/{takerId}/{offerId}")
+    public void confirmOffers(@PathVariable Long takerId, @PathVariable Long offerId) { offerService.confirmOffer(takerId,offerId); }
+
+    @GetMapping("/makeCompleteOffer/{offerId}")
+    public void makeCompleteOffer(@PathVariable Long offerId) { offerService.makeCompleteOffer(offerId); }
+
+    @GetMapping("/restoreOffer/{offerId}")
+    public void restoreOffer(@PathVariable Long offerId) {
+        offerService.restoreOffer(offerId);
+    }
+
+    @GetMapping("/cancelOffer/{offerId}")
+    public void cancelOffer(@PathVariable Long offerId) {
+        offerService.cancelOffer(offerId);
+    }
+
+    @GetMapping("/deleteOffer/{id}")
+    public void deleteOffer(@PathVariable Long id) {
+        offerService.deleteById(id);
     }
 }
