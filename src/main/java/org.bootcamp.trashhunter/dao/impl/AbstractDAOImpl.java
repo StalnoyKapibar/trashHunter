@@ -1,10 +1,11 @@
 package org.bootcamp.trashhunter.dao.impl;
 
-import org.bootcamp.trashhunter.dao.impl.abstraction.AbstractDao;
+import org.bootcamp.trashhunter.dao.abstraction.AbstractDao;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -62,5 +63,11 @@ public abstract class AbstractDAOImpl<T> implements AbstractDao<T> {
     public void deleteById(Long id) {
         T entity = getById(id);
         delete(entity);
+    }
+
+    public void deleteByID(Long id) {
+        Query query = entityManager.createQuery("DELETE FROM" +clazz.getName() +" e WHERE e.id = :param");
+        query.setParameter("param", id);
+        query.executeUpdate();
     }
 }

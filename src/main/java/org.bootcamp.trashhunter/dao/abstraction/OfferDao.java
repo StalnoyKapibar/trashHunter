@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.dao.impl.abstraction;
+package org.bootcamp.trashhunter.dao.abstraction;
 
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.Taker;

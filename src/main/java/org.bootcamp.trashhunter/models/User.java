@@ -1,8 +1,7 @@
 package org.bootcamp.trashhunter.models;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
@@ -28,6 +27,9 @@ public abstract class User {
     @Column
     private String aboutUser;
 
+    @Column(nullable = false)
+    private String city;
+
     @Lob
     @Column(name="pic")
     private byte[] pic;
@@ -46,11 +48,12 @@ public abstract class User {
         this.pic = pic;
     }
 
-    public User(String email, String name, String password, LocalDate registrationDate) {
+    public User(String email, String name, String password, LocalDate registrationDate, String city) {
         this.password = password;
         this.email = email;
         this.name = name;
         this.registrationDate = registrationDate;
+        this.city = city;
     }
 
     public String getAboutUser() { return aboutUser; }
@@ -103,5 +106,13 @@ public abstract class User {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }
