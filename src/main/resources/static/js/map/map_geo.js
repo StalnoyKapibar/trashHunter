@@ -6,8 +6,6 @@ var city = $("meta[name='defined_city']").attr("content");
 var latitude;
 var longitude;
 
-codeAddress();
-
 function codeAddress() {
     geocoder = new google.maps.Geocoder;
     geocoder.geocode({'address': city}, function (results, status) {
@@ -19,102 +17,14 @@ function codeAddress() {
     });
 }
 
-
 function initMap() {
-    if(latitude===undefined){
+    if (latitude === undefined) {
         codeAddress();
     }
-    let styledMapType = new google.maps.StyledMapType(
-        [
-            {
-                "elementType": "geometry",
-                "stylers": [{"color": "#f5f5f5"}]
-            },
-            {
-                "elementType": "labels.icon",
-                "stylers": [{"visibility": "off"}]
-            },
-            {
-                "elementType": "labels.text.fill",
-                "stylers": [{"color": "#616161"}]
-            },
-            {
-                "elementType": "labels.text.stroke",
-                "stylers": [{"color": "#f5f5f5"}]
-            },
-            {
-                "featureType": "administrative.land_parcel", "elementType": "labels.text.fill",
-                "stylers": [{"color": "#bdbdbd"}]
-            },
-            {
-                "featureType": "poi",
-                "elementType": "geometry",
-                "stylers": [{"color": "#eeeeee"}]
-            },
-            {
-                "featureType": "poi",
-                "elementType": "labels.text.fill",
-                "stylers": [{"color": "#757575"}]
-            },
-            {
-                "featureType": "poi.park",
-                "elementType": "geometry",
-                "stylers": [{"color": "#0adc51"}]
-            },
-            {
-                "featureType": "poi.park",
-                "elementType": "labels.text.fill",
-                "stylers": [{"color": "#9e9e9e"}]
-            },
-            {
-                "featureType": "road",
-                "elementType": "geometry",
-                "stylers": [{"color": "#ffc107"}]
-            },
-            {
-                "featureType": "road.arterial",
-                "elementType": "labels.text.fill",
-                "stylers": [{"color": "#757575"}]
-            },
-            {
-                "featureType": "road.highway",
-                "elementType": "geometry",
-                "stylers": [{"color": "#ff9907"}]
-            },
-            {
-                "featureType": "road.highway",
-                "elementType": "labels.text.fill",
-                "stylers": [{"color": "#616161"}]
-            },
-            {
-                "featureType": "road.local",
-                "elementType": "labels.text.fill",
-                "stylers": [{"color": "#9e9e9e"}]
-            },
-            {
-                "featureType": "transit.line",
-                "elementType": "geometry",
-                "stylers": [{"color": "#e5e5e5"}]
-            },
-            {
-                "featureType": "transit.station",
-                "elementType": "geometry",
-                "stylers": [{"color": "#eeeeee"}]
-            },
-            {
-                "featureType": "water",
-                "elementType": "geometry",
-                "stylers": [{"color": "#4d90fe"}]
-                // /* water color styled map: 007bff*/
-            },
-            {
-                "featureType": "water",
-                "elementType": "labels.text.fill",
-                "stylers": [{"color": "#9e9e9e"}]
-            }
-        ], {name: 'Styled Map'});
 
-    var viborg = {lat: latitude, lng: longitude};
+    let styledMapType = new google.maps.StyledMapType(styledMapPropertiesArray, {name: 'Styled Map'});
+
+    let viborg = {lat: latitude, lng: longitude};
 
     map = new google.maps.Map(document.getElementById('map'), {
         center: viborg,
@@ -297,7 +207,7 @@ function CenterControl(controlDiv, map) {
     });
 }
 
-// Button "Find my location"
+// Button "Find Me"
 function setMyCoordinates() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
