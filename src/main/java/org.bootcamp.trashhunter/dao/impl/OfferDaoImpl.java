@@ -1,8 +1,7 @@
 package org.bootcamp.trashhunter.dao.impl;
 
 
-import org.bootcamp.trashhunter.dao.impl.abstraction.AbstractDao;
-import org.bootcamp.trashhunter.dao.impl.abstraction.OfferDao;
+import org.bootcamp.trashhunter.dao.abstraction.OfferDao;
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.Taker;
 import org.springframework.stereotype.Repository;

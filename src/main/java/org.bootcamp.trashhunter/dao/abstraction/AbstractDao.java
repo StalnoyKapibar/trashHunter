@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.dao.impl.abstraction;
+package org.bootcamp.trashhunter.dao.abstraction;
 
 import java.util.List;
 

@@ -44,7 +44,7 @@ public class EditUserController  {
         String emails = user.getName();
         User user1 = userService.findByEmail(emails);
         user1.setName(name);
-        user1.setAboutUser(aboutUser);
+//        user1.setAboutUser(aboutUser);
         userService.update(user1);
         ModelAndView mv = new ModelAndView("redirect:/edit");
 

@@ -1,15 +1,17 @@
 package org.bootcamp.trashhunter.controller;
 
-import org.bootcamp.trashhunter.dao.impl.UserDao;
-import org.bootcamp.trashhunter.dao.impl.UserFavoritesDao;
+
+import org.bootcamp.trashhunter.dao.abstraction.UserDao;
+import org.bootcamp.trashhunter.dao.abstraction.UserFavoritesDao;
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.UserFavorites;
 import org.bootcamp.trashhunter.models.UserFavoritesDTO;
-import org.bootcamp.trashhunter.services.impl.UserService;
+import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +19,13 @@ import java.util.List;
 public class FavoritesController {
 
 	@Autowired
-	UserService userService;
+    UserService userService;
 
 	@Autowired
-	UserFavoritesDao userFavoritesDao;
+    UserFavoritesDao userFavoritesDao;
 
 	@Autowired
-	UserDao userDao;
+    UserDao userDao;
 
 	@GetMapping(value = "/favorites")
 	private ModelAndView initTest() {

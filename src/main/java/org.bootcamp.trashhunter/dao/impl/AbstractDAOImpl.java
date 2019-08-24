@@ -1,6 +1,6 @@
 package org.bootcamp.trashhunter.dao.impl;
 
-import org.bootcamp.trashhunter.dao.impl.abstraction.AbstractDao;
+import org.bootcamp.trashhunter.dao.abstraction.AbstractDao;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

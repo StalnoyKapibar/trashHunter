@@ -1,6 +1,5 @@
-package org.bootcamp.trashhunter.dao.impl.abstraction;
+package org.bootcamp.trashhunter.dao.abstraction;
 
-import org.bootcamp.trashhunter.models.token.BaseToken;
 import org.bootcamp.trashhunter.models.token.VerificationToken;
 
 public interface VerificationTokenDAO extends BaseTokenDAO<VerificationToken> {

@@ -5,9 +5,8 @@ import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.token.VerificationToken;
 import org.bootcamp.trashhunter.services.abstraction.MailService;
-import org.bootcamp.trashhunter.services.abstraction.SenderService;
-import org.bootcamp.trashhunter.services.abstraction.TakerService;
-import org.bootcamp.trashhunter.services.impl.tokens.VerificationTokenService;
+import org.bootcamp.trashhunter.services.abstraction.UserService;
+import org.bootcamp.trashhunter.services.abstraction.tokens.VerificationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Controller
 public class RegistrationController {
@@ -26,14 +24,9 @@ public class RegistrationController {
     private MailService mailService;
 
     @Autowired
-    private TakerService takerServiceImpl;
     private UserService userService;
 
     @Autowired
-    private SenderService senderServiceImpl;
-
-    @Autowired
-    VerificationTokenService verificationTokenService;
     private VerificationTokenService verificationTokenService;
 
     @GetMapping("/registration")
@@ -57,16 +50,17 @@ public class RegistrationController {
 
     @GetMapping(value = "/activate/{token}")
     public String activate(@PathVariable("token") String token, Model model) {
-        VerificationToken verificationToken = verificationTokenService.findByToken(token);
-        if (verificationToken != null) {
-            boolean complete = verificationTokenService.tokenIsNonExpired(verificationToken);
-            model.addAttribute("complete", complete);
-            if (complete) {
-                verificationTokenService.completeRegistration(verificationToken);
-            }
-        } else {
-            model.addAttribute("complete", false);
-        }
+//        VerificationToken verificationToken = verificationTokenService.findByToken(token);
+//        if (verificationToken != null) {
+////            boolean complete = verificationTokenService.tokenIsNonExpired(verificationToken);
+//            boolean complete = true;
+//            model.addAttribute("complete", complete);
+//            if (complete) {
+//                verificationTokenService.completeRegistration(verificationToken);
+//            }
+//        } else {
+//            model.addAttribute("complete", false);
+//        }
         return "registration/confirm_registration";
     }
 }

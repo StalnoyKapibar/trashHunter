@@ -1,6 +1,6 @@
 package org.bootcamp.trashhunter.dao.impl;
 
-import org.bootcamp.trashhunter.dao.impl.abstraction.SenderDao;
+import org.bootcamp.trashhunter.dao.abstraction.SenderDao;
 import org.bootcamp.trashhunter.models.Sender;
 import org.springframework.stereotype.Repository;
 
