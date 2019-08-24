@@ -28,10 +28,6 @@ public class FileUploadController {
             e.printStackTrace();
         }
         userServiceImpl.update(user1);
-
-        MultipartFile multipartFile = image;
-        System.out.println(image.toString());
-
         return new ResponseEntity(HttpStatus.OK);
     }
 }

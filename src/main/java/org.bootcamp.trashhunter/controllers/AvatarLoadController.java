@@ -15,8 +15,6 @@ import java.security.Principal;
 
 @Controller
 public class AvatarLoadController {
-
-
     @Autowired
     UserServiceImpl userService;
 
@@ -25,10 +23,8 @@ public class AvatarLoadController {
         String email = user.getName();
         User user1 = userService.findByEmail(email);
         byte[] image = user1.getPic();
-
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
-
         return new ResponseEntity<byte[]>(image, headers, HttpStatus.OK);
     }
 

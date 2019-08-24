@@ -32,12 +32,10 @@ public abstract class User {
     @Column(name="pic")
     private byte[] pic;
 
-//    @Column(columnDefinition = "TINYINT")
-//    @Type(type = "org.hibernate.type.NumericBooleanType")
-    private boolean enabled = true;
+    private boolean enabled;
 
     public User() {
-        this.enabled = true;
+        this.enabled = false;
     }
 
     public byte[] getPic() {

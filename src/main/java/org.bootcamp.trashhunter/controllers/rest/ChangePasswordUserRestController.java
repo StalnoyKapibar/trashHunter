@@ -1,4 +1,4 @@
-package org.bootcamp.trashhunter.controllers;
+package org.bootcamp.trashhunter.controllers.rest;
 
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.services.abstraction.UserService;
@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/")
-public class UserRestController {
+public class ChangePasswordUserRestController {
 
     @Autowired
     private UserService userService;
 
 
-    @PostMapping("/change")
+    @PostMapping("/changePass")
     public ResponseEntity changeUserPassword(@RequestParam("new_pass") String password,
                                              @RequestParam("old_pass") String oldPassword) {
         User user = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
