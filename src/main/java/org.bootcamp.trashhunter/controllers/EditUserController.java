@@ -39,8 +39,7 @@ public class EditUserController  {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ModelAndView saveEditedUser(@RequestParam String name, Principal user,
-                                       @RequestParam String aboutUser) {
+    public ModelAndView saveEditedUser(@RequestParam String name, Principal user) {
         String emails = user.getName();
         User user1 = userService.findByEmail(emails);
         user1.setName(name);
