@@ -17,7 +17,7 @@ public class UserDao extends AbstractDAO<User> {
 
     public User findByEmail(String email) {
         return entityManager
-                .createQuery("SELECT u FROM User u WHERE u.email = :param", User.class)
+                .createQuery("FROM User WHERE email = :param", User.class)
                 .setParameter("param", email)
                 .getSingleResult();
     }

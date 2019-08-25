@@ -1,7 +1,6 @@
 package org.bootcamp.trashhunter.dao.impl;
 
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.lang.reflect.ParameterizedType;

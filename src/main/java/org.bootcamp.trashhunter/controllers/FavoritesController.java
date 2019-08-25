@@ -1,10 +1,10 @@
-package org.bootcamp.trashhunter.controller;
+package org.bootcamp.trashhunter.controllers;
 
 import org.bootcamp.trashhunter.dao.impl.UserDao;
 import org.bootcamp.trashhunter.dao.impl.UserFavoritesDao;
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.UserFavorites;
-import org.bootcamp.trashhunter.models.UserFavoritesDTO;
+import org.bootcamp.trashhunter.models.dto.UserFavoritesDTO;
 import org.bootcamp.trashhunter.services.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,10 +26,10 @@ public class FavoritesController {
 	UserDao userDao;
 
 	@GetMapping(value = "/favorites")
-	private ModelAndView initTest() {
+	private ModelAndView getPageFavorites() {
 
 // I get the list of friends of this user (1L):
-		// TODO Сюда передать id Boss'a
+// Сюда передать id Boss'a
 		Long num = 1L;
 		List<UserFavorites> listUf = userFavoritesDao.getAllUserFavById(num);
 
@@ -42,15 +42,13 @@ public class FavoritesController {
 			listFav.add(uf.getUserSubject());
 		}
 
-// I get the Users list by id from the listFav list:
+// Get the Users list by id from the listFav list:
 		List<User> listUsers = userDao.getUsersFriendsListByUsersId(listFav);
-// I create a list of Users using UserFavoritesDTO:
+// Create list of Users using UserFavoritesDTO:
 		List<UserFavoritesDTO> ufDto = new ArrayList<>();
 		for (User lu : listUsers) {
 			ufDto.add(new UserFavoritesDTO(userBoss, lu));
 		}
-
-
 
 // Print ModelAndView for favorites.html:
 		ModelAndView modelAndView = new ModelAndView();
