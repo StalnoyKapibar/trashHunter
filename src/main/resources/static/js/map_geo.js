@@ -257,6 +257,12 @@ function drawPoints(data) {
                     newCell.appendChild(newText);
                 }
             });
+
+            let linkToChatFromTaker = document.getElementById("linkToChatFromTaker");
+            if (linkToChatFromTaker) {
+                linkToChatFromTaker.href="/chat/?partnerId=" + offer.sender.id + "&offerId=" + offer.id;
+                $('#linkToChatFromTaker').show();
+            }
         });
     });
 }
