@@ -64,10 +64,10 @@ public abstract class AbstractDAOImpl<T> implements AbstractDao<T> {
         T entity = getById(id);
         delete(entity);
     }
+
     public void deleteByID(Long id) {
         Query query = entityManager.createQuery("DELETE FROM" +clazz.getName() +" e WHERE e.id = :param");
         query.setParameter("param", id);
-        int rowsDeleted = query.executeUpdate();
-
+        query.executeUpdate();
     }
 }
