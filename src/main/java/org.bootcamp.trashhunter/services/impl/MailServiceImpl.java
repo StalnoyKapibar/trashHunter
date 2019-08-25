@@ -34,9 +34,10 @@ public class MailServiceImpl implements MailService {
             String message = String.format(
                     "Привет , %s! \n" +
                             "благодарим за регистрацию на нашем сервисе. Пожалуйста, перейдите по ссылке снизу: " +
-                            "http://localhost:8080/activate/%s",
+                            "<a href=http://localhost:8080/activate/%s>" + "Ваша ссылка :)" +"</a>",
                     user.getName(),
                     token.getToken()
+
             );
             send(user.getEmail(),"Activatation code", message);
         }

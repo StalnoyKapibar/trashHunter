@@ -26,7 +26,7 @@ public class EditUserController  {
         User user1 = userService.findByEmail(email);
         ModelAndView modelAndView = new ModelAndView();
 
-        if (user1 != null && user1.getClass() == Sender.class) {
+        if( user1 != null && user1.getClass() == Sender.class) {
             modelAndView.setViewName("sender/sender_edit_user");
             Sender sender = (Sender) user1;
             model.addAttribute("user", sender);
@@ -39,14 +39,13 @@ public class EditUserController  {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ModelAndView saveEditedUser(@RequestParam String name, Principal user) {
+    public ModelAndView saveEditedUser(@RequestParam String name, Principal user, @RequestParam String aboutUser) {
         String emails = user.getName();
         User user1 = userService.findByEmail(emails);
         user1.setName(name);
-//        user1.setAboutUser(aboutUser);
+        user1.setAboutUser(aboutUser);
         userService.update(user1);
         ModelAndView mv = new ModelAndView("redirect:/edit");
-
         return mv;
     }
 }

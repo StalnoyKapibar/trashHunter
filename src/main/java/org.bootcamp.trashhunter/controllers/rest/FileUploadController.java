@@ -21,17 +21,13 @@ public class FileUploadController {
         String email = user.getName();
         User user1 = userServiceImpl.findByEmail(email);
 
-//        try {
-//            byte[] photo = image.getBytes();
-//            user1.setPic(photo);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            byte[] photo = image.getBytes();
+            user1.setPic(photo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         userServiceImpl.update(user1);
-
-        MultipartFile multipartFile = image;
-        System.out.println(image.toString());
-
         return new ResponseEntity(HttpStatus.OK);
     }
 }
