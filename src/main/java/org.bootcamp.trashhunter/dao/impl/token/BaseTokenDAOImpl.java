@@ -1,10 +1,12 @@
 package org.bootcamp.trashhunter.dao.impl.token;
 
-import org.bootcamp.trashhunter.dao.impl.AbstractDAO;
+import org.bootcamp.trashhunter.dao.abstraction.BaseTokenDAO;
+import org.bootcamp.trashhunter.dao.impl.AbstractDAOImpl;
 import org.bootcamp.trashhunter.models.token.BaseToken;
 
-public class BaseTokenDAO<T extends BaseToken> extends AbstractDAO<T> {
+public class BaseTokenDAOImpl<T extends BaseToken> extends AbstractDAOImpl<T> implements BaseTokenDAO<T> {
 
+    @Override
     public T findByToken(String token) {
         return entityManager
                 .createQuery("SELECT t FROM " + clazz.getName() + " t WHERE t.token = :param", clazz)
@@ -13,6 +15,7 @@ public class BaseTokenDAO<T extends BaseToken> extends AbstractDAO<T> {
                 .stream().findFirst().orElse(null);
     }
 
+    @Override
     public boolean existsTokenByUserId(Long userId) {
         return !entityManager
                 .createQuery("SELECT t FROM " + clazz.getName() + " t WHERE t.user.id = :id", clazz)
@@ -20,6 +23,7 @@ public class BaseTokenDAO<T extends BaseToken> extends AbstractDAO<T> {
                 .getResultList().isEmpty();
     }
 
+    @Override
     public T findTokenByUserId(Long userId) {
         return entityManager
                 .createQuery("SELECT t FROM " + clazz.getName() + " t WHERE t.user.id = :id", clazz)

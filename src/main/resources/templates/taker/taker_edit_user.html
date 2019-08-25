@@ -81,7 +81,7 @@
                                                                 <div class="col mb-3">
                                                                     <div class="form-group">
                                                                         <label>About</label>
-                                                                        <textarea class="form-control" rows="5" name="about" maxlength="120" th:placeholder="${user.aboutUser}"></textarea>
+                                                                        <textarea class="form-control" rows="5" name="about" maxlength="120" th:field="${user.aboutUser}"></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -90,6 +90,7 @@
                                                     <div class="row">
                                                         <div class="col-12 col-sm-6 mb-3">
                                                             <div class="mb-2"><b>Change Password</b></div>
+
                                                         </div>
                                                         <div class="col-12 col-sm-5 offset-sm-1 mb-3">
                                                             <div class="mb-2"><b>Keeping in Touch</b></div>
@@ -151,6 +152,8 @@
             </form>
         </div>
     </div>
+    <th:block th:replace="fragments/commonfragments :: scripts"></th:block>
+    <script type="text/javascript" src="/js/avatar.js"></script>
 </div>
 </body>
 </html>

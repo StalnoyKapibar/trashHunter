@@ -1,8 +1,7 @@
 package org.bootcamp.trashhunter.controllers.rest;
 
 import org.bootcamp.trashhunter.models.Offer;
-import org.bootcamp.trashhunter.models.TrashType;
-import org.bootcamp.trashhunter.services.impl.OfferService;
+import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,6 +1,7 @@
 package org.bootcamp.trashhunter.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
