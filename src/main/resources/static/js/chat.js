@@ -36,7 +36,6 @@ function connect(event) {
 
         let socket = new SockJS('/ws');
         stompClient = Stomp.over(socket);
-
         stompClient.connect({}, onConnected, onError);
     }
     event.preventDefault();
@@ -57,21 +56,17 @@ function showMessage(message) {
     }
 
     messageElement.appendChild(avatarElement);
-
     let usernameElement = document.createElement('span');
     let usernameText = document.createTextNode(message.sender + "(" + message.created + ")");
     usernameElement.appendChild(usernameText);
     messageElement.appendChild(usernameElement);
-
     let textElement = document.createElement('p');
     if (message.type === 'LASTOFFER') {
         textElement.style['background-color'] = colors[9];
     }
     let messageText = document.createTextNode(message.content);
     textElement.appendChild(messageText);
-
     messageElement.appendChild(textElement);
-
     messageArea.appendChild(messageElement);
     messageArea.scrollTop = messageArea.scrollHeight;
 }
@@ -130,10 +125,7 @@ function showOffer() {
     if (chatMessage.content === lastOffer) {
         chatMessage.type = 'LASTOFFER';
     }
-
     stompClient.send(`${topic}/sendMessage`, {}, JSON.stringify(chatMessage));
-
-
 }
 
 function getSelectedOffer() {
@@ -193,7 +185,6 @@ function onMessageReceived(payload) {
         message.content = message.sender + ' left!';
     } else {
         messageElement.classList.add('chat-message');
-
         let avatarElement = document.createElement('i');
         let avatarText = document.createTextNode(message.sender[0]);
         avatarElement.appendChild(avatarText);
@@ -202,9 +193,7 @@ function onMessageReceived(payload) {
             avatarElement = document.createElement("img");
             avatarElement.setAttribute("src", getImageForOffer(message.trashType));
         }
-
         messageElement.appendChild(avatarElement);
-
         let usernameElement = document.createElement('span');
         let usernameText = document.createTextNode(message.sender + "(" + message.created + ")");
         usernameElement.appendChild(usernameText);
@@ -219,7 +208,6 @@ function onMessageReceived(payload) {
     textElement.appendChild(messageText);
 
     messageElement.appendChild(textElement);
-
     messageArea.appendChild(messageElement);
     messageArea.scrollTop = messageArea.scrollHeight;
 }
@@ -283,7 +271,6 @@ function getImageForOffer(trashType) {
     } else {
         return "../img/blank.png";
     }
-
 }
 
 $(document).ready(function () {
