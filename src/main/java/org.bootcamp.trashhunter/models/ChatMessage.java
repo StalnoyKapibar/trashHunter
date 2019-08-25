@@ -22,7 +22,7 @@ public class ChatMessage {
 
     private LocalDateTime created;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_fk", nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Sender senderObject;
