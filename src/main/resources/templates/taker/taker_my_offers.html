@@ -5,17 +5,17 @@
         layout:decorate="~{layouts/commonlayouts}"
         lang="en">
 <head>
-    <title>SenderOffers</title>
+    <title>TakerOffers</title>
     <link href="/css/sender.css" rel="stylesheet">
 </head>
 <body>
 <div layout:fragment="content">
-    <div sec:authorize="hasAuthority('Sender')">
+    <div sec:authorize="hasAuthority('Taker')">
         <div class="container">
             <div class="row">
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
-                    <h2>Мои Предложения</h2>
+                    <h2>Мои Заказы</h2>
                 </div>
                 <div class="col-sm-4"></div>
 
@@ -26,7 +26,7 @@
                     <table id="employerTable" class="table"
                            width="100%">
                         <tbody align="center">
-                        <!--Loaded from sender_offer.js getTable()-->
+                        <!--Loaded from taker_offer.js getTable()-->
                         </tbody>
                     </table>
                 </div>
@@ -35,7 +35,7 @@
     </div>
 </div>
 <div layout:fragment="localscripts">
-    <script src="/js/sender/sender_offers.js"></script>
+    <script src="/js/taker/taker_offers.js"></script>
 </div>
 </body>
 </html>
