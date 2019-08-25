@@ -19,7 +19,7 @@ function validatePass() {
         let token = $("meta[name='_csrf']").attr("content");
         let header = $("meta[name='_csrf_header']").attr("content");
         $.ajax({
-            url: "/api/change",
+            url: "/api/user/change_password",
             type: 'POST',
             // dataType: "application/json; charset=utf-8",
             data: passChange,
@@ -45,7 +45,4 @@ function validatePass() {
         });
 
     }
-
-
-
 };

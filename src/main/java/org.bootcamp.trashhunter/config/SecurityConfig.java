@@ -55,11 +55,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/registration").anonymous()
+                .antMatchers("/registration", "/activate/*","/api/user/resend_email_for_token_recovery").anonymous()
                 .antMatchers("/", "/api/tags/**", "/api/vacancies/**", "/css/*", "/js/*", "/vacancy/**" ).permitAll()
                 .antMatchers("/admin/**").access("hasAnyRole('Taker','Sender')").anyRequest().authenticated()
-                .antMatchers("/update_password", "api/change").access("hasAnyRole('User')").anyRequest().authenticated()
-                .antMatchers("/", "/api/offer/**", "/css/*", "/js/*", "/img/*", "/activate/*").permitAll()
+                .antMatchers( "api/user/change_password").access("hasAnyRole('User')").anyRequest().authenticated()
+                .antMatchers("/", "/api/offer/**", "/css/*", "/js/*", "/img/*").permitAll()
                 .antMatchers("/admin/**").access("hasAnyRole('Taker','Sender')").anyRequest().authenticated();
     }
 

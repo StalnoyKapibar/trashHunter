@@ -14,7 +14,7 @@ public class MyController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/update_password")
+    @GetMapping(value = "api/user/change_password")
     public String updatePasswordPage(Model model, Principal principal) {
 
         return "update_password";
