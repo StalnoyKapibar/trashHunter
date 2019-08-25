@@ -16,6 +16,7 @@ function validatePass() {
                           'new_pass': newPass
         };
 
+        //todo убрать токены
         let token = $("meta[name='_csrf']").attr("content");
         let header = $("meta[name='_csrf_header']").attr("content");
         $.ajax({

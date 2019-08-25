@@ -20,7 +20,7 @@ public class Offer {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Sender sender;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
     @JoinTable(name = "offers_takers",
             joinColumns = @JoinColumn(name = "offer_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "taker_id", referencedColumnName = "id"))
@@ -136,11 +136,11 @@ public class Offer {
         isSorted = sorted;
     }
 
-    public OfferStatus getStatus() {
+    public OfferStatus getOfferStatus() {
         return offerStatus;
     }
 
-    public void setStatus(OfferStatus offerStatus) {
+    public void setOfferStatus(OfferStatus offerStatus) {
         this.offerStatus = offerStatus;
     }
 

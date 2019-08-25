@@ -4,10 +4,9 @@ import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.token.VerificationToken;
-import org.bootcamp.trashhunter.services.impl.MailService;
-import org.bootcamp.trashhunter.services.impl.SenderService;
-import org.bootcamp.trashhunter.services.impl.TakerService;
-import org.bootcamp.trashhunter.services.impl.tokens.VerificationTokenService;
+import org.bootcamp.trashhunter.services.abstraction.MailService;
+import org.bootcamp.trashhunter.services.abstraction.UserService;
+import org.bootcamp.trashhunter.services.abstraction.tokens.VerificationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Controller
 public class RegistrationController {
@@ -26,13 +24,10 @@ public class RegistrationController {
     private MailService mailService;
 
     @Autowired
-    private TakerService takerService;
+    private UserService userService;
 
     @Autowired
-    private SenderService senderService;
-
-    @Autowired
-    VerificationTokenService verificationTokenService;
+    private VerificationTokenService verificationTokenService;
 
     @GetMapping("/registration")
     public String getRegistrationPage() {
@@ -40,35 +35,17 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String registration(@RequestParam String email, @RequestParam  String password,
-                               @RequestParam  String name, @RequestParam  String role) {
-        // todo duplicate( will be done after merge by Matvey)
+    public String registration(@RequestParam String email, @RequestParam  String password, @RequestParam  String name,
+                               @RequestParam  String role, @RequestParam  String city) {
         User registeredUser = null;
         if ("TAKER".equals(role)) {
-            Taker taker = new Taker();
-            taker.setEmail(email);
-            taker.setName(name);
-            taker.setPassword(password);
-            taker.setRegistrationDate(LocalDate.now());
-            takerService.add(taker);
-            registeredUser = taker;
+            registeredUser = new Taker(email, name, password, LocalDate.now(), city);
         } else if ("SENDER".equals(role)) {
-            Sender sender = new Sender();
-            sender.setEmail(email);
-            sender.setName(name);
-            sender.setPassword(password);
-            sender.setRegistrationDate(LocalDate.now());
-            senderService.add(sender);
-            registeredUser = sender;
+            registeredUser = new Sender(email, name, password, LocalDate.now() ,city);
         }
-
-        String token = UUID.randomUUID().toString();
-        VerificationToken verificationToken =
-                new VerificationToken(token, registeredUser, verificationTokenService.calculateExpiryDate());
-        verificationTokenService.add(verificationToken);
-        mailService.sendMessage(registeredUser, verificationToken);
-
-        return "registration/complited_registration";
+        userService.add(registeredUser);
+        verificationTokenService.sendToken(registeredUser);
+        return "registration/completed_registration";
     }
 
     @GetMapping(value = "/activate/{token}")
@@ -76,6 +53,7 @@ public class RegistrationController {
         VerificationToken verificationToken = verificationTokenService.findByToken(token);
         if (verificationToken != null) {
             boolean complete = verificationTokenService.tokenIsNonExpired(verificationToken);
+
             model.addAttribute("complete", complete);
             if (complete) {
                 verificationTokenService.completeRegistration(verificationToken);
