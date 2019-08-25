@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/commonlayouts}"
+        lang="en">
+<head>
+    <title>MainPage</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&libraries=places&callback=initMap"
+            async defer></script>
+    <script type="text/javascript" src="/js/sender/point_location.js"></script>
+</head>
+<body>
+<div  layout:fragment="content">
+    <div class="container-fluid">
+        <div class="row" style="height: 40px"></div>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4" align="center" style="color: #7295B1">
+                <form action="/new_offer" method="post">
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class=" selectContainer">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-list"></i></span>
+                                    </div>
+                                    <select name="trashType" id="trashType" class="form-control selectpicker"
+                                            required="required">
+                                        <option value="">Выбирите тип мусора</option>
+                                        <option value="METAL">Металл</option>
+                                        <option value="PAPER">Бумага</option>
+                                        <option value="FOOD">Пищевые отходы</option>
+                                        <option value="PLASTIC">Пластик</option>
+                                        <option value="WOOD">Дерево</option>
+                                        <option value="GLASS">Стекло</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class=" selectContainer">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-list"></i></span>
+                                    </div>
+                                    <select name="isSorted" id="isSorted" class="form-control selectpicker"
+                                            required="required">
+                                        <option value="">Выбирите тип сортировки</option>
+                                        <option value="true">Отсортировано</option>
+                                        <option value="false">Не сортировано</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-plus-square"></i></span>
+                                    </div>
+                                    <input name="weight" style="width: 30%" id="weight"
+                                           class="form-control" type="number" placeholder="Введите вес">
+                                    <label class="mr-sm-2 ml-1"> кг </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-plus-square"></i></span>
+                                    </div>
+                                    <input name="volume" style="width: 30%" id="volume"
+                                           class="form-control" type="number" placeholder="Введите объём">
+                                    <label class="mr-sm-2 ml-1"> м³ </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-plus-square"></i></span>
+                                    </div>
+                                    <input name="price" style="width: 30%" id="price"
+                                           class="form-control" type="number" placeholder="Введите примерную цену">
+                                    <label class="mr-sm-2 ml-1"> руб </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                        <div class="col-sm-1"></div>
+                        <label class="col control-label">Указать адрес вывоза</label>
+                        <div class="col-md-12 inputGroupContainer">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="button" data-toggle="modal"
+                                                    data-target="#mapModal" style="background-color: #F39C12; color: #222"
+                                                    onclick="initV_Map()"><i class="fas fa-map"></i>
+                                            </button>
+                                        </span>
+                                </div>
+                                <input name="v_address" id="v_address"
+                                       placeholder="<- открыть карту"
+                                       class="form-control" type="text" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-1"></div>
+                            <label class="col-md-11 control-label">Описание вашего предложения</label>
+                            <div class="col-md-12 inputGroupContainer">
+                                <div class="input-group">
+                                    <textarea name="v_shortDescription" id="v_shortDescription" rows="3" maxlength="255"
+                                              placeholder="описание не более 255 символов" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" align="center">
+                            <button type="submit" class="btn btn-warning" style="width: 250px;">
+                                Зарегистрироваться <i class="fas fa-paper-plane "></i>
+                            </button>
+                        </div>
+                        <input type="hidden" th:attr="name=${_csrf.parameterName},value=${_csrf.token}"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- mapModal -->
+    <div id="mapModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Укажите место на карте</h2>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <input name="v_address_modal" id="v_address_modal"
+                           placeholder="Введите полный адрес вручную или выберите на карте"
+                           class="form-control is-invalid" type="text">
+                </div>
+                <div id="v_map" style="height: 600px"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
