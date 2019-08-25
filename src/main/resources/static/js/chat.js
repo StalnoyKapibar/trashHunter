@@ -137,16 +137,18 @@ function showOffer() {
 }
 
 function getSelectedOffer() {
-    return $.ajax({
-        url: '/api/offer/' + offerId.val(),
-        dataType: "json",
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        async: false,
-        success: function (data) {
-            dataFromOffer = data;
-        }
-    });
+    if (offerId.val()) {
+        $.ajax({
+            url: '/api/offer/' + offerId.val(),
+            dataType: "json",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            success: function (data) {
+                dataFromOffer = data;
+            }
+        });
+    }
 }
 
 function onConnected() {
