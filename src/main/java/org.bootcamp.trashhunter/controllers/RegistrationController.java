@@ -27,7 +27,7 @@ public class RegistrationController {
     private UserService userService;
 
     @Autowired
-    private VerificationTokenService verificationTokenService;
+    private VerificationTokenService<VerificationToken> verificationTokenService;
 
     @GetMapping("/registration")
     public String getRegistrationPage() {
@@ -50,17 +50,17 @@ public class RegistrationController {
 
     @GetMapping(value = "/activate/{token}")
     public String activate(@PathVariable("token") String token, Model model) {
-//        VerificationToken verificationToken = verificationTokenService.findByToken(token);
-//        if (verificationToken != null) {
-////            boolean complete = verificationTokenService.tokenIsNonExpired(verificationToken);
-//            boolean complete = true;
-//            model.addAttribute("complete", complete);
-//            if (complete) {
-//                verificationTokenService.completeRegistration(verificationToken);
-//            }
-//        } else {
-//            model.addAttribute("complete", false);
-//        }
+        VerificationToken verificationToken = verificationTokenService.findByToken(token);
+        if (verificationToken != null) {
+            boolean complete = verificationTokenService.tokenIsNonExpired(verificationToken);
+
+            model.addAttribute("complete", complete);
+            if (complete) {
+                verificationTokenService.completeRegistration(verificationToken);
+            }
+        } else {
+            model.addAttribute("complete", false);
+        }
         return "registration/confirm_registration";
     }
 }

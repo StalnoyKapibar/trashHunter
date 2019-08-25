@@ -1,11 +1,9 @@
 package org.bootcamp.trashhunter.dao.impl.token;
 
-import org.bootcamp.trashhunter.dao.impl.AbstractDAOImpl;
 import org.bootcamp.trashhunter.dao.abstraction.BaseTokenDAO;
+import org.bootcamp.trashhunter.dao.impl.AbstractDAOImpl;
 import org.bootcamp.trashhunter.models.token.BaseToken;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public class BaseTokenDAOImpl<T extends BaseToken> extends AbstractDAOImpl<T> implements BaseTokenDAO<T> {
 
     @Override

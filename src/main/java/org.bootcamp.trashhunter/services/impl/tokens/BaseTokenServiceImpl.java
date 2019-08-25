@@ -4,16 +4,13 @@ import org.bootcamp.trashhunter.dao.abstraction.BaseTokenDAO;
 import org.bootcamp.trashhunter.models.token.BaseToken;
 import org.bootcamp.trashhunter.services.AbstractServiceImpl;
 import org.bootcamp.trashhunter.services.abstraction.tokens.BaseTokenService;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.Calendar;
 import java.util.Date;
 
-public abstract class BaseTokenServiceImpl<T extends BaseToken> extends AbstractServiceImpl<T> implements BaseTokenService {
+public abstract class BaseTokenServiceImpl<T extends BaseToken> extends AbstractServiceImpl<T> implements BaseTokenService<T> {
 
     protected final BaseTokenDAO<T> baseTokenDAO;
 
-    @Autowired
     public BaseTokenServiceImpl(BaseTokenDAO<T> baseTokenDAO) {
         this.baseTokenDAO = baseTokenDAO;
     }
@@ -40,14 +37,14 @@ public abstract class BaseTokenServiceImpl<T extends BaseToken> extends Abstract
     public boolean existsTokenByUserId(Long userID) {
         return baseTokenDAO.existsTokenByUserId(userID);
     }
-//
-//    @Override
-//    public boolean tokenIsNonExpired(T token) {
-//        Calendar calendar = Calendar.getInstance();
-//        boolean isNonExpired = (token.getExpiryDate().getTime() - calendar.getTime().getTime()) >= 0;
-//        if (!isNonExpired) {
-//            baseTokenDAO.delete(token);
-//        }
-//        return isNonExpired;
-//    }
+
+    @Override
+    public boolean tokenIsNonExpired(T token) {
+        Calendar calendar = Calendar.getInstance();
+        boolean isNonExpired = (token.getExpiryDate().getTime() - calendar.getTime().getTime()) >= 0;
+        if (!isNonExpired) {
+            abstractDAO.delete(token);
+        }
+        return isNonExpired;
+    }
 }
