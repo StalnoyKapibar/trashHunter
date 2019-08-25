@@ -1,6 +1,7 @@
 package org.bootcamp.trashhunter.dao.impl;
 
 
+import org.bootcamp.trashhunter.dao.abstraction.OfferDao;
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.Taker;
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository("offerDao")
-public class OfferDao extends AbstractDAO<Offer> {
+public class OfferDaoImpl extends AbstractDAOImpl<Offer> implements OfferDao {
 
     @PersistenceContext
     protected EntityManager entityManager;
@@ -26,10 +27,11 @@ public class OfferDao extends AbstractDAO<Offer> {
       map.put("isSorted", "true");
       map.put("isFree", "false");
   */
+
     public List<Offer> getFilterQuery(Map<String, Object> map) {
 
         StringBuilder whereQuery = new StringBuilder();
-        whereQuery.append("SELECT o FROM Offer o JOIN FETCH o.sender WHERE o.status<>'COMPLETE'");
+        whereQuery.append("SELECT o FROM Offer o JOIN FETCH o.sender WHERE o.offerStatus<>'COMPLETE'");
 
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             switch (entry.getKey()) {
@@ -71,7 +73,7 @@ public class OfferDao extends AbstractDAO<Offer> {
     public Map<Offer, List<Taker>> getOffersBySenderIdActiveFirst(Long senderId) {
         Map<Offer, List<Taker>> map = new LinkedHashMap<>();
         List<Offer> offers = entityManager
-                .createQuery("SELECT t FROM Offer t WHERE t.sender.id = :id ORDER BY t.offerStatus ", Offer.class)
+                .createQuery("SELECT t FROM Offer t WHERE t.sender.id = :id ORDER BY FIELD (t.offerStatus,'ACTIVE','TAKEN','OPEN','COMPLETE')", Offer.class)
                 .setParameter("id", senderId)
                 .getResultList();
         for (Offer offer : offers) {

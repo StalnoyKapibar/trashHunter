@@ -136,11 +136,11 @@ public class Offer {
         isSorted = sorted;
     }
 
-    public OfferStatus getStatus() {
+    public OfferStatus getOfferStatus() {
         return offerStatus;
     }
 
-    public void setStatus(OfferStatus offerStatus) {
+    public void setOfferStatus(OfferStatus offerStatus) {
         this.offerStatus = offerStatus;
     }
 

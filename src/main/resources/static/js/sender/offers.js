@@ -1,15 +1,5 @@
 $(document).ready(function () {
-    // 'use strict';
-    // feather.replace();
-
     getTable();
-    // $('#sortBy option').each(function () {
-    //     var param = $(this);
-    //     if (location.href.indexOf(param.val()) !== -1) {
-    //         param.prop('selected', true);
-    //     }
-    // });
-
 });
 
 function getTable() {
@@ -18,22 +8,21 @@ function getTable() {
         url: "/api/sender/my_offers",
         type: "GET",
         success: function (result) {
-            let res = result;
             $('#employerTable tbody').empty();
             $.each(result, function (offer, takers) {
-
-                var offerRow =
-                    '<div class="container-fluid">' +
-                    '<div class="row">' +
-                    '<div class="col-sm-2"></div>'+
-                    '<div class="col-sm-10">' +
-                    '<div class="container-fluid cards">' +
-                    '<div class="card" >' +
-                    '<div class="card-header" style="background-color: #7295b1">';
+                let offerRow = '';
                 JSON.parse(offer, function (key, value) {
                     if (key == "id") {
                         offerId = value;
-                        offerRow += ' Заказ№ ' + value + ' ';
+                        offerRow +=
+                            '<div class="container-fluid" id="offer' + offerId +'">' +
+                            '<div class="row">' +
+                            '<div class="col-sm-1"></div>'+
+                            '<div class="col-sm-10">' +
+                            '<div class="container-fluid cards">' +
+                            '<div class="card" id="'+ offerId +'" style="margin-bottom: 1%" >' +
+                            '<div class="card-header" style="color: white; background-color: #7295b1">'+
+                            ' Заказ№ ' + value + ' ';
                     }
                     if (key == "weight") {
                         offerRow += ' вес: ' + value + 'кг ';
@@ -45,62 +34,112 @@ function getTable() {
                         offerRow += ' цена: ' + value + 'руб ';
                     }
                     if (key == "trashType") {
-                        offerRow += ' тип мусора ' + value;
-                        // '</div>'+
-                        // '<div class="card-body"style="background-color: aliceblue">';
+                        offerRow += ' тип мусора: ' + value;
                     }
-                    if (key == "isActive") {
-                        if (value == "false") {
-                            offerRow += '</div>' +
-                                +'<div class="card-body" style="background-color: aliceblue">' +
-                                'На предложение пока никто не откликнулся :('
-                                + '</div>';
-                        } else {
+                    if (key == "offerStatus") {
+                        if (value == "ACTIVE") {
                             offerRow += '</div>' +
                                 '<div class="card-body" style="background-color: aliceblue">';
                             $.each(takers, function (i, taker) {
                                 offerRow += '<div class="row" style="margin-bottom: 1%">' +
                                     '<div class="col-sm-1"></div>' +
-                                    '<div class="col-sm-7">' + taker.name + ' ' +
-                                    taker.email +
+                                    '<div class="input-group col-sm-3">' +
+                                    '<div class="input-group-prepend">'+
+                                    '<span class="input-group-text"><i class="fas fa-user"></i></span>'+ '</div>'+
+                                    '<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="'+
+                                    taker.name +'" disabled>' + '</div>' +
+                                    '<div class="input-group col-sm-4">' +
+                                    '<div class="input-group-prepend">'+
+                                    '<span class="input-group-text"><i class="fas fa-envelope"></i></span>'+ '</div>'+
+                                    '<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="'
+                                    + taker.email+'" disabled>' +
                                     '</div>' +
-                                    '<button class="btn btn-primary col-sm-1"' +
-                                    ' style="margin-right: 1%"' +
+                                    '<button class="btn btn-primary btn-icon "' +
                                     'onclick="confirmOffer(' + taker.id +',' + offerId + ')">' +
-                                    + 'Подвтведрдить' +
+                                     '<span class="icon"><i class="fas fa-check"></i></span>подтвердить' +
                                     '</button>' +
-                                    '<a href="/chat" class="btn btn-secondary col-sm-1" >' +
-                                    +'Чат' +
+                                    '<a href="/chat" class="btn btn-info btn-icon " >' +
+                                    '<span class="icon"><i class="fas fa-comments"></i></span>чат' +
                                     '</a>' +
                                     '<div class="col-sm-1"></div>' +
                                     '</div>';
                                 ;
                             });
                             offerRow += '</div>';
+                        } else if (value == 'COMPLETE'){
+                            offerRow += '</div>' +
+                                '<div class="card-body" style="background-color: navajowhite">' +
+                                '<div class="row"> <div class="col-sm-1"></div>' +
+                                '<div class="col-sm-6"><h5 >Востановить Предложение</h5></div>' +
+                                '<div class="col-sm-5"><button class="btn btn-primary btn-icon "' +
+                                'onclick="restoreOffer(' + offerId + ')">' +
+                                '<span class="icon"><i class="fas fa-trash-restore"></i></span>востановить' +
+                                '</button></div>' +'</div>'+
+                                 '</div>';
+                        } else if (value == 'TAKEN'){
+                            offerRow += '</div>' +
+                                '<div class="card-body" style="background-color: aliceblue">';
+                            $.each(takers, function (i, taker) {
+                                offerRow += '<div class="row" style="margin-bottom: 1%">' +
+                                    '<div class="col-sm-1"></div>' +
+                                    '<div class="input-group col-sm-3">' +
+                                    '<div class="input-group-prepend">'+
+                                    '<span class="input-group-text"><i class="fas fa-user"></i></span>'+ '</div>'+
+                                    '<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="'+
+                                    taker.name +'" disabled>' + '</div>' +
+                                    '<div class="input-group col-sm-4">' +
+                                    '<div class="input-group-prepend">'+
+                                    '<span class="input-group-text"><i class="fas fa-envelope"></i></span>'+ '</div>'+
+                                    '<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="'
+                                    + taker.email+'" disabled>' +
+                                    '</div>' +
+                                    '<button class="btn btn-primary btn-icon "' +
+                                    'onclick="cancelOffer(' + offerId + ')">' +
+                                    '<span class="icon"><i class="fas fa-window-close"></i></span>отказать' +
+                                    '</button>' +
+                                    '   <a href="/chat" class="btn btn-info btn-icon " >' +
+                                        '<span class="icon"><i class="fas fa-comments"></i></span>чат' +
+                                        '</a>' +
+                                        '<div class="col-sm-1"></div>' +
+                                    '</div>';
+                                ;
+                            });
+                            offerRow += '</div>';
+                        } else {
+                            offerRow += '</div>' +
+                                '<div class="card-body" style="background-color: moccasin">' +
+                                '<h4>На предложение пока никто не откликнулся :( </h4>'
+                                + '</div>';
                         }
                     }
 
                 });
                 offerRow += '<div class="card-footer" style="background-color: #7295b1">'+
                     '<div class="row">' +
-                    '<div class="col-sm-9"></div>'+
-                    '<button class="btn btn-info col-sm-1" style="margin-right: 1% " onclick="(' + offerId + '" >' +
-                    +'<span>change</span>' +
+                    '<div class="col-sm-10"></div>'+
+                    '<button class="btn btn-light btn-circle"' +
+                    'data-toggle="tooltip" data-placement="bottom" title="Радактировать предложение"' +
+                    'style="margin-right: 1% " onclick=edit"(' + offerId + ')">' +
+                    '<i class="fas fa-edit"></i>' +
                     '</button>' +
-                    '<button class="btn btn-info col-sm-1" onclick="deleteOffer(' + offerId+ ')" >' +
-                    +'delete' +
+                    '<button class="btn btn-light btn-circle "'+
+                    'data-toggle="tooltip" data-placement="bottom" title="сделать шаблоном"'+
+                    'onclick="makeCompleteOffer(' + offerId + ')">'+
+                    '<i class="fas fa-download"></i>' +
+                    '</button>' +
+                    '<button class="btn btn-light btn-circle "'+
+                    'data-toggle="tooltip" data-placement="bottom" title="удалить предложение"'+
+                    'onclick="deleteOffer(' + offerId + ')">'+
+                    '<i class="fas fa-trash"></i>' +
                     '</button>' +
                     '</div>'+
-                    '<div class="col-sm-1"></div>' +'</div>';
+                    '</div>';
                 offerRow +=
                     '</div>' +
                     '</div>' +
                     '</div>' +
-                    '</div>'
+                    '</div>'+
                 '</div>';
-
-                offerRow += '<br>';
-
 
                 $('#employerTable tbody').append(offerRow);
 
@@ -113,36 +152,59 @@ function getTable() {
     });
 }
 
-// function sort() {
-//     if (document.getElementById('sort').checked) {
-//         $('#sort').addClass("is-valid");
-//         $('#employerTable tbody').empty();
-//         getTable('active');
-//
-//     } else {
-//         $('#sort').removeClass("is-valid");
-//         $('#employerTable tbody').empty();
-//         getTable('all');
-//     }
-// }
-function offerDelete(offerId) {
+function deleteOffer(offerId) {
     $.ajax({
-        url: '/api/s/confirmOffer/' + id,
+        url: '/api/sender/deleteOffer/' + offerId,
         type: 'GET',
         success: function () {
-            $('#employerTable tbody').empty();
-            getTablle();
+            //$('#employerTable tbody').empty();
+            //getTable();
+            let string = '#offer'+offerId;
+             $(string).hide();
         }
     });
 }
 
-function confirmOffer(id) {
+function restoreOffer(offerId) {
     $.ajax({
-        url: '/api/sender/confirmOffer/' + id,
+        url: '/api/sender/restoreOffer/' + offerId,
         type: 'GET',
         success: function () {
             $('#employerTable tbody').empty();
-            getTablle();
+            getTable();
+        }
+    });
+}
+
+function makeCompleteOffer(offerId) {
+    $.ajax({
+        url: '/api/sender/makeCompleteOffer/' + offerId,
+        type: 'GET',
+        success: function () {
+            $('#employerTable tbody').empty();
+            getTable();
+        }
+    });
+}
+
+function cancelOffer(offerId) {
+    $.ajax({
+        url: '/api/sender/cancelOffer/' + offerId,
+        type: 'GET',
+        success: function () {
+            $('#employerTable tbody').empty();
+            getTable();
+        }
+    });
+}
+
+function confirmOffer(takerId, offerId) {
+    $.ajax({
+        url: '/api/sender/confirmOffer/' + takerId + '/' + offerId,
+        type: 'GET',
+        success: function () {
+            $('#employerTable tbody').empty();
+            getTable();
         }
     });
 }

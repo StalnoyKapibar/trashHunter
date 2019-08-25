@@ -1,7 +1,8 @@
-package org.bootcamp.trashhunter.controllers;
+package org.bootcamp.trashhunter.controller;
 
-import org.bootcamp.trashhunter.dao.impl.UserDao;
-import org.bootcamp.trashhunter.dao.impl.UserFavoritesDao;
+
+import org.bootcamp.trashhunter.dao.abstraction.UserDao;
+import org.bootcamp.trashhunter.dao.abstraction.UserFavoritesDao;
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.UserFavorites;
 import org.bootcamp.trashhunter.models.dto.UserFavoritesDTO;
@@ -17,13 +18,13 @@ import java.util.List;
 public class FavoritesController {
 
 	@Autowired
-	UserService userService;
+    UserService userService;
 
 	@Autowired
-	UserFavoritesDao userFavoritesDao;
+    UserFavoritesDao userFavoritesDao;
 
 	@Autowired
-	UserDao userDao;
+    UserDao userDao;
 
 	@GetMapping(value = "/favorites")
 	private ModelAndView getPageFavorites() {
