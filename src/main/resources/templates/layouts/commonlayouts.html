@@ -8,11 +8,11 @@
 <body>
 
 <th:block th:replace="fragments/commonfragments :: nav"></th:block>
-<div class="container-fluid">
-    <div class="row">
+<div class="container-fluid" style="padding: 0px;">
+    <!--<div class="row">-->
         <!--<th:block th:replace="fragments/commonfragments :: sidebar"></th:block>-->
-        <div class="col-sm-12 chromeFix" style="padding: 0px" layout:fragment="content"></div>
-    </div>
+        <div class="row col-sm-12 chromeFix" style="padding: 0px" layout:fragment="content"></div>
+    <!--</div>-->
 </div>
 
 <th:block th:replace="fragments/commonfragments :: scripts"></th:block>
