@@ -4,7 +4,7 @@ import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.token.VerificationToken;
 
 
-public interface VerificationTokenService<T extends VerificationToken> extends BaseTokenService<T>  {
+public interface VerificationTokenService extends BaseTokenService<VerificationToken>  {
 
     public void completeRegistration(VerificationToken token);
 

@@ -27,7 +27,7 @@ public class RegistrationController {
     private UserService userService;
 
     @Autowired
-    private VerificationTokenService<VerificationToken> verificationTokenService;
+    private VerificationTokenService verificationTokenService;
 
     @GetMapping("/registration")
     public String getRegistrationPage() {

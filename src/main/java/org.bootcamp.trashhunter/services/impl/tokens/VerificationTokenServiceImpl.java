@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class VerificationTokenServiceImpl extends BaseTokenServiceImpl<VerificationToken> implements VerificationTokenService<VerificationToken> {
+public class VerificationTokenServiceImpl extends BaseTokenServiceImpl<VerificationToken> implements VerificationTokenService {
 
     @Autowired
     private MailService mailService;

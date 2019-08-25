@@ -41,7 +41,6 @@ public class MainController {
             String role = authentication.getAuthorities().iterator().next().getAuthority();
             if (role.equals("Sender")) {
                 return  "sender/sender_page";
-
             } else {
                 return  "taker/taker_page";
             }
