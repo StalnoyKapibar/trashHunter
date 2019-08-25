@@ -1,20 +1,24 @@
-package org.bootcamp.trashhunter.controllers;
+package org.bootcamp.trashhunter.controllers.rest;
 
-import org.apache.coyote.Response;
+import groovyjarjarpicocli.groovy.PicocliScriptASTTransformation;
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.token.VerificationToken;
-import org.bootcamp.trashhunter.services.AbstractService;
-import org.bootcamp.trashhunter.services.impl.MailService;
-import org.bootcamp.trashhunter.services.impl.UserService;
-import org.bootcamp.trashhunter.services.impl.tokens.VerificationTokenService;
+import org.bootcamp.trashhunter.services.abstraction.MailService;
+import org.bootcamp.trashhunter.services.abstraction.UserService;
+import org.bootcamp.trashhunter.services.abstraction.tokens.VerificationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.thymeleaf.extras.springsecurity5.auth.AuthUtils;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -34,13 +38,12 @@ public class UserRestController {
     @PostMapping("/change_password")
     public ResponseEntity changeUserPassword(@RequestParam("new_pass") String password,
                                              @RequestParam("old_pass") String oldPassword) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.isAuthenticated()){
-            User user = userService.findByEmail(authentication.getName());
+        User user = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        if ((user != null) && (user.getPassword().equals(oldPassword))) {
             user.setPassword(password);
             userService.update(user);
             return new ResponseEntity(HttpStatus.OK);
-        } else {
+        } else{
             return new ResponseEntity(HttpStatus.BAD_GATEWAY);
         }
     }

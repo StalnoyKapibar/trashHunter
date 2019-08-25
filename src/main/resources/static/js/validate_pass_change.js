@@ -16,9 +16,6 @@ function validatePass() {
                           'new_pass': newPass
         };
 
-        //todo убрать токены
-        let token = $("meta[name='_csrf']").attr("content");
-        let header = $("meta[name='_csrf_header']").attr("content");
         $.ajax({
             url: "/api/user/change_password",
             type: 'POST',
@@ -35,8 +32,6 @@ function validatePass() {
                 $('#div1').attr('class', 'btn btn-primary').html('Домой').click(function(){
                     $('#not_validate').attr('class','invisible');
                     window.location.href="/";
-
-
                 });
 
             },
