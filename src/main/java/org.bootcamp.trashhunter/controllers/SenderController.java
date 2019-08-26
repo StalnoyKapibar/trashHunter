@@ -8,10 +8,14 @@ import org.bootcamp.trashhunter.models.embedded.Coordinates;
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
 
@@ -39,7 +43,8 @@ public class SenderController {
 
     @PostMapping("/new_offer")
     public String createNewOffer(@ModelAttribute Offer offer, @ModelAttribute Coordinates coordinates, Principal principal,
-                                 @RequestParam(value = "isSorted", required = false) boolean isSorted) {
+                                 @RequestParam(value = "isSorted", required = false) boolean isSorted, Model model) {
+
         User sender = userService.findByEmail(principal.getName());
         offer.setSender((Sender) sender);
         offer.setOfferStatus(OfferStatus.OPEN);
@@ -47,6 +52,7 @@ public class SenderController {
         offer.setCoordinates(coordinates);
         offer.setCreationDateTime(LocalDateTime.now());
         offerService.add(offer);
+        model.addAttribute("hasCompleted", true);
         return "new_offer";
     }
 }

@@ -1,27 +1,13 @@
 var map;
 var marker;
-var location;
+var latitude = 55.752030;
+var longitude = 37.633685;
 var city = $("meta[name='city']").attr("content");
 
-$(document).ready(function() {
-     initMap();
-    $("#isSorted").on('change', function () {
-        if (this.checked) {
-            $("#isSorted").attr("value", "true")
-        } else {
-            $("#isSorted").attr("value", "false")
-        }
-    });
-});
-
 function initMap(){
-    //location = getCoordsByAddress(city);
-    if(location===undefined){
-        location =  {lat: 55.752030, lng: 37.633685};
-    }
-
+    getCoordsByAddress(city);
     map = new google.maps.Map(document.getElementById('map'), {
-        center: location,
+        center: {lat: latitude, lng: longitude},
         zoom: 13,
         gestureHandling: 'cooperative',
         streetViewControl: false,
@@ -30,13 +16,12 @@ function initMap(){
             mapTypeIds: ['hybrid', 'styled_map']
         }
     });
-
-    let styledMapType = new google.maps.StyledMapType(styledMap, {name: 'Styled Map'});
-    map.mapTypes.set('styled_map', styledMapType);
-    map.setMapTypeId('styled_map');
-
+    let options = {
+        types: ['(cities)'],
+        componentRestrictions: {country: "ru"}
+    };
     let input = document.getElementById('address');
-    let autocomplete = new google.maps.places.Autocomplete(input);
+    let autocomplete = new google.maps.places.Autocomplete(input,options);
 
     input.addEventListener("change", function () {
         input.value = "";
@@ -96,10 +81,31 @@ function getCoordsByAddress(address) {
         type: "GET",
         async: false,
         success: function (data) {
-            location = data.results[0].geometry.location;
+            latitude = data.results[0].geometry.location.lat;
+            longitude = data.results[0].geometry.location.lng;
         }
     });
     return location;
 }
 
+$(document).ready(function() {
+    initMap();
+    $("#isSorted").on('change', function () {
+        if (this.checked) {
+            $("#isSorted").attr("value", "true")
+        } else {
+            $("#isSorted").attr("value", "false")
+        }
+    });
+
+    $("#isFree").on('change', function () {
+        if (this.checked) {
+            $("#price").val(0);
+            $("#price").attr("disabled", "disabled")
+        } else {
+            $("#price").val("");
+            $("#price").removeAttr("disabled");
+        }
+    });
+});
 
