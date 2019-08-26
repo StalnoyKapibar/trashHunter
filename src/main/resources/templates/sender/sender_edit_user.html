@@ -65,7 +65,7 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Номер телефона</label>
-                                                                    <input class="form-control" type="text" name="username" placeholder="325235325325" value="323232332">
+                                                                    <input class="form-control" type="text" name="phone" th:attr="value = ${user.phoneNumber}" >
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -73,7 +73,7 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Ваш адрес</label>
-                                                                    <input class="form-control" name="email" type="text" placeholder="user@example.com" >
+                                                                    <input class="form-control" name="address" type="text" th:field="${user.address}" >
                                                                 </div>
                                                             </div>
                                                         </div>

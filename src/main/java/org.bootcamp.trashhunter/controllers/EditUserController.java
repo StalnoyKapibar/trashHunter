@@ -21,31 +21,41 @@ public class EditUserController  {
     UserService userService;
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public ModelAndView edit(Model model, Principal user) {
+    public String edit(Model model, Principal user) {
         String email = user.getName();
         User user1 = userService.findByEmail(email);
-        ModelAndView modelAndView = new ModelAndView();
 
+        String user_page = null;
         if( user1 != null && user1.getClass() == Sender.class) {
-            modelAndView.setViewName("sender/sender_edit_user");
-            Sender sender = (Sender) user1;
-            model.addAttribute("user", sender);
+            user_page = "sender/sender_edit_user";
         } else if (user1 != null && user1.getClass() == Taker.class) {
-            modelAndView.setViewName("taker/taker_edit_user");
-            Taker taker = (Taker) user1;
-            model.addAttribute("user", taker);
+            user_page = "taker/taker_edit_user";
         }
-        return modelAndView;
+        model.addAttribute("user", user1);
+        return user_page;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ModelAndView saveEditedUser(@RequestParam String name, Principal user, @RequestParam String aboutUser) {
+    public String saveEditedUser(@RequestParam String name, Model model, Principal user, @RequestParam String address,
+                                 @RequestParam String aboutUser, @RequestParam String phone) {
+
         String emails = user.getName();
         User user1 = userService.findByEmail(emails);
+
+        String user_page = null;
+        if (user1.getClass() == Sender.class) {
+            user_page = "sender/sender_edit_user";
+        } else if (user1.getClass() == Taker.class) {
+            user_page = "taker/taker_edit_user";
+        }
+
+        model.addAttribute("user", user1);
         user1.setName(name);
         user1.setAboutUser(aboutUser);
+        user1.setPhoneNumber(phone);
+        user1.setAddress(address);
         userService.update(user1);
-        ModelAndView mv = new ModelAndView("redirect:/edit");
-        return mv;
+
+        return user_page;
     }
 }

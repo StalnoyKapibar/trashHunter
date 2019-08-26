@@ -37,11 +37,12 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String registration(@RequestParam String email, @RequestParam  String password, @RequestParam  String name,
                                @RequestParam  String role, @RequestParam  String city) {
+        byte [] pic = userService.extractBytesDefaultAvatar();
         User registeredUser = null;
         if ("TAKER".equals(role)) {
-            registeredUser = new Taker(email, name, password, LocalDate.now(), city);
+            registeredUser = new Taker(email, name, password, LocalDate.now(), city, pic );
         } else if ("SENDER".equals(role)) {
-            registeredUser = new Sender(email, name, password, LocalDate.now() ,city);
+            registeredUser = new Sender(email, name, password, LocalDate.now() ,city, pic);
         }
         userService.add(registeredUser);
         verificationTokenService.sendToken(registeredUser);
