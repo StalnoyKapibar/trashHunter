@@ -6,7 +6,9 @@ import org.bootcamp.trashhunter.models.token.VerificationToken;
 
 public interface VerificationTokenService extends BaseTokenService<VerificationToken>  {
 
-   void completeRegistration(VerificationToken token);
+    public void completeRegistration(VerificationToken token);
 
-   void sendToken(User registeredUser);
+    public void sendToken(User registeredUser);
+
+    public void sendTokenToResetPassword(User registeredUser);
 }

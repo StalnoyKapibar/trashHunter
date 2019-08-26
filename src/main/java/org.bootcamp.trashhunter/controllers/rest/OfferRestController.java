@@ -15,6 +15,10 @@ public class OfferRestController {
     @Autowired
     private OfferService offerService;
 
+    @GetMapping("/deleteOffer/{offerId}")
+    public void deleteOffer(@PathVariable Long offerId) {
+        offerService.deleteById(offerId);
+    }
 
     @PostMapping
     public List<Offer> getOffersWithFilterMap(@RequestBody Map<String, Object> map) {
@@ -37,6 +41,11 @@ public class OfferRestController {
     @GetMapping
     public List<Offer> getMeeting() {
         return offerService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public Offer getOfferById(@PathVariable("id") long id) {
+        return offerService.getById(id);
     }
 
     @GetMapping("/makeCompleteOffer/{offerId}")

@@ -58,12 +58,11 @@ function getTable() {
                                     'onclick="confirmOffer(' + taker.id +',' + offerId + ')">' +
                                      '<span class="icon"><i class="fas fa-check"></i></span>подтвердить' +
                                     '</button>' +
-                                    '<a href="/chat" class="btn btn-info btn-icon " >' +
+                                    '<a href="/chat/?partnerId=' + taker.id + '&offerId=' + offerId +'" class="btn btn-info btn-icon " target="_blank">' +
                                     '<span class="icon"><i class="fas fa-comments"></i></span>чат' +
                                     '</a>' +
                                     '<div class="col-sm-1"></div>' +
                                     '</div>';
-                                ;
                             });
                             offerRow += '</div>';
                         } else if (value == 'COMPLETE'){
@@ -97,12 +96,11 @@ function getTable() {
                                     'onclick="cancelOffer(' + offerId + ')">' +
                                     '<span class="icon"><i class="fas fa-window-close"></i></span>отказать' +
                                     '</button>' +
-                                    '   <a href="/chat" class="btn btn-info btn-icon " >' +
+                                    '   <a href="/chat/?partnerId=' + taker.id + '&offerId=' + offerId +'" class="btn btn-info btn-icon " target="_blank" >' +
                                         '<span class="icon"><i class="fas fa-comments"></i></span>чат' +
                                         '</a>' +
                                         '<div class="col-sm-1"></div>' +
                                     '</div>';
-                                ;
                             });
                             offerRow += '</div>';
                         } else {

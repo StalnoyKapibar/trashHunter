@@ -34,7 +34,12 @@ function initMap() {
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(filter);
 
-    let autocomplete = new google.maps.places.Autocomplete(input);
+    let options = {
+        types: ['(cities)'],
+        componentRestrictions: {country: "ru"}
+    };
+
+    let autocomplete = new google.maps.places.Autocomplete(input, options);
 
     infoWindow = new google.maps.InfoWindow();
     let infowindowContent = document.getElementById('infowindow-content');
@@ -161,6 +166,12 @@ function drawPoints(data) {
                     newCell.appendChild(newText);
                 }
             });
+
+            let linkToChatFromTaker = document.getElementById("linkToChatFromTaker");
+            if (linkToChatFromTaker) {
+                linkToChatFromTaker.href="/chat/?partnerId=" + offer.sender.id + "&offerId=" + offer.id;
+                $('#linkToChatFromTaker').show();
+            }
         });
     });
 }

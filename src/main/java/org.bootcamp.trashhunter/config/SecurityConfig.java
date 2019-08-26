@@ -56,7 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/registration", "/activate/*", "/api/user/resend_email_for_token_recovery").anonymous()
-                .antMatchers("/", "/api/offer/**", "/css/*", "/js/*", "/img/*", "/activate/*", "/**", "/favorites", "404").permitAll();
+                .antMatchers("/reset_password", "/reset/**").anonymous()
+                .antMatchers("/", "/api/offer/**", "/css/*", "/js/*", "/img/*", "/activate/*", "/**", "/favorites", "/chat/**").permitAll();
+                //.antMatchers("/sender/**").access("hasAuthority('Sender')");
                 //.antMatchers("/admin/**").access("hasAnyRole('Taker','Sender')").anyRequest().authenticated();
     }
 

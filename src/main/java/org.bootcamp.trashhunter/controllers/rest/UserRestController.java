@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.extras.springsecurity5.auth.AuthUtils;
 
 import java.util.UUID;
 
@@ -56,5 +54,10 @@ public class UserRestController {
         } else {
             return new ResponseEntity(HttpStatus.BAD_GATEWAY);
         }
+    }
+
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable("id") long id) {
+        return userService.getById(id);
     }
 }
