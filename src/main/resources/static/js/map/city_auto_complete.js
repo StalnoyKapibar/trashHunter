@@ -16,7 +16,7 @@ function initMap(){
     });
 
     autocomplete.addListener('place_changed', function () {
-        var place = autocomplete.getPlace();
+        let place = autocomplete.getPlace();
         document.getElementById('address').value = place.formatted_address;
     });
 }

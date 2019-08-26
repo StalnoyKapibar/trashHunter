@@ -8,7 +8,6 @@ var longitude;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        // center: viborg,
         zoom: 14,
         gestureHandling: 'cooperative',
         streetViewControl: false,
@@ -20,11 +19,11 @@ function initMap() {
         }
     });
 
-    geocoder = new google.maps.Geocoder;
+    geocoder = new google.maps.Geocoder();
     codeAddress();
 
     //Associate the styled map with the MapTypeId and set it to display.
-    let styledMapType = new google.maps.StyledMapType(styledMap, {name: 'Styled Map'});
+    let styledMapType = new google.maps.StyledMapType(styledMapPropertiesArray, {name: 'Styled Map'});
     map.mapTypes.set('styled_map', styledMapType);
     map.setMapTypeId('styled_map');
 
@@ -91,8 +90,7 @@ function initMap() {
 }
 
 function codeAddress() {
-    let viborg = {lat: 60.704958391204, lng: 28.753046876075};
-
+    let viborg = {lat: 60.704958391204265, lng: 28.753046876075004};
     geocoder.geocode({'address': city}, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
             map.setCenter(results[0].geometry.location);
@@ -101,7 +99,6 @@ function codeAddress() {
         }
     });
 }
-
 function createInfoOfferTable(tableID) {
     let tableRef = document.getElementById(tableID);
     let newRow = tableRef.insertRow(0);
@@ -204,7 +201,7 @@ function CenterControl(controlDiv, map) {
     });
 }
 
-// Button "Find my location"
+// Button "Find Me"
 function setMyCoordinates() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
