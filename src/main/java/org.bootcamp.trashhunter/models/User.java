@@ -1,6 +1,7 @@
 package org.bootcamp.trashhunter.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
@@ -23,13 +24,28 @@ public abstract class User {
     @Column(nullable = false)
     private LocalDate registrationDate;
 
+    @Column
+    private String aboutUser;
+
     @Column(nullable = false)
     private String city;
+
+    @Lob
+    @Column(name="pic")
+    private byte[] pic;
 
     private boolean enabled;
 
     public User() {
         this.enabled = false;
+    }
+
+    public byte[] getPic() {
+        return pic;
+    }
+
+    public void setPic(byte[] pic) {
+        this.pic = pic;
     }
 
     public User(String email, String name, String password, LocalDate registrationDate, String city) {
@@ -39,6 +55,10 @@ public abstract class User {
         this.registrationDate = registrationDate;
         this.city = city;
     }
+
+    public String getAboutUser() { return aboutUser; }
+
+    public void setAboutUser(String aboutUser) { this.aboutUser = aboutUser; }
 
     public long getId() {
         return id;

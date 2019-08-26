@@ -1,22 +1,19 @@
 package org.bootcamp.trashhunter.config;
 
-
-import org.bootcamp.trashhunter.models.UserFavorites;
-import org.bootcamp.trashhunter.models.OfferStatus;
-import org.bootcamp.trashhunter.models.Sender;
-import org.bootcamp.trashhunter.models.Taker;
-import org.bootcamp.trashhunter.models.TrashType;
-import org.bootcamp.trashhunter.models.Offer;
+import org.bootcamp.trashhunter.models.*;
 import org.bootcamp.trashhunter.models.embedded.Coordinates;
-import org.bootcamp.trashhunter.services.impl.OfferService;
-import org.bootcamp.trashhunter.services.impl.SenderService;
-import org.bootcamp.trashhunter.services.impl.TakerService;
-import org.bootcamp.trashhunter.services.impl.UserFavoritesService;
+
+import org.bootcamp.trashhunter.services.abstraction.OfferService;
+import org.bootcamp.trashhunter.services.abstraction.SenderService;
+import org.bootcamp.trashhunter.services.abstraction.TakerService;
+import org.bootcamp.trashhunter.services.impl.UserFavoritesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class InitData {
 
@@ -30,7 +27,7 @@ public class InitData {
     TakerService takerService;
 
 	@Autowired
-	UserFavoritesService userFavoritesService;
+    UserFavoritesServiceImpl userFavoritesService;
 
     private void init() {
         initSenders();

@@ -16,10 +16,8 @@ function validatePass() {
                           'new_pass': newPass
         };
 
-        let token = $("meta[name='_csrf']").attr("content");
-        let header = $("meta[name='_csrf_header']").attr("content");
         $.ajax({
-            url: "/api/change",
+            url: "/api/user/change_password",
             type: 'POST',
             // dataType: "application/json; charset=utf-8",
             data: passChange,
@@ -34,8 +32,6 @@ function validatePass() {
                 $('#div1').attr('class', 'btn btn-primary').html('Домой').click(function(){
                     $('#not_validate').attr('class','invisible');
                     window.location.href="/";
-
-
                 });
 
             },
@@ -45,7 +41,4 @@ function validatePass() {
         });
 
     }
-
-
-
 };
