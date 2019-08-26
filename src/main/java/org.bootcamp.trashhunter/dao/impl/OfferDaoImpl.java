@@ -4,6 +4,7 @@ package org.bootcamp.trashhunter.dao.impl;
 import org.bootcamp.trashhunter.dao.abstraction.OfferDao;
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.Taker;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -28,6 +29,7 @@ public class OfferDaoImpl extends AbstractDAOImpl<Offer> implements OfferDao {
       map.put("isFree", "false");
   */
 
+    @Override
     public List<Offer> getFilterQuery(Map<String, Object> map) {
 
         StringBuilder whereQuery = new StringBuilder();
@@ -70,11 +72,18 @@ public class OfferDaoImpl extends AbstractDAOImpl<Offer> implements OfferDao {
         return entityManager.createQuery(whereQuery.toString(), Offer.class).getResultList();
     }
 
-    public Map<Offer, List<Taker>> getOffersBySenderIdActiveFirst(Long senderId) {
+    @Override
+    public List<Offer> getOffersByTaker(String email){
+        return entityManager.createQuery( "SELECT o FROM Offer o WHERE (o.offerStatus='TAKEN' AND o.respondingTakers(0).id='4')", Offer.class)
+                .getResultList();
+    }
+
+    @Override
+    public Map<Offer, List<Taker>> getOffersBySenderIdActiveFirst(String email) {
         Map<Offer, List<Taker>> map = new LinkedHashMap<>();
         List<Offer> offers = entityManager
-                .createQuery("SELECT t FROM Offer t WHERE t.sender.id = :id ORDER BY FIELD (t.offerStatus,'ACTIVE','TAKEN','OPEN','COMPLETE')", Offer.class)
-                .setParameter("id", senderId)
+                .createQuery("SELECT o FROM Offer o WHERE o.sender.email = :email ORDER BY FIELD (o.offerStatus,'ACTIVE','TAKEN','OPEN','COMPLETE')", Offer.class)
+                .setParameter("email", email)
                 .getResultList();
         for (Offer offer : offers) {
             map.put(offer, offer.getRespondingTakers());

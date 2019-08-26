@@ -8,7 +8,7 @@ function getTable() {
         url: "/api/sender/my_offers",
         type: "GET",
         success: function (result) {
-            $('#employerTable tbody').empty();
+            $('#senderOffersTable tbody').empty();
             $.each(result, function (offer, takers) {
                 let offerRow = '';
                 JSON.parse(offer, function (key, value) {
@@ -141,7 +141,7 @@ function getTable() {
                     '</div>'+
                 '</div>';
 
-                $('#employerTable tbody').append(offerRow);
+                $('#senderOffersTable tbody').append(offerRow);
 
             });
 
@@ -157,8 +157,6 @@ function deleteOffer(offerId) {
         url: '/api/sender/deleteOffer/' + offerId,
         type: 'GET',
         success: function () {
-            //$('#employerTable tbody').empty();
-            //getTable();
             let string = '#offer'+offerId;
              $(string).hide();
         }
@@ -170,7 +168,7 @@ function restoreOffer(offerId) {
         url: '/api/sender/restoreOffer/' + offerId,
         type: 'GET',
         success: function () {
-            $('#employerTable tbody').empty();
+            $('#senderOffersTable tbody').empty();
             getTable();
         }
     });
@@ -181,7 +179,7 @@ function makeCompleteOffer(offerId) {
         url: '/api/sender/makeCompleteOffer/' + offerId,
         type: 'GET',
         success: function () {
-            $('#employerTable tbody').empty();
+            $('#senderOffersTable tbody').empty();
             getTable();
         }
     });
@@ -192,7 +190,7 @@ function cancelOffer(offerId) {
         url: '/api/sender/cancelOffer/' + offerId,
         type: 'GET',
         success: function () {
-            $('#employerTable tbody').empty();
+            $('#senderOffersTable tbody').empty();
             getTable();
         }
     });
@@ -203,7 +201,7 @@ function confirmOffer(takerId, offerId) {
         url: '/api/sender/confirmOffer/' + takerId + '/' + offerId,
         type: 'GET',
         success: function () {
-            $('#employerTable tbody').empty();
+            $('#senderOffersTable tbody').empty();
             getTable();
         }
     });

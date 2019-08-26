@@ -30,8 +30,14 @@ public class OfferServiceImpl extends AbstractServiceImpl<Offer> implements Offe
         return offerDao.getFilterQuery(map);
     }
 
-    public Map<Offer,List<Taker>> getOffersBySenderIdActiveFirst(Long id) {
-        return offerDao.getOffersBySenderIdActiveFirst(id);
+    @Override
+    public List<Offer> getOffersByTaker(String email){
+        return offerDao.getOffersByTaker(email);
+    }
+
+    @Override
+    public Map<Offer,List<Taker>> getOffersBySenderIdActiveFirst(String email) {
+        return offerDao.getOffersBySenderIdActiveFirst(email);
     }
 
     @Override
