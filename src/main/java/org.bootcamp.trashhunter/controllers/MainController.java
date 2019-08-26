@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.security.Principal;
 
 @Controller
@@ -17,7 +16,10 @@ public class MainController {
     private UserService userService;
 
     @GetMapping("/")
-    public String main(@RequestParam(value = "city", required = false) String city, Model model, Principal principal){
+    public String main(@RequestParam(value = "city", required = false) String city,
+                       @RequestParam(value = "error", required = false) boolean error,
+                       Model model,
+                       Principal principal){
         if (principal != null) {
             String userCity = userService.findByEmail(principal.getName()).getCity();
             model.addAttribute("city", !userCity.isEmpty() ? userCity : "Москва, Россия" );
@@ -26,13 +28,11 @@ public class MainController {
         if (city == null) {
             return "welcome";
         }
+        if (error) {
+            model.addAttribute("error", true);
+        }
         model.addAttribute("city", city);
         return "index";
-    }
-
-    @GetMapping(value = "/login")
-    public String login(Model model, Principal user) {
-        return "login";
     }
 
     @GetMapping(value = "/index")
@@ -50,8 +50,9 @@ public class MainController {
     }
 
     @GetMapping(value = "/update_password")
-    public String updatePasswordPage(Model model, Principal principal) {
+    public String updatePasswordPage() {
         return "update_password";
-
     }
+
+
 }

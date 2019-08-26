@@ -6,118 +6,8 @@ var city = $("meta[name='defined_city']").attr("content");
 var latitude;
 var longitude;
 
-codeAddress();
-
-function codeAddress() {
-    geocoder = new google.maps.Geocoder;
-    geocoder.geocode({'address': city}, function (results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            latitude = results[0].geometry.location.lat();
-            longitude = results[0].geometry.location.lng();
-            initMap();
-        }
-    });
-}
-
-
 function initMap() {
-    if(latitude===undefined){
-        codeAddress();
-    }
-    let styledMapType = new google.maps.StyledMapType(
-        [
-            {
-                "elementType": "geometry",
-                "stylers": [{"color": "#f5f5f5"}]
-            },
-            {
-                "elementType": "labels.icon",
-                "stylers": [{"visibility": "off"}]
-            },
-            {
-                "elementType": "labels.text.fill",
-                "stylers": [{"color": "#616161"}]
-            },
-            {
-                "elementType": "labels.text.stroke",
-                "stylers": [{"color": "#f5f5f5"}]
-            },
-            {
-                "featureType": "administrative.land_parcel", "elementType": "labels.text.fill",
-                "stylers": [{"color": "#bdbdbd"}]
-            },
-            {
-                "featureType": "poi",
-                "elementType": "geometry",
-                "stylers": [{"color": "#eeeeee"}]
-            },
-            {
-                "featureType": "poi",
-                "elementType": "labels.text.fill",
-                "stylers": [{"color": "#757575"}]
-            },
-            {
-                "featureType": "poi.park",
-                "elementType": "geometry",
-                "stylers": [{"color": "#0adc51"}]
-            },
-            {
-                "featureType": "poi.park",
-                "elementType": "labels.text.fill",
-                "stylers": [{"color": "#9e9e9e"}]
-            },
-            {
-                "featureType": "road",
-                "elementType": "geometry",
-                "stylers": [{"color": "#ffc107"}]
-            },
-            {
-                "featureType": "road.arterial",
-                "elementType": "labels.text.fill",
-                "stylers": [{"color": "#757575"}]
-            },
-            {
-                "featureType": "road.highway",
-                "elementType": "geometry",
-                "stylers": [{"color": "#ff9907"}]
-            },
-            {
-                "featureType": "road.highway",
-                "elementType": "labels.text.fill",
-                "stylers": [{"color": "#616161"}]
-            },
-            {
-                "featureType": "road.local",
-                "elementType": "labels.text.fill",
-                "stylers": [{"color": "#9e9e9e"}]
-            },
-            {
-                "featureType": "transit.line",
-                "elementType": "geometry",
-                "stylers": [{"color": "#e5e5e5"}]
-            },
-            {
-                "featureType": "transit.station",
-                "elementType": "geometry",
-                "stylers": [{"color": "#eeeeee"}]
-            },
-            {
-                "featureType": "water",
-                "elementType": "geometry",
-                "stylers": [{"color": "#4d90fe"}]
-                // /* water color styled map: 007bff*/
-            },
-            {
-                "featureType": "water",
-                "elementType": "labels.text.fill",
-                "stylers": [{"color": "#9e9e9e"}]
-            }
-        ], {name: 'Styled Map'});
-
-    var viborg = {lat: latitude, lng: longitude};
-
     map = new google.maps.Map(document.getElementById('map'), {
-        center: viborg,
         zoom: 14,
         gestureHandling: 'cooperative',
         streetViewControl: false,
@@ -129,7 +19,11 @@ function initMap() {
         }
     });
 
+    geocoder = new google.maps.Geocoder();
+    codeAddress();
+
     //Associate the styled map with the MapTypeId and set it to display.
+    let styledMapType = new google.maps.StyledMapType(styledMapPropertiesArray, {name: 'Styled Map'});
     map.mapTypes.set('styled_map', styledMapType);
     map.setMapTypeId('styled_map');
 
@@ -140,7 +34,12 @@ function initMap() {
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(filter);
 
-    let autocomplete = new google.maps.places.Autocomplete(input);
+    let options = {
+        types: ['(cities)'],
+        componentRestrictions: {country: "ru"}
+    };
+
+    let autocomplete = new google.maps.places.Autocomplete(input, options);
 
     infoWindow = new google.maps.InfoWindow();
     let infowindowContent = document.getElementById('infowindow-content');
@@ -195,6 +94,16 @@ function initMap() {
     map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(centerControlDiv);
 }
 
+function codeAddress() {
+    let viborg = {lat: 60.704958391204265, lng: 28.753046876075004};
+    geocoder.geocode({'address': city}, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            map.setCenter(results[0].geometry.location);
+        } else {
+            map.setCenter(viborg);
+        }
+    });
+}
 function createInfoOfferTable(tableID) {
     let tableRef = document.getElementById(tableID);
     let newRow = tableRef.insertRow(0);
@@ -257,6 +166,12 @@ function drawPoints(data) {
                     newCell.appendChild(newText);
                 }
             });
+
+            let linkToChatFromTaker = document.getElementById("linkToChatFromTaker");
+            if (linkToChatFromTaker) {
+                linkToChatFromTaker.href="/chat/?partnerId=" + offer.sender.id + "&offerId=" + offer.id;
+                $('#linkToChatFromTaker').show();
+            }
         });
     });
 }
@@ -296,8 +211,13 @@ function CenterControl(controlDiv, map) {
         setMyCoordinates();
     });
 }
+function doFilterInit() {
+    deleteMarkers();
+    drawPoints(doFilter());
 
-// Button "Find my location"
+}
+
+// Button "Find Me"
 function setMyCoordinates() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {

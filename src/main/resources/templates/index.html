@@ -5,35 +5,19 @@
       lang="en">
 <head>
     <title>MainPage</title>
-    <link rel="stylesheet" type="text/css" href="/css/map_geo.css">
     <meta name="defined_city" th:content="${city}"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/filter.css">
-
+    <th:block th:replace="map_geo :: map_scripts"></th:block>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-9" align="center" style="color: #7295B1; padding: 0px">
-                <th:block th:replace="map_geo :: map"></th:block>
-                <th:block th:replace="filter :: filter"></th:block>
-            </div>
-            <div class="col-sm-3" style="padding: 0">
-                <th:block th:replace="filter :: markerinfo"></th:block>
-            </div>
+        <div class="row" align="center" style="color: #7295B1; padding: 0px">
+            <th:block th:replace="map_geo :: map"></th:block>
         </div>
     </div>
 </div>
-
-<div layout:fragment="localscripts">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&libraries=places&callback=initMap"
-            async defer></script>
-    <script type="text/javascript" src="/js/styled_map.js"></script>
-    <script type="text/javascript" src="/js/trash_filter.js"></script>
-    <script type="text/javascript" src="/js/map_geo.js"></script>
-</div>
-
 
 </body>
 </html>

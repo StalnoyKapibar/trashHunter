@@ -1,5 +1,6 @@
 body {
     background-color: #F5F5F5;
+    height: 100%;
 }
 
 /*Navbar style*/
@@ -27,7 +28,7 @@ body {
 }
 
 .navbar .dropdown-menu {
-    position: relative;
+    /*position: relative;*/
     right: 0;
 }
 
@@ -101,6 +102,9 @@ li {
     background-color: lightgray;
 }
 
+#ups_message {
+    display: none;
+}
 
 /*Vacancies list style*/
 
