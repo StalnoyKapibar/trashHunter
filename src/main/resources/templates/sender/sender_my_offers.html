@@ -11,21 +11,19 @@
 <body>
 <div layout:fragment="content">
     <div sec:authorize="hasAuthority('Sender')">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
                     <h2>Мои Предложения</h2>
                 </div>
                 <div class="col-sm-4"></div>
-
             </div>
             <br>
-            <div class="row">
-                <div class="table-responsive">
-                    <table id="senderOffersTable" class="table"
+            <div class="row" >
+                <table id="senderOffersTable" class="table"
                            width="100%">
-                        <tbody align="center">
+                        <tbody >
                         <!--Loaded from sender_offer.js getTable()-->
                         </tbody>
                     </table>

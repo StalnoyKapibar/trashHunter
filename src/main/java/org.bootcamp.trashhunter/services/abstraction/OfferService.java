@@ -21,4 +21,6 @@ public interface OfferService extends AbstractService<Offer>{
     void makeCompleteOffer(Long offerId);
 
     void restoreOffer(Long offerId);
+
+    List<Offer> getFilterOffersForTaker(Map<String, Object> map,String email)
 }

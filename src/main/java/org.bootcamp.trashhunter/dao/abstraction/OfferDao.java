@@ -21,4 +21,5 @@ public interface OfferDao extends AbstractDao<Offer> {
 
     List<Offer> getOffersByTaker(String email);
 
+    List<Offer> getFilterOffersForTaker(Map<String , Object> map, String email);
 }

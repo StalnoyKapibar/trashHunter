@@ -4,7 +4,6 @@ package org.bootcamp.trashhunter.dao.impl;
 import org.bootcamp.trashhunter.dao.abstraction.OfferDao;
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.Taker;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -28,13 +27,47 @@ public class OfferDaoImpl extends AbstractDAOImpl<Offer> implements OfferDao {
       map.put("isSorted", "true");
       map.put("isFree", "false");
   */
-
+    // for all uncomplete offers;
     @Override
     public List<Offer> getFilterQuery(Map<String, Object> map) {
 
-        StringBuilder whereQuery = new StringBuilder();
-        whereQuery.append("SELECT o FROM Offer o JOIN FETCH o.sender WHERE o.offerStatus<>'COMPLETE'");
+        String query ="SELECT o FROM Offer o JOIN FETCH o.sender WHERE o.offerStatus<>'COMPLETE'";
+        query += getStringForFilterQuery(map);
+        return entityManager.createQuery(query, Offer.class).getResultList();
+    }
 
+    @Override
+    public List<Offer> getFilterOffersForTaker(Map<String , Object> map, String email){
+        String query = "SELECT o FROM Offer o JOIN o.respondingTakers t WHERE(o.offerStatus = 'ACTIVE' and t.email= :email) ";
+        query += getStringForFilterQuery(map);
+        return entityManager.createQuery(query,Offer.class).setParameter("email", email).getResultList();
+    }
+
+    @Override
+    public List<Offer> getOffersByTaker(String email){
+        return  entityManager
+                .createQuery( "SELECT o FROM Offer o JOIN o.respondingTakers t WHERE"+
+                        "(o.offerStatus = 'ACTIVE' and t.email= :email)", Offer.class)
+                .setParameter("email", email)
+                .getResultList();
+    }
+
+    @Override
+    public Map<Offer, List<Taker>> getOffersBySenderIdActiveFirst(String email) {
+        Map<Offer, List<Taker>> map = new LinkedHashMap<>();
+        List<Offer> offers = entityManager
+                .createQuery("SELECT o FROM Offer o WHERE o.sender.email = :email ORDER BY FIELD (o.offerStatus,'ACTIVE','TAKEN','OPEN','COMPLETE')", Offer.class)
+                .setParameter("email", email)
+                .getResultList();
+        for (Offer offer : offers) {
+            map.put(offer, offer.getRespondingTakers());
+        }
+        return map;
+    }
+
+    private String getStringForFilterQuery(Map<String, Object> map){
+
+        StringBuilder whereQuery = new StringBuilder();
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             switch (entry.getKey()) {
                 case "trashType":
@@ -68,36 +101,7 @@ public class OfferDaoImpl extends AbstractDAOImpl<Offer> implements OfferDao {
                     break;
             }
         }
-
-        return entityManager.createQuery(whereQuery.toString(), Offer.class).getResultList();
-    }
-
-
-//    entityManager
-//            .createQuery("SELECT v FROM Vacancy v JOIN v.tags t WHERE t IN (:param)", Vacancy.class)
-//            .setParameter("param", tags)
-//                .setMaxResults(limit)
-//                .getResultList());
-    @Override
-    public List<Offer> getOffersByTaker(String email){
-        return  entityManager
-                .createQuery( "SELECT o FROM Offer o JOIN o.respondingTakers t WHERE"+
-                        "(o.offerStatus = 'ACTIVE' and t.email= :email)", Offer.class)
-                .setParameter("email", "taker1@mail.ru")
-                .getResultList();
-    }
-
-    @Override
-    public Map<Offer, List<Taker>> getOffersBySenderIdActiveFirst(String email) {
-        Map<Offer, List<Taker>> map = new LinkedHashMap<>();
-        List<Offer> offers = entityManager
-                .createQuery("SELECT o FROM Offer o WHERE o.sender.email = :email ORDER BY FIELD (o.offerStatus,'ACTIVE','TAKEN','OPEN','COMPLETE')", Offer.class)
-                .setParameter("email", email)
-                .getResultList();
-        for (Offer offer : offers) {
-            map.put(offer, offer.getRespondingTakers());
-        }
-        return map;
+        return whereQuery.toString();
     }
 
     private String getBetweenQuery(String name, String[] array) {
