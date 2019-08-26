@@ -12,7 +12,7 @@ function getTable() {
             $.each(result, function (i, offer) {
                 let offerRow = '';
                 offerRow +=
-                    '<div class="container-fluid" id="offer' + offerId + '">' +
+                    '<div class="container-fluid" id="offer' + offer.id + '">' +
                     '<div class="row">' +
                     '<div class="col-sm-1"></div>' +
                     '<div class="col-sm-10">' +
