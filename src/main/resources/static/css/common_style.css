@@ -28,7 +28,7 @@ body {
 }
 
 .navbar .dropdown-menu {
-    position: relative;
+    /*position: relative;*/
     right: 0;
 }
 
