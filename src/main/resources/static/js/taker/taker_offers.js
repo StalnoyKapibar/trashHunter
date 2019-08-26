@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    getTable();
+   doFilter();
 });
 
 function getTable(data) {
@@ -135,7 +135,7 @@ function doFilter(){
     console.log(filter);
 
     $.ajax({
-        url: "/api/taker/offers_by_taker_filter" ,
+        url: "/api/taker/my_offers" ,
         type: "post",
         contentType: "application/json; charset=utf-8",
         async: false,

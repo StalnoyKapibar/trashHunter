@@ -35,16 +35,6 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/taker/my_offers")
-    public String myOffers(){
-        return "/taker/taker_my_offers";
-    }
-
-    @GetMapping("/sender/my_offers")
-    public String senderMyOffers() {
-        return "/sender/sender_my_offers";
-    }
-
     @GetMapping(value = "/index")
     public String mainPage(Authentication authentication) {
         if (authentication.isAuthenticated()) {

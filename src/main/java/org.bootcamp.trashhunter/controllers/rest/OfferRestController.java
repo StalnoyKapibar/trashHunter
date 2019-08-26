@@ -15,17 +15,17 @@ public class OfferRestController {
     @Autowired
     private OfferService offerService;
 
-    @GetMapping("/deleteOffer/{offerId}")
-    public void deleteOffer(@PathVariable Long offerId) {
-        offerService.deleteById(offerId);
-    }
-
     @PostMapping
     public List<Offer> getOffersWithFilterMap(@RequestBody Map<String, Object> map) {
         if (map.size() == 0) {
             return offerService.getAll();
         }
         return offerService.getFilterQuery(map);
+    }
+
+    @GetMapping
+    public List<Offer> getMeeting() {
+        return offerService.getAll();
     }
 
     @GetMapping("/confirmOffer/{takerId}/{offerId}")
@@ -38,11 +38,6 @@ public class OfferRestController {
         offerService.restoreOffer(offerId);
     }
 
-    @GetMapping
-    public List<Offer> getMeeting() {
-        return offerService.getAll();
-    }
-
     @GetMapping("/{id}")
     public Offer getOfferById(@PathVariable("id") long id) {
         return offerService.getById(id);
@@ -53,13 +48,14 @@ public class OfferRestController {
         offerService.makeCompleteOffer(offerId);
     }
 
+    @GetMapping("/cancelOffer/{offerId}")
+    public void cancelOffer(@PathVariable Long offerId) {
+        offerService.cancelOffer(offerId);
+    }
+
     @GetMapping("/deleteOffer/{offerId}")
     public void deleteOffer(@PathVariable Long offerId) {
         offerService.deleteById(offerId);
     }
 
-    @GetMapping("/cancelOffer/{offerId}")
-    public void cancelOffer(@PathVariable Long offerId) {
-        offerService.cancelOffer(offerId);
-    }
 }

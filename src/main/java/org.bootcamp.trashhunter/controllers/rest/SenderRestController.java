@@ -30,5 +30,4 @@ public class SenderRestController {
         return offerService.getOffersBySenderIdActiveFirst(name);
     }
 
-
 }
