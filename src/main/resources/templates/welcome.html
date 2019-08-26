@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&libraries=places&callback=initMap"
             async defer></script>
-    <script type="text/javascript" src="/js/city_auto_complete.js"></script>
-    <script type="text/javascript" src="/js/define_city.js"></script>
+    <script type="text/javascript" src="/js/map/city_auto_complete.js"></script>
+    <script type="text/javascript" src="/js/map/define_city.js"></script>
     <title>Trash_hunter</title>
     <style>
         .form-group {
@@ -19,11 +19,14 @@
         .form-control{
             height: calc(1.5em + .75rem + 10px);
         }
+        .list-group-item {
+            border-color: #ffffff;
+        }
     </style>
 </head>
 
 <body>
-<div class="container mt-5" style="width: 50%" >
+<div class="container mt-1" style="width: 50%" >
     <div align="center">
         <h1>Добро пожаловать на сервис Trash Hunter</h1>
         <h2>Пожалуйста, выберите свой город, чтобы посмотреть предложения по вывозу мусора</h2>
@@ -31,7 +34,7 @@
             <div class="col-sm-4" style="padding: 0">
                 <ul class="list-group">
                     <li class="list-group-item"><a href="/?city=Москва, Россия"><strong>Москва</strong></a></li>
-                    <li class="list-group-item"><a href="/?city=Санкт-Питербург, Россия">Санкт-Питербург</a></li>
+                    <li class="list-group-item"><a href="/?city=Санкт-Петербург, Россия">Санкт-Петербург</a></li>
                     <li class="list-group-item"><a href="/?city=Новосибирск, Россия">Новосибирск</a></li>
                 </ul>
             </div>
@@ -61,8 +64,8 @@
                 <button type="submit" onclick="loadMap()" class="btn-lg btn-primary btn-block">Выбрать</button>
             </div>
         </div>
-        <div style="margin-top: 70px" class="form-group row justify-content-center align-items-center">
-            <img style="width: 100%" src="https://d1softball.net/wp-content/uploads/google-maps-russia.png">
+        <div style="margin-top: 45px" class="form-group row justify-content-center align-items-center">
+            <img style="width: 100%" src="/img/common/welcome.png">
         </div>
     </div>
 </div>

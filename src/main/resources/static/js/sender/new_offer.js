@@ -16,6 +16,11 @@ function initMap(){
             mapTypeIds: ['hybrid', 'styled_map']
         }
     });
+
+    let styledMapType = new google.maps.StyledMapType(styledMapPropertiesArray, {name: 'Styled Map'});
+    map.mapTypes.set('styled_map', styledMapType);
+    map.setMapTypeId('styled_map');
+
     let options = {
         types: ['(cities)'],
         componentRestrictions: {country: "ru"}
