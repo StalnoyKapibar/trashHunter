@@ -9,4 +9,6 @@ public interface VerificationTokenService extends BaseTokenService<VerificationT
     public void completeRegistration(VerificationToken token);
 
     public void sendToken(User registeredUser);
+
+    public void sendTokenToResetPassword(User registeredUser);
 }
