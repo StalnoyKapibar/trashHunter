@@ -7,12 +7,14 @@ function validatePass() {
     let newPass = document.getElementById("newPassword").value;
     let repeatPass = document.getElementById("repeatPassword").value;
     let token = document.getElementById("token").value;
+    let email = document.getElementById("email").value;
     if(newPass !== repeatPass) {
         $('#not_matches').attr('class','visible alert').css("color", "red");
     } else {
         let passChange = {
             'new_pass': newPass,
-            'token': token
+            'token': token,
+            'email' : email
         };
 
         $.ajax({
