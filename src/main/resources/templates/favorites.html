@@ -52,21 +52,20 @@
 								<a href="#" class="btn btn-primary btn-md " role="button" data-toggle="modal" th:data-target="'#mod' + ${uf.usersubject.id}">info</a>
 							</td>
 
-<!--//////////////////-->
-<!--START Modal window-->
+<!--///////////-->
+<!--START Modal-->
 <div th:id="'mod' + ${uf.usersubject.id}" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" style="text-align: left">Предыдущая работа</h4>
+				<h4 class="modal-title" style="text-align: left">Модальное окно</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
 			</div>
 			<div class="modal-body" align="center">
-				<div>
-					<span th:text="${uf.usersubject.registrationDate}" />
-					<span th:text="'id = ' + ${uf.usersubject.id}" />
-					<span th:text="${uf.usersubject.name}" />
-				</div>
+
+				<span th:text="${uf.usersubject.id}" />
+				<span th:text="${uf.usersubject.name}" />
+
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal" style="text-align: right">Закрыть</button>
@@ -74,8 +73,8 @@
 		</div>
 	</div>
 </div>
-<!--FINISH Modal window-->
-<!--///////////////////-->
+<!--FINISH Modal-->
+<!--////////////-->
 
 						</tr>
 					</span>

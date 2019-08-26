@@ -2,6 +2,7 @@ package org.bootcamp.trashhunter.dao.impl;
 
 import org.bootcamp.trashhunter.dao.abstraction.AbstractDao;
 import org.springframework.stereotype.Repository;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;

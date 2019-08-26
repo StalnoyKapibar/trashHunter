@@ -1,10 +1,10 @@
-package org.bootcamp.trashhunter.controller.rest;
+package org.bootcamp.trashhunter.controllers.rest;
 
 import org.bootcamp.trashhunter.models.Offer;
-import org.bootcamp.trashhunter.services.impl.OfferService;
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Map;
 
