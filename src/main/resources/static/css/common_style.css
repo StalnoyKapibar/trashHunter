@@ -1,5 +1,6 @@
 body {
     background-color: #F5F5F5;
+    height: 100%;
 }
 
 /*Navbar style*/
@@ -27,7 +28,7 @@ body {
 }
 
 .navbar .dropdown-menu {
-    position: relative;
+    /*position: relative;*/
     right: 0;
 }
 
