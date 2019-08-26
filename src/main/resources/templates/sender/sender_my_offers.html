@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html
+        xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         layout:decorate="~{layouts/commonlayouts}"
@@ -10,8 +11,8 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div sec:authorize="hasAuthority('Sender')">
-        <div class="container-fluid">
+
+        <div class="container">
             <div class="row">
                 <div class="col-sm-4"></div>
                 <div class="col-sm-4">
@@ -21,16 +22,17 @@
             </div>
             <br>
             <div class="row" >
-                <table id="senderOffersTable" class="table"
-                           width="100%">
-                        <tbody >
-                        <!--Loaded from sender_offer.js getTable()-->
-                        </tbody>
+                <div class="table-responsive">
+                    <table id="senderOffersTable" class="table"
+                               width="100%">
+                            <tbody align="center">
+                                <!--Loaded from sender_offer.js getTable()-->
+                            </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </div>
+
 </div>
 <div layout:fragment="localscripts">
     <script src="/js/sender/sender_offers.js"></script>
