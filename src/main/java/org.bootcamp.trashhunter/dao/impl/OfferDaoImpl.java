@@ -72,10 +72,18 @@ public class OfferDaoImpl extends AbstractDAOImpl<Offer> implements OfferDao {
         return entityManager.createQuery(whereQuery.toString(), Offer.class).getResultList();
     }
 
+
+//    entityManager
+//            .createQuery("SELECT v FROM Vacancy v JOIN v.tags t WHERE t IN (:param)", Vacancy.class)
+//            .setParameter("param", tags)
+//                .setMaxResults(limit)
+//                .getResultList());
     @Override
     public List<Offer> getOffersByTaker(String email){
-        return entityManager.createQuery( "SELECT o FROM Offer o JOIN o.respondigTakers t WHERE (o.offerStatus='TAKEN' and t.email= :param", Offer.class).
-                setParameter("email", email)
+        return  entityManager
+                .createQuery( "SELECT o FROM Offer o JOIN o.respondingTakers t WHERE"+
+                        "(o.offerStatus = 'ACTIVE' and t.email= :email)", Offer.class)
+                .setParameter("email", "taker1@mail.ru")
                 .getResultList();
     }
 
