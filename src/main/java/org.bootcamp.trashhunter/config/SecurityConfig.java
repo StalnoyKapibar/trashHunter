@@ -1,5 +1,7 @@
 package org.bootcamp.trashhunter.config;
 
+import org.bootcamp.trashhunter.security.AuthFailureHandler;
+import org.bootcamp.trashhunter.security.AuthSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +24,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    AuthSuccessHandler authSuccessHandler;
+
+    @Autowired
+    AuthFailureHandler authFailureHandler;
+
     @Bean
     public NoOpPasswordEncoder passwordEncoder() {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
@@ -39,12 +47,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.formLogin()
-                .loginPage("/")
-                .loginProcessingUrl("/login")
-                .failureUrl("/?error=true")
                 .usernameParameter("email")
                 .passwordParameter("password")
+                .loginProcessingUrl("/login")
+                .failureHandler(authFailureHandler)
+                .successHandler(authSuccessHandler)
                 .permitAll();
 
         http.logout()
@@ -57,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/registration", "/activate/*", "/api/user/resend_email_for_token_recovery").anonymous()
                 .antMatchers("/", "/api/offer/**", "/css/*", "/js/*", "/img/*", "/activate/*", "/**", "/favorites", "/chat/**").permitAll();
-                //.antMatchers("/admin/**").access("hasAnyRole('Taker','Sender')").anyRequest().authenticated();
+        //.antMatchers("/admin/**").access("hasAnyRole('Taker','Sender')").anyRequest().authenticated();
     }
 
 
