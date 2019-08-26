@@ -211,6 +211,13 @@ function CenterControl(controlDiv, map) {
         setMyCoordinates();
     });
 }
+function doFilterInit() {
+    deleteMarkers();
+    console.log(doFilter());
+    let data = doFilter();
+    drawPoints(data);
+    alert(data);
+}
 
 // Button "Find Me"
 function setMyCoordinates() {

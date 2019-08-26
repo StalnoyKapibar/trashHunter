@@ -7,112 +7,104 @@
         lang="en">
 <head>
     <title>TakerOffers</title>
-
-    <script type="text/javascript" src="/js/map/styled_map.js"></script>
-    <script type="text/javascript" src="/js/map/map_geo.js"></script>
-    <link href="/css/my_offers.css" rel="stylesheet">
-    <link href="/css/filter.css" rel="stylesheet">
 </head>
 <body>
 <div layout:fragment="content">
-    <div sec:authorize="hasAuthority('Taker')">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4"></div>
-                <div class="col-sm-4">
-                    <h2>Мои Заказы</h2>
-                </div>
-                <div class="col-sm-4"></div>
+    <div class="filter-container" id="filter-container">
+        <button class="filter-open-btn" id="filter-open-btn" onclick="openFilter()">☰ Фильтрация
+        </button>
 
+        <div class="filter" id="filter">
+            <a href="javascript:void(0)" class="close-filter" onclick="closeFilter()">⌆</a>
+            <div class="form-check-inline">
+                <input class="form-check-input" type="checkbox" value="" id="METAL">
+                <label class="form-check-label" for="METAL">Металл
+                </label>
             </div>
-            <br>
+            <div class="form-check-inline">
+                <input class="form-check-input" type="checkbox" value="" id="PAPER">
+                <label class="form-check-label" for="PAPER">Бумага
+                </label>
+            </div>
+            <div class="form-check-inline">
+                <input class="form-check-input" type="checkbox" value="" id="GLASS">
+                <label class="form-check-label" for="GLASS">Стекло
+                </label>
+            </div>
+            <div class="form-check-inline">
+                <input class="form-check-input" type="checkbox" value="" id="FOOD">
+                <label class="form-check-label" for="FOOD">Пищевые отходы
+                </label>
+            </div>
+            <div class="form-check-inline">
+                <input class="form-check-input" type="checkbox" value="" id="WOOD">
+                <label class="form-check-label" for="WOOD">Дерево
+                </label>
+            </div>
+            <div class="form-check-inline">
+                <input class="form-check-input" type="checkbox" value="" id="PLASTIC">
+                <label class="form-check-label" for="PLASTIC">Пластик
+                </label>
+            </div>
+
+            <div class="col mt-2">
+                <form class="form-inline">
+                    <label class="mr-sm-2" for="isSorted">Вес: </label>
+                    <input name="weightFrom" style="width: 30%" id="weightFrom"
+                           class="form-control" type="number" placeholder="от">
+                    <input name="weightTo" style="width: 30%" id="weightTo"
+                           class="form-control ml-2" type="number" placeholder="до">
+                    <label class="mr-sm-2 ml-1"> кг </label>
+                </form>
+            </div>
+            <div class="col mt-2">
+                <form class="form-inline">
+                    <label class="mr-sm-2" for="isSorted">Объем: </label>
+                    <input name="volumeFrom" style="width: 30%" id="volumeFrom"
+                           class="form-control" type="number" placeholder="от">
+
+                    <input name="volumeFrom" style="width: 30%" id="volumeTo"
+                           class="form-control ml-2" type="number" placeholder="до">
+                    <label class="mr-sm-2 ml-1"> м³ </label>
+                </form>
+            </div>
+            <div class="col mt-2">
+                <label class="mr-sm-2" for="isSorted">Вид сортировки: </label>
+                <select name="isSorted" id="isSorted" class="form-control selectpicker"
+                        required="required">
+                    <option value="">Любой</option>
+                    <option value="true">Сортированное</option>
+                    <option value="false">Несортированное</option>
+                </select>
+            </div>
+            <div class="col mt-2">
+                <label class="mr-sm-2" for="isSorted">Сделка: </label>
+                <select name="isFree" id="isFree" class="form-control selectpicker"
+                        required="required">
+                    <option value="">Все</option>
+                    <option value="true">Бесплатная</option>
+                    <option value="false">Платная</option>
+                </select>
+            </div>
+
+            <div class="col mt-2">
+                <button type="button" class="btn btn-md btn-warning btn-block" onclick="doFilterInit()">Выбрать</button>
+            </div>
+
+        </div>
+    </div>
+
+            <!--<div class="row">-->
+                <!--<div class="col-sm-4">-->
+
+                <!--</div>-->
+                <!--<div class="col-sm-4">-->
+                    <!--<h2>Мои Заказы</h2>-->
+                <!--</div>-->
+                <!--<div class="col-sm-4"></div>-->
+            <!--</div>-->
             <div class="row">
                 <div class="col-sm-4">
-                    <div class="filter-container" id="filter-container">
-                        <button class="filter-open-btn" id="filter-open-btn" onclick="openFilter()">☰ Фильтрация
-                        </button>
-
-                        <div class="filter" id="filter">
-                            <a href="javascript:void(0)" class="close-filter" onclick="closeFilter()">⌆</a>
-                            <div class="form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="" id="METAL">
-                                <label class="form-check-label" for="METAL">Металл
-                                </label>
-                            </div>
-                            <div class="form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="" id="PAPER">
-                                <label class="form-check-label" for="PAPER">Бумага
-                                </label>
-                            </div>
-                            <div class="form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="" id="GLASS">
-                                <label class="form-check-label" for="GLASS">Стекло
-                                </label>
-                            </div>
-                            <div class="form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="" id="FOOD">
-                                <label class="form-check-label" for="FOOD">Пищевые отходы
-                                </label>
-                            </div>
-                            <div class="form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="" id="WOOD">
-                                <label class="form-check-label" for="WOOD">Дерево
-                                </label>
-                            </div>
-                            <div class="form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="" id="PLASTIC">
-                                <label class="form-check-label" for="PLASTIC">Пластик
-                                </label>
-                            </div>
-
-                            <div class="col mt-2">
-                                <form class="form-inline">
-                                    <label class="mr-sm-2" for="isSorted">Вес: </label>
-                                    <input name="weightFrom" style="width: 30%" id="weightFrom"
-                                           class="form-control" type="number" placeholder="от">
-                                    <input name="weightTo" style="width: 30%" id="weightTo"
-                                           class="form-control ml-2" type="number" placeholder="до">
-                                    <label class="mr-sm-2 ml-1"> кг </label>
-                                </form>
-                            </div>
-                            <div class="col mt-2">
-                                <form class="form-inline">
-                                    <label class="mr-sm-2" for="isSorted">Объем: </label>
-                                    <input name="volumeFrom" style="width: 30%" id="volumeFrom"
-                                           class="form-control" type="number" placeholder="от">
-
-                                    <input name="volumeFrom" style="width: 30%" id="volumeTo"
-                                           class="form-control ml-2" type="number" placeholder="до">
-                                    <label class="mr-sm-2 ml-1"> м³ </label>
-                                </form>
-                            </div>
-                            <div class="col mt-2">
-                                <label class="mr-sm-2" for="isSorted">Вид сортировки: </label>
-                                <select name="isSorted" id="isSorted" class="form-control selectpicker"
-                                        required="required">
-                                    <option value="">Любой</option>
-                                    <option value="true">Сортированное</option>
-                                    <option value="false">Несортированное</option>
-                                </select>
-                            </div>
-                            <div class="col mt-2">
-                                <label class="mr-sm-2" for="isSorted">Сделка: </label>
-                                <select name="isFree" id="isFree" class="form-control selectpicker"
-                                        required="required">
-                                    <option value="">Все</option>
-                                    <option value="true">Бесплатная</option>
-                                    <option value="false">Платная</option>
-                                </select>
-                            </div>
-
-                            <!--<div class="col text-center mt-1 pb-2 mb-2">-->
-                            <div class="col mt-2">
-                                <button type="button" class="btn btn-md btn-warning btn-block" onclick="doFilter()">Выбрать</button>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div id="map"></div>
                 </div>
 
                 <div class="table-responsive">
@@ -124,10 +116,12 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
+
 </div>
 <div layout:fragment="localscripts">
+    <link href="/css/my_offers.css" rel="stylesheet">
+    <link href="/css/filter.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/map/trash_filter.js"></script>
     <script src="/js/taker/taker_offers.js"></script>
 </div>
 </body>

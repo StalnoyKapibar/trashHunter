@@ -19,9 +19,9 @@ public class TakerRestController {
     @PostMapping("/my_offers")
     public List<Offer> getOffersWithFilterMap(@RequestBody(required = false) Map<String, Object> map) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (map.size() != 2) {
-            return offerService.getFilterOffersForTaker(map,email);
+        if (map.size() == 0) {
+            return offerService.getOffersByTaker(email);
         }
-        return offerService.getOffersByTaker(email);
+        return offerService.getFilterOffersForTaker(map,email);
     }
 }

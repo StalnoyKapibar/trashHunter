@@ -1,3 +1,4 @@
+let result;
 function doFilter(){
     let trashType = [];
     $('input[type=checkbox]').each(function () {
@@ -33,8 +34,6 @@ function doFilter(){
         filter["isFree"] = isFree;
     }
 
-    console.log(filter);
-
     $.ajax({
         url: "/api/offer",
         type: "POST",
@@ -43,10 +42,10 @@ function doFilter(){
         dataType: "json",
         data: JSON.stringify(filter),
         success: function (data) {
-            deleteMarkers();
-            drawPoints(data);
+           result = data;
         }
     });
+    return result;
 }
 
 function openFilter() {
