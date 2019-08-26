@@ -10,10 +10,7 @@ import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -34,19 +31,22 @@ public class SenderController {
     }
 
     @GetMapping("/new_offer")
-    public String getNewOfferPage(){
+    public String getNewOfferPage(Model model, Principal principal){
+        String city = userService.findByEmail(principal.getName()).getCity();
+        model.addAttribute("city", city);
         return "new_offer";
     }
 
     @PostMapping("/new_offer")
     public String createNewOffer(@ModelAttribute Offer offer, @ModelAttribute Coordinates coordinates, Principal principal,
-                                 Model model){
+                                 @RequestParam(value = "isSorted", required = false) boolean isSorted) {
         User sender = userService.findByEmail(principal.getName());
         offer.setSender((Sender) sender);
         offer.setOfferStatus(OfferStatus.OPEN);
+        offer.setSorted(isSorted);
         offer.setCoordinates(coordinates);
         offer.setCreationDateTime(LocalDateTime.now());
-//        offerService.add(offer);
+        offerService.add(offer);
         return "new_offer";
     }
 }
