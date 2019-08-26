@@ -40,9 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
-                .loginPage("/login")
+                .loginPage("/")
                 .loginProcessingUrl("/login")
-                .failureUrl("/login?error")
+                .failureUrl("/?error=true")
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .permitAll();
@@ -50,14 +50,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.logout()
                 .permitAll()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
+                .logoutSuccessUrl("/")
                 .invalidateHttpSession(true);
 
         http
                 .authorizeRequests()
-                .antMatchers("/registration").anonymous()
-                .antMatchers("/", "/api/offer/**", "/css/*", "/js/*", "/img/*", "/activate/*", "/**", "/favorites", "/error","404").permitAll()
-                .antMatchers("/update_password", "api/change").access("hasAnyRole('User')").anyRequest().authenticated();
+                .antMatchers("/registration", "/activate/*", "/api/user/resend_email_for_token_recovery").anonymous()
+                .antMatchers("/", "/api/offer/**", "/css/*", "/js/*", "/img/*", "/activate/*", "/**", "/favorites").permitAll();
                 //.antMatchers("/admin/**").access("hasAnyRole('Taker','Sender')").anyRequest().authenticated();
     }
 

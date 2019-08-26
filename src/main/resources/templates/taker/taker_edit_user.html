@@ -16,7 +16,7 @@
 
                 <div class="col">
                     <div class="row">
-                        <div class="col mb-4">
+                        <div class="col mb-5">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="e-profile">
@@ -36,19 +36,19 @@
                                                     <div class="mt-2">
                                                         <div class="custom-file">
                                                             <input type="file" class="custom-file-input" name="inputName" id="uploadimage" enctype="multipart/form-data">
-                                                            <label class="custom-file-label" for="uploadimage">Choose file</label>
+                                                            <label class="custom-file-label" for="uploadimage">Выбрать файл</label>
                                                         </div>
-                                                        <button type="submit" id="btnSubmit" class="btn btn-outline-primary">Submit</button>
+                                                        <button type="submit" id="btnSubmit" class="btn btn-outline-primary">Отправить</button>
                                                     </div>
                                                 </div>
                                                 <div class="text-center text-sm-right">
-                                                    <span class="badge badge-secondary">Taker</span>
+                                                    <span class="badge badge-secondary">Приемщик</span>
                                                     <div class="text-muted"><small><span th:text="${user.registrationDate}"></span></small></div>
                                                 </div>
                                             </div>
                                         </div>
                                         <ul class="nav nav-tabs">
-                                            <li class="nav-item"><a href="" class="active nav-link">Settings</a></li>
+                                            <li class="nav-item"><a href="" class="active nav-link">Настройки</a></li>
                                         </ul>
                                         <div class="tab-content pt-3">
                                             <div class="tab-pane active">
@@ -58,30 +58,30 @@
                                                             <div class="row">
                                                                 <div class="col">
                                                                     <div class="form-group">
-                                                                        <label>Full Name</label>
+                                                                        <label>Полное имя</label>
                                                                         <input class="form-control" type="text" name="name" th:attr="value = ${user.name}" >
                                                                     </div>
                                                                 </div>
                                                                 <div class="col">
                                                                     <div class="form-group">
-                                                                        <label>Username</label>
-                                                                        <input class="form-control" type="text" name="username" placeholder="johnny.s" value="johnny.s">
+                                                                        <label>Номер телефона</label>
+                                                                        <input class="form-control" type="text" name="username" placeholder="+373 069319503" value="johnny.s">
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col">
                                                                     <div class="form-group">
-                                                                        <label>Email</label>
-                                                                        <input class="form-control" name="email" type="text" placeholder="user@example.com" >
+                                                                        <label>Ваш адрес</label>
+                                                                        <input class="form-control" name="email" type="text" placeholder="31 august" >
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col mb-3">
                                                                     <div class="form-group">
-                                                                        <label>About</label>
-                                                                        <textarea class="form-control" rows="5" name="about" maxlength="120" th:field="${user.aboutUser}"></textarea>
+                                                                        <label>Дополнительная информация</label>
+                                                                        <textarea class="form-control" rows="5" name="about" type="text" maxlength="120" th:field="${user.aboutUser}"></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -89,26 +89,28 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-12 col-sm-6 mb-3">
-                                                            <div class="mb-2"><b>Change Password</b></div>
+                                                            <div class="mb-2"></div>
+
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <input class="btn btn-primary" type="button"  onclick="location.href='/update_password'" value="Сменить пароль" >
+                                                                </div>
+                                                            </div>
 
                                                         </div>
                                                         <div class="col-12 col-sm-5 offset-sm-1 mb-3">
-                                                            <div class="mb-2"><b>Keeping in Touch</b></div>
+                                                            <div class="mb-2"><b>Держать в курсе</b></div>
                                                             <div class="row">
                                                                 <div class="col">
-                                                                    <label>Email Notifications</label>
+                                                                    <label>Оповещение</label>
                                                                     <div class="custom-controls-stacked px-2">
                                                                         <div class="custom-control custom-checkbox">
-                                                                            <input type="checkbox" class="custom-control-input" id="notifications-blog" checked="">
-                                                                            <label class="custom-control-label" for="notifications-blog">Blog posts</label>
-                                                                        </div>
-                                                                        <div class="custom-control custom-checkbox">
                                                                             <input type="checkbox" class="custom-control-input" id="notifications-news" checked="">
-                                                                            <label class="custom-control-label" for="notifications-news">Newsletter</label>
+                                                                            <label class="custom-control-label" for="notifications-news">Новости</label>
                                                                         </div>
                                                                         <div class="custom-control custom-checkbox">
                                                                             <input type="checkbox" class="custom-control-input" id="notifications-offers" checked="">
-                                                                            <label class="custom-control-label" for="notifications-offers">Personal Offers</label>
+                                                                            <label class="custom-control-label" for="notifications-offers">Деловые предложения</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -117,7 +119,7 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col d-flex justify-content-end">
-                                                            <button class="btn btn-primary" type="submit">Save Changes</button>
+                                                            <button class="btn btn-primary" type="submit">Сохранить</button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -132,16 +134,16 @@
                         <div class="col-12 col-md-3 mb-3">
                             <div class="card">
                                 <div class="card-body">
-                                    <h6 class="card-title font-weight-bold">Support</h6>
-                                    <p class="card-text">Get fast, free help from our friendly assistants.</p>
-                                    <button type="button" class="btn btn-primary">Contact Us</button>
+                                    <h6 class="card-title font-weight-bold">Нужна помощь?</h6>
+                                    <p class="card-text">Мы ответим на все ваши вопросы.</p>
+                                    <button type="button" class="btn btn-primary">Помощи</button>
                                 </div>
                             </div>
                             <div class="card" style="height: 33rem;">
                                 <div class="card-body">
-                                    <h6 class="card-title font-weight-bold">Support</h6>
-                                    <p class="card-text">Get fast, free help from our friendly assistants.</p>
-                                    <button type="button" class="btn btn-primary">Contact Us</button>
+                                    <h6 class="card-title font-weight-bold">Советы по безопасности</h6>
+                                    <p class="card-text">Вместо <b>trashhunter.ru</b> вполне можно увидеть <b>trashunter.ru</b> или даже <b>trashhhunter.ru</b>: разница всего в одной букве, и многие этого даже не замечают.
+                                        Если вы проследуете по этой ссылке, то в худшем случае можете подцепить серьезный вирус, а в лучшем – просто лишитесь своего аккаунта на сайте.</p>
                                 </div>
                             </div>
                         </div>

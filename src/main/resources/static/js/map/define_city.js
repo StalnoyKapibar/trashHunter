@@ -1,7 +1,6 @@
-
 function loadMap() {
     let address = $("#address").val();
-    if (address==="") {
+    if (address === "") {
         return;
     }
     window.location.replace("/?city=" + address);

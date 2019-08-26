@@ -23,7 +23,7 @@ function doAjax() {
             request.setRequestHeader(header, token);
         },
         success: (data) => {
-            alert(data);
+            window.location.reload();
         },
         error: (e) => {
             alert(e.responseText);
