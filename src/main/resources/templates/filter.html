@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Filter</title>
@@ -100,7 +99,6 @@
             </table>
         </div>
     </div>
-    <a sec:authorize="hasAuthority('Taker')" id="linkToChatFromTaker" style="display: none" href="/chat" class="btn btn-info" target="_blank">Чат</a>
 
 </th:block>
 </body>

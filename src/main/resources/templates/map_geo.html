@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:display="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/commonlayouts}"
       lang="en">
 <head>
@@ -128,6 +129,7 @@
                 <table class="table table" id="offerInfoTable">
                 </table>
             </div>
+            <a sec:authorize="hasAuthority('Taker')" style="display: none" id="linkToChatFromTaker"  href="/chat" class="btn btn-info" target="_blank">Чат</a>
         </div>
     </div>
 
