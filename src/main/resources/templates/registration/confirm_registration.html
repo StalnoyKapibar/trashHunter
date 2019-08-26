@@ -1,23 +1,57 @@
 <!DOCTYPE html>
-<html   xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layouts/commonlayouts}"
-        lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/commonlayouts}"
+      lang="en">
 <head>
-    <title>Conformation status</title>
+    <title>Успешная регистрация</title>
+    <script src="/js/resend_token.js"></script>
 </head>
-<body>
-<div  layout:fragment="content">
-    <div class="container-fluid">
-        <div class="row" style="height: 40px"></div>
-        <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4" align="center" style="color: #7295B1">
-                <span th:if="${complete}" style="font-size: 25px">Вы успешно подтвердили свой аккаунт</span>
-                <span th:if="not ${complete}" style="font-size: 25px">Произошла ошибки. Токен не найден или уже недействителен</span>
+<br>
+
+<div layout:fragment="content">
+    </br></br></br>
+    <span th:if="${complete}">
+    <div class="container">
+        <div class="card text-white bg-success mb-12" style="max-width: 80rem;">
+            <div class="card-header"><H2>Поздравляем</H2></div>
+            <div class="card-body">
+                <h5 class="card-title">Регистрация прошла успешно.</h5>
+                <p class="card-text" align="center"><a href="/login/"><button type="submit" class="btn btn-warning"
+                                                                              style="width: 250px;" id='div1'>
+                            Войти <i class="fa fa-check"></i>
+                        </button></a></p>
             </div>
         </div>
     </div>
+        </span>
+    <span th:if="!${complete}">
+    <div class="container">
+        <div class="card text-white bg-warning mb-3" style="max-width: 80rem;">
+            <div class="card-header"><H2>Ой, ваша ссылка недействительна, давайте попробуем еще раз</H2></div>
+            <div class="card-body">
+                <br class="card-title" align="center">
+                    <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-envelope"></i></span>
+                                </div>
+                                <input type="text" id="email" name="email" placeholder="Введите актуальный адрес почты"
+                                       style="background-color: white" class="form-control"/>
+                    </div>
+                </br>
+                <div align="left">
+                    <h6 id="not_matches" class="invisible">Такого e-mail не существует :( .</h6>
+                    </div>
+                    <button type="submit" class="btn btn-primary" align="center"
+                            style="width: 250px;" th:onclick="resend()" id='upp'>
+                            Отправить письмо <i class="fas fa-dove"></i>
+                        </button>
+                </h5>
+                <p class="card-text"></p>
+            </div>
+        </div>
+    </div>
+        </span>
 </div>
 </body>
 </html>
