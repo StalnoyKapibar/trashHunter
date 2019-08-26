@@ -72,6 +72,8 @@ public class EditUserController {
             model.addAttribute("complete", complete);
             model.addAttribute("token", token);
             model.addAttribute("email", verificationToken.getUser().getEmail());
+        } else {
+            model.addAttribute("error", "error");
         }
         return "reset/update_password";
     }
@@ -82,9 +84,11 @@ public class EditUserController {
     }
 
     @PostMapping("/reset/change_password")
-    public ResponseEntity resetUserPassword(@RequestParam("new_pass") String password, @RequestParam("token") String token) {
+    public ResponseEntity resetUserPassword(@RequestParam("new_pass") String password,
+                                            @RequestParam("token") String token,
+                                            @RequestParam("email") String email) {
         VerificationToken verificationToken = verificationTokenService.findByToken(token);
-        if (verificationToken != null) {
+        if (verificationToken != null && verificationToken.getUser().getEmail().equals(email)) {
             boolean complete = verificationTokenService.tokenIsNonExpired(verificationToken);
             User userByToken = verificationToken.getUser();
             if (userByToken != null && complete) {
