@@ -28,6 +28,14 @@ function login() {
                 $('#ups_message').slideDown({opacity: "show"}, "slow");
                 console.error("Unable to login");
             }
+
+            if (data.reset_msg == false) {
+                $('#reset_message').hide();
+            }
+            else {
+                $('#reset_message').slideDown({opacity: "show"}, "slow");
+                $('#link_reset_message').attr("href", "/reset/send_message/?"+email);
+            }
         },
         error: function (data) {
             console.error("Login failure");
