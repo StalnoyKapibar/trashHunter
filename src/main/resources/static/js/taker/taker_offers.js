@@ -1,5 +1,5 @@
 $(document).ready(function () {
-   getTable(doFilter());
+   getTable(doFilter('TakerActive'));
 });
 
 function getTable(data) {
@@ -69,7 +69,7 @@ function getTable(data) {
 }
 
 function doFilterInit() {
-    getTable(doFilter());
+    getTable(doFilter('TakerActive'));
 }
 
 function makeCompleteOffer(offerId) {

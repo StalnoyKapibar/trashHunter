@@ -23,7 +23,7 @@
 
 .filter {
     width: inherit;
-    position: inherit;
+    position: relative;
     z-index: inherit;
     height: 0;
     top: 0;
