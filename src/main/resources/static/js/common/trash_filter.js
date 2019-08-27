@@ -1,5 +1,5 @@
 let result;
-function doFilter(){
+function doFilter(urlrequest){
     let trashType = [];
     $('input[type=checkbox]').each(function () {
         if (this.checked) {
@@ -33,9 +33,17 @@ function doFilter(){
     if (isFree!=="") {
         filter["isFree"] = isFree;
     }
-
+    console.log(window.location.pathname);
+    if (window.location.pathname.endsWith('my_offers')){
+        $("#but_find_all").hide();
+    }
+     if (urlrequest == 'All'){
+        urlrequest = '/api/offer';
+    } else if (urlrequest == 'TakerActive'){
+        urlrequest = '/api/taker/my_offers';
+    }
     $.ajax({
-        url: "/api/offer",
+        url: urlrequest,
         type: "POST",
         contentType: "application/json; charset=utf-8",
         async: false,
@@ -49,12 +57,12 @@ function doFilter(){
 }
 
 function openFilter() {
-    if (document.getElementById("filter").style.height == "0px" ) {
-        document.getElementById("filter").style.height = "600px";
-        document.getElementById("filter").slideDown({opacity: "show"}, "slow");
+    let filter = $("#filter");
+    if (filter.height() == 0) {
+        filter.height("600px");
     } else {
-        document.getElementById("filter").style.height = "0px";
-        document.getElementById("filter").hide();
+        filter.height("0px");
     }
+
 }
 
