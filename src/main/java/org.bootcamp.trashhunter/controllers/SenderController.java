@@ -8,14 +8,10 @@ import org.bootcamp.trashhunter.models.embedded.Coordinates;
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
-import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
 
@@ -38,7 +34,15 @@ public class SenderController {
     public String getNewOfferPage(Model model, Principal principal) {
         String city = userService.findByEmail(principal.getName()).getCity();
         model.addAttribute("city", city);
-        return "new_offer";
+        return "/sender/new_offer";
+    }
+
+    @GetMapping("/edit_offer/{offerId}")
+    public String editOffer (Model model,Principal principal,@PathVariable Long offerId){
+        String city = userService.findByEmail(principal.getName()).getCity();
+        model.addAttribute("offer",offerService.getById(offerId));
+        model.addAttribute("city", city);
+        return "/sender/edit_offer";
     }
 
     @PostMapping("/new_offer")
@@ -52,6 +56,6 @@ public class SenderController {
         offer.setCreationDateTime(LocalDateTime.now());
         offerService.add(offer);
         model.addAttribute("hasCompleted", true);
-        return "new_offer";
+        return "/sender/new_offer";
     }
 }

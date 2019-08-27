@@ -117,7 +117,7 @@ function getTable() {
                     '<div class="col-sm-10"></div>'+
                     '<button class="btn btn-light btn-circle"' +
                     'data-toggle="tooltip" data-placement="bottom" title="Радактировать предложение"' +
-                    'style="margin-right: 1% " onclick=edit"(' + offerId + ')">' +
+                    'style="margin-right: 1% " <a href="" onclick="editOffer(' + offerId + ')">' +
                     '<i class="fas fa-edit"></i>' +
                     '</button>' +
                     '<button class="btn btn-light btn-circle "'+
@@ -146,6 +146,16 @@ function getTable() {
         },
         error: function (message) {
             console.log(message);
+        }
+    });
+}
+
+function editOffer(offerId) {
+    $.ajax({
+        url: '/sender/edit_offer/' + offerId,
+        type: 'GET',
+        success: function () {
+            console.log(offerId);
         }
     });
 }
