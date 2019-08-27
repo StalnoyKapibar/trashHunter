@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/registration", "/activate/*", "/api/user/resend_email_for_token_recovery").anonymous()
-                .antMatchers("/", "/api/offer/**", "/css/*", "/js/*", "/img/*", "/activate/*", "/**", "/favorites", "/chat/**").permitAll();
+                .antMatchers("/", "/api/offer/**", "/css/*", "/js/*", "/img/*", "/activate/*", "/**", "/favorites", "/chat/**", "error").permitAll();
                 //.antMatchers("/admin/**").access("hasAnyRole('Taker','Sender')").anyRequest().authenticated();
     }
 
@@ -67,7 +67,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        return tokenRepositoryImpl;
 //    }
 }
-
-
-
-

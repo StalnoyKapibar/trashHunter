@@ -53,7 +53,6 @@ public class FavoritesController {
 		}
 
 
-
 // Print ModelAndView for favorites.html:
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("favorites");
