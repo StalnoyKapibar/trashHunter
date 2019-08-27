@@ -1,7 +1,18 @@
 package org.bootcamp.trashhunter.models;
 
+import javax.persistence.*;
+
+@Entity
 public class UserFavoritesDTO {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne
 	private User userboss;
+
+    @ManyToOne()
 	private User usersubject;
 
 	public UserFavoritesDTO(){}
@@ -26,4 +37,12 @@ public class UserFavoritesDTO {
 	public void setUsersubject(User usersubject) {
 		this.usersubject = usersubject;
 	}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

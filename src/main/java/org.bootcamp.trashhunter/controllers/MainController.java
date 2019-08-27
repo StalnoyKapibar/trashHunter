@@ -50,8 +50,9 @@ public class MainController {
     }
 
     @GetMapping(value = "/update_password")
-    public String updatePasswordPage(Model model, Principal principal) {
-
+    public String updatePasswordPage() {
         return "update_password";
     }
+
+
 }

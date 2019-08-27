@@ -34,7 +34,12 @@ function initMap() {
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(filter);
 
-    let autocomplete = new google.maps.places.Autocomplete(input);
+    let options = {
+        types: ['(cities)'],
+        componentRestrictions: {country: "ru"}
+    };
+
+    let autocomplete = new google.maps.places.Autocomplete(input, options);
 
     infoWindow = new google.maps.InfoWindow();
     let infowindowContent = document.getElementById('infowindow-content');
@@ -205,6 +210,11 @@ function CenterControl(controlDiv, map) {
     controlUI.addEventListener('click', function () {
         setMyCoordinates();
     });
+}
+function doFilterInit() {
+    deleteMarkers();
+    drawPoints(doFilter());
+
 }
 
 // Button "Find Me"

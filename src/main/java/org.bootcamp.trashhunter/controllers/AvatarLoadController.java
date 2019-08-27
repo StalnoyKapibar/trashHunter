@@ -14,6 +14,7 @@ import java.security.Principal;
 
 @Controller
 public class AvatarLoadController {
+
     @Autowired
     UserServiceImpl userService;
 
@@ -26,5 +27,4 @@ public class AvatarLoadController {
         headers.setContentType(MediaType.IMAGE_PNG);
         return new ResponseEntity<byte[]>(image, headers, HttpStatus.OK);
     }
-
 }

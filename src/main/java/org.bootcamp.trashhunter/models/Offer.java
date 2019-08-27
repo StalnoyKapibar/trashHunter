@@ -20,7 +20,7 @@ public class Offer {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Sender sender;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH})
     @JoinTable(name = "offers_takers",
             joinColumns = @JoinColumn(name = "offer_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "taker_id", referencedColumnName = "id"))

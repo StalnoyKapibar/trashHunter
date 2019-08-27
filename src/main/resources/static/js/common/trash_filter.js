@@ -1,3 +1,4 @@
+let result;
 function doFilter(){
     let trashType = [];
     $('input[type=checkbox]').each(function () {
@@ -33,8 +34,6 @@ function doFilter(){
         filter["isFree"] = isFree;
     }
 
-    console.log(filter);
-
     $.ajax({
         url: "/api/offer",
         type: "POST",
@@ -43,18 +42,19 @@ function doFilter(){
         dataType: "json",
         data: JSON.stringify(filter),
         success: function (data) {
-            deleteMarkers();
-            drawPoints(data);
+           result = data;
         }
     });
+    return result;
 }
 
 function openFilter() {
-    document.getElementById("filter").style.height = "400px";
-    document.getElementById("filter-open-btn").style.height = "0";
+    if (document.getElementById("filter").style.height == "0px" ) {
+        document.getElementById("filter").style.height = "600px";
+        document.getElementById("filter").slideDown({opacity: "show"}, "slow");
+    } else {
+        document.getElementById("filter").style.height = "0px";
+        document.getElementById("filter").hide();
+    }
 }
 
-function closeFilter() {
-    document.getElementById("filter").style.height = "0";
-    document.getElementById("filter-open-btn").style.height = "50px";
-}

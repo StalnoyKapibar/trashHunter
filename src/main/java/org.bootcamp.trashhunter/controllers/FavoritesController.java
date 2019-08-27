@@ -27,11 +27,12 @@ public class FavoritesController {
 	@Autowired
     UserDao userDao;
 
+	//todo wtf?
 	@GetMapping(value = "/favorites")
 	private ModelAndView initTest() {
 
 // I get the list of friends of this user (1L):
-		// TODO Сюда передать id Boss'a
+		// Сюда передать id Boss'a
 		Long num = 1L;
 		List<UserFavorites> listUf = userFavoritesDao.getAllUserFavById(num);
 
