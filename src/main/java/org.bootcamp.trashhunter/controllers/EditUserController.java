@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.security.Principal;
 
 @Controller
@@ -50,6 +49,7 @@ public class EditUserController {
         user1.setName(name);
         user1.setAboutUser(aboutUser);
         userService.update(user1);
+        //todo
         ModelAndView mv = new ModelAndView("redirect:/edit");
         return mv;
     }

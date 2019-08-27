@@ -1,4 +1,5 @@
-function doFilter(){
+let result;
+function doFilter(urlrequest){
     let trashType = [];
     $('input[type=checkbox]').each(function () {
         if (this.checked) {
@@ -32,29 +33,36 @@ function doFilter(){
     if (isFree!=="") {
         filter["isFree"] = isFree;
     }
-
-    console.log(filter);
-
+    console.log(window.location.pathname);
+    if (window.location.pathname.endsWith('my_offers')){
+        $("#but_find_all").hide();
+    }
+     if (urlrequest == 'All'){
+        urlrequest = '/api/offer';
+    } else if (urlrequest == 'TakerActive'){
+        urlrequest = '/api/taker/my_offers';
+    }
     $.ajax({
-        url: "/api/offer",
+        url: urlrequest,
         type: "POST",
         contentType: "application/json; charset=utf-8",
         async: false,
         dataType: "json",
         data: JSON.stringify(filter),
         success: function (data) {
-            deleteMarkers();
-            drawPoints(data);
+           result = data;
         }
     });
+    return result;
 }
 
 function openFilter() {
-    document.getElementById("filter").style.height = "400px";
-    document.getElementById("filter-open-btn").style.height = "0";
+    let filter = $("#filter");
+    if (filter.height() == 0) {
+        filter.height("600px");
+    } else {
+        filter.height("0px");
+    }
+
 }
 
-function closeFilter() {
-    document.getElementById("filter").style.height = "0";
-    document.getElementById("filter-open-btn").style.height = "50px";
-}

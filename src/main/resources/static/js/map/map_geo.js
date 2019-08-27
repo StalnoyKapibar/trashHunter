@@ -34,7 +34,12 @@ function initMap() {
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(filter);
 
-    let autocomplete = new google.maps.places.Autocomplete(input);
+    let options = {
+        types: ['(cities)'],
+        componentRestrictions: {country: "ru"}
+    };
+
+    let autocomplete = new google.maps.places.Autocomplete(input, options);
 
     infoWindow = new google.maps.InfoWindow();
     let infowindowContent = document.getElementById('infowindow-content');
@@ -206,6 +211,10 @@ function CenterControl(controlDiv, map) {
         setMyCoordinates();
     });
 }
+function doFilterInit(urlrequest) {
+    deleteMarkers();
+    drawPoints(doFilter(urlrequest));
+}
 
 // Button "Find Me"
 function setMyCoordinates() {
@@ -234,4 +243,5 @@ function setMyCoordinates() {
             'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
     }
+
 }

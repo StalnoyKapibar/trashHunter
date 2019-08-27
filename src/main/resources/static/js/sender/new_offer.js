@@ -4,7 +4,7 @@ var latitude = 55.752030;
 var longitude = 37.633685;
 var city = $("meta[name='city']").attr("content");
 
-function initMap(){
+function initMap() {
     getCoordsByAddress(city);
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: latitude, lng: longitude},
@@ -16,6 +16,11 @@ function initMap(){
             mapTypeIds: ['hybrid', 'styled_map']
         }
     });
+
+    let styledMapType = new google.maps.StyledMapType(styledMapPropertiesArray, {name: 'Styled Map'});
+    map.mapTypes.set('styled_map', styledMapType);
+    map.setMapTypeId('styled_map');
+
     let options = {
         types: ['(cities)'],
         componentRestrictions: {country: "ru"}

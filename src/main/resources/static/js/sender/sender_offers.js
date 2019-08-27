@@ -3,12 +3,12 @@ $(document).ready(function () {
 });
 
 function getTable() {
-    let offerId;
+    var offerId;
     $.ajax({
         url: "/api/sender/my_offers",
         type: "GET",
         success: function (result) {
-            $('#employerTable tbody').empty();
+            $('#senderOffersTable tbody').empty();
             $.each(result, function (offer, takers) {
                 let offerRow = '';
                 JSON.parse(offer, function (key, value) {
@@ -139,7 +139,7 @@ function getTable() {
                     '</div>'+
                 '</div>';
 
-                $('#employerTable tbody').append(offerRow);
+                $('#senderOffersTable tbody').append(offerRow);
 
             });
 
@@ -152,23 +152,20 @@ function getTable() {
 
 function deleteOffer(offerId) {
     $.ajax({
-        url: '/api/sender/deleteOffer/' + offerId,
+        url: '/api/offer/deleteOffer/' + offerId,
         type: 'GET',
         success: function () {
-            //$('#employerTable tbody').empty();
-            //getTable();
-            let string = '#offer'+offerId;
-             $(string).hide();
+             $('#offer'+offerId).hide();
         }
     });
 }
 
 function restoreOffer(offerId) {
     $.ajax({
-        url: '/api/sender/restoreOffer/' + offerId,
+        url: '/api/offer/restoreOffer/' + offerId,
         type: 'GET',
         success: function () {
-            $('#employerTable tbody').empty();
+            $('#senderOffersTable tbody').empty();
             getTable();
         }
     });
@@ -176,10 +173,10 @@ function restoreOffer(offerId) {
 
 function makeCompleteOffer(offerId) {
     $.ajax({
-        url: '/api/sender/makeCompleteOffer/' + offerId,
+        url: '/api/offer/makeCompleteOffer/' + offerId,
         type: 'GET',
         success: function () {
-            $('#employerTable tbody').empty();
+            $('#senderOffersTable tbody').empty();
             getTable();
         }
     });
@@ -187,10 +184,10 @@ function makeCompleteOffer(offerId) {
 
 function cancelOffer(offerId) {
     $.ajax({
-        url: '/api/sender/cancelOffer/' + offerId,
+        url: '/api/offer/cancelOffer/' + offerId,
         type: 'GET',
         success: function () {
-            $('#employerTable tbody').empty();
+            $('#senderOffersTable tbody').empty();
             getTable();
         }
     });
@@ -198,10 +195,10 @@ function cancelOffer(offerId) {
 
 function confirmOffer(takerId, offerId) {
     $.ajax({
-        url: '/api/sender/confirmOffer/' + takerId + '/' + offerId,
+        url: '/api/offer/confirmOffer/' + takerId + '/' + offerId,
         type: 'GET',
         success: function () {
-            $('#employerTable tbody').empty();
+            $('#senderOffersTable tbody').empty();
             getTable();
         }
     });

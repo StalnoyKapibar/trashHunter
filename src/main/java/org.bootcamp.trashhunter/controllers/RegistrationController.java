@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.time.LocalDate;
 
 @Controller
@@ -53,7 +52,6 @@ public class RegistrationController {
         VerificationToken verificationToken = verificationTokenService.findByToken(token);
         if (verificationToken != null) {
             boolean complete = verificationTokenService.tokenIsNonExpired(verificationToken);
-
             model.addAttribute("complete", complete);
             if (complete) {
                 verificationTokenService.completeRegistration(verificationToken);
