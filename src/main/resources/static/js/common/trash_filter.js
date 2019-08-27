@@ -49,12 +49,14 @@ function doFilter(){
 }
 
 function openFilter() {
-    if (document.getElementById("filter").style.height == "0px" ) {
-        document.getElementById("filter").style.height = "600px";
-        document.getElementById("filter").slideDown({opacity: "show"}, "slow");
+    let openHeight = "600px";
+    let closeHeight = "0px";
+
+    let filter = $("#filter");
+
+    if (filter.height() == parseInt(closeHeight)) {
+        filter.height(openHeight);
     } else {
-        document.getElementById("filter").style.height = "0px";
-        document.getElementById("filter").hide();
+        filter.height(closeHeight);
     }
 }
-

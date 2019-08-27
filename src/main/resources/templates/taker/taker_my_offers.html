@@ -9,6 +9,7 @@
     <title>TakerOffers</title>
 </head>
 <body>
+
 <div layout:fragment="content">
     <div class="col-sm-3">
         <th:block th:replace="fragments/filter :: filter"></th:block>
@@ -23,14 +24,14 @@
             </table>
         </div>
     </div>
-
-
 </div>
-<div layout:fragment="localscripts">
-    <link href="/css/my_offers.css" rel="stylesheet">
-    <link href="/css/filter.css" rel="stylesheet">
+
+<th:block layout:fragment="localscripts">
+    <link rel="stylesheet" href="/css/my_offers.css">
+    <link rel="stylesheet" href="/css/filter.css">
     <script type="text/javascript" src="/js/common/trash_filter.js"></script>
-    <script src="/js/taker/taker_offers.js"></script>
-</div>
+    <script type="text/javascript" src="/js/taker/taker_offers.js"></script>
+</th:block>
+
 </body>
 </html>
