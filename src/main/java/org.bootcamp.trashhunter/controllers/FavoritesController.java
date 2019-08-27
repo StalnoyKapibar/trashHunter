@@ -27,6 +27,7 @@ public class FavoritesController {
 	@Autowired
     UserDao userDao;
 
+	//todo wtf?
 	@GetMapping(value = "/favorites")
 	private ModelAndView initTest() {
 

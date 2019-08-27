@@ -2,7 +2,7 @@ $(document).ready(function () {
     initMap();
 });
 
-function initMap(){
+function initMap() {
     let options = {
         types: ['(cities)'],
         componentRestrictions: {country: "ru"}

@@ -50,6 +50,7 @@ public class EditUserController {
         user1.setName(name);
         user1.setAboutUser(aboutUser);
         userService.update(user1);
+        //todo
         ModelAndView mv = new ModelAndView("redirect:/edit");
         return mv;
     }

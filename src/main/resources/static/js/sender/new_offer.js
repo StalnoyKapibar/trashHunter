@@ -4,7 +4,7 @@ var latitude = 55.752030;
 var longitude = 37.633685;
 var city = $("meta[name='city']").attr("content");
 
-function initMap(){
+function initMap() {
     getCoordsByAddress(city);
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: latitude, lng: longitude},
