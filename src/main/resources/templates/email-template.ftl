@@ -18,7 +18,7 @@
     <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
         <tr>
 
-            <p><b>Привет ${name},</b></p>
+            <p><b>Привет ${userName},</b></p>
                 <p>${body}</b></p>
                 <#if link??>
                     <a href="${link}">Ссылка</a>

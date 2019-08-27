@@ -42,28 +42,6 @@ public class MailServiceImpl implements MailService {
         mailSender.send(mailMessage);
     }
 
-    private void sendWithModel(String emailTo, String subject, String message, Map<String, Object> model) {
-        model.put("name", emailTo);
-        model.put("body", message);
-        model.put("link", "http://localhost:8080");
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper helper;
-        try {
-            helper = new MimeMessageHelper(mimeMessage,
-                    MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
-                    StandardCharsets.UTF_8.name());
-            Template t = freeMarkerConfig.getTemplate("email-template.ftl");
-            String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
-            helper.setTo(emailTo);
-            helper.setText(html, true);
-            helper.setSubject(subject);
-            helper.setFrom(username);
-            mailSender.send(mimeMessage);
-        } catch (MessagingException | IOException | TemplateException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     public void sendMessage(User user, VerificationToken token) {
         if (!StringUtils.isEmpty(user.getEmail())) {
@@ -83,6 +61,26 @@ public class MailServiceImpl implements MailService {
     public void sendMessage(User user, String message, String subject) {
         if (!StringUtils.isEmpty(user.getEmail())) {
             send(user.getEmail(), subject, message);
+        }
+    }
+
+    @Override
+    public void sendMessageWithModel(String emailTo, String subject, Map<String, Object> modelMessage) {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper helper;
+        try {
+            helper = new MimeMessageHelper(mimeMessage,
+                    MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+                    StandardCharsets.UTF_8.name());
+            Template t = freeMarkerConfig.getTemplate("email-template.ftl");
+            String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, modelMessage);
+            helper.setTo(emailTo);
+            helper.setText(html, true);
+            helper.setSubject(subject);
+            helper.setFrom(username);
+            mailSender.send(mimeMessage);
+        } catch (MessagingException | IOException | TemplateException e) {
+            e.printStackTrace();
         }
     }
 }
