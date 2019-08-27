@@ -49,9 +49,7 @@ public class EditUserController {
         user1.setName(name);
         user1.setAboutUser(aboutUser);
         userService.update(user1);
-        //todo
-        ModelAndView mv = new ModelAndView("redirect:/edit");
-        return mv;
+        return new ModelAndView("redirect:/edit");
     }
 
     @PostMapping("/reset/send_message")
@@ -61,6 +59,12 @@ public class EditUserController {
             verificationTokenService.sendTokenToResetPassword(registeredUser);
             model.addAttribute("sentMsg", "ok");
         }
+        return "reset/reset_password";
+    }
+
+    @GetMapping(value = "/reset/send_message")
+    public String resetPasswordGetPage(@RequestParam(required = false) String email, Model model) {
+        model.addAttribute("email", email);
         return "reset/reset_password";
     }
 
@@ -76,11 +80,6 @@ public class EditUserController {
             model.addAttribute("error", "error");
         }
         return "reset/update_password";
-    }
-
-    @GetMapping(value = "/reset/send_message")
-    public String resetPasswordPage() {
-        return "reset/reset_password";
     }
 
     @PostMapping("/reset/change_password")

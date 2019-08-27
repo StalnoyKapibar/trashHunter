@@ -103,6 +103,10 @@ li {
 }
 
 #ups_message {
+     display: none;
+}
+
+#reset_message {
     display: none;
 }
 
