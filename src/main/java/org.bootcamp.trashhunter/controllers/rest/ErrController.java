@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class ErrController implements ErrorController {
+
 	private static final String PATH = "/error";
 
 	@RequestMapping(value = PATH)
@@ -22,4 +23,5 @@ public class ErrController implements ErrorController {
 	public String getErrorPath() {
 		return PATH;
 	}
+
 }
