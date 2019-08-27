@@ -57,12 +57,12 @@ function doFilter(urlrequest){
 }
 
 function openFilter() {
-    if (document.getElementById("filter").style.height == "0px" ) {
-        document.getElementById("filter").style.height = "620px";
-        document.getElementById("filter").slideDown({opacity: "show"}, "slow");
+    let filter = $("#filter");
+    if (filter.height() == 0) {
+        filter.height("600px");
     } else {
-        document.getElementById("filter").style.height = "0px";
-        $("filter").hide();
+        filter.height("0px");
     }
+
 }
 
