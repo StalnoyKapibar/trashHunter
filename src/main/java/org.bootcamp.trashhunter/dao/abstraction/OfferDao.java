@@ -17,5 +17,9 @@ public interface OfferDao extends AbstractDao<Offer> {
       */
     List<Offer> getFilterQuery(Map<String, Object> map);
 
-    Map<Offer,List<Taker>> getOffersBySenderIdActiveFirst(Long senderId);
+    Map<Offer,List<Taker>> getOffersBySenderIdActiveFirst(String name);
+
+    List<Offer> getOffersByTaker(String email);
+
+    List<Offer> getFilterOffersForTaker(Map<String , Object> map, String email);
 }

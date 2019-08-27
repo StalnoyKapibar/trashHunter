@@ -20,7 +20,7 @@ public class FileUploadController {
     public @ResponseBody ResponseEntity updateSeekerPhoto(@RequestParam(value = "img") MultipartFile image, Principal user) {
         String email = user.getName();
         User user1 = userServiceImpl.findByEmail(email);
-
+        //todo адекватная обработка исключений
         try {
             byte[] photo = image.getBytes();
             user1.setPic(photo);

@@ -1,6 +1,5 @@
 package org.bootcamp.trashhunter.controllers.rest;
 
-import groovyjarjarpicocli.groovy.PicocliScriptASTTransformation;
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.token.VerificationToken;
 import org.bootcamp.trashhunter.services.abstraction.MailService;
@@ -9,13 +8,10 @@ import org.bootcamp.trashhunter.services.abstraction.tokens.VerificationTokenSer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.extras.springsecurity5.auth.AuthUtils;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController

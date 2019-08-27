@@ -7,36 +7,35 @@
         lang="en">
 <head>
     <title>SenderOffers</title>
-    <link href="/css/sender.css" rel="stylesheet">
+    <link href="/css/my_offers.css" rel="stylesheet">
 </head>
 <body>
 <div layout:fragment="content">
 
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4">
-                <h2>Мои Предложения</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <h2>Мои Предложения</h2>
+                </div>
+                <div class="col-sm-4"></div>
             </div>
-            <div class="col-sm-4"></div>
-
-        </div>
-        <br>
-        <div class="row">
-            <div class="table-responsive">
-                <table id="employerTable" class="table"
-                       width="100%" >
-                    <tbody align="center">
-                    <!--Loaded from offer.js getTable()-->
-                    </tbody>
-                </table>
+            <br>
+            <div class="row" >
+                <div class="table-responsive">
+                    <table id="senderOffersTable" class="table"
+                               width="100%">
+                            <tbody align="center">
+                                <!--Loaded from sender_offer.js getTable()-->
+                            </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 
 </div>
-<div  layout:fragment="localscripts">
-    <script src="/js/sender/offers.js"></script>
+<div layout:fragment="localscripts">
+    <script src="/js/sender/sender_offers.js"></script>
 </div>
 </body>
 </html>

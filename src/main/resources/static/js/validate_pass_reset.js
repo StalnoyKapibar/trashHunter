@@ -4,25 +4,24 @@ function validatePass() {
     $('#success_change').attr('class','invisible').css("color", "green");
 
 
-    let oldPass = document.getElementById("oldPassword").value;
     let newPass = document.getElementById("newPassword").value;
     let repeatPass = document.getElementById("repeatPassword").value;
-    if(newPass !== repeatPass) {
+    let token = document.getElementById("token").value;
+    let email = document.getElementById("email").value;
+    if (newPass !== repeatPass) {
         $('#not_matches').attr('class','visible alert').css("color", "red");
-
-
     } else {
-        let passChange = {'old_pass': oldPass,
-                          'new_pass': newPass
+        let passChange = {
+            'new_pass': newPass,
+            'token': token,
+            'email' : email
         };
 
         $.ajax({
-            //todo
-            url: "/api/user/change_password",
+            url: "/reset/change_password",
             type: 'POST',
-            // dataType: "application/json; charset=utf-8",
             data: passChange,
-            // contentType: "application/json",
+            //todo
             beforeSend: function (request) {
                 request.setRequestHeader(header, token);
             },

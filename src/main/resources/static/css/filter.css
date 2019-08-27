@@ -1,5 +1,6 @@
 .filter-container {
-    width: 300px;
+    width: 350px;
+    height: 1000px;
     margin: 10px 0 0 10px;
     text-decoration: none;
     font-size: 25px;
@@ -35,7 +36,7 @@
 }
 
 .filter-open-btn:hover {
-    background-color: #444;
+    background-color: #7295b1;
 }
 
 #filter-container a {
