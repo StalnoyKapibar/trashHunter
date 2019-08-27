@@ -1,40 +1,61 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/commonlayouts}"
-	  lang="en">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/commonlayouts}"
+      lang="en">
 <head>
-	<title>Trash_hunter</title>
+    <title>Trash_hunter</title>
 </head>
 
 <body style="background-color: #ebebeb">
 
 <div layout:fragment="content" align="center">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-4">
-				<br/><br/><br/><br/><br/>
-				<h4>Trashhunter sign in</h4>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <br/><br/><br/><br/><br/>
+                <h4>Trashhunter sign in</h4>
 
-				<form th:action="@{/login}" method="post">
-					<div class="form-group">
-						<label th:for="login"></label>
-							<input type="text" style="background-color: white" class="form-control btn btn-default btn-md btn-block" th:id="email" name="login" th:name="email" placeholder="Email">
-					</div>
-					<div class="form-group">
-						<label th:for="password"></label>
-							<input type="password" style="background-color: white" class="form-control btn btn-default btn-md btn-block" name="password" th:name="password" th:id="password" placeholder="Password">
-					</div>
-					<!--<label> Remember Me</label>-->
-					<!--<input type="checkbox" name="remember-me" />-->
-					<button type="submit" class="btn btn-primary btn-md btn-block">Submit</button>
-				</form>
-
-			</div>
-			<div class="col-md-4"></div>
-		</div>
-	</div>
+                <div id="login-form">
+                    <p>
+                        <label for="username" class="sr-only">Почта:</label>
+                        <input type="text" id="username" name="email" class="form-control"
+                               placeholder="Email" required autofocus>
+                    </p>
+                    <p>
+                        <label for="password" class="sr-only">Пароль:</label>
+                        <input type="password" id="password" name="password" class="form-control"
+                               placeholder="Password" required>
+                    </p>
+                    <button class="btn btn-md btn-warning btn-block" id="login-btn" onclick="login()">
+                        Войти
+                    </button>
+                    <div class="alert alert-danger" role="alert" id="ups_message">
+                        Проверьте правильность введённых данных
+                        <i class="fas fa-exclamation-circle"></i>
+                        <br/>
+                    </div>
+                </div>
+                <!--
+                                <form th:action="@{/login}" method="post">
+                                    <div class="form-group">
+                                        <label th:for="login"></label>
+                                            <input type="text" style="background-color: white" class="form-control btn btn-default btn-md btn-block" th:id="email" name="login" th:name="email" placeholder="Email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label th:for="password"></label>
+                                            <input type="password" style="background-color: white" class="form-control btn btn-default btn-md btn-block" name="password" th:name="password" th:id="password" placeholder="Password">
+                                    </div>
+                                    &lt;!&ndash;<label> Remember Me</label>&ndash;&gt;
+                                    &lt;!&ndash;<input type="checkbox" name="remember-me" />&ndash;&gt;
+                                    <button type="submit" class="btn btn-primary btn-md btn-block">Submit</button>
+                                </form>
+                -->
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
 </div>
 
 </body>

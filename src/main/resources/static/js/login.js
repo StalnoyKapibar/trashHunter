@@ -34,3 +34,11 @@ function login() {
         }
     });
 }
+
+let input = document.getElementById("password");
+input.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("login-btn").click();
+    }
+});
