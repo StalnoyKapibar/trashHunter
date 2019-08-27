@@ -21,7 +21,7 @@ public class AuthFailureHandler extends SimpleUrlAuthenticationFailureHandler {
         Object countWrong = session.getAttribute("countWrong");
         int count;
         if (countWrong == null) {
-            count = 0;
+            count = 1;
         } else {
             count = (Integer) countWrong + 1;
         }
