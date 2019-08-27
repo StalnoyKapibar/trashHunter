@@ -49,11 +49,12 @@ function doFilter(){
 }
 
 function openFilter() {
-    document.getElementById("filter").style.height = "400px";
-    document.getElementById("filter-open-btn").style.height = "0";
+    if (document.getElementById("filter").style.height == "0px" ) {
+        document.getElementById("filter").style.height = "600px";
+        document.getElementById("filter").slideDown({opacity: "show"}, "slow");
+    } else {
+        document.getElementById("filter").style.height = "0px";
+        document.getElementById("filter").hide();
+    }
 }
 
-function closeFilter() {
-    document.getElementById("filter").style.height = "0";
-    document.getElementById("filter-open-btn").style.height = "50px";
-}

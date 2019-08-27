@@ -14,7 +14,7 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&libraries=places&callback=initMap"
                 defer></script>
         <script type="text/javascript" src="/js/map/styled_map.js"></script>
-        <script type="text/javascript" src="/js/map/trash_filter.js"></script>
+        <script type="text/javascript" src="/js/common/trash_filter.js"></script>
         <script type="text/javascript" src="/js/map/map_geo.js"></script>
     </th:block>
 </head>
@@ -110,8 +110,6 @@
                         <option value="false">Платная</option>
                     </select>
                 </div>
-
-                <!--<div class="col text-center mt-1 pb-2 mb-2">-->
                 <div class="col mt-2">
                     <button type="button" class="btn btn-md btn-warning btn-block" onclick="doFilterInit()">Выбрать</button>
                 </div>

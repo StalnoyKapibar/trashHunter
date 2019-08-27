@@ -213,10 +213,8 @@ function CenterControl(controlDiv, map) {
 }
 function doFilterInit() {
     deleteMarkers();
-    console.log(doFilter());
-    let data = doFilter();
-    drawPoints(data);
-    alert(data);
+    drawPoints(doFilter());
+
 }
 
 // Button "Find Me"
