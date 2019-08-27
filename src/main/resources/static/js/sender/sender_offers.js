@@ -3,7 +3,7 @@ $(document).ready(function () {
 });
 
 function getTable() {
-    let offerId;
+    var offerId;
     $.ajax({
         url: "/api/sender/my_offers",
         type: "GET",

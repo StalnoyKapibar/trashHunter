@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 <head>
     <meta charset="UTF-8">
     <title>Filter</title>
@@ -106,9 +108,14 @@
                 </select>
             </div>
             <hr>
-            <div class="col mt-2">
-                <button type="button" class="btn btn-md btn-warning btn-block" onclick="doFilterInit()">
-                    Выбрать
+            <div class="col mt-2" >
+                <button id="but_find_all" type="button"  class="btn btn-md btn-warning btn-block" onclick="doFilterInit('All')" >
+                    Искать
+                </button>
+            </div>
+            <div class="col mt-2" sec:authorize="hasAuthority('Taker')">
+                <button type="button" class="btn btn-md btn-primary btn-block" onclick="doFilterInit('TakerActive')">
+                     Мои заказы
                 </button>
             </div>
         </div>
