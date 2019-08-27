@@ -21,5 +21,6 @@ public class TrashHunterApplication {
     public InitData initData() {
         return new InitData();
     }
-
 }
+
+
