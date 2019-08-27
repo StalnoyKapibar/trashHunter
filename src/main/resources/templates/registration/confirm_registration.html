@@ -7,7 +7,9 @@
     <title>Успешная регистрация</title>
     <script src="/js/resend_token.js"></script>
 </head>
+<body>
 <br>
+
 
 <div layout:fragment="content">
     </br></br></br>
@@ -17,10 +19,13 @@
             <div class="card-header"><H2>Поздравляем</H2></div>
             <div class="card-body">
                 <h5 class="card-title">Регистрация прошла успешно.</h5>
-                <p class="card-text" align="center"><a href="/login/"><button type="submit" class="btn btn-warning"
-                                                                              style="width: 250px;" id='div1'>
+                <p class="card-text" align="center">
+                    <a href="/login/">
+                        <button type="submit" class="btn btn-warning" style="width: 250px;" id='div1'>
                             Войти <i class="fa fa-check"></i>
-                        </button></a></p>
+                        </button>
+                    </a>
+                </p>
             </div>
         </div>
     </div>
@@ -32,20 +37,22 @@
             <div class="card-body">
                 <br class="card-title" align="center">
                     <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-envelope"></i></span>
-                                </div>
-                                <input type="text" id="email" name="email" placeholder="Введите актуальный адрес почты"
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="far fa-envelope"></i>
+                            </span>
+                        </div>
+                        <input type="text" id="email" name="email" placeholder="Введите актуальный адрес почты"
                                        style="background-color: white" class="form-control"/>
                     </div>
                 </br>
                 <div align="left">
                     <h6 id="not_matches" class="invisible">Такого e-mail не существует :( .</h6>
-                    </div>
-                    <button type="submit" class="btn btn-primary" align="center"
+                </div>
+                <button type="submit" class="btn btn-primary" align="center"
                             style="width: 250px;" th:onclick="resend()" id='upp'>
                             Отправить письмо <i class="fas fa-dove"></i>
-                        </button>
+                </button>
                 </h5>
                 <p class="card-text"></p>
             </div>
@@ -53,5 +60,6 @@
     </div>
         </span>
 </div>
+
 </body>
 </html>
