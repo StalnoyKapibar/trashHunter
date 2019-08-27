@@ -53,7 +53,6 @@ public class RegistrationController {
         VerificationToken verificationToken = verificationTokenService.findByToken(token);
         if (verificationToken != null) {
             boolean complete = verificationTokenService.tokenIsNonExpired(verificationToken);
-
             model.addAttribute("complete", complete);
             if (complete) {
                 verificationTokenService.completeRegistration(verificationToken);

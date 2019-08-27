@@ -8,7 +8,7 @@ function validatePass() {
     let repeatPass = document.getElementById("repeatPassword").value;
     let token = document.getElementById("token").value;
     let email = document.getElementById("email").value;
-    if(newPass !== repeatPass) {
+    if (newPass !== repeatPass) {
         $('#not_matches').attr('class','visible alert').css("color", "red");
     } else {
         let passChange = {
@@ -21,6 +21,7 @@ function validatePass() {
             url: "/reset/change_password",
             type: 'POST',
             data: passChange,
+            //todo
             beforeSend: function (request) {
                 request.setRequestHeader(header, token);
             },

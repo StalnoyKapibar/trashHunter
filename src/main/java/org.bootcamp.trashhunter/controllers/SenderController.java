@@ -35,7 +35,7 @@ public class SenderController {
     }
 
     @GetMapping("/new_offer")
-    public String getNewOfferPage(Model model, Principal principal){
+    public String getNewOfferPage(Model model, Principal principal) {
         String city = userService.findByEmail(principal.getName()).getCity();
         model.addAttribute("city", city);
         return "new_offer";
@@ -44,7 +44,6 @@ public class SenderController {
     @PostMapping("/new_offer")
     public String createNewOffer(@ModelAttribute Offer offer, @ModelAttribute Coordinates coordinates, Principal principal,
                                  @RequestParam(value = "isSorted", required = false) boolean isSorted, Model model) {
-
         User sender = userService.findByEmail(principal.getName());
         offer.setSender((Sender) sender);
         offer.setOfferStatus(OfferStatus.OPEN);

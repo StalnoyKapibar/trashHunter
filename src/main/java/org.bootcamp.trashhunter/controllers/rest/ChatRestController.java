@@ -19,6 +19,4 @@ public class ChatRestController {
     public List<ChatMessage> getChatMessage(@PathVariable("takerId") long takerId, @PathVariable("senderId") long senderId) {
         return chatMessageService.getChatByTakerIdAndSenderId(takerId, senderId);
     }
-
-
 }

@@ -17,6 +17,7 @@ function validatePass() {
         };
 
         $.ajax({
+            //todo
             url: "/api/user/change_password",
             type: 'POST',
             // dataType: "application/json; charset=utf-8",

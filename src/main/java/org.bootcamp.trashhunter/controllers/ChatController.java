@@ -8,6 +8,7 @@ import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.bootcamp.trashhunter.services.impl.ChatMessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -36,6 +37,7 @@ public class ChatController {
     private final SenderService senderService;
     private final TakerService takerService;
 
+    @Autowired
     public ChatController(SimpMessageSendingOperations messagingTemplate,
                           UserService userService, ChatMessageService chatMessageService,
                           SenderService senderService, TakerService takerService) {
