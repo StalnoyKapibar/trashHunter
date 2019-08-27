@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/commonlayouts}"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="row flex-lg-nowrap">
+            <form action="#" th:action="@{/edit}" th:object="${user}" method="post">
+
+                <div class="col">
+                    <div class="row">
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="e-profile">
+                                        <div class="row" >
+                                            <div class="col-12 col-sm-auto mb-3">
+                                                <div class="mx-auto" style="width: 140px;">
+                                                    <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
+                                                        <img th:src="@{/image}" height="160" width="160" class="img-circle profile-avatar" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                                                <div class="text-center text-sm-left mb-2 mb-sm-0">
+                                                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap"><span th:text="${user.name}"></span></h4>
+                                                    <p class="mb-0"><span th:text="${user.email}"></span></p>
+                                                    <!--                                                    <div class="text-muted"><small>Last seen 2 hours ago</small></div>-->
+                                                    <div class="mt-2">
+                                                        <div class="custom-file">
+                                                            <input type="file" class="custom-file-input" name="inputName" id="uploadimage" enctype="multipart/form-data">
+                                                            <label class="custom-file-label" for="uploadimage">Choose file</label>
+                                                        </div>
+                                                        <button type="submit" id="btnSubmit" class="btn btn-outline-primary">Submit</button>
+                                                    </div>
+                                                </div>
+                                                <div class="text-center text-sm-right">
+                                                    <span class="badge badge-secondary">Taker</span>
+                                                    <div class="text-muted"><small><span th:text="${user.registrationDate}"></span></small></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item"><a href="" class="active nav-link">Settings</a></li>
+                                        </ul>
+                                        <div class="tab-content pt-3">
+                                            <div class="tab-pane active">
+                                                <form class="form" novalidate="">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label>Full Name</label>
+                                                                        <input class="form-control" type="text" name="name" th:attr="value = ${user.name}" >
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label>Username</label>
+                                                                        <input class="form-control" type="text" name="username" placeholder="johnny.s" value="johnny.s">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label>Email</label>
+                                                                        <input class="form-control" name="email" type="text" placeholder="user@example.com" >
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col mb-3">
+                                                                    <div class="form-group">
+                                                                        <label>About</label>
+                                                                        <textarea class="form-control" rows="5" name="about" maxlength="120" th:placeholder="${user.aboutUser}"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-12 col-sm-6 mb-3">
+                                                            <div class="mb-2"><b>Change Password</b></div>
+                                                        </div>
+                                                        <div class="col-12 col-sm-5 offset-sm-1 mb-3">
+                                                            <div class="mb-2"><b>Keeping in Touch</b></div>
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <label>Email Notifications</label>
+                                                                    <div class="custom-controls-stacked px-2">
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" id="notifications-blog" checked="">
+                                                                            <label class="custom-control-label" for="notifications-blog">Blog posts</label>
+                                                                        </div>
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" id="notifications-news" checked="">
+                                                                            <label class="custom-control-label" for="notifications-news">Newsletter</label>
+                                                                        </div>
+                                                                        <div class="custom-control custom-checkbox">
+                                                                            <input type="checkbox" class="custom-control-input" id="notifications-offers" checked="">
+                                                                            <label class="custom-control-label" for="notifications-offers">Personal Offers</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col d-flex justify-content-end">
+                                                            <button class="btn btn-primary" type="submit">Save Changes</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-3 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title font-weight-bold">Support</h6>
+                                    <p class="card-text">Get fast, free help from our friendly assistants.</p>
+                                    <button type="button" class="btn btn-primary">Contact Us</button>
+                                </div>
+                            </div>
+                            <div class="card" style="height: 33rem;">
+                                <div class="card-body">
+                                    <h6 class="card-title font-weight-bold">Support</h6>
+                                    <p class="card-text">Get fast, free help from our friendly assistants.</p>
+                                    <button type="button" class="btn btn-primary">Contact Us</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

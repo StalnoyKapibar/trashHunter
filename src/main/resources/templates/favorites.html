@@ -1,0 +1,99 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<title>Favorites</title>
+</head>
+
+<body style="background-color: #ebebeb">
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<div align="center">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-3"></div>
+			<div class="col-md-6">
+				<h3>My Favorites</h3>
+				<h3 th:text="${boss.name}"></h3>
+
+<!--++++++++++++++++++++-->
+<!-- EditModalPage START-->
+<div class="tab-content" id="pills-tabContent" style="margin: 0; padding: 0">
+	<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" >
+		<div class="table-responsive" style="background-color: white; padding: 10px 20px">
+			<table class="table table-borderless table-striped table-hover table-condensed" style="background-color: white">
+				<thead>
+					<tr>
+						<th>id</th>
+						<th>email</th>
+						<th>name</th>
+<!--						<th>password</th>-->
+						<th>registrationDate</th>
+						<th>enabled</th>
+						<th>button</th>
+					</tr>
+				</thead>
+				<tbody>
+					<span th:each="uf : ${ufDto}">
+						<tr>
+							<td th:text="${uf.usersubject.id}"></td>
+							<td th:text="${uf.usersubject.email}"></td>
+							<td th:text="${uf.usersubject.name}"></td>
+<!--							<td th:text="${uf.usersubject.password}"></td>-->
+							<td th:text="${uf.usersubject.registrationDate}"></td>
+							<td th:text="${uf.usersubject.enabled}"></td>
+							<td>
+								<a href="#" class="btn btn-primary btn-md " role="button" data-toggle="modal" th:data-target="'#mod' + ${uf.usersubject.id}">info</a>
+							</td>
+
+<!--///////////-->
+<!--START Modal-->
+<div th:id="'mod' + ${uf.usersubject.id}" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" style="text-align: left">Модальное окно</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+			</div>
+			<div class="modal-body" align="center">
+
+				<span th:text="${uf.usersubject.id}" />
+				<span th:text="${uf.usersubject.name}" />
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" style="text-align: right">Закрыть</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--FINISH Modal-->
+<!--////////////-->
+
+						</tr>
+					</span>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<!-- EditModalPage FINISH -->
+<!--++++++++++++++++++++++-->
+
+			</div>
+<!--			<div class="col-md-2"></div>-->
+		</div>
+	</div>
+</div>
+
+
+
+
+</body>
+</html>

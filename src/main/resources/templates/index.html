@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/commonlayouts}"
+      lang="en">
+<head>
+    <title>MainPage</title>
+    <meta name="defined_city" th:content="${city}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/filter.css">
+    <th:block th:replace="map_geo :: map_scripts"></th:block>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container-fluid">
+        <div class="row" align="center" style="color: #7295B1; padding: 0px">
+            <th:block th:replace="map_geo :: map"></th:block>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

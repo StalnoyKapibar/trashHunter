@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/commonlayouts}"
+      lang="en">
+<head>
+    <title>Map</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+
+    <th:block th:fragment="map_scripts">
+        <link rel="stylesheet" type="text/css" href="/css/map_geo.css">
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&libraries=places&callback=initMap"
+                defer></script>
+        <script type="text/javascript" src="/js/map/styled_map.js"></script>
+        <script type="text/javascript" src="/js/common/trash_filter.js"></script>
+        <script type="text/javascript" src="/js/map/map_geo.js"></script>
+    </th:block>
+</head>
+<body>
+<th:block th:fragment="map">
+    <div class="col-sm-9">
+        <div class="pac-card" id="pac-card">
+            <div id="title">
+                Поиск по адресу:
+            </div>
+            <div id="pac-container">
+                <input id="pac-input" type="text" placeholder="Введите адрес">
+            </div>
+        </div>
+        <div id="infowindow-content">
+            <img src="" width="16" height="16" id="place-icon">
+            <span id="place-name" class="title"></span><br>
+            <span id="place-address"></span>
+        </div>
+        <th:block th:replace="fragments/filter :: filter"></th:block>
+        <div id="map"></div>
+    </div>
+
+    <div class="col-sm-3" style="padding:0px">
+        <div class="container">
+            <h4>Информация об объекте</h4>
+
+            <div class="row">
+                <table class="table table" id="offerInfoTable">
+                </table>
+            </div>
+            <a sec:authorize="hasAuthority('Taker')" style="display: none" id="linkToChatFromTaker"  href="/chat" class="btn btn-info" target="_blank">Чат</a>
+        </div>
+    </div>
+
+</th:block>
+
+</body>
+</html>
