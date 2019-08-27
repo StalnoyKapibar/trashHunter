@@ -25,41 +25,45 @@ public class EditUserController {
     @Autowired
     private VerificationTokenService verificationTokenService;
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String edit(Model model, Principal user) {
-        String email = user.getName();
-        User user1 = userService.findByEmail(email);
-
-        String user_page = null;
-        if( user1 != null && user1.getClass() == Sender.class) {
-            user_page = "sender/sender_edit_user";
-        } else if (user1 != null && user1.getClass() == Taker.class) {
-            user_page = "taker/taker_edit_user";
+    @RequestMapping(value = "/profile/edit/{id}", method = RequestMethod.GET)
+    public String edit(@PathVariable("id") Long id, Model model, Principal principal) {
+        String email = principal.getName();
+        User user = userService.findByEmail(email);
+        if (user.getId() != id) {
+            return "error";
         }
-        model.addAttribute("user", user1);
-        return user_page;
+        String page = null;
+        if( user != null && user.getClass() == Sender.class) {
+            page = "sender/sender_edit_user";
+        } else if (user != null && user.getClass() == Taker.class) {
+            page = "taker/taker_edit_user";
+        }
+        model.addAttribute("user", user);
+        return page;
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String saveEditedUser(@RequestParam String name, Model model, Principal user, @RequestParam String address,
-                                 @RequestParam String aboutUser, @RequestParam String phone) {
-
-        String emails = user.getName();
-        User user1 = userService.findByEmail(emails);
-
+    @RequestMapping(value = "/profile/edit/{id}", method = RequestMethod.POST)
+    public String saveEditedUser(@RequestParam String aboutUser, @RequestParam String name, Model model,
+                                 @RequestParam String address, @PathVariable("id") Long id, @RequestParam String phone,
+                                  Principal principal) {
+        String emails = principal.getName();
+        User user = userService.findByEmail(emails);
+        if (user.getId() != id) {
+            return "error";
+        }
         String user_page = null;
-        if (user1.getClass() == Sender.class) {
+        if (user.getClass() == Sender.class) {
             user_page = "sender/sender_edit_user";
-        } else if (user1.getClass() == Taker.class) {
+        } else if (user.getClass() == Taker.class) {
             user_page = "taker/taker_edit_user";
         }
 
-        model.addAttribute("user", user1);
-        user1.setName(name);
-        user1.setAboutUser(aboutUser);
-        user1.setPhoneNumber(phone);
-        user1.setAddress(address);
-        userService.update(user1);
+        model.addAttribute("user", user);
+        user.setName(name);
+        user.setAboutUser(aboutUser);
+        user.setPhoneNumber(phone);
+        user.setAddress(address);
+        userService.update(user);
 
         return user_page;
     }

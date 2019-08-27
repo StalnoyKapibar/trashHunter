@@ -8,6 +8,7 @@ import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.services.AbstractServiceImpl;
 import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -19,6 +20,9 @@ import java.io.IOException;
 
 @Service
 public class UserServiceImpl extends AbstractServiceImpl<User> implements UserService {
+
+    @Value("${avatar.default}")
+    private String avatarName;
 
     @Autowired
     private UserDao userDao;
@@ -34,7 +38,10 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
     public String encoder64(String string) { return   userDao.base64Encoder(string); }
 
     public byte[] extractBytesDefaultAvatar () {
-        File imgPath = new File("C:\\Users\\Iura\\Documents\\code\\trashHunter\\src\\main\\resources\\static\\img\\defaultAvatar.png");
+        String sep = File.separator;
+        String DEFAULT_AVATAR_PATH = new File("").getAbsolutePath() + sep + "src" + sep + "main"
+                + sep + "resources" + sep + "static" + sep + "img" + sep + "common" + sep + avatarName;
+        File imgPath = new File(DEFAULT_AVATAR_PATH);
         BufferedImage bufferedImage = null;
         try {
             bufferedImage = ImageIO.read(imgPath);
