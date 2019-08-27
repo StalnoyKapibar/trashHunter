@@ -21,7 +21,7 @@ function getTable() {
                             '<div class="col-sm-10">' +
                             '<div class="container-fluid cards">' +
                             '<div class="card" id="'+ offerId +'" style="margin-bottom: 1%" >' +
-                            '<div class="card-header" style="color: white; background-color: #7295b1">'+
+                            '<div class="card-header" style="color: white; background-color: #285196">'+
                             ' Заказ№ ' + value + ' ';
                     }
                     if (key == "weight") {
@@ -112,7 +112,7 @@ function getTable() {
                     }
 
                 });
-                offerRow += '<div class="card-footer" style="background-color: #7295b1">'+
+                offerRow += '<div class="card-footer" style="background-color: #285196">'+
                     '<div class="row">' +
                     '<div class="col-sm-10"></div>'+
                     '<button class="btn btn-light btn-circle"' +

@@ -36,7 +36,11 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String registration(@RequestParam String email, @RequestParam  String password, @RequestParam  String name,
-                               @RequestParam  String role, @RequestParam  String city) {
+                               @RequestParam  String role, @RequestParam  String city, Model model) {
+        if (!userService.isValid(email)) {
+            model.addAttribute("hasValidIssues", true);
+            return "registration/registration";
+        }
         User registeredUser = null;
         if ("TAKER".equals(role)) {
             registeredUser = new Taker(email, name, password, LocalDate.now(), city);
@@ -45,7 +49,8 @@ public class RegistrationController {
         }
         userService.add(registeredUser);
         verificationTokenService.sendToken(registeredUser);
-        return "registration/completed_registration";
+        model.addAttribute("isSuccess", true);
+        return "registration/registration";
     }
 
     @GetMapping(value = "/activate/{token}")

@@ -49,7 +49,7 @@ function doFilter(){
 }
 
 function openFilter() {
-    if (document.getElementById("filter").style.height == "0px" ) {
+    if (document.getElementById("filter").style.height === "0px" ) {
         document.getElementById("filter").style.height = "600px";
         document.getElementById("filter").slideDown({opacity: "show"}, "slow");
     } else {

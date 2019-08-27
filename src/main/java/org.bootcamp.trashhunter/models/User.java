@@ -2,7 +2,7 @@ package org.bootcamp.trashhunter.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.io.Serializable;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
@@ -14,14 +14,12 @@ public abstract class User {
     private long id;
 
     @Column(nullable = false, unique = true)
-    @Email
     private String email;
 
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
-    
     private String password;
 
     @Column(nullable = false)

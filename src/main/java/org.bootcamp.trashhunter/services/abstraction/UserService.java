@@ -9,4 +9,6 @@ public interface UserService extends AbstractService<User> {
     User findById(long id);
 
     String encoder64(String string);
+
+    boolean isValid(String email);
 }

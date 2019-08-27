@@ -23,4 +23,12 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     public String encoder64(String string) { return   userDao.base64Encoder(string);
     }
+
+    public boolean isValid(String email){
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        if (findByEmail(email) == null && email.matches(regex)) {
+            return true;
+        }
+        return false;
+    }
 }
