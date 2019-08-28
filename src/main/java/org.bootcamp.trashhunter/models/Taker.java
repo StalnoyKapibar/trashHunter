@@ -9,7 +9,7 @@ public class Taker extends User {
     public Taker() {
     }
 
-    public Taker(String email, String name, String password, LocalDate registrationDate, String city) {
-        super(email, name, password, registrationDate, city);
+    public Taker(String email, String name, String password, LocalDate registrationDate, String city, byte [] pic) {
+        super(email, name, password, registrationDate, city, pic);
     }
 }

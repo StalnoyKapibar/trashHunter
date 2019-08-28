@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -33,7 +35,10 @@ public class VerificationTokenServiceImpl extends BaseTokenServiceImpl<Verificat
         VerificationToken verificationToken =
                 new VerificationToken(token, registeredUser, calculateExpiryDate());
         baseTokenDAO.add(verificationToken);
-        mailService.sendMessage(registeredUser, verificationToken);
+        Map<String, Object> map = getMessageMap(registeredUser.getName(),
+                "Благодарим за регистрацию на нашем сервисе. Пожалуйста, перейдите по ссылке снизу: ",
+                String.format("http://localhost:8080/activate/%s", verificationToken.getToken()));
+        mailService.sendMessageWithModel(registeredUser.getEmail(), "Activation code", map);
     }
 
     @Override
@@ -42,14 +47,17 @@ public class VerificationTokenServiceImpl extends BaseTokenServiceImpl<Verificat
         VerificationToken verificationToken =
                 new VerificationToken(token, registeredUser, calculateExpiryDate());
         baseTokenDAO.add(verificationToken);
-        String message = String.format(
-                "Привет , %s! \n" +
-                        "Для восстановления пароля пройдите по ссылке внизу: " +
-                        "<a href=http://localhost:8080/reset/get_token/%s>" + "Ваша ссылка :)" + "</a>",
-                registeredUser.getName(),
-                verificationToken.getToken()
+        Map<String, Object> map = getMessageMap(registeredUser.getName(),
+                "Для восстановления пароля пройдите по ссылке внизу: ",
+                String.format("http://localhost:8080/reset/get_token/%s", verificationToken.getToken()));
+        mailService.sendMessageWithModel(registeredUser.getEmail(), "Reset password", map);
+    }
 
-        );
-        mailService.sendMessage(registeredUser, message, "Reset password");
+    private Map<String, Object> getMessageMap(String userName, String body, String link) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userName", userName);
+        map.put("body", body);
+        map.put("link", link);
+        return map;
     }
 }

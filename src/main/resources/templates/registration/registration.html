@@ -8,17 +8,26 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&libraries=places&callback=initMap"
             async defer></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/PascaleBeier/bootstrap-validate/v2.2.0/dist/bootstrap-validate.js"></script>
     <script type="text/javascript" src="/js/map/city_auto_complete.js"></script>
 </head>
 <body>
 <div  layout:fragment="content">
     <div class="container-fluid">
-        <div class="row" style="height: 40px"></div>
         <div class="row">
             <div class="col-sm-4"></div>
-            <div class="col-sm-4" align="center" style="color: #7295B1">
+            <div class="col-sm-4" align="center" style="background-color: #ffffff">
+                <h1 class="mt-3">Регистрация</h1>
+                <div th:if="${isSuccess}" class="alert alert-success" role="alert">
+                    <p>Новый пользователь был успешно добавлен.</p>
+                    <p>Чтобы завершить регистрацию, следуйте инструкциям в письме,
+                        отправленное на адрес электронной почты, указанный при регистрации</p>
+                </div>
+                <div th:if="${hasValidIssues}" class="alert alert-danger" role="alert">
+                    <p>Ошибка регистрации:</p>
+                    <p>введенный email уже существует или невалидный</p>
+                </div>
                 <form action="/registration" method="post">
-
                     <div class="card-body">
                         <div class="form-group">
                             <!--<label class="col-md-4 control-label">Логин (Email)</label>-->
@@ -94,6 +103,7 @@
                     </div>
                 </form>
             </div>
+            <div class="col-sm-4"></div>
         </div>
     </div>
 </div>

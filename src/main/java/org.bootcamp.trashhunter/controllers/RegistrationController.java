@@ -20,9 +20,6 @@ import java.time.LocalDate;
 public class RegistrationController {
 
     @Autowired
-    private MailService mailService;
-
-    @Autowired
     private UserService userService;
 
     @Autowired
@@ -35,16 +32,22 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String registration(@RequestParam String email, @RequestParam  String password, @RequestParam  String name,
-                               @RequestParam  String role, @RequestParam  String city) {
+                               @RequestParam  String role, @RequestParam  String city, Model model) {
+        if (!userService.isValid(email)) {
+            model.addAttribute("hasValidIssues", true);
+            return "registration/registration";
+        }
         User registeredUser = null;
+        byte [] pic = userService.extractBytesDefaultAvatar();
         if ("TAKER".equals(role)) {
-            registeredUser = new Taker(email, name, password, LocalDate.now(), city);
+            registeredUser = new Taker(email, name, password, LocalDate.now(), city, pic );
         } else if ("SENDER".equals(role)) {
-            registeredUser = new Sender(email, name, password, LocalDate.now() ,city);
+            registeredUser = new Sender(email, name, password, LocalDate.now() ,city, pic);
         }
         userService.add(registeredUser);
         verificationTokenService.sendToken(registeredUser);
-        return "registration/completed_registration";
+        model.addAttribute("isSuccess", true);
+        return "registration/registration";
     }
 
     @GetMapping(value = "/activate/{token}")

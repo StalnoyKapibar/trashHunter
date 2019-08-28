@@ -12,12 +12,14 @@
 <div layout:fragment="content">
     <div class="container">
     <div class="row flex-lg-nowrap">
-        <form action="#" th:action="@{/edit}" th:object="${user}" method="post">
-
+        <form action="#" th:action="@{/profile/edit/{id}(id = ${user.id})}" th:object="${user}" method="post">
             <div class="col">
                 <div class="row">
                     <div class="col mb-5">
                         <div class="card">
+                            <div th:if="${isEdited}" class="alert alert-success" role="alert">
+                                <p>Профиль успешно изменен</p>
+                            </div>
                             <div class="card-body">
                                 <div class="e-profile">
                                     <div class="row" >
@@ -65,7 +67,7 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Номер телефона</label>
-                                                                    <input class="form-control" type="text" name="username" placeholder="325235325325" value="323232332">
+                                                                    <input class="form-control" type="text" name="phone" th:attr="value = ${user.phoneNumber}" >
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -73,7 +75,7 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Ваш адрес</label>
-                                                                    <input class="form-control" name="email" type="text" placeholder="user@example.com" >
+                                                                    <input class="form-control" name="address" type="text" th:field="${user.address}" >
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -81,7 +83,7 @@
                                                             <div class="col mb-3">
                                                                 <div class="form-group">
                                                                     <label>Дополнительная информация</label>
-                                                                    <textarea class="form-control" rows="5" name="about" type="text" maxlength="120" th:field="${user.aboutUser}"></textarea>
+                                                                    <textarea style="resize: none;" class="form-control" rows="5" name="about" type="text" maxlength="120" th:field="${user.aboutUser}"></textarea>
                                                                 </div>
                                                             </div>
                                                         </div>

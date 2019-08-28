@@ -19,6 +19,7 @@
     color: white;
     padding: 0px;
     border: none;
+    outline: 0 !important;
 }
 
 .filter {
@@ -36,7 +37,7 @@
 }
 
 .filter-open-btn:hover {
-    background-color: #7295b1;
+    background-color: #285196;
 }
 
 #filter-container a {
