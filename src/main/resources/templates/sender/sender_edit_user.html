@@ -12,19 +12,21 @@
 <div layout:fragment="content">
     <div class="container">
     <div class="row flex-lg-nowrap">
-        <form action="#" th:action="@{/edit}" th:object="${user}" method="post">
-
+        <form action="#" th:action="@{/profile/edit/{id}(id = ${user.id})}" th:object="${user}" method="post">
             <div class="col">
                 <div class="row">
                     <div class="col mb-5">
                         <div class="card">
+                            <div th:if="${isEdited}" class="alert alert-success" role="alert">
+                                <p>Профиль успешно изменен</p>
+                            </div>
                             <div class="card-body">
                                 <div class="e-profile">
                                     <div class="row" >
                                         <div class="col-12 col-sm-auto mb-3">
                                             <div class="mx-auto" style="width: 140px;">
                                                 <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
-                                                    <img th:src="@{/image}" height="160" width="160" class="img-circle profile-avatar" />
+                                                    <img th:src="@{/image/avatar/{id} (id = ${user.getId()})}" height="160" width="160" class="img-circle profile-avatar" />
                                                 </div>
                                             </div>
                                         </div>
@@ -81,7 +83,7 @@
                                                             <div class="col mb-3">
                                                                 <div class="form-group">
                                                                     <label>Дополнительная информация</label>
-                                                                    <textarea class="form-control" rows="5" name="about" type="text" maxlength="120" th:field="${user.aboutUser}"></textarea>
+                                                                    <textarea style="resize: none;" class="form-control" rows="5" name="about" type="text" maxlength="120" th:field="${user.aboutUser}"></textarea>
                                                                 </div>
                                                             </div>
                                                         </div>

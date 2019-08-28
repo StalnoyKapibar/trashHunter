@@ -15,15 +15,13 @@ public class UserDaoImpl extends AbstractDAOImpl<User> implements UserDao {
     public List<User> getUsersFriendsListByUsersId(List<Long> id) {
         Query query = entityManager.createQuery("from User where id IN (:paramId)");
         query.setParameter("paramId", id);
-        List<User> list = query.getResultList();
-        return list;
+        return (List<User>) query.getResultList();
     }
 
     public User findByEmail(String email) {
         return entityManager
                 .createQuery("SELECT u FROM User u WHERE u.email = :param", User.class)
-                .setParameter("param", email)
-                .getSingleResult();
+                .setParameter("param", email).getResultStream().findFirst().orElse(null);
     }
 
 
@@ -37,9 +35,7 @@ public class UserDaoImpl extends AbstractDAOImpl<User> implements UserDao {
 
     public String base64Encoder(String string) {
         Base64.Encoder encoder = Base64.getEncoder();
-        String encodedString = encoder.encodeToString(
-                string.getBytes(StandardCharsets.UTF_8) );
-        return encodedString;
+        return encoder.encodeToString(string.getBytes(StandardCharsets.UTF_8));
     }
 
 

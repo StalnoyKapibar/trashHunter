@@ -12,4 +12,5 @@ public enum TrashType {
     public static TrashType getRandom() {
         return values()[(int) (Math.random() * values().length)];
     }
+
 }

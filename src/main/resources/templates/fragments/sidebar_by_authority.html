@@ -10,21 +10,18 @@
 </th:block>
 
 <th:block th:fragment="sender_sidebar">
-    <li><a href="/"><span>Карта</span></a></li>
-    <li><a href="/index"><span>Моя страница</span></a></li>
-    <li><a href="/sender/my_offers"><span>Мои заказы</span></a></li>
-    <li><a href="#"><span>Активные заказы</span></a></li>
-    <li><a href="/sender/new_offer"><span>Добавить заказ</span></a></li>
-    <li><a href="/edit"><span>Настройка профиля</span></a></li>
-
+    <li><a id="mapnav" href="/"><span>Карта</span></a></li>
+    <li><a id="profilenav" href="/profile"><span>Моя страница</span></a></li>
+    <li><a id="myoffersnav" href="/sender/my_offers"><span>Мои заказы</span></a></li>
+    <li><a id="newoffernav" href="/sender/new_offer"><span>Добавить заказ</span></a></li>
+    <li><a id="favnav" href="/favorites"><span>Избранное</span></a></li>
 </th:block>
 
 <th:block th:fragment="taker_sidebar">
-    <li class="nav-item"><a class="nav-link" href="/"><span>Карта</span></a></li>
-    <li class="nav-item"><a class="nav-link" href="#"><span>Моя страница</span></a></li>
-    <li class="nav-item"><a class="nav-link" href="/taker/my_offers"><span>Мои заказы</span></a></li>
-    <li class="nav-item"><a class="nav-link" href="#"><span>Друзья Сендеры(избраные)</span></a></li>
-    <li class="nav-item"><a class="nav-link" href="/edit"><span>Настройка профиля</span></a></li>
+    <li><a id="mapnav" href="/"><span>Карта</span></a></li>
+    <li><a id="profilenav" href="/profile"><span>Моя страница</span></a></li>
+    <li><a id="myoffersnav" href="/taker/my_offers"><span>Мои заказы</span></a></li>
+	<li><a id="favnav" href="/favorites"><span>Избранное</span></a></li>
 </th:block>
 
 </body>

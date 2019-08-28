@@ -14,14 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.time.LocalDate;
 
 @Controller
 public class RegistrationController {
-
-    @Autowired
-    private MailService mailService;
 
     @Autowired
     private UserService userService;
@@ -36,9 +32,13 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String registration(@RequestParam String email, @RequestParam  String password, @RequestParam  String name,
-                               @RequestParam  String role, @RequestParam  String city) {
-        byte [] pic = userService.extractBytesDefaultAvatar();
+                               @RequestParam  String role, @RequestParam  String city, Model model) {
+        if (!userService.isValid(email)) {
+            model.addAttribute("hasValidIssues", true);
+            return "registration/registration";
+        }
         User registeredUser = null;
+        byte[] pic = userService.extractBytesDefaultAvatar("avatar.png");
         if ("TAKER".equals(role)) {
             registeredUser = new Taker(email, name, password, LocalDate.now(), city, pic );
         } else if ("SENDER".equals(role)) {
@@ -46,7 +46,8 @@ public class RegistrationController {
         }
         userService.add(registeredUser);
         verificationTokenService.sendToken(registeredUser);
-        return "registration/completed_registration";
+        model.addAttribute("isSuccess", true);
+        return "registration/registration";
     }
 
     @GetMapping(value = "/activate/{token}")

@@ -278,6 +278,16 @@ function drawPoints(data) {
                     newText = document.createTextNode(value);
                     newCell.appendChild(newText);
                 }
+                if (key == 'sender'){
+                    let newRow = tableRef.insertRow();
+                    let newCell = newRow.insertCell();
+                    let newText = document.createTextNode(key);
+                    newCell.appendChild(newText);
+
+                    newCell = newRow.insertCell();
+                    newText = document.createTextNode(value.name);
+                    newCell.appendChild(newText);
+                }
             });
 
             let linkToChatFromTaker = document.getElementById("linkToChatFromTaker");
@@ -325,10 +335,9 @@ function CenterControl(controlDiv, map) {
     });
 
 }
-function doFilterInit() {
+function doFilterInit(urlrequest) {
     deleteMarkers();
-    drawPoints(doFilter());
-
+    drawPoints(doFilter(urlrequest));
 }
 
 // Button "Find Me"
@@ -359,4 +368,5 @@ function setMyCoordinates() {
             'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
     }
+
 }

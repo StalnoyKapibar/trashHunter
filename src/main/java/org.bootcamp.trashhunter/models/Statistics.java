@@ -10,10 +10,6 @@ public class Statistics {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne()
-    @PrimaryKeyJoinColumn
-    private User user;
-
     @Column
     private long numOfRatings;
 
@@ -21,13 +17,19 @@ public class Statistics {
     private double summaryScore;
 
     @Column
-    private double rating;
-
-    @Column
     private long numOfDeals;
 
+    @Column
+    private long summaryWeight;
 
     public Statistics() {
+    }
+
+    public Statistics(long numOfRatings, double summaryScore, long numOfDeals, long summaryWeight) {
+        this.numOfRatings = numOfRatings;
+        this.summaryScore = summaryScore;
+        this.numOfDeals = numOfDeals;
+        this.summaryWeight = summaryWeight;
     }
 
     public long getId() {
@@ -36,14 +38,6 @@ public class Statistics {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public long getNumOfRatings() {
@@ -62,19 +56,19 @@ public class Statistics {
         this.summaryScore = summaryScore;
     }
 
-    public double getRating() {
-        return summaryScore / numOfRatings;
-    }
-
-    public void setRating(long rating) {
-        this.rating = rating;
-    }
-
     public long getNumOfDeals() {
         return numOfDeals;
     }
 
     public void setNumOfDeals(long numOfDeals) {
         this.numOfDeals = numOfDeals;
+    }
+
+    public long getSummaryWeight() {
+        return this.summaryWeight;
+    }
+
+    public void setSummaryWeight(long summaryWeight) {
+        this.summaryWeight = summaryWeight;
     }
 }

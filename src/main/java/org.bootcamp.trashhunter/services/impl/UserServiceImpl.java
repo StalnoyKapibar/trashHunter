@@ -8,6 +8,7 @@ import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.services.AbstractServiceImpl;
 import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -33,9 +34,13 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     public String encoder64(String string) { return   userDao.base64Encoder(string); }
 
-    public byte[] extractBytesDefaultAvatar () {
-        File imgPath = new File("C:\\Users\\Iura\\Documents\\code\\trashHunter\\src\\main\\resources\\static\\img\\defaultAvatar.png");
+    public byte[] extractBytesDefaultAvatar(String avatarName) {
+        String sep = File.separator;
+        String DEFAULT_AVATAR_PATH = new File("").getAbsolutePath() + sep + "src" + sep + "main"
+                + sep + "resources" + sep + "static" + sep + "img" + sep + "avatar" + sep + avatarName;
+        File imgPath = new File(DEFAULT_AVATAR_PATH);
         BufferedImage bufferedImage = null;
+        //todo
         try {
             bufferedImage = ImageIO.read(imgPath);
         } catch (IOException e) {
@@ -54,5 +59,13 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
             }
         }
         return bos == null ? null : bos.getBytes();
+    }
+
+    public boolean isValid(String email){
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        if (findByEmail(email) == null && email.matches(regex)) {
+            return true;
+        }
+        return false;
     }
 }
