@@ -22,8 +22,7 @@ public class UserDaoImpl extends AbstractDAOImpl<User> implements UserDao {
     public User findByEmail(String email) {
         return entityManager
                 .createQuery("SELECT u FROM User u WHERE u.email = :param", User.class)
-                .setParameter("param", email)
-                .getSingleResult();
+                .setParameter("param", email).getResultStream().findFirst().orElse(null);
     }
 
 

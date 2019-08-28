@@ -24,32 +24,48 @@ public class EditUserController {
     @Autowired
     private VerificationTokenService verificationTokenService;
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public ModelAndView edit(Model model, Principal user) {
-        String email = user.getName();
-        User user1 = userService.findByEmail(email);
-        ModelAndView modelAndView = new ModelAndView();
-
-        if (user1 != null && user1.getClass() == Sender.class) {
-            modelAndView.setViewName("sender/sender_edit_user");
-            Sender sender = (Sender) user1;
-            model.addAttribute("user", sender);
-        } else if (user1 != null && user1.getClass() == Taker.class) {
-            modelAndView.setViewName("taker/taker_edit_user");
-            Taker taker = (Taker) user1;
-            model.addAttribute("user", taker);
+    @RequestMapping(value = "/profile/edit/{id}", method = RequestMethod.GET)
+    public String edit(@PathVariable("id") Long id, Model model, Principal principal) {
+        String email = principal.getName();
+        User user = userService.findByEmail(email);
+        if (user.getId() != id) {
+            return "error";
         }
-        return modelAndView;
+        String page = null;
+        if( user != null && user.getClass() == Sender.class) {
+            page = "sender/sender_edit_user";
+        } else if (user != null && user.getClass() == Taker.class) {
+            page = "taker/taker_edit_user";
+        }
+        model.addAttribute("user", user);
+        return page;
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ModelAndView saveEditedUser(@RequestParam String name, Principal user, @RequestParam String aboutUser) {
-        String emails = user.getName();
-        User user1 = userService.findByEmail(emails);
-        user1.setName(name);
-        user1.setAboutUser(aboutUser);
-        userService.update(user1);
-        return new ModelAndView("redirect:/edit");
+    @RequestMapping(value = "/profile/edit/{id}", method = RequestMethod.POST)
+    public String saveEditedUser(@RequestParam String aboutUser, @RequestParam String name, Model model,
+                                 @RequestParam String address, @PathVariable("id") Long id, @RequestParam String phone,
+                                  Principal principal) {
+        String emails = principal.getName();
+        User user = userService.findByEmail(emails);
+        if (user.getId() != id) {
+            return "error";
+        }
+        String user_page = null;
+        if (user.getClass() == Sender.class) {
+            user_page = "sender/sender_edit_user";
+        } else if (user.getClass() == Taker.class) {
+            user_page = "taker/taker_edit_user";
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("isEdited", true);
+        user.setName(name);
+        user.setAboutUser(aboutUser);
+        user.setPhoneNumber(phone);
+        user.setAddress(address);
+        userService.update(user);
+
+        return user_page;
     }
 
     @PostMapping("/reset/send_message")
@@ -59,12 +75,6 @@ public class EditUserController {
             verificationTokenService.sendTokenToResetPassword(registeredUser);
             model.addAttribute("sentMsg", "ok");
         }
-        return "reset/reset_password";
-    }
-
-    @GetMapping(value = "/reset/send_message")
-    public String resetPasswordGetPage(@RequestParam(required = false) String email, Model model) {
-        model.addAttribute("email", email);
         return "reset/reset_password";
     }
 
@@ -80,6 +90,11 @@ public class EditUserController {
             model.addAttribute("error", "error");
         }
         return "reset/update_password";
+    }
+
+    @GetMapping(value = "/reset/send_message")
+    public String resetPasswordPage() {
+        return "reset/reset_password";
     }
 
     @PostMapping("/reset/change_password")

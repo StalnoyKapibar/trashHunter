@@ -12,6 +12,7 @@ import org.bootcamp.trashhunter.models.embedded.Coordinates;
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.bootcamp.trashhunter.services.abstraction.SenderService;
 import org.bootcamp.trashhunter.services.abstraction.TakerService;
+import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.bootcamp.trashhunter.services.impl.UserFavoritesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,6 +35,9 @@ public class InitData {
 
 	@Autowired
     UserFavoritesServiceImpl userFavoritesService;
+
+	@Autowired
+	UserService userService;
 
     private void init() {
         initSenders();
@@ -58,20 +62,20 @@ public class InitData {
     }
 
     private void initSenders() {
-        Sender sender1 = new Sender("sender1@mail.ru", "Mixa", "sender1", LocalDate.now(), "Выборг, Россия");
+        Sender sender1 = new Sender("sender1@mail.ru", "Mixa", "sender1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar());
         senderService.add(sender1);
-        Sender sender2 = new Sender("sender2@mail.ru", "Max", "sender2", LocalDate.now(), "Выборг, Россия");
+        Sender sender2 = new Sender("sender2@mail.ru", "Max", "sender2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar() );
         senderService.add(sender2);
-        Sender sender3 = new Sender("sender3@mail.ru", "Ivan", "sender3", LocalDate.now(), "Выборг, Россия");
+        Sender sender3 = new Sender("sender3@mail.ru", "Ivan", "sender3", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar());
         senderService.add(sender3);
     }
 
     private void initTakers() {
-        Taker taker1 = new Taker("taker1@mail.ru", "Yura", "taker1", LocalDate.now(), "Выборг, Россия");
+        Taker taker1 = new Taker("taker1@mail.ru", "Yura", "taker1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar());
         takerService.add(taker1);
-        Taker taker2 = new Taker("taker2@mail.ru", "Matvey", "taker2", LocalDate.now(), "Выборг, Россия");
+        Taker taker2 = new Taker("taker2@mail.ru", "Matvey", "taker2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar());
         takerService.add(taker2);
-        Taker taker3 = new Taker("taker3@mail.ru", "Denis", "taker3", LocalDate.now(), "Выборг, Россия");
+        Taker taker3 = new Taker("taker3@mail.ru", "Denis", "taker3", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar());
         takerService.add(taker3);
     }
 

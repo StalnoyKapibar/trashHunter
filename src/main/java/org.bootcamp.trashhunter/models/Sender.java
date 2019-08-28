@@ -8,7 +8,7 @@ public class Sender extends User {
 
     public Sender() {}
 
-    public Sender(String email, String name, String password, LocalDate registrationDate, String city) {
-        super(email, name, password, registrationDate, city);
+    public Sender(String email, String name, String password, LocalDate registrationDate, String city, byte [] pic) {
+        super(email, name, password, registrationDate, city, pic);
     }
 }
