@@ -10,13 +10,18 @@
 <body>
 <div layout:fragment="content">
 <div class="container">
+    <div th:if="${isU}" class="alert alert-success" role="alert">
+        <p>Новый пользователь был успешно добавлен.</p>
+        <p>Чтобы завершить регистрацию, следуйте инструкциям в письме,
+            отправленное на адрес электронной почты, указанный при регистрации</p>
+    </div>
     <div class="row flex-lg-nowrap">
         <div class="col-12 col-lg-auto mb-3" style="width: 220px;">
             <div th:if="${isHolder}" class="card p-3">
                 <div class="e-navlist e-navlist--active-bg">
                     <ul class="nav">
-                        <li class="nav-item"><a class="nav-link px-2 active" href="/overview"><i class="fa fa-fw fa-bar-chart mr-1"></i><span>Overview</span></a></li>
-                        <li class="nav-item"><a class="nav-link px-2" href="/users"><i class="fa fa-fw fa-th mr-1"></i><span>CRUD</span></a></li>
+                        <li class="nav-item"><a class="nav-link px-2 active" href="#"><i class="fa fa-fw fa-bar-chart mr-1"></i><span>Overview</span></a></li>
+                        <li class="nav-item"><a class="nav-link px-2" href="#"><i class="fa fa-fw fa-th mr-1"></i><span>CRUD</span></a></li>
                         <li class="nav-item"><a class="nav-link px-2" th:href="@{/profile/edit/{id}(id = ${user.id})}"><i class="fa fa-fw fa-cog mr-1"></i><span>Настройки</span></a></li>
                     </ul>
                 </div>
@@ -63,8 +68,8 @@
                                         </div>
 
                                         <div class="text-center text-sm-right">
-                                            <span class="badge badge-secondary" sec:authorize="hasAuthority('Sender')">Sender</span>
-                                            <span class="badge badge-secondary" sec:authorize="hasAuthority('Taker')">Taker</span>
+                                            <span class="badge badge-secondary" th:if="${user.getClass().getSimpleName()=='Sender'}">Сдатчик</span>
+                                            <span class="badge badge-secondary" th:if="${user.getClass().getSimpleName()=='Taker'}">Приемщик</span>
                                             <div class="text-muted"><small><span th:text="${user.registrationDate}"></span></small></div>
                                         </div>
                                     </div>
@@ -101,22 +106,22 @@
                                                             <label><b>Номер телефона</b></label>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <label><p><span th:text="${user.phoneNumber}"></span></p></label>
+                                                            <label><p><span th:text="${user.phoneNumber}">Не указан</span></p></label>
                                                         </div>
                                                     </div>
                                                     <div class="row" style="height:50px;">
                                                         <div class="col-md-6">
-                                                            <label><b>Tип и марка автомобиля</b></label>
+                                                            <label><b>Адрес проживания</b></label>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <p>Web Developer and Designer</p>
+                                                            <p><span th:text="${user.address}">не указано</span></p>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col mb-3">
                                                             <div class="form-group">
                                                                 <label><b>Дополнительная информация</b></label>
-                                                                <textarea class="form-control" rows="5" th:field="${user.aboutUser}"></textarea>
+                                                                <textarea readonly class="form-control" rows="5" th:field="${user.aboutUser}">не указана</textarea>
                                                             </div>
                                                         </div>
                                                     </div>

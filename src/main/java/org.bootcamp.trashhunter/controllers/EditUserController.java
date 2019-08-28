@@ -58,6 +58,7 @@ public class EditUserController {
         }
 
         model.addAttribute("user", user);
+        model.addAttribute("isEdited", true);
         user.setName(name);
         user.setAboutUser(aboutUser);
         user.setPhoneNumber(phone);
