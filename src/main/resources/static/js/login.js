@@ -22,11 +22,18 @@ function login() {
             if (data.login == true) {
                 console.info("Authentication Success!");
                 $('#ups_message').hide();
+                $('#reset_message').hide();
                 window.location.href = "/";
-            }
-            else {
+            } else {
                 $('#ups_message').slideDown({opacity: "show"}, "slow");
                 console.error("Unable to login");
+                if (data.reset_msg == false) {
+                    $('#reset_message').hide();
+                    console.log('ok');
+                } else {
+                    $('#reset_message').slideDown({opacity: "show"}, "slow");
+                    $('#link_reset_message').attr("href", "/reset/send_message/?"+email);
+                }
             }
         },
         error: function (data) {
