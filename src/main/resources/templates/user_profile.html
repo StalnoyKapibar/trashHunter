@@ -71,6 +71,11 @@
                                             <span class="badge badge-secondary" th:if="${user.getClass().getSimpleName()=='Sender'}">Сдатчик</span>
                                             <span class="badge badge-secondary" th:if="${user.getClass().getSimpleName()=='Taker'}">Приемщик</span>
                                             <div class="text-muted"><small><span th:text="${user.registrationDate}"></span></small></div>
+                                            <div th:if="!${isHolder}">
+                                                <!--need to be done-->
+                                                <a href="#" class="btn btn-info btn-icon " target="_blank">
+                                            <span class="icon"><i class="fas fa-comments"></i></span>чат</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

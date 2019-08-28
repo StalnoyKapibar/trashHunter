@@ -34,6 +34,7 @@ public class UserProfileController {
         } else {
             User userFromPath = userService.findById(id);
             model.addAttribute("user", userFromPath);
+            model.addAttribute("principalId",userFromSession.getId());
         }
         return "user_profile";
     }
