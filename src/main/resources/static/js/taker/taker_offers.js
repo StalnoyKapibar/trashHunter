@@ -1,5 +1,5 @@
 $(document).ready(function () {
-   getTable(doFilter());
+   getTable(doFilter('TakerActive'));
 });
 
 function getTable(data) {
@@ -13,14 +13,14 @@ function getTable(data) {
                         '<div class="col-sm-10">' +
                             '<div class="container-fluid cards">' +
                                 '<div class="card" id="' + offer.id + '" style="margin-bottom: 1%" >' +
-                                '<div class="card-header" style="color: white; background-color: #7295b1">' +
+                                '<div class="card-header" style="color: white; background-color: #4d90fe">' +
                                     ' Заказ№ ' + offer.id + ' '+
                                     ' вес: ' + offer.weight + 'кг '+
                                     ' объем: ' + offer.volume + 'м³ '+
                                     ' цена: ' + offer.price + 'руб '+
                                     ' тип мусора: ' + offer.trashType +
                                 '</div>' +
-                                '<div class="card-body" style="background-color: moccasin">' +
+                                '<div class="card-body" style="background-color: white">' +
                                     '<div class="row" style="margin-bottom: 1%">' +
                                     '<div class="col-sm-1"></div>'+
                                         '<div class="input-group col-sm-3">' +
@@ -47,7 +47,7 @@ function getTable(data) {
                                     '<div class="col-sm-1"></div>' +
                             '</div>'+
                         '</div>'+
-                        '<div class="card-footer" style="background-color: #7295b1">'+
+                        '<div class="card-footer" style="background-color: #4d90fe">'+
                             '<div class="row">' +
                                 '<div class="col-sm-10"></div>'+
                                     '<button class="btn btn-light btn-circle "'+
@@ -69,7 +69,7 @@ function getTable(data) {
 }
 
 function doFilterInit() {
-    getTable(doFilter());
+    getTable(doFilter('TakerActive'));
 }
 
 function makeCompleteOffer(offerId) {

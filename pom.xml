@@ -44,7 +44,6 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity5 -->
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
@@ -63,9 +62,11 @@
             <artifactId>thymeleaf-layout-dialect</artifactId>
             <version>2.3.0</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-aop -->
-
-        <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjtools -->
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>2.3.5</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

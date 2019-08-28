@@ -211,10 +211,9 @@ function CenterControl(controlDiv, map) {
         setMyCoordinates();
     });
 }
-function doFilterInit() {
+function doFilterInit(urlrequest) {
     deleteMarkers();
-    drawPoints(doFilter());
-
+    drawPoints(doFilter(urlrequest));
 }
 
 // Button "Find Me"
@@ -244,4 +243,5 @@ function setMyCoordinates() {
             'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
     }
+
 }

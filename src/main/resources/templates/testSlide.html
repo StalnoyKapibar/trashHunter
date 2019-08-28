@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-lime">
+<head>
+    <link rel="stylesheet" href="/css/slide_menu.css">
+</head>
+
+<body class="flex-center-wrapper flex-column">
+<div id="nav-icon2">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+<div class="sliding-menu flex-center-wrapper flex-column left-menu">
+    <ul>
+        <li> <a href="#">Home</a> </li>
+        <li><hr></li>
+        <li><a href="#">Contact</a></li>
+        <li> <hr></li>
+        <li><a href="#">About</a>/li>
+    </ul><span class="sliiider-exit exit left-exit">&#215</span></div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/c5edb0b5a3.js"></script>
+<script type="text/javascript" src="/js/slide_menu.js"></script>
+<script type="text/javascript">
+    var settings = {
+        toggle: "#sliiider-toggle",
+        exit_selector: ".slider-exit",
+        animation_duration: "0.5s",
+        place: "left",
+        animation_curve: "cubic-bezier(0.54, 0.01, 0.57, 1.03)",
+        body_slide: true,
+        no_scroll: true,
+    };
+
+    $("#left-menu").sliiide(settings); //initialize sliiide
+</script>
+</html>

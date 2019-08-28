@@ -60,7 +60,7 @@ li {
 
 .sidebar a {
     text-decoration: none;
-    color: #7295b1;
+    color: #285196;
     display: block;
 }
 
@@ -103,6 +103,10 @@ li {
 }
 
 #ups_message {
+     display: none;
+}
+
+#reset_message {
     display: none;
 }
 
@@ -131,7 +135,7 @@ li {
     bottom: 5%;
     font-size: 20px;
     font-weight: bold;
-    color: #7295b1;
+    color: #285196;
 }
 
 .vacancyTags {

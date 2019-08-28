@@ -1,6 +1,6 @@
 .filter-container {
     width: 350px;
-    height: 1000px;
+    /*height: 1000px;*/
     margin: 10px 0 0 10px;
     text-decoration: none;
     font-size: 25px;
@@ -19,11 +19,12 @@
     color: white;
     padding: 0px;
     border: none;
+    outline: 0 !important;
 }
 
 .filter {
     width: inherit;
-    position: inherit;
+    position: relative;
     z-index: inherit;
     height: 0;
     top: 0;
@@ -36,7 +37,7 @@
 }
 
 .filter-open-btn:hover {
-    background-color: #7295b1;
+    background-color: #285196;
 }
 
 #filter-container a {
