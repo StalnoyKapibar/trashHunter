@@ -1,31 +1,33 @@
 <!DOCTYPE html>
-<html   xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layouts/commonlayouts}"
-        lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layouts/commonlayouts}"
+      lang="en">
 <head>
-    <title>MainPage</title>
+    <title>EditOffer</title>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&libraries=places&callback=initMap"></script>
-    <meta name="city" th:content="${city}"/>
+    <meta name="trType" th:content="${offer.trashType}"/>
+    <meta name="longitude" th:content="${longitude}"/>
+    <meta name="latitude" th:content="${latitude}"/>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script type="text/javascript" src="/js/map/styled_map.js"></script>
-    <script type="text/javascript" src="/js/sender/new_offer.js"></script>
+    <script type="text/javascript" src="/js/sender/edit_offer.js"></script>
     <style></style>
-</head> new_offer
+</head>
 <body>
 <div  layout:fragment="content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-3" style="background-color: #f5f5f5"></div>
             <div class="col-sm-6" align="center" style="color: #7295B1">
-                <h1 class="mt-4"> Добавление новой точки вывоза</h1>
+                <h1 class="mt-4"> Редакция точки вывоза № <span th:text="${offer.id}"></span></h1>
                 <div th:if="${hasCompleted}" class="alert alert-success" role="alert">
                     Новая запись была успешно добавлена
                 </div>
-                <form role="form" id="offer_form"  method="post" action="">
+                <form role="form" id="offer_form"  method="post" action="/sender/edit_offer">
                     <div class="card-body">
                         <div class="form-group">
                             <div class=" selectContainer">
@@ -34,16 +36,15 @@
                                         <span class="input-group-text"><i class="fas fa-list"></i></span>
                                     </div>
                                     <select name="trashType" id="trashType" class="form-control selectpicker mr-5"
-                                            required="required">
-                                        <option value="">Выбирите тип мусора</option>
-                                        <option value="METAL">Металл</option>
+                                             required="required">
                                         <option value="PAPER">Бумага</option>
-                                        <option value="FOOD">Пищевые отходы</option>
-                                        <option value="PLASTIC">Пластик</option>
-                                        <option value="WOOD">Дерево</option>
-                                        <option value="GLASS">Стекло</option>
+                                        <option value="METAL">Металл</option>
+                                        <option value="FOOD">Отходы</option>
+                                        <option value="PLASTIC" >Пластик</option>
+                                        <option value="GLASS" >Стекло</option>
+                                        <option value="WOOD" >Дерево</option>
                                     </select>
-                                    <input type="checkbox" name="isSorted" value="false" class="custom-control-input" id="isSorted">
+                                    <input type="checkbox" name="isSorted"  class="custom-control-input" id="isSorted" th:checked="${offer.isSorted}">
                                     <label class="custom-control-label mr-sm-5 ml-2" for="isSorted">Сортированный</label>
                                 </div>
                             </div>
@@ -55,11 +56,11 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-plus-square"></i></span>
                                     </div>
-                                    <input name="volume" style="width: 30%" id="volume" required="required"
-                                           class="form-control" type="number" placeholder="Введите приблизительный объём">
+                                    <input name="volume" style="width: 30%" id="volume" class="form-control"
+                                           type="number" th:value="${offer.volume}" required="required">
                                     <label class="mr-sm-2 ml-1"> м³ </label>
                                     <input required="required" name="weight" style="width: 30%" id="weight"
-                                           class="form-control" type="number" placeholder="Введите приблизительный вес">
+                                           class="form-control" type="number" th:value="${offer.weight}">
                                     <label class="mr-sm-2 ml-1"> кг </label>
                                 </div>
                             </div>
@@ -72,9 +73,9 @@
                                         <span class="input-group-text"><i class="fas fa-plus-square"></i></span>
                                     </div>
                                     <input name="price" style="width: 30%" id="price" required="required"
-                                           class="form-control" type="number" placeholder="Введите примерную цену">
+                                           class="form-control" type="number" th:value="${offer.price}" th:disabled="${offer.price ==0}">
                                     <label class="mr-sm-5 ml-2"> руб</label>
-                                    <input type="checkbox" name="isFree" class="custom-control-input" id="isFree">
+                                    <input type="checkbox" name="isFree" class="custom-control-input" id="isFree" th:checked="${offer.price == 0}">
                                     <label class="custom-control-label" for="isFree">Безвозмездный вывоз</label>
                                 </div>
                             </div>
@@ -87,8 +88,10 @@
                                 <div class="input-group">
                                     <input name="address" id="address" placeholder="Введите полный адрес вручную или выберите на карте"
                                            class="form-control mb-2" type="text" required="required">
-                                    <input id="o_latitude" type="hidden" value="123" name="latitude"/>
-                                    <input id="o_longitude" type="hidden" value="123" name="longitude"/>
+                                    <input id="o_latitude" type="hidden" th:value="${latitude}" name="latitude"/>
+                                    <input id="o_longitude" type="hidden" th:value="${longitude}" name="longitude"/>
+                                    <input id="id" type="hidden" th:value="${offer.id}" name="id"/>
+
                                 </div>
                                 <div id="map" style="height: 600px"></div>
                             </div>
@@ -100,14 +103,14 @@
                             <div class="col-md-12 inputGroupContainer">
                                 <div class="input-group">
                                     <textarea name="description" id="description" rows="3" maxlength="255" required="required"
-                                              placeholder="описание не более 255 символов" class="form-control"></textarea>
+                                              th:text="${offer.description}" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group" align="center">
                             <button type="submit"  class="btn btn-warning" style="width: 250px;">
-                                Зарегистрироваться <i class="fas fa-paper-plane "></i>
+                                Изменить <i class="fas fa-paper-plane "></i>
                             </button>
                         </div>
                         <input type="hidden" th:attr="name=${_csrf.parameterName},value=${_csrf.token}"/>

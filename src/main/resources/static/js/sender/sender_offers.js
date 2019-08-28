@@ -115,11 +115,11 @@ function getTable() {
                 offerRow += '<div class="card-footer" style="background-color: #4d90fe">'+
                     '<div class="row">' +
                     '<div class="col-sm-10"></div>'+
-                    '<button class="btn btn-light btn-circle"' +
+                    '<a href="/sender/edit_offer/' + offerId + '" class="btn btn-light btn-circle"' +
                     'data-toggle="tooltip" data-placement="bottom" title="Радактировать предложение"' +
-                    'style="margin-right: 1% " <a href="" onclick="editOffer(' + offerId + ')">' +
+                    'style="margin-right: 1% " >' +
                     '<i class="fas fa-edit"></i>' +
-                    '</button>' +
+                    '</a>' +
                     '<button class="btn btn-light btn-circle "'+
                     'data-toggle="tooltip" data-placement="bottom" title="сделать шаблоном"'+
                     'onclick="makeCompleteOffer(' + offerId + ')">'+
@@ -146,16 +146,6 @@ function getTable() {
         },
         error: function (message) {
             console.log(message);
-        }
-    });
-}
-
-function editOffer(offerId) {
-    $.ajax({
-        url: '/sender/edit_offer/' + offerId,
-        type: 'GET',
-        success: function () {
-            console.log(offerId);
         }
     });
 }
