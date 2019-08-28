@@ -149,7 +149,7 @@ public class InitData {
             }
             if (randomOffer.getOfferStatus().equals(OfferStatus.TAKEN)){
                 List<Taker> takers = new ArrayList<>();
-                takers.add(takerService.getById(4L));
+                takers.add(takerService.getById(5L));
                 randomOffer.setRespondingTakers(takers);
             }
             offerService.add(randomOffer);
