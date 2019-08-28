@@ -41,6 +41,9 @@ public abstract class User {
     @Column
     String address;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    Statistics statistics;
+
     @Column
     private boolean enabled;
 
@@ -143,5 +146,13 @@ public abstract class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Statistics getStatistics() {
+        return statistics;
+    }
+
+    public void setStatistics(Statistics statistics) {
+        this.statistics = statistics;
     }
 }
