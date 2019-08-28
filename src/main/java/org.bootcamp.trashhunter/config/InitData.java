@@ -60,21 +60,25 @@ public class InitData {
     }
 
     private void initSenders() {
-        Sender sender1 = new Sender("sender1@mail.ru", "Mixa", "sender1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar());
+        Sender sender1 = new Sender("sender1@mail.ru", "Михаил А.", "sender1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("mixa.jpg"));
         senderService.add(sender1);
-        Sender sender2 = new Sender("sender2@mail.ru", "Max", "sender2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar() );
+        Sender sender2 = new Sender("sender2@mail.ru", "Максим В.", "sender2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("max.jpg") );
         senderService.add(sender2);
-        Sender sender3 = new Sender("sender3@mail.ru", "Ivan", "sender3", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar());
+        Sender sender3 = new Sender("sender3@mail.ru", "Иван Ф.", "sender3", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("ivan.jpg"));
         senderService.add(sender3);
+        Sender sender4 = new Sender("sender4@mail.ru", "Юрий П.", "sender4", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("iura.jpg"));
+        senderService.add(sender4);
     }
 
     private void initTakers() {
-        Taker taker1 = new Taker("taker1@mail.ru", "Yura", "taker1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar());
+        Taker taker1 = new Taker("taker1@mail.ru", "Юра З.", "taker1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("yura.jpg"));
         takerService.add(taker1);
-        Taker taker2 = new Taker("taker2@mail.ru", "Matvey", "taker2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar());
+        Taker taker2 = new Taker("taker2@mail.ru", "Матвей О.", "taker2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("matey.jpg"));
         takerService.add(taker2);
-        Taker taker3 = new Taker("taker3@mail.ru", "Denis", "taker3", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar());
+        Taker taker3 = new Taker("taker3@mail.ru", "Денис Т.", "taker3", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("denis.jpg"));
         takerService.add(taker3);
+//        Taker taker4 = new Taker("taker4@mail.ru", "Владислав Ы.", "taker4", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("vlad.png"));
+//        takerService.add(taker4);
     }
 
     private void initRandomOffers(int quantity) {
