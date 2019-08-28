@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.security.Principal;
 
@@ -18,11 +19,10 @@ public class AvatarLoadController {
     @Autowired
     UserServiceImpl userService;
 
-    @RequestMapping(value = "/image",  produces = MediaType.IMAGE_PNG_VALUE)
-    public ResponseEntity<byte[]> getImage(Model model, String error, String logout, Principal user) {
-        String email = user.getName();
-        User user1 = userService.findByEmail(email);
-        byte[] image = user1.getPic();
+    @RequestMapping(value = "/image/avatar/{id}",  produces = MediaType.IMAGE_PNG_VALUE)
+    public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
+        User user = userService.findById(id);
+        byte[] image = user.getPic();
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
         return new ResponseEntity<byte[]>(image, headers, HttpStatus.OK);
