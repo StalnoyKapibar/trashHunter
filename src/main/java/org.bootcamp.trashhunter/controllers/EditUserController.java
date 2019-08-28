@@ -94,7 +94,8 @@ public class EditUserController {
     }
 
     @GetMapping(value = "/reset/send_message")
-    public String resetPasswordPage() {
+    public String resetPasswordGetPage(@RequestParam(required = false) String email, Model model) {
+        model.addAttribute("email", email);
         return "reset/reset_password";
     }
 
