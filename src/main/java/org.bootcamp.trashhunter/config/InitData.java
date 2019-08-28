@@ -1,6 +1,5 @@
 package org.bootcamp.trashhunter.config;
 
-
 import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.OfferStatus;
 import org.bootcamp.trashhunter.models.Offer;
@@ -8,18 +7,15 @@ import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.models.TrashType;
 import org.bootcamp.trashhunter.models.UserFavorites;
 import org.bootcamp.trashhunter.models.embedded.Coordinates;
-
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.bootcamp.trashhunter.services.abstraction.SenderService;
 import org.bootcamp.trashhunter.services.abstraction.TakerService;
 import org.bootcamp.trashhunter.services.impl.UserFavoritesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class InitData {
 
@@ -55,6 +51,8 @@ public class InitData {
         userFavoritesService.add(uf5);
         UserFavorites uf6 = new UserFavorites(5L, 2L);
         userFavoritesService.add(uf6);
+        UserFavorites uf7 = new UserFavorites(4L, 2L);
+        userFavoritesService.add(uf7);
     }
 
     private void initSenders() {

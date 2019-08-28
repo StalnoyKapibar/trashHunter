@@ -15,7 +15,6 @@ public class TrashHunterApplication {
 
     //нужно раскоментить @Bean для создания таблиц
     // Теперь с интерфейсами
-
     @Bean(initMethod = "init")
     @PostConstruct
     public InitData initData() {
