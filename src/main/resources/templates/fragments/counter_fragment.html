@@ -7,19 +7,18 @@
 </head>
 <body>
 <th:block th:fragment="counter" style="width: 106px;">
-<div class="container" style="width: 106px;">
+<div class="container">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <div class="row">
         <div class="col">
-        <div class="col">
-            <div class="counter" style="width: 106px;">
+            <div class="counter">
                 <img icon="smileyface" src="/img/trash.png"/>
-                <h2 class="timer count-title count-number" data-to="157" data-speed="1500"></h2>
+                <h1 class="timer count-title count-number" th:data-to="${statistic.summaryWeight}" data-speed="1500"></h1>
             </div>
-            <div style="margin-left: -8px; width: 150px; "> <p class="count-text ">кг мусора</p></div>
+            <div th:if="${user.getClass().getSimpleName()=='Sender'}"><p class="count-text">отдал кг мусора</p></div>
+            <div th:if="${user.getClass().getSimpleName()=='Taker'}"><p class="count-text">вывез кг мусора</p></div>
         </div>
     </div>
-</div>
 <th:block th:replace="fragments/commonfragments :: scripts"></th:block>
 <script type="text/javascript" src="/js/counter.js"></script>
 </div>
