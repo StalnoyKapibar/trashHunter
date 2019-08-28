@@ -8,14 +8,10 @@ import org.bootcamp.trashhunter.models.embedded.Coordinates;
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
-import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
 
@@ -30,13 +26,21 @@ public class SenderController {
     private UserService userService;
 
     @GetMapping("/my_offers")
-    public String senderMyOffers() {
+    public String senderMyOffers(Principal principal) {
+        User user = userService.findByEmail(principal.getName());
+        if (user.getLimit() == 2) {
+            return "banned";
+        }
         return "sender/sender_my_offers";
     }
 
     @GetMapping("/new_offer")
     public String getNewOfferPage(Model model, Principal principal) {
-        String city = userService.findByEmail(principal.getName()).getCity();
+        User user = userService.findByEmail(principal.getName());
+        if (user.getLimit() == 2) {
+            return "banned";
+        }
+        String city = user.getCity();
         model.addAttribute("city", city);
         return "new_offer";
     }

@@ -37,8 +37,16 @@ public class UserDaoImpl extends AbstractDAOImpl<User> implements UserDao {
     public String base64Encoder(String string) {
         Base64.Encoder encoder = Base64.getEncoder();
         String encodedString = encoder.encodeToString(
-                string.getBytes(StandardCharsets.UTF_8) );
+                string.getBytes(StandardCharsets.UTF_8));
         return encodedString;
+    }
+
+    @Override
+    public void setLimit(long id, int limit) {
+        entityManager.createQuery("Update User u set u.limit=:limit WHERE u.id=:id")
+                .setParameter("id", id)
+                .setParameter("limit", limit)
+                .executeUpdate();
     }
 
 
