@@ -199,6 +199,7 @@ function drawPoints(data) {
                 return this.charAt(0).toUpperCase() + this.slice(1);
             }
             $.each(offer, function (key, value) {
+                let isName = false;
                 let id;
                 if (key == 'id'){
                     id = key;
@@ -206,13 +207,13 @@ function drawPoints(data) {
                 if (key != 'coordinates' && key != 'id' && key != 'creationDateTime' && key != 'description' && key != 'respondingTakers') {
 
                     if (key == 'sender' ) {
+                        isName = true;
                         value = value.name;
-                    } else if (key == 'respondingTakers' & value != null) {
-                        for (i = 0; i < value.length; i++) {
-                            value[i] = value[i].name;
-                        }
+                        var name = value;
+                        // name.link("http://localhost:8080/profile/1");
+                        value = "<div><a href='http://localhost:8080/profile/1'>" + name + "</a></div>";
                     }
-                    value = String(value);
+
                     key = key.capitalize();
 
                     if (key == 'Sender') {
@@ -230,7 +231,7 @@ function drawPoints(data) {
                         key = 'Тип мусора:';
                     } else if (key == 'OfferStatus') {
                         key = 'Статус предложение:';
-                    } else if (key == 'Sorted') {
+                    } else if (key == 'IsSorted') {
                         if (value == 'true') {
                             value = "Рассортирован"
                         } else {
@@ -265,28 +266,20 @@ function drawPoints(data) {
                     }
 
 
-
-
-                    value = value.capitalize();
                     let newRow = tableRef.insertRow();
                     let newCell = newRow.insertCell();
 
                     let newText = document.createTextNode(key);
                     newCell.appendChild(newText);
                     newCell = newRow.insertCell();
-                    $(value).css('color', 'blue');
-                    newText = document.createTextNode(value);
-                    newCell.appendChild(newText);
-                }
-                if (key == 'sender'){
-                    let newRow = tableRef.insertRow();
-                    let newCell = newRow.insertCell();
-                    let newText = document.createTextNode(key);
-                    newCell.appendChild(newText);
+                    if(isName){
+                        newText = $(value);
+                        $(newCell).append(newText);
+                    } else {
+                        newText = document.createTextNode(value);
+                        newCell.appendChild(newText);
+                    }
 
-                    newCell = newRow.insertCell();
-                    newText = document.createTextNode(value.name);
-                    newCell.appendChild(newText);
                 }
             });
 
