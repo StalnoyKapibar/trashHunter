@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.security.Principal;
 
 @Controller
@@ -87,13 +88,14 @@ public class EditUserController {
             model.addAttribute("token", token);
             model.addAttribute("email", verificationToken.getUser().getEmail());
         } else {
-            model.addAttribute("error", "error");
+            return "error";
         }
         return "reset/update_password";
     }
 
     @GetMapping(value = "/reset/send_message")
-    public String resetPasswordPage() {
+    public String resetPasswordGetPage(@RequestParam(required = false) String email, Model model) {
+        model.addAttribute("email", email);
         return "reset/reset_password";
     }
 
