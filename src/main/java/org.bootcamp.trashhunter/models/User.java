@@ -1,5 +1,7 @@
 package org.bootcamp.trashhunter.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
@@ -40,6 +42,10 @@ public abstract class User {
 
     @Column
     String address;
+
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    Statistics statistics;
 
     @Column
     private boolean enabled;
@@ -143,5 +149,13 @@ public abstract class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Statistics getStatistics() {
+        return statistics;
+    }
+
+    public void setStatistics(Statistics statistics) {
+        this.statistics = statistics;
     }
 }

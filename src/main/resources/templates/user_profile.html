@@ -6,15 +6,16 @@
       lang="en">
 <head>
     <title>Профиль</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .checked {
+            color: orange;
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content">
 <div class="container">
-    <div th:if="${isU}" class="alert alert-success" role="alert">
-        <p>Новый пользователь был успешно добавлен.</p>
-        <p>Чтобы завершить регистрацию, следуйте инструкциям в письме,
-            отправленное на адрес электронной почты, указанный при регистрации</p>
-    </div>
     <div class="row flex-lg-nowrap">
         <div class="col-12 col-lg-auto mb-3" style="width: 220px;">
             <div th:if="${isHolder}" class="card p-3">
@@ -54,17 +55,17 @@
                                         <div class="text-center text-sm-left mb-2 mb-sm-0">
                                             <h4 class="pb-1 mb-0 text-nowrap"><span th:text="${user.name}"></span></h4>
                                             <p class="mb-0"><span th:text="${user.email}"></span></p>
-                                            <div class="text-muted"><small>Last seen 2 hours ago</small></div>
-                                            <div class="col-8" style="min-width: 210px;">
-                                                <a href="" title="Positiv">
-                                                    <img src="/img/icons8-approvazione-30.png">
-                                                    <span>200</span>
-                                                </a>
-                                                <a href="" title="Negative">
-                                                    <img src="/img/icons8-meno-30.png">
-                                                    <span>6</span>
-                                                </a>
-                                            </div>
+                                            <!--<div class="text-muted"><small>Last seen 2 hours ago</small></div>-->
+                                            <!--<div class="col-8" style="min-width: 210px;">-->
+                                                <!--<a href="" title="Positiv">-->
+                                                    <!--<img src="/img/icons8-approvazione-30.png">-->
+                                                    <!--<span>200</span>-->
+                                                <!--</a>-->
+                                                <!--<a href="" title="Negative">-->
+                                                    <!--<img src="/img/icons8-meno-30.png">-->
+                                                    <!--<span>6</span>-->
+                                                <!--</a>-->
+                                            <!--</div>-->
                                         </div>
 
                                         <div class="text-center text-sm-right">
@@ -143,16 +144,19 @@
                 </div>
 
                 <div class="col-12 col-md-4 mb-3">
+                    <div class="card" style="height: 12rem;">
+                        <div class="card-body">
+                            <h6 class="card-title font-weight-bold" > Статистика</h6>
+                            <p>Сделок произведено: <strong th:text="${statistic.numOfDeals}"></strong></p>
+                            <p>Средний рейтинг: <span id="a_rating" hidden="hidden" th:text="${statistic.rating}"></span></p>
+                            <div id="stars">
+
+                            </div>
+                        </div>
+                    </div>
                     <div class="card">
                         <div class="card-body">
                             <th:block th:replace="fragments/counter_fragment:: counter"></th:block>
-                        </div>
-                    </div>
-                    <div class="card" style="height: 33rem;">
-                        <div class="card-body">
-                            <h6 class="card-title font-weight-bold" > Статистика</h6>
-                            <p class="card-text">Вместо <b>trashhunter.ru</b> вполне можно увидеть <b>trashunter.ru</b> или даже <b>trashhhunter.ru</b>: разница всего в одной букве, и многие этого даже не замечают.
-                                Если вы проследуете по этой ссылке, то в худшем случае можете подцепить серьезный вирус, а в лучшем – просто лишитесь своего аккаунта на сайте.</p>
                         </div>
                     </div>
                 </div>
@@ -162,6 +166,7 @@
 </div>
     <th:block th:replace="fragments/commonfragments :: scripts"></th:block>
     <script type="text/javascript" src="/js/avatar.js"></script>
+    <script type="text/javascript" src="/js/star_definer.js"></script>
 </div>
 </body>
 </html>
