@@ -34,6 +34,7 @@ public abstract class User {
     @Column(name="pic")
     private byte[] pic;
 
+    @Column
     private boolean enabled;
 
     public User() {

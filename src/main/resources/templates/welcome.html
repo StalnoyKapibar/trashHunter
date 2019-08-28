@@ -4,10 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <script type="text/javascript" src="/js/map/city_auto_complete.js"></script>
-    <script type="text/javascript" src="/js/map/define_city.js"></script>
     <title>Trash_hunter</title>
+
     <style>
         .form-group {
             margin-bottom: 0;
@@ -20,8 +18,9 @@
         .list-group-item {
             border-color: #ffffff;
         }
-
     </style>
+
+    <th:block th:replace="map_geo :: map_scripts"></th:block>
 </head>
 
 <body>
@@ -70,5 +69,11 @@
         </div>
     </div>
 </th:block>
+
+<th:block layout:fragment="localscripts">
+    <script type="text/javascript" src="/js/map/city_auto_complete.js"></script>
+    <script type="text/javascript" src="/js/map/define_city.js"></script>
+</th:block>
+
 </body>
 </html>
