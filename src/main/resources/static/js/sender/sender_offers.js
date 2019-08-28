@@ -45,7 +45,7 @@ function getTable() {
                                     '<div class="col-sm-1"></div>' +
                                     '<div class="input-group col-sm-4">' +
                                     '<div class="input-group-prepend">'+
-                                    '<a href="/profile/' + taker.id + '" class="btn" ' +
+                                    '<a href="/profile/' + taker.id + '" class="btn-image" ' +
                                     'data-toggle="tooltip" data-placement="bottom" title="просмотреть профиль">' +
                                     '<span style="padding: 0" class="input-group-text">' +
                                     '<img width="38" height="36" src="/image/avatar/'+ taker.id +'"></span>'+ '</a>' +'</div>'+
@@ -86,7 +86,7 @@ function getTable() {
                                     '<div class="col-sm-1"></div>' +
                                     '<div class="input-group col-sm-4">' +
                                     '<div class="input-group-prepend">'+
-                                    '<a href="/profile/' + taker.id + '" class="btn" ' +
+                                    '<a href="/profile/' + taker.id + '" class="btn-image" ' +
                                     'data-toggle="tooltip" data-placement="bottom" title="просмотреть профиль">' +
                                     '<span style="padding: 0" class="input-group-text">' +
                                     '<img width="38" height="36" src="/image/avatar/'+ taker.id +'"></span>'+ '</a>' +'</div>'+

@@ -23,16 +23,15 @@ function getTable(data) {
                                 '<div class="card-body" style="background-color: #ffffff">' +
                                     '<div class="row" style="margin-bottom: 1%">' +
                                     '<div class="col-sm-1"></div>'+
-                                        '<div  class="input-group col-sm-4">' +
-                                            '<div class="input-group-prepend">'+
-                                            '<a href="/profile/' + offer.sender.id + '" class="btn" '+
-                                            'data-toggle="tooltip" data-placement="bottom" title="просмотреть профиль">' +
-                                            '<span class="input-group-text">' +
-                                        '<img width="38" height="36" src="/image/avatar/'+ offer.sender.id +'"></span>' + '</a>' +
-                                        '</div>'+
-                                        '<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="'+
-                                            offer.sender.name +'" disabled>' +
-                                        '</div>' +
+                                    '<div class="input-group col-sm-4">' +
+                                    '<div class="input-group-prepend">'+
+                                    '<a href="/profile/' + offer.sender.id + '" class="btn-image" ' +
+                                    'data-toggle="tooltip" data-placement="bottom" title="просмотреть профиль">' +
+                                    '<span style="padding: 0" class="input-group-text">' +
+                                    '<img width="38" height="36" src="/image/avatar/'+ offer.sender.id +'"></span>'+ '</a>' +'</div>'+
+                                    '<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="'+
+                                    offer.sender.name +'" disabled>' + '</div>' +
+
                                         '<div class="input-group col-sm-3">' +
                                             '<div class="input-group-prepend">'+
                                                 '<span class="input-group-text"><i class="fas fa-envelope"></i></span>'+
