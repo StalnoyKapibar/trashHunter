@@ -16,7 +16,15 @@ function initMap() {
         mapTypeControlOptions: {
             position: google.maps.ControlPosition.BOTTOM_LEFT,
             mapTypeIds: ['hybrid', 'styled_map']
-        }
+        },
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.TOP_LEFT,
+        },
+
+        fullscreenControlOptions: {
+            position: google.maps.ControlPosition.BOTTOM_RIGHT,
+        },
+
     });
 
     geocoder = new google.maps.Geocoder();
@@ -25,7 +33,7 @@ function initMap() {
     //Associate the styled map with the MapTypeId and set it to display.
     let styledMapType = new google.maps.StyledMapType(styledMapPropertiesArray, {name: 'Styled Map'});
     map.mapTypes.set('styled_map', styledMapType);
-    map.setMapTypeId('styled_map');
+    map.setMapTypeId('hybrid');
 
     let card = document.getElementById('pac-card');
     let input = document.getElementById('pac-input');
@@ -91,7 +99,7 @@ function initMap() {
     let centerControlDiv = document.createElement('div');
     let centerControl = new CenterControl(centerControlDiv, map);
     centerControlDiv.index = 1;
-    map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(centerControlDiv);
+    map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(centerControlDiv);
 }
 
 function codeAddress() {
@@ -150,18 +158,79 @@ function drawPoints(data) {
                 url: url
             }
         });
+        $('#showFilePanel').click(function(event) {
+            if ($('.notification-container').hasClass('dismiss')) {
+                $('.notification-container').removeClass('dismiss').addClass('selected').show();
+            }
+            event.preventDefault();
+        });
+
+        $('#closeFilePanel').click(function(event) {
+            if ($('.notification-container').hasClass('selected')) {
+                $('.notification-container').removeClass('selected').addClass('dismiss');
+            }
+            event.preventDefault();
+        });
         markers.push(marker);
         marker.addListener('click', function () {
             let tableRef = document.getElementById('offerInfoTable');
             $("#offerInfoTable tr").remove();
+            // $("#showFilePanel").action;
+             $("#div").slideToggle('slow',  function() {
+                if ($("#div").is(":visible")) {
+                    $("#div").show();
+                } else if ($("#div").is(":hidden")){
+                    $("#div").show();
+                }
+
+                 window.addEventListener('click', function(e){
+                     if (document.getElementById("div").contains(e.target)){
+                         $("#div").show();
+                     } else{
+                         $("#div").hide();
+                     }
+                 })
+            });
+            String.prototype.capitalize = function() {
+                return this.charAt(0).toUpperCase() + this.slice(1);
+            }
             $.each(offer, function (key, value) {
-                if (key != 'coordinates' && key != 'id') {
+                if (key != 'coordinates' && key != 'id' && key != 'creationDateTime' && key != 'description' && key != 'respondingTakers') {
+
+                    if (key == 'sender' ) {
+                        value = value.name;
+                    } else if (key == 'respondingTakers' & value != null) {
+                        for (i = 0; i < value.length; i++) {
+                            value[i] = value[i].name;
+                        }
+                    }
+                    value = String(value);
+                    key = key.capitalize();
+
+                    if (key == 'Sender') {
+                        key = 'Сдатчик';
+                    } else if (key ==  'Weight'){
+                        key = 'Вес';
+                    } else if (key == 'Volume') {
+                        key = 'Объем';
+                    } else if (key == 'Price') {
+                        key = 'Цена';
+                    } else if (key == 'TrashType') {
+                        key = 'Тип мусора';
+                    } else if (key == 'OfferStatus') {
+                        key = 'Статус предложение';
+                    } else if (key == 'Sorted') {
+                        key = 'Рассортировка';
+                    }
+
+                    value = value.capitalize();
                     let newRow = tableRef.insertRow();
                     let newCell = newRow.insertCell();
+
                     let newText = document.createTextNode(key);
                     newCell.appendChild(newText);
-
                     newCell = newRow.insertCell();
+                    $(value).css('color', 'blue');
                     newText = document.createTextNode(value);
                     newCell.appendChild(newText);
                 }
@@ -210,6 +279,7 @@ function CenterControl(controlDiv, map) {
     controlUI.addEventListener('click', function () {
         setMyCoordinates();
     });
+
 }
 function doFilterInit() {
     deleteMarkers();
@@ -229,6 +299,7 @@ function setMyCoordinates() {
             infoWindow.setContent('Location found.');
             infoWindow.open(map);
             map.setCenter(pos);
+
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
         });

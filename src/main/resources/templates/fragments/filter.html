@@ -6,8 +6,8 @@
 </head>
 <body>
 <th:block th:fragment="filter">
-    <div class="filter-container" id="filter-container">
-        <button class="filter-open-btn" id="filter-open-btn" onclick="openFilter()">☰ Фильтрация
+    <div class="filter-container" id="filter-container" style="width: 200px">
+        <button style="width: 165px; margin-left: -55px" class="filter-open-btn" id="filter-open-btn" onclick="openFilter()">☰ Фильтрация
         </button>
 
         <div class="filter" id="filter">
@@ -115,15 +115,5 @@
     </div>
 </th:block>
 
-<th:block th:fragment="markerinfo">
-    <h4>Информация об объекте</h4>
-    <div class="container">
-        <div class="row">
-            <table class="table table" id="offerInfoTable">
-            </table>
-        </div>
-    </div>
-
-</th:block>
 </body>
 </html>

@@ -7,9 +7,9 @@
 <head>
     <title>Map</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-
     <th:block th:fragment="map_scripts">
         <link rel="stylesheet" type="text/css" href="/css/map_geo.css">
+        <link rel="stylesheet" href="/css/slide_menu.css">
 
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&libraries=places&callback=initMap"
                 defer></script>
@@ -20,7 +20,7 @@
 </head>
 <body>
 <th:block th:fragment="map">
-    <div class="col-sm-9">
+    <div class="col-sm-12" style="padding: -10px" >
         <div class="pac-card" id="pac-card">
             <div id="title">
                 Поиск по адресу:
@@ -35,21 +35,14 @@
             <span id="place-address"></span>
         </div>
         <th:block th:replace="fragments/filter :: filter"></th:block>
-        <div id="map"></div>
+        <div id="map" style="padding: 0px"></div>
     </div>
 
-    <div class="col-sm-3" style="padding:0px">
-        <div class="container">
-            <h4>Информация об объекте</h4>
-
-            <div class="row">
-                <table class="table table" id="offerInfoTable">
-                </table>
-            </div>
-            <a sec:authorize="hasAuthority('Taker')" style="display: none" id="linkToChatFromTaker"  href="/chat" class="btn btn-info" target="_blank">Чат</a>
-        </div>
+    <div class="notification-container dismiss" id="div" style="height: 400px; margin-top: 25px" >
+        <table class="table table" id="offerInfoTable"></table>
     </div>
 
+    </div>
 </th:block>
 
 </body>
