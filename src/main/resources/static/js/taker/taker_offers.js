@@ -23,7 +23,7 @@ function getTable(data) {
                                 '<div class="card-body" style="background-color: #ffffff">' +
                                     '<div class="row" style="margin-bottom: 1%">' +
                                     '<div class="col-sm-1"></div>'+
-                                        '<div  class="input-group col-sm-3">' +
+                                        '<div  class="input-group col-sm-4">' +
                                             '<div class="input-group-prepend">'+
                                             '<span style="padding: 0" class="input-group-text">' +
                                         '<img width="38" height="36" src="/image/avatar/'+ offer.sender.id +'"></span>'+
@@ -31,7 +31,7 @@ function getTable(data) {
                                         '<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="'+
                                             offer.sender.name +'" disabled>' +
                                         '</div>' +
-                                        '<div class="input-group col-sm-4">' +
+                                        '<div class="input-group col-sm-3">' +
                                             '<div class="input-group-prepend">'+
                                                 '<span class="input-group-text"><i class="fas fa-envelope"></i></span>'+
                                             '</div>'+
