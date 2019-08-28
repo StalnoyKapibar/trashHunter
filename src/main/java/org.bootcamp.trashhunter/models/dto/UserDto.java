@@ -1,7 +1,6 @@
 package org.bootcamp.trashhunter.models.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Lob;
+import org.bootcamp.trashhunter.models.User;
 import java.time.LocalDate;
 
 public class UserDto {
@@ -12,17 +11,55 @@ public class UserDto {
 
     private String name;
 
-    private String password;
-
     private LocalDate registrationDate;
-
-    private String aboutUser;
 
     private String city;
 
-    private byte[] pic;
+    public UserDto(User user) {
+        this.id = user.getId();
+        this.email = user.getEmail();
+        this.name = user.getName();
+        this.registrationDate = user.getRegistrationDate();
+        this.city = user.getCity();
+    }
 
-    @Column
-    private boolean enabled;
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDate getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(LocalDate registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 }

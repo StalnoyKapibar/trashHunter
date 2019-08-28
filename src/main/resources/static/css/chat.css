@@ -139,7 +139,7 @@ button.accent {
 }
 
 .chat-container {
-    max-width: 700px;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
     background-color: #fff;
@@ -161,7 +161,13 @@ button.accent {
 }
 
 #chat-page #messageForm {
-    padding: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+    position: absolute;
+    bottom: 0;
+    max-width: 600px;
+    right: 0;
+    width: 100%;
 }
 
 #chat-page ul li {
@@ -209,6 +215,9 @@ button.accent {
     text-transform: uppercase;
 }
 
+.list-group-item.list-group-item-action.bg-light {
+    padding-top: 12px;
+}
 #chat-page .chat-message span {
     color: #333;
     font-weight: 600;
@@ -216,6 +225,15 @@ button.accent {
 
 #chat-page .chat-message p {
     color: #43464b;
+}
+
+#messageArea {
+    height: 600px;
+    position: absolute;
+    top: 70px;
+    right: 0px;
+    max-width: 600px;
+    width: 100%;
 }
 
 #messageForm .input-group input {
@@ -228,9 +246,14 @@ button.accent {
     width: 80px;
     height: 38px;
     margin-left: 5px;
+    padding: 0;
 }
 
 .chat-header {
+    position: absolute;
+    right: 0px;
+    max-width: 600px;
+    width: 100%;
     text-align: center;
     padding: 15px;
     border-bottom: 1px solid #ececec;
@@ -294,5 +317,44 @@ button.accent {
 
     .chat-header h2 {
         font-size: 1.1em;
+    }
+}
+
+/*Sidebar*/
+#sidebar-container {
+    position: absolute;
+    min-height: 100%;
+    margin-left: -15rem;
+    -webkit-transition: margin .25s ease-out;
+    -moz-transition: margin .25s ease-out;
+    -o-transition: margin .25s ease-out;
+    transition: margin .25s ease-out;
+}
+
+#sidebar-container .sidebar-heading {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
+}
+
+#sidebar-container .list-group {
+    width: 200px;
+}
+
+#wrapper.toggled #sidebar-container {
+    margin-left: 0;
+}
+
+@media (min-width: 768px) {
+    #sidebar-container {
+        margin-left: 0;
+    }
+
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+
+    #wrapper.toggled #sidebar-container {
+        margin-left: -15rem;
     }
 }

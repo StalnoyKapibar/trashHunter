@@ -1,7 +1,9 @@
 package org.bootcamp.trashhunter.controllers;
 
 import org.bootcamp.trashhunter.config.WebSocketEventListener;
-import org.bootcamp.trashhunter.models.ChatMessage;
+import org.bootcamp.trashhunter.models.*;
+import org.bootcamp.trashhunter.models.dto.UserDto;
+import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.bootcamp.trashhunter.services.abstraction.SenderService;
 import org.bootcamp.trashhunter.services.abstraction.TakerService;
 import org.bootcamp.trashhunter.services.abstraction.UserService;
@@ -18,10 +20,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.*;
 
 import static java.lang.String.format;
 
@@ -36,16 +40,18 @@ public class ChatController {
     private final ChatMessageService chatMessageService;
     private final SenderService senderService;
     private final TakerService takerService;
+    private final OfferService offerService;
 
     @Autowired
     public ChatController(SimpMessageSendingOperations messagingTemplate,
                           UserService userService, ChatMessageService chatMessageService,
-                          SenderService senderService, TakerService takerService) {
+                          SenderService senderService, TakerService takerService, OfferService offerService) {
         this.messagingTemplate = messagingTemplate;
         this.userService = userService;
         this.chatMessageService = chatMessageService;
         this.senderService = senderService;
         this.takerService = takerService;
+        this.offerService = offerService;
     }
 
     @MessageMapping("/chat/{roomId}/sendMessage")
@@ -90,7 +96,47 @@ public class ChatController {
     }
 
     @GetMapping("/chat")
-    public String chat(@RequestParam("partnerId") long partnerId,
+    public String chat(@RequestParam(value = "offerId", required = false) Long offerId,
+                       Principal principal,
+                       Authentication authentication,
+                       Model model) {
+        if (authentication.isAuthenticated()) {
+            User user = userService.findByEmail(principal.getName());
+            UserDto chatOwner = new UserDto(user);
+            model.addAttribute("chatOwner", chatOwner);
+            String role = authentication.getAuthorities().iterator().next().getAuthority();
+
+            Collection<User> companionList = new HashSet<>();
+            if (role.equals("Sender")) {
+                Map<Offer, List<Taker>> allSenderOffersList = offerService.getOffersBySenderIdActiveFirst(chatOwner.getEmail());
+/*
+                allOffersList.entrySet().stream()
+                        .filter(entry -> (entry.getKey().getOfferStatus().equals(OfferStatus.TAKEN)))
+                        .map(offerListEntry -> )
+*/
+                for (Map.Entry<Offer, List<Taker>> entry : allSenderOffersList.entrySet()) {
+                    if (entry.getValue().size() == 1) {
+                        companionList.add(entry.getValue().get(0));
+                    }
+                }
+            } else if (role.equals("Taker")) {
+                List<Offer> takerOffersList = offerService.getOffersByTaker(chatOwner.getEmail());
+                for (Offer offer : takerOffersList) {
+                    companionList.add(offer.getSender());
+                }
+            }
+            if (!companionList.isEmpty()) {
+                model.addAttribute("companionList", companionList);
+            }
+            if (offerId != null) {
+                model.addAttribute("offerId", offerId);
+            }
+        }
+        return "chat";
+    }
+/*
+    @GetMapping("/chat/{companionId}")
+    public String chat(@PathVariable("{companionId}") long partnerId,
                        @RequestParam(value = "offerId", required = false) Long offerId,
                        Principal principal,
                        Authentication authentication,
@@ -111,6 +157,7 @@ public class ChatController {
         }
         return "chat";
     }
+*/
 
     private boolean isRightPrincipal(long senderId, long takerId, Principal principal, String role) {
         if (role.equals("Taker")) {

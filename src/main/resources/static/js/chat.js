@@ -26,6 +26,14 @@ let colors = [
     '#e41032', '#f2d4e8'
 ];
 
+$(document).ready(function () {
+    usernamePage.classList.remove('hidden');
+    usernameForm.addEventListener('submit', connect, true);
+    messageForm.addEventListener('submit', sendMessage, true);
+    connect();
+
+    fillInSidebar();
+});
 
 function connect(event) {
     username = nameInput.val().trim();
@@ -289,9 +297,3 @@ function getImageForOffer(trashType) {
     }
 }
 
-$(document).ready(function () {
-    usernamePage.classList.remove('hidden');
-    usernameForm.addEventListener('submit', connect, true);
-    messageForm.addEventListener('submit', sendMessage, true);
-    connect();
-});

@@ -1,4 +1,6 @@
-package org.bootcamp.trashhunter.models;
+package org.bootcamp.trashhunter.models.dto;
+
+import org.bootcamp.trashhunter.models.User;
 
 import javax.persistence.*;
 
