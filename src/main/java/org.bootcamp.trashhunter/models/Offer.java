@@ -128,11 +128,11 @@ public class Offer {
         this.coordinates = coordinates;
     }
 
-    public boolean isSorted() {
+    public boolean getIsSorted() {
         return isSorted;
     }
 
-    public void setSorted(boolean sorted) {
+    public void setIsSorted(boolean sorted) {
         isSorted = sorted;
     }
 
@@ -174,8 +174,8 @@ public class Offer {
                 "{\"id\": " + id +
                 ", \"weight\": " + weight +
                 ", \"volume\": " + volume +
-                ", \"price\": " + price +
-                ", \"trashType\": " + '\"' + trashType +'\"' +
+                ", \"price\": " + price + ", " +
+                        "\"trashType\": " + '\"' + trashType +'\"' +
                 ", \"offerStatus\": " + '\"' + offerStatus + '\"' +
                         "}";
     }

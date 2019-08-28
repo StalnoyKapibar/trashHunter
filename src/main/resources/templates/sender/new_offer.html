@@ -4,7 +4,7 @@
         layout:decorate="~{layouts/commonlayouts}"
         lang="en">
 <head>
-    <title>MainPage</title>
+    <title>NewOffer</title>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&libraries=places&callback=initMap"></script>
     <meta name="city" th:content="${city}"/>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -14,7 +14,7 @@
     <script type="text/javascript" src="/js/map/styled_map.js"></script>
     <script type="text/javascript" src="/js/sender/new_offer.js"></script>
     <style></style>
-</head>
+</head> new_offer
 <body>
 <div  layout:fragment="content">
     <div class="container-fluid">
@@ -53,7 +53,9 @@
                             <div class="inputGroupContainer">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-plus-square"></i></span>
+                                        <span class="input-group-text">
+                                            <i class="fas fa-plus-square"></i>
+                                        </span>
                                     </div>
                                     <input name="volume" style="width: 30%" id="volume" required="required"
                                            class="form-control" type="number" placeholder="Введите приблизительный объём">

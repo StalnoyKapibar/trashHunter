@@ -43,12 +43,13 @@ function getTable() {
                             $.each(takers, function (i, taker) {
                                 offerRow += '<div class="row" style="margin-bottom: 1%">' +
                                     '<div class="col-sm-1"></div>' +
-                                    '<div class="input-group col-sm-3">' +
+                                    '<div class="input-group col-sm-4">' +
                                     '<div class="input-group-prepend">'+
-                                    '<span class="input-group-text"><i class="fas fa-user"></i></span>'+ '</div>'+
+                                    '<span style="padding: 0" class="input-group-text">' +
+                                    '<img width="38" height="36" src="/image/avatar/'+ taker.id +'"></span>'+ '</div>'+
                                     '<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="'+
                                     taker.name +'" disabled>' + '</div>' +
-                                    '<div class="input-group col-sm-4">' +
+                                    '<div class="input-group col-sm-3">' +
                                     '<div class="input-group-prepend">'+
                                     '<span class="input-group-text"><i class="fas fa-envelope"></i></span>'+ '</div>'+
                                     '<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="'
@@ -115,11 +116,11 @@ function getTable() {
                 offerRow += '<div class="card-footer" style="background-color: #4d90fe">'+
                     '<div class="row">' +
                     '<div class="col-sm-10"></div>'+
-                    '<button class="btn btn-light btn-circle"' +
+                    '<a href="/sender/edit_offer/' + offerId + '" class="btn btn-light btn-circle"' +
                     'data-toggle="tooltip" data-placement="bottom" title="Радактировать предложение"' +
-                    'style="margin-right: 1% " onclick=edit"(' + offerId + ')">' +
+                    'style="margin-right: 1% " >' +
                     '<i class="fas fa-edit"></i>' +
-                    '</button>' +
+                    '</a>' +
                     '<button class="btn btn-light btn-circle "'+
                     'data-toggle="tooltip" data-placement="bottom" title="сделать шаблоном"'+
                     'onclick="makeCompleteOffer(' + offerId + ')">'+
