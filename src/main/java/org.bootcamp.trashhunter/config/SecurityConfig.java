@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.formLogin()
+                .loginPage("/login.html")
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .loginProcessingUrl("/login")
