@@ -7,6 +7,7 @@ import org.bootcamp.trashhunter.models.UserFavorites;
 import org.bootcamp.trashhunter.models.UserFavoritesDTO;
 import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,15 +28,26 @@ public class FavoritesController {
     UserDao userDao;
 
 	@GetMapping(value = "/favorites")
-	private ModelAndView initTest() {
+	private ModelAndView getAllFavorites() {
 
-		Long num = 1L;
-		List<UserFavorites> listUf = userFavoritesDao.getAllUserFavById(num);
+		String email = SecurityContextHolder.getContext().getAuthentication().getName();
+		User userBossFromEmail = userService.findByEmail(email);
 
-		User userBoss = userService.getById(num);
+		if (userBossFromEmail == null) return new ModelAndView("index");
+
+		Long numBoss = userBossFromEmail.getId();
+		List<UserFavorites> listUsersFav = userFavoritesDao.getAllUserFavById(numBoss);
+
+		if (listUsersFav.size() == 0) {
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("favorites");
+			modelAndView.addObject("boss", userBossFromEmail.getName());
+			modelAndView.addObject("ufDto", null);
+			return modelAndView;
+		}
 
 		List<Long> listFav = new ArrayList<>();
-		for (UserFavorites uf : listUf) {
+		for (UserFavorites uf : listUsersFav) {
 			listFav.add(uf.getUserSubject());
 		}
 
@@ -43,12 +55,12 @@ public class FavoritesController {
 
 		List<UserFavoritesDTO> ufDto = new ArrayList<>();
 		for (User lu : listUsers) {
-			ufDto.add(new UserFavoritesDTO(userBoss, lu));
+			ufDto.add(new UserFavoritesDTO(userBossFromEmail, lu));
 		}
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("favorites");
-		modelAndView.addObject("boss", ufDto.get(0).getUserboss());
+		modelAndView.addObject("boss", userBossFromEmail.getName());
 		modelAndView.addObject("ufDto", ufDto);
 		return modelAndView;
 	}
