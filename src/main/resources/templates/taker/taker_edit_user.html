@@ -11,11 +11,6 @@
 <body>
 <div layout:fragment="content">
     <div class="container">
-        <div th:if="${isEdited}" class="alert alert-success" role="alert">
-            <p>Новый пользователь был успешно добавлен.</p>
-            <p>Чтобы завершить регистрацию, следуйте инструкциям в письме,
-                отправленное на адрес электронной почты, указанный при регистрации</p>
-        </div>
         <div class="row flex-lg-nowrap">
             <form action="#" th:action="@{/profile/edit/{id}(id = ${user.id})}" th:object="${user}" method="post">
 
@@ -89,7 +84,7 @@
                                                                 <div class="col mb-3">
                                                                     <div class="form-group">
                                                                         <label>Дополнительная информация</label>
-                                                                        <textarea class="form-control" rows="5" name="about" type="text" maxlength="120" th:field="${user.aboutUser}"></textarea>
+                                                                        <textarea style="resize: none;" class="form-control" rows="5" name="about" type="text" maxlength="120" th:field="${user.aboutUser}"></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
