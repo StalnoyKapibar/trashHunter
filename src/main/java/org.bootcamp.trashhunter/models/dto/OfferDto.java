@@ -55,7 +55,7 @@ public class OfferDto {
                 offer.getVolume(),
                 offer.getPrice(),
                 offer.getTrashType(),
-                offer.isSorted(),
+                offer.getIsSorted(),
                 offer.getCreationDateTime(),
                 offer.getDescription()
         );
