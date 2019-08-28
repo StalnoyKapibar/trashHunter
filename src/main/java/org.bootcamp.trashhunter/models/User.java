@@ -32,7 +32,7 @@ public abstract class User {
     private String city;
 
     @Lob
-    @Column(name="pic")
+    @Column(name = "pic")
     private byte[] pic;
 
     @Column
@@ -41,8 +41,7 @@ public abstract class User {
     @Column
     String address;
 
-
-
+    @Column
     private boolean enabled;
 
     public User() {
@@ -57,20 +56,22 @@ public abstract class User {
         this.pic = pic;
     }
 
-
-    public User(String email, String name, String password, LocalDate registrationDate, String city, byte [] pic) {
+    public User(String email, String name, String password, LocalDate registrationDate, String city, byte[] pic) {
         this.password = password;
         this.email = email;
         this.name = name;
         this.registrationDate = registrationDate;
         this.city = city;
         this.pic = pic;
-
     }
 
-    public String getAboutUser() { return aboutUser; }
+    public String getAboutUser() {
+        return aboutUser;
+    }
 
-    public void setAboutUser(String aboutUser) { this.aboutUser = aboutUser; }
+    public void setAboutUser(String aboutUser) {
+        this.aboutUser = aboutUser;
+    }
 
     public long getId() {
         return id;
@@ -124,13 +125,23 @@ public abstract class User {
         return city;
     }
 
-    public void setCity(String city) { this.city = city; }
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-    public String getPhoneNumber() { return phoneNumber; }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
-    public String getAddress() { return address; }
+    public String getAddress() {
+        return address;
+    }
 
-    public void setAddress(String address) { this.address = address; }
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }

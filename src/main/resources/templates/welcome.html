@@ -3,14 +3,9 @@
       layout:decorate="~{layouts/commonlayouts}">
 <head>
     <meta charset="UTF-8">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhmsuY2GsI23ECoyUqAaVtWVDz3GleyTo&libraries=places&callback=initMap"
-            async defer></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <script type="text/javascript" src="/js/map/city_auto_complete.js"></script>
-    <script type="text/javascript" src="/js/map/define_city.js"></script>
     <title>Trash_hunter</title>
+
     <style>
         .form-group {
             margin-bottom: 0;
@@ -19,16 +14,19 @@
         .form-control {
             height: calc(1.5em + .75rem + 10px);
         }
+
         .list-group-item {
             border-color: #f5f5f5;
             background-color : #f5f5f5;
         }
     </style>
+
+    <th:block th:replace="map_geo :: map_scripts"></th:block>
 </head>
 
 <body>
-<div layout:fragment="content">
-    <div class="container mt-1" style="width: 50%" >
+<th:block layout:fragment="content">
+    <div class="container mt-1" style="width: 50%">
         <div align="center">
             <h1>Добро пожаловать на сервис Trash Hunter</h1>
             <h2>Пожалуйста, выберите свой город, чтобы посмотреть предложения по вывозу мусора</h2>
@@ -71,7 +69,12 @@
             </div>
         </div>
     </div>
-</div>
+</th:block>
+
+<th:block layout:fragment="localscripts">
+    <script type="text/javascript" src="/js/map/city_auto_complete.js"></script>
+    <script type="text/javascript" src="/js/map/define_city.js"></script>
+</th:block>
 
 </body>
 </html>

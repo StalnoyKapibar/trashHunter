@@ -48,7 +48,6 @@ public class ChatController {
         this.takerService = takerService;
     }
 
-
     @MessageMapping("/chat/{roomId}/sendMessage")
     public void sendMessage(@DestinationVariable String roomId,
                             @Payload ChatMessage chatMessage,
@@ -68,8 +67,11 @@ public class ChatController {
     }
 
     @MessageMapping("/chat/{roomId}/addUser")
-    public void addUser(@DestinationVariable String roomId, @Payload ChatMessage chatMessage,
-                        SimpMessageHeaderAccessor headerAccessor, Principal principal, Authentication authentication) {
+    public void addUser(@DestinationVariable String roomId,
+                        @Payload ChatMessage chatMessage,
+                        SimpMessageHeaderAccessor headerAccessor,
+                        Principal principal,
+                        Authentication authentication) {
         long takerId = Integer.valueOf(roomId.split("_")[0]);
         long senderId = Integer.valueOf(roomId.split("_")[1]);
         String role = authentication.getAuthorities().iterator().next().getAuthority();
