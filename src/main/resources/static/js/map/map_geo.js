@@ -5,6 +5,10 @@ var geocoder;
 var city = $("meta[name='defined_city']").attr("content");
 var latitude;
 var longitude;
+let kilograms = ".кг";
+let price = ".руб";
+let twoPoints = ":";
+
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -195,6 +199,10 @@ function drawPoints(data) {
                 return this.charAt(0).toUpperCase() + this.slice(1);
             }
             $.each(offer, function (key, value) {
+                let id;
+                if (key == 'id'){
+                    id = key;
+                }
                 if (key != 'coordinates' && key != 'id' && key != 'creationDateTime' && key != 'description' && key != 'respondingTakers') {
 
                     if (key == 'sender' ) {
@@ -208,20 +216,56 @@ function drawPoints(data) {
                     key = key.capitalize();
 
                     if (key == 'Sender') {
-                        key = 'Сдатчик';
+                        key = 'Сдатчик:';
                     } else if (key ==  'Weight'){
-                        key = 'Вес';
+                        key = 'Вес:';
+                        value = value + kilograms;
                     } else if (key == 'Volume') {
-                        key = 'Объем';
+                        key = 'Объем:';
+                        value = value + ".м³";
                     } else if (key == 'Price') {
-                        key = 'Цена';
+                        key = 'Цена:';
+                        value = value + price;
                     } else if (key == 'TrashType') {
-                        key = 'Тип мусора';
+                        key = 'Тип мусора:';
                     } else if (key == 'OfferStatus') {
-                        key = 'Статус предложение';
+                        key = 'Статус предложение:';
                     } else if (key == 'Sorted') {
-                        key = 'Рассортировка';
+                        if (value == 'true') {
+                            value = "Рассортирован"
+                        } else {
+                            value = "Несортированн"
+                        }
+                        key = 'Рассортировка:';
                     }
+
+
+                    if (value == 'METAL') {
+                        value = 'Метал';
+                    } else  if (value == 'PAPER') {
+                        value = 'Бумага';
+                    } else  if (value == 'FOOD') {
+                        value = 'Органика';
+                    } else  if (value == 'PLASTIC') {
+                        value = 'Пластик';
+                    } else  if (value == 'WOOD') {
+                        value = 'Дерево';
+                    } else  if (value == 'GLASS') {
+                        value = 'Стекло';
+                    }
+
+                    if (value == 'OPEN') {
+                        value = 'Открыт';
+                    } else  if (value == 'ACTIVE') {
+                        value = 'Активный';
+                    } else if (value == 'TAKEN') {
+                        value = 'Принят';
+                    } else if (value == 'COMPLETE') {
+                        value = 'Завершен';
+                    }
+
+
+
 
                     value = value.capitalize();
                     let newRow = tableRef.insertRow();
