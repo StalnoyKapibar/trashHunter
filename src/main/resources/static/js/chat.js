@@ -229,6 +229,22 @@ function setChatHeader(takerId, senderId) {
     roomIdDisplay.textContent = takerEmail + "-" + senderEmail;
 }
 
+/*
+function getEmailById(id) {
+    $.ajax({
+        url: '/api/user/' + id,
+        dataType: "json",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        success: function (user) {
+
+            takerEmail = user.email;
+        }
+    });
+}
+*/
+
 function getTakerEmailById(id) {
     $.ajax({
         url: '/api/user/' + id,

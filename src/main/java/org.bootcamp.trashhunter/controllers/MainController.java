@@ -16,10 +16,8 @@ public class MainController {
     private UserService userService;
 
     @GetMapping("/")
-    public String main(@RequestParam(value = "city", required = false) String city,
-                       @RequestParam(value = "error", required = false) boolean error,
-                       Model model,
-                       Principal principal){
+    public String main(@RequestParam(value = "city", required = false) String city, Model model,
+                       @RequestParam(value = "error", required = false) boolean error, Principal principal){
         if (principal != null) {
             String userCity = userService.findByEmail(principal.getName()).getCity();
             model.addAttribute("city", !userCity.isEmpty() ? userCity : "Москва, Россия" );

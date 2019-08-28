@@ -1,64 +1,73 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/commonlayouts}"
       lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <title>Chat Application</title>
-  <link rel="stylesheet" href="/css/chat.css" />
+    <title>Chat Application</title>
+    <link rel="stylesheet" href="/css/chat.css"/>
+
 </head>
 <body>
 <noscript>
-  <h2>Sorry! Your browser doesn't support Javascript</h2>
+    <h2>Sorry! Your browser doesn't support Javascript</h2>
 </noscript>
+<div layout:fragment="content">
 
-<div id="username-page" class="hidden">
-  <div class="username-page-container">
-    <h1 class="title">Enter a username and room ID</h1>
-    <form id="usernameForm" name="usernameForm">
-      <div class="form-group">
-        <input th:value="${username}" type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" />
-      </div>
-      <div class="form-group">
-        <input th:value="${chatRoom}" type="text" id="room-id" value="lobby" placeholder="Room ID" autocomplete="off" class="form-control" />
-      </div>
-        <div class="form-group">
-            <input th:value="${offerId}" type="text" id="offerId" value="lobby" placeholder="Offer ID" autocomplete="off" class="form-control" />
+    <div id="username-page" class="hidden">
+        <div class="username-page-container">
+            <h1 class="title">Enter a username and room ID</h1>
+            <form id="usernameForm" name="usernameForm">
+                <div class="form-group">
+                    <input th:value="${username}" type="text" id="name" placeholder="Username" autocomplete="off"
+                           class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <input th:value="${chatRoom}" type="text" id="room-id" value="lobby" placeholder="Room ID"
+                           autocomplete="off" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <input th:value="${offerId}" type="text" id="offerId" value="lobby" placeholder="Offer ID"
+                           autocomplete="off" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="accent username-submit">Start Chatting</button>
+                </div>
+            </form>
         </div>
-      <div class="form-group">
-        <button type="submit" class="accent username-submit">Start Chatting</button>
-      </div>
-    </form>
-  </div>
+    </div>
+
+    <div id="chat-page" class="hidden">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2>Chat [<span id="room-id-display"></span>]</h2>
+            </div>
+            <div class="connecting">
+                Connecting...
+            </div>
+            <ul id="messageArea">
+
+            </ul>
+            <form id="messageForm" name="messageForm" nameForm="messageForm">
+                <div class="form-group">
+                    <div class="input-group clearfix">
+                        <input type="text" id="message" placeholder="Type a message..."
+                               autocomplete="off" class="form-control"/>
+                        <button type="submit" class="primary">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
-<div id="chat-page" class="hidden">
-  <div class="chat-container">
-    <div class="chat-header">
-      <h2>Chat [<span id="room-id-display"></span>]</h2>
-    </div>
-    <div class="connecting">
-      Connecting...
-    </div>
-    <ul id="messageArea">
+<th:block layout:fragment="localscripts">
+    <script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
+    <script type="text/javascript" src="/js/lib/stomp.min.js"></script>
+    <script type="text/javascript" src="/js/lib/js.cookie-2.2.1.min.js"></script>
+    <script type="text/javascript" src="/js/chat.js"></script>
+</th:block>
 
-    </ul>
-    <form id="messageForm" name="messageForm" nameForm="messageForm">
-      <div class="form-group">
-        <div class="input-group clearfix">
-          <input type="text" id="message" placeholder="Type a message..."
-                 autocomplete="off" class="form-control"/>
-          <button type="submit" class="primary">Send</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-
-<script src="/js/jquery-3.4.1.min.js"></script>
-<script src="/js/sockjs.min.js"></script>
-<script src="/js/stomp.min.js"></script>
-<script src="/js/js.cookie-2.2.1.min.js"></script>
-<script src="/js/chat.js"></script>
 </body>
 </html>

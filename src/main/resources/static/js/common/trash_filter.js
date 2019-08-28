@@ -57,12 +57,14 @@ function doFilter(urlrequest){
 }
 
 function openFilter() {
+    let openHeight = "600px";
+    let closeHeight = "0px";
+
     let filter = $("#filter");
-    if (filter.height() == 0) {
-        filter.height("600px");
+
+    if (filter.height() == parseInt(closeHeight)) {
+        filter.height(openHeight);
     } else {
-        filter.height("0px");
+        filter.height(closeHeight);
     }
-
 }
-

@@ -29,11 +29,11 @@ var styledMapPropertiesArray = [
         "elementType": "labels.text.fill",
         "stylers": [{"color": "#757575"}]
     },
-    {
-        "featureType": "poi.park",
-        "elementType": "geometry",
-        "stylers": [{"color": "#0adc51"}]
-    },
+    // {
+    //     "featureType": "poi.park",
+    //     "elementType": "geometry",
+    //     "stylers": [{"color": "#0adc51"}]
+    // },
     {
         "featureType": "poi.park",
         "elementType": "labels.text.fill",
@@ -77,7 +77,7 @@ var styledMapPropertiesArray = [
     {
         "featureType": "water",
         "elementType": "geometry",
-        "stylers": [{"color": "#007bff"}]
+        "stylers": [{"color": "#009dff"}]
         // "stylers": [{"color": "#4d90fe"}]
     },
     {
