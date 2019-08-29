@@ -94,7 +94,13 @@ function getTable() {
                         offerRow += ' цена: ' + value + 'руб ';
                     }
                     if (key == "trashType") {
-                        offerRow += ' тип мусора: ' + value;
+                        offerRow += ' тип мусора: ';
+                            if (value == 'METAL') { offerRow+='Метал';}
+                            if (value == 'FOOD') { offerRow+='Оходы';}
+                            if (value == 'WOOD') { offerRow+='Дерево';}
+                            if (value == 'GLASS') { offerRow+='Стекло';}
+                            if (value == 'PAPER') { offerRow+='Бумага';}
+                            if (value == 'PLASTIC') { offerRow+='Пластик';}
                     }
                     if (key == "offerStatus") {
                         offerRow+= '</div>' +
