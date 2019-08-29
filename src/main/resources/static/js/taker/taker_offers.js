@@ -23,6 +23,22 @@ function getTable(data) {
                                 '<div class="card-body" style="background-color: #ffffff">' +
                                     '<div class="row" style="margin-bottom: 1%">' +
                                     '<div class="col-sm-1"></div>'+
+            '<div class="col-sm-1"></div>' +
+            '<div class="input-group col-sm-1">' +
+            '<div class="input-group-prepend">' +
+            '<span class="input-group-text" ' +
+            ' onclick="putLike(' + offer.sender.id + ', true)">' +
+            '<i class="fas fa-thumbs-up like' + offer.sender.id + '" style="color:black"></i></span>' +
+            '</div>' +
+            '</div>' +
+            '<div class="input-group col-sm-1 ' +
+            ' onclick="putLike(' + offer.sender.id + ', false)">' +
+            '<div class="input-group-prepend">' +
+            '<span class="input-group-text" ' +
+            ' onclick="putLike(' + offer.sender.id + ', false)">' +
+            '<i class="fas fa-thumbs-down dislike' + offer.sender.id + '" style="color:black"></i></span>' +
+            '</div>' +
+            '</div>' +
                                         '<div  class="input-group col-sm-4">' +
                                             '<div class="input-group-prepend">'+
                                             '<span style="padding: 0" class="input-group-text">' +
