@@ -49,9 +49,13 @@ $(document).ready(function () {
             url: '/api/offer/rate_offer/' + takerToRateId + '/' + offerToRateId + '/' + ratingValue,
             type: 'GET',
             success: function () {
-                $(buttonId).hide();
+                $("#sendRatedUser").hide();
             }
         });
+        $(buttonId).hide();
+        $("#successBlock").html("<div style='width: 300px' class=\"alert alert-success\" role=\"alert\">\n" +
+            "  Спасибо, ваша оценка учтена\n" +
+            "</div>")
     });
 
 });
@@ -129,7 +133,7 @@ function getTable() {
                                 '<div class="row"> <div class="col-sm-1"></div>' +
                                 '<div class="col-sm-6"><h5 >Востановить Предложение</h5></div>' +
                                 '<div class="col-sm-5">' +
-                                '<button class="btn btn-primary btn-icon " onclick="restoreOffer(' + takers[0].id + ')">' +
+                                '<button class="btn btn-primary btn-icon " onclick="restoreOffer(' + offerId + ')">' +
                                 '<span class="icon"><i class="fas fa-trash-restore"></i></span>востановить</button>';
                             if(takers.length !== 0){
                                 offerRow += '<button class="btn btn-warning btn-icon" id="rateBtn' + offerId + '"' +
@@ -237,6 +241,8 @@ function restoreOffer(offerId) {
 }
 
 function rateOffer(offerId, takerId, takerName){
+    $("#sendRatedUser").show();
+    $("#successBlock").empty();
     offerToRateId = offerId;
     takerToRateId = takerId;
     $("#takerName").text(takerName);
@@ -307,6 +313,7 @@ function getModalWindow() {
         "                       </ul>\n" +
         "                   </div>" +
         "                </div>\n" +
+        "                <div id='successBlock'></div>" +
         "                <div class=\"modal-footer\">\n" +
         "                    <button id='sendRatedUser' type=\"button\" class=\"btn btn-success\">Оценить</button>\n" +
         "                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Закрыть</button>\n" +

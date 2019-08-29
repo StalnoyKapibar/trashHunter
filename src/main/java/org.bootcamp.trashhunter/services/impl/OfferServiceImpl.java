@@ -80,8 +80,19 @@ public class OfferServiceImpl extends AbstractServiceImpl<Offer> implements Offe
     public void makeCompleteOffer(Long offerId){
         Offer offer = offerDao.getById(offerId);
         offer.setOfferStatus(OfferStatus.COMPLETE);
+        offerDao.update(offer);
+    }
+
+    @Override
+    public void rateOfferBySender(Long takerId, Long offerId, Integer rating){
+        Offer offer = offerDao.getById(offerId);
         offer.setRespondingTakers(new ArrayList<>());
         offerDao.update(offer);
+        Taker taker = takerService.getById(takerId);
+        Statistics statistics = taker.getStatistics();
+        statistics.setSummaryScore(statistics.getSummaryScore() + rating);
+        statistics.setNumOfRatings(statistics.getNumOfRatings() + 1);
+        takerService.update(taker);
     }
 
     @Override
