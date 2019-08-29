@@ -292,7 +292,7 @@ function getModalWindow() {
         "                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>\n" +
         "                </div>\n" +
         "                <div class=\"modal-body\">\n" +
-        "                    <p>Оцени этого пидора</p>\n" +
+        "                    <p>Оцени этого уважаемого пидора</p>\n" +
         "                    <div class='rating-stars text-center'>\n" +
         "                       <ul id='stars'>\n" +
         "                         <li class='star' title='Poor' data-value='1'>\n" +

@@ -61,7 +61,7 @@ public class OfferRestController {
     }
 
     @GetMapping("/rate_offer/{userId}/{offerId}/{rating}")
-    public void rateOffer(@PathVariable Long takerId, @PathVariable Long offerId, @PathVariable Integer rating) {
-        offerService.rateOffer(takerId, offerId ,rating);
+    public void rateOffer(@PathVariable Long userId, @PathVariable Long offerId, @PathVariable Integer rating) {
+        offerService.rateOffer(userId, offerId ,rating);
     }
 }
