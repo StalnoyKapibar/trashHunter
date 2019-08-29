@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -110,6 +111,7 @@ public class ChatController {
         if (offerId != null) {
             model.addAttribute("offerId", offerId);
         }
+        Map<User, Collection<Offer>> companionOffersMap = getCompanionToOffersMap(user, companionList);
         return "chat";
     }
 
@@ -128,6 +130,7 @@ public class ChatController {
             model.addAttribute("username", principal.getName());
             model.addAttribute("chatRoom", companionId + "_" + ownerId);
         }
+
         User user = userService.findByEmail(principal.getName());
         UserDto chatOwner = new UserDto(user);
         model.addAttribute("chatOwner", chatOwner);
@@ -141,18 +144,18 @@ public class ChatController {
         return "chat";
     }
 
-    private Collection<User> getCompanionList(User user) {
-        String role = user.getClass().getSimpleName();
+    private Collection<User> getCompanionList(User chatOwner) {
+        String role = chatOwner.getClass().getSimpleName();
         Collection<User> companionList = new HashSet<>();
         if (role.equals("Sender")) {
-            Map<Offer, List<Taker>> allSenderOffersList = offerService.getOffersBySenderIdActiveFirst(user.getEmail());
-            for (Map.Entry<Offer, List<Taker>> entry : allSenderOffersList.entrySet()) {
+            Map<Offer, List<Taker>> offersBySenderIdActiveFirst = offerService.getOffersBySenderIdActiveFirst(chatOwner.getEmail());
+            for (Map.Entry<Offer, List<Taker>> entry : offersBySenderIdActiveFirst.entrySet()) {
                 if (entry.getValue().size() == 1) {
                     companionList.add(entry.getValue().get(0));
                 }
             }
         } else if (role.equals("Taker")) {
-            List<Offer> takerOffersList = offerService.getOffersByTaker(user.getEmail());
+            List<Offer> takerOffersList = offerService.getOffersByTaker(chatOwner.getEmail());
             for (Offer offer : takerOffersList) {
                 companionList.add(offer.getSender());
             }
@@ -183,6 +186,34 @@ public class ChatController {
         return "chat";
     }
 */
+
+    private Map<User, Collection<Offer>> getCompanionToOffersMap(User chatOwner, Collection<User> companionList) {
+        String companionRole = companionList.iterator().next().getClass().getSimpleName();
+        Map<User, Collection<Offer>> companionToOffersMap = new HashMap<>();
+
+        if (companionRole.equals("Sender")) {
+            for (User companion : companionList) {
+                List<Offer> companionOffersList = offerService.getOffersByTaker(companion.getEmail());
+                companionOffersList = companionOffersList.stream()
+                        .filter(offer ->
+                            offer.getOfferStatus().equals(OfferStatus.TAKEN) &&
+                            offer.getRespondingTakers().contains((Taker) chatOwner))
+                        .collect(Collectors.toList());
+                companionToOffersMap.put(companion, companionOffersList);
+            }
+        } else if (companionRole.equals("Taker")) {
+            for (User companion : companionList) {
+                List<Offer> companionOffers = offerService.getOffersByTaker(companion.getEmail());
+                companionOffers = companionOffers.stream()
+                        .filter(offer -> offer.getSender().equals((Sender) chatOwner))
+                        .collect(Collectors.toList());
+                companionToOffersMap.put(companion, companionOffers);
+            }
+        }
+        return companionToOffersMap;
+    }
+
+
 
     private boolean isRightPrincipal(long senderId, long takerId, Principal principal, String role) {
         if (role.equals("Taker")) {
