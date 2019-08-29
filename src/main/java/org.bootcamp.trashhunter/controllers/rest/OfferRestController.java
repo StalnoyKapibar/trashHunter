@@ -60,10 +60,8 @@ public class OfferRestController {
         offerService.deleteById(offerId);
     }
 
-    @GetMapping("/rate_offer/{takerId}/{offerId}/{rating}")
-    public void rateOffer(@PathVariable Long takerId, @PathVariable Long offerId, @PathVariable Integer rating) {
-        offerService.rateOfferBySender(takerId, offerId ,rating);
+    @GetMapping("/rate_offer/{userId}/{offerId}/{rating}")
+    public void rateOffer(@PathVariable Long userId, @PathVariable Long offerId, @PathVariable Integer rating) {
+        offerService.rateOffer(userId, offerId ,rating);
     }
-
-
 }
