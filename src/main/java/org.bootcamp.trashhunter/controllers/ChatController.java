@@ -100,43 +100,68 @@ public class ChatController {
                        Principal principal,
                        Authentication authentication,
                        Model model) {
-        if (authentication.isAuthenticated()) {
-            User user = userService.findByEmail(principal.getName());
-            UserDto chatOwner = new UserDto(user);
-            model.addAttribute("chatOwner", chatOwner);
-            String role = authentication.getAuthorities().iterator().next().getAuthority();
-
-            Collection<User> companionList = new HashSet<>();
-            if (role.equals("Sender")) {
-                Map<Offer, List<Taker>> allSenderOffersList = offerService.getOffersBySenderIdActiveFirst(chatOwner.getEmail());
-/*
-                allOffersList.entrySet().stream()
-                        .filter(entry -> (entry.getKey().getOfferStatus().equals(OfferStatus.TAKEN)))
-                        .map(offerListEntry -> )
-*/
-                for (Map.Entry<Offer, List<Taker>> entry : allSenderOffersList.entrySet()) {
-                    if (entry.getValue().size() == 1) {
-                        companionList.add(entry.getValue().get(0));
-                    }
-                }
-            } else if (role.equals("Taker")) {
-                List<Offer> takerOffersList = offerService.getOffersByTaker(chatOwner.getEmail());
-                for (Offer offer : takerOffersList) {
-                    companionList.add(offer.getSender());
-                }
-            }
-            if (!companionList.isEmpty()) {
-                model.addAttribute("companionList", companionList);
-            }
-            if (offerId != null) {
-                model.addAttribute("offerId", offerId);
-            }
+        User user = userService.findByEmail(principal.getName());
+        UserDto chatOwner = new UserDto(user);
+        model.addAttribute("chatOwner", chatOwner);
+        Collection<User> companionList = getCompanionList(user);
+        if (!companionList.isEmpty()) {
+            model.addAttribute("companionList", companionList);
+        }
+        if (offerId != null) {
+            model.addAttribute("offerId", offerId);
         }
         return "chat";
     }
-/*
+
     @GetMapping("/chat/{companionId}")
-    public String chat(@PathVariable("{companionId}") long partnerId,
+    public String chat(@PathVariable long companionId,
+                       @RequestParam(value = "offerId", required = false) Long offerId,
+                       Principal principal,
+                       Authentication authentication,
+                       Model model) {
+        long ownerId = userService.findByEmail(principal.getName()).getId();
+        String role = authentication.getAuthorities().iterator().next().getAuthority();
+        if (role.equals("Taker")) {
+            model.addAttribute("username", principal.getName());
+            model.addAttribute("chatRoom", ownerId + "_" + companionId);
+        } else if (role.equals("Sender")) {
+            model.addAttribute("username", principal.getName());
+            model.addAttribute("chatRoom", companionId + "_" + ownerId);
+        }
+        User user = userService.findByEmail(principal.getName());
+        UserDto chatOwner = new UserDto(user);
+        model.addAttribute("chatOwner", chatOwner);
+        Collection<User> companionList = getCompanionList(user);
+        if (!companionList.isEmpty()) {
+            model.addAttribute("companionList", companionList);
+        }
+        if (offerId != null) {
+            model.addAttribute("offerId", offerId);
+        }
+        return "chat";
+    }
+
+    private Collection<User> getCompanionList(User user) {
+        String role = user.getClass().getSimpleName();
+        Collection<User> companionList = new HashSet<>();
+        if (role.equals("Sender")) {
+            Map<Offer, List<Taker>> allSenderOffersList = offerService.getOffersBySenderIdActiveFirst(user.getEmail());
+            for (Map.Entry<Offer, List<Taker>> entry : allSenderOffersList.entrySet()) {
+                if (entry.getValue().size() == 1) {
+                    companionList.add(entry.getValue().get(0));
+                }
+            }
+        } else if (role.equals("Taker")) {
+            List<Offer> takerOffersList = offerService.getOffersByTaker(user.getEmail());
+            for (Offer offer : takerOffersList) {
+                companionList.add(offer.getSender());
+            }
+        }
+        return companionList;
+    }
+/*
+    @GetMapping("/chat")
+    public String chat(@RequestParam("partnerId") long partnerId,
                        @RequestParam(value = "offerId", required = false) Long offerId,
                        Principal principal,
                        Authentication authentication,

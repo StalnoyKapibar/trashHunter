@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       lang="en">
 <!--
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -100,62 +99,64 @@
 -->
 <th:block th:replace="fragments/commonfragments :: nav"></th:block>
 
-    <div id="username-page" class="hidden">
-        <div class="username-page-container">
-            <h1 class="title">Enter a username and room ID</h1>
-            <form id="usernameForm" name="usernameForm">
-                <div class="form-group">
-                    <input th:value="${chatOwner.getEmail()}" type="text" id="name" placeholder="Username" autocomplete="off"
-                           class="form-control"/>
-                </div>
-                <div class="form-group">
-                    <input th:value="${chatRoom}" type="text" id="room-id" value="lobby" placeholder="Room ID"
-                           autocomplete="off" class="form-control"/>
-                </div>
-                <div class="form-group">
-                    <input th:value="${offerId}" type="text" id="offerId" value="lobby" placeholder="Offer ID"
-                           autocomplete="off" class="form-control"/>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="accent username-submit">Start Chatting</button>
-                </div>
-            </form>
-        </div>
+<div id="username-page" class="hidden">
+    <div class="username-page-container">
+        <h1 class="title">Enter a username and room ID</h1>
+        <form id="usernameForm" name="usernameForm">
+            <div class="form-group">
+                <input th:value="${chatOwner.getEmail()}" type="text" id="name" placeholder="Username"
+                       autocomplete="off"
+                       class="form-control"/>
+            </div>
+            <div class="form-group">
+                <input th:value="${chatRoom}" type="text" id="room-id" value="lobby" placeholder="Room ID"
+                       autocomplete="off" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <input th:value="${offerId}" type="text" id="offerId" value="lobby" placeholder="Offer ID"
+                       autocomplete="off" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="accent username-submit">Start Chatting</button>
+            </div>
+        </form>
     </div>
+</div>
 
-    <div id="chat-page" class="hidden">
+<div id="chat-page" class="hidden">
 
-        <div class="chat-container">
-            <div id="sidebar-container" class="bg-light border-right">
-                <div class="sidebar-heading">Доступные чаты</div>
-                <div class="list-group list-group-flush" th:each="companion : ${companionList}">
-                    <a href="#" class="list-group-item list-group-item-action bg-light" th:text="${companion.getName()}"></a>
-                    <!--<a href="#" class="list-group-item list-group-item-action bg-light">User1</a>-->
-                    <!--<a href="#" class="list-group-item list-group-item-action bg-light">User2</a>-->
-                    <!--<a href="#" class="list-group-item list-group-item-action bg-light">User3</a>-->
-                </div>
+    <div class="chat-container">
+        <div id="sidebar-container" class="bg-light border-right">
+            <div class="sidebar-heading">Доступные чаты</div>
+            <div class="list-group list-group-flush" th:each="companion : ${companionList}">
+                <a th:href="'chat/' + ${companion.getId() + '?offerId=' + 5}"
+                   class="list-group-item list-group-item-action bg-light" th:text="${companion.getName()}"></a>
+                <!--<a href="#" class="list-group-item list-group-item-action bg-light">User1</a>-->
+                <!--<a href="#" class="list-group-item list-group-item-action bg-light">User2</a>-->
+                <!--<a href="#" class="list-group-item list-group-item-action bg-light">User3</a>-->
             </div>
-
-            <div class="chat-header">
-                <h2>Chat [<span id="room-id-display"></span>]</h2>
-            </div>
-            <div class="connecting">
-                Connecting...
-            </div>
-            <ul id="messageArea">
-
-            </ul>
-            <form id="messageForm" name="messageForm" nameForm="messageForm">
-                <div class="form-group">
-                    <div class="input-group clearfix">
-                        <input type="text" id="message" placeholder="Type a message..."
-                               autocomplete="off" class="form-control"/>
-                        <button type="submit" class="primary">Send</button>
-                    </div>
-                </div>
-            </form>
         </div>
+
+        <div class="chat-header">
+            <h2>Chat [<span id="room-id-display"></span>]</h2>
+        </div>
+        <div class="connecting">
+            Connecting...
+        </div>
+        <ul id="messageArea">
+
+        </ul>
+        <form id="messageForm" name="messageForm" nameForm="messageForm">
+            <div class="form-group">
+                <div class="input-group clearfix">
+                    <input type="text" id="message" placeholder="Type a message..."
+                           autocomplete="off" class="form-control"/>
+                    <button type="submit" class="primary">Send</button>
+                </div>
+            </div>
+        </form>
     </div>
+</div>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
