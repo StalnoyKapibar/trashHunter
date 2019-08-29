@@ -1,6 +1,8 @@
 package org.bootcamp.trashhunter.controllers.rest;
 
 import org.bootcamp.trashhunter.models.Offer;
+import org.bootcamp.trashhunter.models.Statistics;
+import org.bootcamp.trashhunter.models.dto.StaticticsDto;
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -57,5 +59,11 @@ public class OfferRestController {
     public void deleteOffer(@PathVariable Long offerId) {
         offerService.deleteById(offerId);
     }
+
+    @GetMapping("/rate_offer/{takerId}/{offerId}/{rating}")
+    public void rateOffer(@PathVariable Long takerId, @PathVariable Long offerId, @PathVariable Integer rating) {
+        offerService.rateOfferBySender(takerId, offerId ,rating);
+    }
+
 
 }

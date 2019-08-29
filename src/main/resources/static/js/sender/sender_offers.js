@@ -1,5 +1,59 @@
+var ratingValue;
+var offerToRateId;
+var takerToRateId;
+
 $(document).ready(function () {
     getTable();
+
+    $("body").on('mouseover', '#stars li', function(){
+        var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
+
+        // Now highlight all the stars that's not after the current hovered star
+        $(this).parent().children('li.star').each(function(e){
+            if (e < onStar) {
+                $(this).addClass('hover');
+            }
+            else {
+                $(this).removeClass('hover');
+            }
+        });
+
+    }).on('mouseout', '#stars li', function(){
+        $(this).parent().children('li.star').each(function(e){
+            $(this).removeClass('hover');
+        });
+    });
+
+
+    /* 2. Action to perform on click */
+    $("body").on('click', '#stars li', function(){
+        var onStar = parseInt($(this).data('value'), 10); // The star currently selected
+        var stars = $(this).parent().children('li.star');
+
+        for (i = 0; i < stars.length; i++) {
+            $(stars[i]).removeClass('selected');
+        }
+
+        for (i = 0; i < onStar; i++) {
+            $(stars[i]).addClass('selected');
+        }
+
+        // JUST RESPONSE (Not needed)
+        ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
+        //responseMessage(msg);
+    });
+
+    $("body").on('click', '#sendRatedUser', function() {
+        let buttonId = "#rateBtn" + offerToRateId;
+        $.ajax({
+            url: '/api/offer/rate_offer/' + takerToRateId + '/' + offerToRateId + '/' + ratingValue,
+            type: 'GET',
+            success: function () {
+                $(buttonId).hide();
+            }
+        });
+    });
+
 });
 
 function getTable() {
@@ -11,6 +65,7 @@ function getTable() {
             $('#senderOffersTable tbody').empty();
             $.each(result, function (offer, takers) {
                 let offerRow = '';
+                let counter = 0;
                 JSON.parse(offer, function (key, value) {
                     if (key == "id") {
                         offerId = value;
@@ -74,12 +129,14 @@ function getTable() {
                                 '<div class="row"> <div class="col-sm-1"></div>' +
                                 '<div class="col-sm-6"><h5 >Востановить Предложение</h5></div>' +
                                 '<div class="col-sm-5">' +
-                                '<button class="btn btn-primary btn-icon " onclick="restoreOffer(' + offerId + ')">' +
-                                '<span class="icon"><i class="fas fa-trash-restore"></i></span>востановить</button>' +
-                                '<button class="btn btn-warning btn-icon" id="rateBtn" onclick="rateOffer(' + offerId + ')">' +
-                                '<span class="icon"><i class="fas fa-trash-restore"></i></span>оценить сделку' +
-                                '</button></div>' +'</div>'+
-                                 '</div>';
+                                '<button class="btn btn-primary btn-icon " onclick="restoreOffer(' + takers[0].id + ')">' +
+                                '<span class="icon"><i class="fas fa-trash-restore"></i></span>востановить</button>';
+                            if(takers.length !== 0){
+                                offerRow += '<button class="btn btn-warning btn-icon" id="rateBtn' + offerId + '"' +
+                                    ' onclick="rateOffer(' + offerId + ', ' + takers[0].id + ', \'' + takers[0].name +'\')">' +
+                                    '<span class="icon"><i class="fas fa-trash-restore"></i></span>оценить сделку</button>';
+                            }
+                            offerRow += '</div></div></div>';
                         } else if (value == 'TAKEN'){
                             offerRow += '</div>' +
                                 '<div class="card-body" style="background-color: aliceblue">';
@@ -163,7 +220,7 @@ function deleteOffer(offerId) {
         url: '/api/offer/deleteOffer/' + offerId,
         type: 'GET',
         success: function () {
-             $('#offer'+offerId).hide();
+             $('#offer' + offerId).hide();
         }
     });
 }
@@ -179,10 +236,11 @@ function restoreOffer(offerId) {
     });
 }
 
-function rateOffer(offer){
-    $("#takerName").text(offer.)
+function rateOffer(offerId, takerId, takerName){
+    offerToRateId = offerId;
+    takerToRateId = takerId;
+    $("#takerName").text(takerName);
     $("#rateOffer").modal("show");
-    console.log(123);
 }
 
 function makeCompleteOffer(offerId) {
@@ -229,11 +287,32 @@ function getModalWindow() {
         "                </div>\n" +
         "                <div class=\"modal-body\">\n" +
         "                    <p>Оцени этого пидора</p>\n" +
+        "                    <div class='rating-stars text-center'>\n" +
+        "                       <ul id='stars'>\n" +
+        "                         <li class='star' title='Poor' data-value='1'>\n" +
+        "                           <i class='fa fa-star fa-fw'></i>\n" +
+        "                         </li>\n" +
+        "                         <li class='star' title='Fair' data-value='2'>\n" +
+        "                           <i class='fa fa-star fa-fw'></i>\n" +
+        "                         </li>\n" +
+        "                         <li class='star' title='Good' data-value='3'>\n" +
+        "                           <i class='fa fa-star fa-fw'></i>\n" +
+        "                         </li>\n" +
+        "                         <li class='star' title='Excellent' data-value='4'>\n" +
+        "                           <i class='fa fa-star fa-fw'></i>\n" +
+        "                         </li>\n" +
+        "                         <li class='star' title='WOW!!!' data-value='5'>\n" +
+        "                           <i class='fa fa-star fa-fw'></i>\n" +
+        "                         </li>\n" +
+        "                       </ul>\n" +
+        "                   </div>" +
         "                </div>\n" +
         "                <div class=\"modal-footer\">\n" +
-        "                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n" +
+        "                    <button id='sendRatedUser' type=\"button\" class=\"btn btn-success\">Оценить</button>\n" +
+        "                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Закрыть</button>\n" +
         "                </div>\n" +
         "            </div>\n" +
         "        </div>\n" +
         "    </div>";
 }
+
