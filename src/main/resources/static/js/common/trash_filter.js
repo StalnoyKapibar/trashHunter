@@ -68,3 +68,12 @@ function openFilter() {
         filter.height(closeHeight);
     }
 }
+
+function numberCheck(field) {
+    let number = document.getElementById(field).value;
+    if (number < 0) {
+        alert('Число не должно быть меньше нуля');
+        document.getElementById(field).value = 0;
+        document.getElementById(field).focus();
+    }
+}
