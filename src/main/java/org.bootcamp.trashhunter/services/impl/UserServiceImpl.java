@@ -21,9 +21,6 @@ import java.io.IOException;
 @Service
 public class UserServiceImpl extends AbstractServiceImpl<User> implements UserService {
 
-    @Value("${avatar.default}")
-    private String avatarName;
-
     @Autowired
     private UserDao userDao;
 
@@ -37,12 +34,13 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
 
     public String encoder64(String string) { return   userDao.base64Encoder(string); }
 
-    public byte[] extractBytesDefaultAvatar () {
+    public byte[] extractBytesDefaultAvatar(String avatarName) {
         String sep = File.separator;
         String DEFAULT_AVATAR_PATH = new File("").getAbsolutePath() + sep + "src" + sep + "main"
-                + sep + "resources" + sep + "static" + sep + "img" + sep + "common" + sep + avatarName;
+                + sep + "resources" + sep + "static" + sep + "img" + sep + "avatar" + sep + avatarName;
         File imgPath = new File(DEFAULT_AVATAR_PATH);
         BufferedImage bufferedImage = null;
+        //todo
         try {
             bufferedImage = ImageIO.read(imgPath);
         } catch (IOException e) {

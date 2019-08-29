@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private DataSource dataSource;
 
@@ -68,7 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registration", "/activate/*", "/api/user/resend_email_for_token_recovery").anonymous()
                 .antMatchers("/reset_password", "/reset/**").anonymous()
                 .antMatchers("/", "/api/offer/**", "/css/*", "/js/*", "/img/*", "/activate/*", "/**", "/favorites", "/chat/**").permitAll()
-                .antMatchers("/profile/*", "/sender/*", "/taker/*").authenticated();
+                .antMatchers("/banned/*").authenticated()
+                .antMatchers("/profile/*", "/sender/*", "/taker/*", "/api/vote/**").authenticated();
                 //.antMatchers("/sender/**").access("hasAuthority('Sender')");
                 //.antMatchers("/admin/**").access("hasAnyRole('Taker','Sender')").anyRequest().authenticated();
     }

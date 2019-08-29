@@ -20,8 +20,17 @@ body {
 }
 
 .navbar a :hover {
-    color: lightgray;
+    text-shadow: 20px 20px 40px black, 0 0 2em black; /* Параметры тени */
+    color: white; /* Белый цвет текста */
+    font-size: 1.2em; /* Размер надписи */
 }
+
+.navbar a :visited {
+    text-shadow: 20px 20px 40px black, 0 0 2em black; /* Параметры тени */
+    color: white; /* Белый цвет текста */
+    font-size: 1.2em; /* Размер надписи *
+}
+
 
 .navbar .dropdown {
     display: flex;
@@ -259,3 +268,4 @@ li {
     margin-right: 5px;
 }
 /*//sender-style*/
+

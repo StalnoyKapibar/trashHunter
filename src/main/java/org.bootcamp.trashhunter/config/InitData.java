@@ -1,26 +1,23 @@
 package org.bootcamp.trashhunter.config;
 
-
 import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.OfferStatus;
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.models.TrashType;
 import org.bootcamp.trashhunter.models.UserFavorites;
+import org.bootcamp.trashhunter.models.Statistics;
 import org.bootcamp.trashhunter.models.embedded.Coordinates;
-
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.bootcamp.trashhunter.services.abstraction.SenderService;
 import org.bootcamp.trashhunter.services.abstraction.TakerService;
 import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.bootcamp.trashhunter.services.impl.UserFavoritesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class InitData {
 
@@ -59,24 +56,45 @@ public class InitData {
         userFavoritesService.add(uf5);
         UserFavorites uf6 = new UserFavorites(5L, 2L);
         userFavoritesService.add(uf6);
+        UserFavorites uf7 = new UserFavorites(4L, 2L);
+        userFavoritesService.add(uf7);
     }
 
     private void initSenders() {
-        Sender sender1 = new Sender("sender1@mail.ru", "Mixa", "sender1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar());
+        Statistics s1 = new Statistics(10, 50, 12, 240);
+        Statistics s2 = new Statistics(20, 100, 28, 860);
+        Statistics s3 = new Statistics(30, 200, 22, 121);
+        Statistics s4 = new Statistics(300, 2000, 2203, 1211);
+        Sender sender1 = new Sender("sender1@mail.ru", "Михаил А.", "sender1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("mixa.jpg"));
+        sender1.setStatistics(s1);
         senderService.add(sender1);
-        Sender sender2 = new Sender("sender2@mail.ru", "Max", "sender2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar() );
+        Sender sender2 = new Sender("sender2@mail.ru", "Максим В.", "sender2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("max.jpg") );
+        sender2.setStatistics(s2);
         senderService.add(sender2);
-        Sender sender3 = new Sender("sender3@mail.ru", "Ivan", "sender3", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar());
+        Sender sender3 = new Sender("sender3@mail.ru", "Иван Ф.", "sender3", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("ivan.jpg"));
+        sender3.setStatistics(s3);
         senderService.add(sender3);
+        Sender sender4 = new Sender("sender4@mail.ru", "Юрий П.", "sender4", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("iura.jpg"));
+        sender4.setStatistics(s4);
+        senderService.add(sender4);
     }
 
     private void initTakers() {
-        Taker taker1 = new Taker("taker1@mail.ru", "Yura", "taker1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar());
+        Statistics s1 = new Statistics(10, 50, 12, 240);
+        Statistics s2 = new Statistics(20, 100, 28, 860);
+        Statistics s3 = new Statistics(30, 200, 22, 121);
+
+        Taker taker1 = new Taker("taker1@mail.ru", "Юра З.", "taker1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("yura.jpg"));
+        taker1.setStatistics(s1);
         takerService.add(taker1);
-        Taker taker2 = new Taker("taker2@mail.ru", "Matvey", "taker2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar());
+        Taker taker2 = new Taker("taker2@mail.ru", "Матвей О.", "taker2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("matey.jpg"));
+        taker2.setStatistics(s2);
         takerService.add(taker2);
-        Taker taker3 = new Taker("taker3@mail.ru", "Denis", "taker3", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar());
+        Taker taker3 = new Taker("taker3@mail.ru", "Денис Т.", "taker3", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("denis.jpg"));
+        taker3.setStatistics(s3);
         takerService.add(taker3);
+//        Taker taker4 = new Taker("taker4@mail.ru", "Владислав Ы.", "taker4", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("vlad.png"));
+//        takerService.add(taker4);
     }
 
     private void initRandomOffers(int quantity) {

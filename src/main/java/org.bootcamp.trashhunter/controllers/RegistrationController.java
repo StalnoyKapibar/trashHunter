@@ -38,7 +38,7 @@ public class RegistrationController {
             return "registration/registration";
         }
         User registeredUser = null;
-        byte [] pic = userService.extractBytesDefaultAvatar();
+        byte[] pic = userService.extractBytesDefaultAvatar("avatar.png");
         if ("TAKER".equals(role)) {
             registeredUser = new Taker(email, name, password, LocalDate.now(), city, pic );
         } else if ("SENDER".equals(role)) {

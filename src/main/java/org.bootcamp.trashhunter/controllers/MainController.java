@@ -26,6 +26,7 @@ public class MainController {
         if (city == null) {
             return "welcome";
         }
+        //todo
         if (error) {
             model.addAttribute("error", true);
         }

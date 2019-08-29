@@ -10,7 +10,7 @@ public interface UserService extends AbstractService<User> {
 
     String encoder64(String string);
 
-    public byte[] extractBytesDefaultAvatar ();
+    public byte[] extractBytesDefaultAvatar (String avatarName);
 
     boolean isValid(String email);
 }
