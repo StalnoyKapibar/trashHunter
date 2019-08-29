@@ -33,7 +33,9 @@ public class FavoritesController {
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		User userBossFromEmail = userService.findByEmail(email);
 
-		if (userBossFromEmail == null) return new ModelAndView("index");
+		if (userBossFromEmail == null) {
+		    return new ModelAndView("index");
+        }
 
 		Long numBoss = userBossFromEmail.getId();
 		List<UserFavorites> listUsersFav = userFavoritesDao.getAllUserFavById(numBoss);

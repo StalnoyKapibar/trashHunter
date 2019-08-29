@@ -22,7 +22,6 @@ public class TakerRestController {
         if (map.size() == 0) {
             return offerService.getOffersByTaker(email);
         }
-
-        return offerService.getFilterOffersForTaker(map,email);
+        return offerService.getFilterOffersForTaker(map, email);
     }
 }

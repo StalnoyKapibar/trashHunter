@@ -36,7 +36,7 @@ public class UserRestController {
             user.setPassword(password);
             userService.update(user);
             return new ResponseEntity(HttpStatus.OK);
-        } else{
+        } else {
             return new ResponseEntity(HttpStatus.BAD_GATEWAY);
         }
     }
