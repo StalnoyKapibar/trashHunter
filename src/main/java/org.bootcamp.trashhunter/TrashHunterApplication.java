@@ -14,10 +14,10 @@ public class TrashHunterApplication {
     }
 
 //    нужно раскоментить @Bean для создания таблиц
-//    @Bean(initMethod = "init")
-//    @PostConstruct
-//    public InitData initData() {
-//        return new InitData();
-//    }
+    @Bean(initMethod = "init")
+    @PostConstruct
+    public InitData initData() {
+        return new InitData();
+    }
 
 }
