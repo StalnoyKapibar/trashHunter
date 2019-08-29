@@ -81,6 +81,7 @@ function getTable() {
                             '<div class="container-fluid cards">' +
                             '<div class="card" id="'+ offerId +'" style="margin-bottom: 1%" >' +
                             '<div class="card-header" style="color: white; background-color: #4d90fe">'+
+                            '<div class="row">'+'<div class="col-sm-10">' +
                             ' Заказ№ ' + value + ' ';
                     }
                     if (key == "weight") {
@@ -96,6 +97,22 @@ function getTable() {
                         offerRow += ' тип мусора: ' + value;
                     }
                     if (key == "offerStatus") {
+                        offerRow+= '</div>' +
+                            '<a href="/sender/edit_offer/' + offerId + '" class="btn btn-light btn-circle"' +
+                            'data-toggle="tooltip" data-placement="bottom" title="Радактировать предложение"' +
+                            'style="margin-right: 2% " >' +
+                            '<i class="fas fa-edit"></i>' +
+                            '</a>' +
+                            '<button class="btn btn-light btn-circle "'+
+                            'data-toggle="tooltip" data-placement="bottom" title="сделать шаблоном"'+
+                            'onclick="makeCompleteOffer(' + offerId + ')">'+
+                            '<i class="fas fa-download"></i>' +
+                            '</button>' +
+                            '<button class="btn btn-light btn-circle "'+
+                            'data-toggle="tooltip" data-placement="bottom" title="удалить предложение"'+
+                            'onclick="deleteOffer(' + offerId + ')">'+
+                            '<i class="fas fa-trash"></i>' +
+                            '</button>'+'</div>';
                         if (value == "ACTIVE") {
                             offerRow += '</div>' +
                                 '<div class="card-body" style="background-color: aliceblue">';
@@ -138,7 +155,7 @@ function getTable() {
                             if(takers.length !== 0){
                                 offerRow += '<button class="btn btn-warning btn-icon" id="rateBtn' + offerId + '"' +
                                     ' onclick="rateOffer(' + offerId + ', ' + takers[0].id + ', \'' + takers[0].name +'\')">' +
-                                    '<span class="icon"><i class="fas fa-trash-restore"></i></span>оценить сделку</button>';
+                                    '<span class="icon"><i class="fas fa-award"></i></span>оценить</button>';
                             }
                             offerRow += '</div></div></div>';
                         } else if (value == 'TAKEN'){
@@ -181,26 +198,6 @@ function getTable() {
                     }
 
                 });
-                offerRow += '<div class="card-footer" style="background-color: #4d90fe">'+
-                    '<div class="row">' +
-                    '<div class="col-sm-10"></div>'+
-                    '<a href="/sender/edit_offer/' + offerId + '" class="btn btn-light btn-circle"' +
-                    'data-toggle="tooltip" data-placement="bottom" title="Радактировать предложение"' +
-                    'style="margin-right: 1% " >' +
-                    '<i class="fas fa-edit"></i>' +
-                    '</a>' +
-                    '<button class="btn btn-light btn-circle "'+
-                    'data-toggle="tooltip" data-placement="bottom" title="сделать шаблоном"'+
-                    'onclick="makeCompleteOffer(' + offerId + ')">'+
-                    '<i class="fas fa-download"></i>' +
-                    '</button>' +
-                    '<button class="btn btn-light btn-circle "'+
-                    'data-toggle="tooltip" data-placement="bottom" title="удалить предложение"'+
-                    'onclick="deleteOffer(' + offerId + ')">'+
-                    '<i class="fas fa-trash"></i>' +
-                    '</button>' +
-                    '</div>'+
-                    '</div>';
                 offerRow +=
                     '</div>' +
                     '</div>' +
