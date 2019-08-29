@@ -21,11 +21,6 @@ function validatePass() {
             url: "/reset/change_password",
             type: 'POST',
             data: passChange,
-            //todo
-            beforeSend: function (request) {
-                request.setRequestHeader(header, token);
-            },
-
             success: function (e) {
                 $('#success_change').attr('class','visible alert').css("color", "green");
                 $('#not_validate').remove();
