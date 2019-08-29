@@ -38,5 +38,13 @@ public class UserDaoImpl extends AbstractDAOImpl<User> implements UserDao {
         return encoder.encodeToString(string.getBytes(StandardCharsets.UTF_8));
     }
 
+    @Override
+    public void setLimit(long id, int limit) {
+        entityManager.createQuery("Update User u set u.limit=:limit WHERE u.id=:id")
+                .setParameter("id", id)
+                .setParameter("limit", limit)
+                .executeUpdate();
+    }
+
 
 }
