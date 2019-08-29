@@ -1,73 +1,181 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+<!--
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/commonlayouts}"
-      lang="en">
-
+-->
 <head>
     <title>Chat Application</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
     <link rel="stylesheet" href="/css/chat.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/common_style.css">
 
 </head>
 <body>
 <noscript>
     <h2>Sorry! Your browser doesn't support Javascript</h2>
 </noscript>
-<div layout:fragment="content">
 
-    <div id="username-page" class="hidden">
-        <div class="username-page-container">
-            <h1 class="title">Enter a username and room ID</h1>
-            <form id="usernameForm" name="usernameForm">
-                <div class="form-group">
-                    <input th:value="${username}" type="text" id="name" placeholder="Username" autocomplete="off"
-                           class="form-control"/>
-                </div>
-                <div class="form-group">
-                    <input th:value="${chatRoom}" type="text" id="room-id" value="lobby" placeholder="Room ID"
-                           autocomplete="off" class="form-control"/>
-                </div>
-                <div class="form-group">
-                    <input th:value="${offerId}" type="text" id="offerId" value="lobby" placeholder="Offer ID"
-                           autocomplete="off" class="form-control"/>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="accent username-submit">Start Chatting</button>
-                </div>
-            </form>
-        </div>
-    </div>
+<!--
+<nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+    <a class="navbar-brand" href="/" style="padding: 0px;">
+        <img src="/img/logo1.png" alt="Trash Hunter" style="height:60px; padding: 0px;">
+    </a>
+    <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-expanded="false">
+        <span class="navbar-toggler-icon navbar-dark"></span>
+    </button>
 
-    <div id="chat-page" class="hidden">
-        <div class="chat-container">
-            <div class="chat-header">
-                <h2>Chat [<span id="room-id-display"></span>]</h2>
-            </div>
-            <div class="connecting">
-                Connecting...
-            </div>
-            <ul id="messageArea">
-
-            </ul>
-            <form id="messageForm" name="messageForm" nameForm="messageForm">
-                <div class="form-group">
-                    <div class="input-group clearfix">
-                        <input type="text" id="message" placeholder="Type a message..."
-                               autocomplete="off" class="form-control"/>
-                        <button type="submit" class="primary">Send</button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto" sec:authorize="hasAuthority('Sender')">
+            <th:block th:replace="fragments/sidebar_by_authority :: sender_sidebar"></th:block>
+        </ul>
+        <ul class="navbar-nav mr-auto" sec:authorize="hasAuthority('Taker')">
+            <th:block th:replace="fragments/sidebar_by_authority :: taker_sidebar"></th:block>
+        </ul>
+        <ul sec:authorize="!isAuthenticated()" class="navbar-nav ml-auto">
+            <th:block th:replace="fragments/sidebar_by_authority :: not_authority_sidebar"></th:block>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    Войти
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="container" style="width: 330px">
+                        <div id="login-form">
+                            <p>
+                                <label for="username" class="sr-only">Почта:</label>
+                                <input type="text" id="username" name="email" class="form-control"
+                                       placeholder="Email" required autofocus>
+                            </p>
+                            <p>
+                                <label for="password" class="sr-only">Пароль:</label>
+                                <input type="password" id="password" name="password" class="form-control"
+                                       placeholder="Password" required>
+                            </p>
+                            <button class="btn btn-md btn-warning btn-block" id="login-btn" onclick="login()">
+                                Войти
+                            </button>
+                            <div class="alert alert-danger" role="alert" id="ups_message">
+                                Проверьте правильность введённых данных
+                                <i class="fas fa-exclamation-circle"></i>
+                                <br/>
+                            </div>
+                            <div class="alert alert-warning" role="alert" id="reset_message">
+                                <a id="link_reset_message" href="/reset/send_message" class="text-info stretched-link">Восстановить
+                                    пароль</a>
+                                <br/>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </li>
+        </ul>
+        <ul sec:authorize="isAuthenticated()" class="navbar-nav ml-auto">
+            <li sec:authorize="hasAuthority('Sender')" class="nav-item">
+                <i class="far fa-user"></i>
+                <a href="/profile"><span sec:authentication="name"></span></a>
+            </li>
+            <li sec:authorize="hasAuthority('Taker')" class="nav-item">
+                <i class="far fa-user"></i>
+                <a href="/profile"><span sec:authentication="name"></span></a>
+            </li>
+            <li class="nav-item">
+                <a href="/logout"><span>Logout</span></a>
+                <i class="fas fa-sign-out-alt"></i>
+            </li>
+        </ul>
+    </div>
+</nav>
+-->
+<th:block th:replace="fragments/commonfragments :: nav"></th:block>
+
+<div id="username-page" class="hidden">
+    <div class="username-page-container">
+        <h1 class="title">Enter a username and room ID</h1>
+        <form id="usernameForm" name="usernameForm">
+            <div class="form-group">
+                <input th:value="${chatOwner.getEmail()}" type="text" id="name" placeholder="Username"
+                       autocomplete="off"
+                       class="form-control"/>
+            </div>
+            <div class="form-group">
+                <input th:value="${chatRoom}" type="text" id="room-id" value="lobby" placeholder="Room ID"
+                       autocomplete="off" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <input th:value="${offerId}" type="text" id="offerId" value="lobby" placeholder="Offer ID"
+                       autocomplete="off" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="accent username-submit">Start Chatting</button>
+            </div>
+        </form>
     </div>
 </div>
 
-<th:block layout:fragment="localscripts">
-    <script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
-    <script type="text/javascript" src="/js/lib/stomp.min.js"></script>
-    <script type="text/javascript" src="/js/lib/js.cookie-2.2.1.min.js"></script>
-    <script type="text/javascript" src="/js/chat.js"></script>
-</th:block>
+<div id="chat-page" class="hidden">
+
+    <div class="chat-container">
+        <div id="sidebar-container" class="bg-light border-right">
+            <div class="sidebar-heading">Доступные чаты</div>
+            <div th:if="${companionsWithOffersMap}">
+                <th:block th:each="entry : ${companionsWithOffersMap.entrySet()}">
+                    <button class="dropdown-btn" th:text="${entry.getKey().getName()}">
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-container">
+                        <th:block th:each="offer : ${entry.getValue()}">
+                            <a th:href="'/chat/' + ${entry.getKey().getId()} + '?offerId=' + ${offer.getId()}"
+                               th:text="'Заказ ' + ${offer.getId()}"></a>
+                        </th:block>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+        <div class="chat-header">
+            <h2>Chat [<span id="room-id-display"></span>]</h2>
+        </div>
+        <div class="connecting">
+            Connecting...
+        </div>
+        <ul id="messageArea">
+
+        </ul>
+        <form id="messageForm" name="messageForm" nameForm="messageForm">
+            <div class="form-group">
+                <div class="input-group clearfix">
+                    <input type="text" id="message" placeholder="Type a message..."
+                           autocomplete="off" class="form-control"/>
+                    <button type="submit" class="primary">Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://kit.fontawesome.com/c5edb0b5a3.js"></script>
+<script type="text/javascript" src="/js/csrf_token.js"></script>
+<script type="text/javascript" src="/js/login.js"></script>
+
+<!--<th:block layout:fragment="localscripts">-->
+<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
+<script type="text/javascript" src="/js/lib/stomp.min.js"></script>
+<script type="text/javascript" src="/js/lib/js.cookie-2.2.1.min.js"></script>
+<script type="text/javascript" src="/js/chat.js"></script>
+<!--</th:block>-->
 
 </body>
 </html>

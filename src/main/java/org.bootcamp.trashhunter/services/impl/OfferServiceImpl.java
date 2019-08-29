@@ -4,6 +4,7 @@ import org.bootcamp.trashhunter.dao.abstraction.OfferDao;
 import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.OfferStatus;
 import org.bootcamp.trashhunter.models.Statistics;
+import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.services.AbstractServiceImpl;
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
@@ -34,6 +35,16 @@ public class OfferServiceImpl extends AbstractServiceImpl<Offer> implements Offe
     @Override
     public List<Offer> getOffersByTaker(String email){
         return offerDao.getOffersByTaker(email);
+    }
+
+    @Override
+    public List<Offer> getTakenOffersByTaker(Taker taker) {
+        return offerDao.getTakenOffersByTaker(taker);
+    }
+
+    @Override
+    public List<Offer> getTakenOffersBySender(Sender sender) {
+        return offerDao.getTakenOffersBySender(sender);
     }
 
     @Override
@@ -69,20 +80,8 @@ public class OfferServiceImpl extends AbstractServiceImpl<Offer> implements Offe
     public void makeCompleteOffer(Long offerId){
         Offer offer = offerDao.getById(offerId);
         offer.setOfferStatus(OfferStatus.COMPLETE);
-        offerDao.update(offer);
-    }
-
-    @Override
-    public void rateOfferBySender(Long takerId, Long offerId, Integer rating){
-        Offer offer = offerDao.getById(offerId);
-        offer.setOfferStatus(OfferStatus.COMPLETE);
         offer.setRespondingTakers(new ArrayList<>());
         offerDao.update(offer);
-        Taker taker = takerService.getById(takerId);
-        Statistics statistics = taker.getStatistics();
-        statistics.setSummaryScore(statistics.getSummaryScore() + rating);
-        statistics.setNumOfRatings(statistics.getNumOfRatings() + 1);
-        takerService.update(taker);
     }
 
     @Override
