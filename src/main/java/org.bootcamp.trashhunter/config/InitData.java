@@ -80,9 +80,9 @@ public class InitData {
     }
 
     private void initRandomOffers(int quantity) {
-        double seed;
         double seed1;
         double seed2;
+        double seed3;
 
         Sender randomSender;
         long randomWeight;
@@ -107,21 +107,21 @@ public class InitData {
         double minLongitude = 28.728941036284482;
 
         for (int i = 0; i < quantity; i++) {
-            seed = Math.random();
             seed1 = Math.random();
             seed2 = Math.random();
+            seed3 = Math.random();
 
-            randomSender = senderService.getById(1 + (long) (seed * numOfSenders));
-            randomWeight = (long) (seed * maxWeight);
-            randomVolume = (long) (seed * maxVolume);
-            randomPrice = (long) (seed * maxPrice);
+            randomSender = senderService.getById(1 + (long) (seed1 * numOfSenders));
+            randomWeight = (long) (seed1 * maxWeight);
+            randomVolume = (long) (seed2 * maxVolume);
+            randomPrice = (long) (seed3 * maxPrice);
             randomTrashType = TrashType.getRandom();
-            randomIsSorted = seed < 0.5;
+            randomIsSorted = seed1 < 0.5;
             randomStatus = OfferStatus.getRandom();
             randomDate = LocalDateTime.now();
             randomDescription = "this is offer number " + i;
-            randomLatitude = minLatitude + seed * (maxLatitude - minLatitude);
-            randomLongitude = minLongitude + seed1 * (maxLongitude - minLongitude);
+            randomLatitude = minLatitude + seed2 * (maxLatitude - minLatitude);
+            randomLongitude = minLongitude + seed3 * (maxLongitude - minLongitude);
             randomCoordinates = new Coordinates(randomLatitude, randomLongitude);
 
             Offer randomOffer = new Offer(randomSender, randomWeight, randomVolume, randomPrice, randomTrashType,
@@ -131,7 +131,7 @@ public class InitData {
             }
             if (randomOffer.getOfferStatus().equals(OfferStatus.TAKEN)){
                 List<Taker> takers = new ArrayList<>();
-                takers.add(takerService.getById(4L));
+                takers.add(takerService.getById(3 + (long) (seed1 * 3)));
                 randomOffer.setRespondingTakers(takers);
             }
             offerService.add(randomOffer);

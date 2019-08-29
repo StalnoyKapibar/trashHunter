@@ -128,15 +128,20 @@
     <div class="chat-container">
         <div id="sidebar-container" class="bg-light border-right">
             <div class="sidebar-heading">Доступные чаты</div>
-            <div class="list-group list-group-flush" th:each="companion : ${companionList}">
-                <a th:href="'chat/' + ${companion.getId() + '?offerId=' + 5}"
-                   class="list-group-item list-group-item-action bg-light" th:text="${companion.getName()}"></a>
-                <!--<a href="#" class="list-group-item list-group-item-action bg-light">User1</a>-->
-                <!--<a href="#" class="list-group-item list-group-item-action bg-light">User2</a>-->
-                <!--<a href="#" class="list-group-item list-group-item-action bg-light">User3</a>-->
+            <div th:if="${companionsWithOffersMap}">
+                <th:block th:each="entry : ${companionsWithOffersMap.entrySet()}">
+                    <button class="dropdown-btn" th:text="${entry.getKey().getName()}">
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-container">
+                        <th:block th:each="offer : ${entry.getValue()}">
+                            <a th:href="'/chat/' + ${entry.getKey().getId()} + '?offerId=' + ${offer.getId()}"
+                               th:text="'Заказ ' + ${offer.getId()}"></a>
+                        </th:block>
+                    </div>
+                </th:block>
             </div>
         </div>
-
         <div class="chat-header">
             <h2>Chat [<span id="room-id-display"></span>]</h2>
         </div>

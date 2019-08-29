@@ -1,6 +1,7 @@
 package org.bootcamp.trashhunter.services.abstraction;
 
 import org.bootcamp.trashhunter.models.Offer;
+import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.Taker;
 
 import java.util.List;
@@ -13,6 +14,10 @@ public interface OfferService extends AbstractService<Offer>{
     Map<Offer, List<Taker>> getOffersBySenderIdActiveFirst(String email);
 
     List<Offer> getOffersByTaker(String email);
+
+    List<Offer> getTakenOffersByTaker(Taker taker);
+
+    List<Offer> getTakenOffersBySender(Sender sender);
 
     void confirmOffer(Long takerId, Long offerId);
 
