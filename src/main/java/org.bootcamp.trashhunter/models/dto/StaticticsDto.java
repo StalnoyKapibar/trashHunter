@@ -1,35 +1,34 @@
-package org.bootcamp.trashhunter.models;
+package org.bootcamp.trashhunter.models.dto;
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = "statisitcs")
-public class Statistics {
+import org.bootcamp.trashhunter.models.Statistics;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class StaticticsDto {
+
     private long id;
 
-    @Column
     private long numOfRatings;
 
-    @Column
     private double summaryScore;
 
-    @Column
     private long numOfDeals;
 
-    @Column
+    private double rating;
+
     private long summaryWeight;
 
-    public Statistics() {
-    }
-
-    public Statistics(long numOfRatings, double summaryScore, long numOfDeals, long summaryWeight) {
+    public StaticticsDto(long id, long numOfRatings, double summaryScore, long numOfDeals, long summaryWeight) {
+        this.id = id;
         this.numOfRatings = numOfRatings;
         this.summaryScore = summaryScore;
         this.numOfDeals = numOfDeals;
+        this.rating = summaryScore / numOfDeals;
         this.summaryWeight = summaryWeight;
+    }
+
+    public static StaticticsDto getStaticticsDto(Statistics statistics) {
+        return new StaticticsDto(statistics.getId(), statistics.getNumOfRatings(), statistics.getSummaryScore(),
+                statistics.getNumOfDeals(), statistics.getSummaryWeight());
     }
 
     public long getId() {
@@ -64,8 +63,16 @@ public class Statistics {
         this.numOfDeals = numOfDeals;
     }
 
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
     public long getSummaryWeight() {
-        return this.summaryWeight;
+        return summaryWeight;
     }
 
     public void setSummaryWeight(long summaryWeight) {
