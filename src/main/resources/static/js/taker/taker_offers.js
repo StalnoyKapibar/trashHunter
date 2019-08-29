@@ -100,18 +100,3 @@ function cancelOffer(offerId) {
     });
 }
 
-function putLike(userId, vote) {
-    $.ajax({
-        url: '/api/vote/user/' + userId + '/vote/' + vote,
-        type: 'GET',
-        success: function (data) {
-            if (vote === true) {
-                $('.like' + userId).css({"color": "red"});
-                $('.dislike' + userId).css({"color": "black"});
-            } else {
-                $('.like' + userId).css({"color": "black"});
-                $('.dislike' + userId).css({"color": "red"});
-            }
-        }
-    });
-}

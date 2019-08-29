@@ -36,6 +36,14 @@ public class VoteRestController {
         return getUserLimit(userId);
     }
 
+    @GetMapping("/user/{userToId}")
+    public Vote getVoteCurrentUserForUserToId(@PathVariable Long userToId, Principal principal) {
+        String email = principal.getName();
+        User userFrom = userService.findByEmail(email);
+        return voteService.getByUserFromIdAndUserToId(userFrom.getId(), userToId);
+    }
+
+
     private int getUserLimit(long userIdTo) {
         return voteService.getLimit(userIdTo);
     }
