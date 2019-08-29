@@ -1,5 +1,24 @@
+var takerToRateId;
+var offerToRateId;
+var ratingValue;
+
 $(document).ready(function () {
    getTable(doFilter('TakerActive'));
+
+    $("body").on('click', '#sendRatedUser', function() {
+        let buttonId = "#rateBtn" + offerToRateId;
+        $.ajax({
+            url: '/api/offer/rate_offer/' + takerToRateId + '/' + offerToRateId + '/' + ratingValue,
+            type: 'GET',
+            success: function () {
+                $("#sendRatedUser").hide();
+            }
+        });
+        $(buttonId).hide();
+        $("#successBlock").html("<div style='width: 300px' class=\"alert alert-success\" role=\"alert\">\n" +
+            "  Спасибо, ваша оценка учтена\n" +
+            "</div>")
+    });
 });
 
 function getTable(data) {
@@ -40,8 +59,9 @@ function getTable(data) {
                                                 offer.sender.email+'" disabled>' +
                                         '</div>';
                                     if (offer.offerStatus == 'TAKEN'){
+                                        console.log(offer);
                                         offerRow += '<button class="btn btn-primary btn-icon "' +
-                                        'onclick="makeCompleteOffer(' + offer.id +')">' +
+                                        'onclick="makeCompleteOffer(' + offer.id +', ' + offer.sender.id +')">' +
                                         '<span class="icon"><i class="fas fa-truck-loading"></i></span>завершить' +
                                     '</button>'; }
                                     if (offer.offerStatus == 'ACTIVE'){
@@ -84,7 +104,18 @@ function doFilterInit() {
     getTable(doFilter('TakerActive'));
 }
 
-function makeCompleteOffer(offerId) {
+function makeCompleteOffer(offerId, senderId) {
+    $.ajax({
+        url: '/api/offer/makeCompleteOffer/' + offerId,
+        type: 'GET',
+        success: function () {
+            $('#takerOffersTable tbody').empty();
+            getTable(doFilter());
+        }
+    });
+}
+
+function rateSender(senderId) {
     $.ajax({
         url: '/api/offer/makeCompleteOffer/' + offerId,
         type: 'GET',

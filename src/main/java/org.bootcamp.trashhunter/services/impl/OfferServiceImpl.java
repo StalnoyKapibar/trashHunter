@@ -1,14 +1,11 @@
 package org.bootcamp.trashhunter.services.impl;
 
 import org.bootcamp.trashhunter.dao.abstraction.OfferDao;
-import org.bootcamp.trashhunter.models.Offer;
-import org.bootcamp.trashhunter.models.OfferStatus;
-import org.bootcamp.trashhunter.models.Statistics;
-import org.bootcamp.trashhunter.models.Sender;
-import org.bootcamp.trashhunter.models.Taker;
+import org.bootcamp.trashhunter.models.*;
 import org.bootcamp.trashhunter.services.AbstractServiceImpl;
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.bootcamp.trashhunter.services.abstraction.TakerService;
+import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +23,9 @@ public class OfferServiceImpl extends AbstractServiceImpl<Offer> implements Offe
 
     @Autowired
     private TakerService takerService;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public List<Offer> getFilterQuery(Map<String, Object> map) {
@@ -84,15 +84,17 @@ public class OfferServiceImpl extends AbstractServiceImpl<Offer> implements Offe
     }
 
     @Override
-    public void rateOfferBySender(Long takerId, Long offerId, Integer rating){
-        Offer offer = offerDao.getById(offerId);
-        offer.setRespondingTakers(new ArrayList<>());
-        offerDao.update(offer);
-        Taker taker = takerService.getById(takerId);
-        Statistics statistics = taker.getStatistics();
+    public void rateOffer(Long senderId, Long offerId, Integer rating){
+        User user = userService.getById(senderId);
+        Statistics statistics = user.getStatistics();
         statistics.setSummaryScore(statistics.getSummaryScore() + rating);
         statistics.setNumOfRatings(statistics.getNumOfRatings() + 1);
-        takerService.update(taker);
+        userService.update(user);
+        if (user.getClass() == Taker.class) {
+            Offer offer = offerDao.getById(offerId);
+            offer.setRespondingTakers(new ArrayList<>());
+            offerDao.update(offer);
+        }
     }
 
     @Override
