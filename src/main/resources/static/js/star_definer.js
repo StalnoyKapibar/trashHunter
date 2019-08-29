@@ -39,7 +39,7 @@ function putLike(userId, vote) {
         success: function (data) {
             if (data != -1) {
                 if (vote === true) {
-                    $('.like').css({"color": "red"});
+                    $('.like').css({"color": "#007cff"});
                     $('.dislike').css({"color": "black"});
                 } else {
                     $('.like').css({"color": "black"});
@@ -59,7 +59,7 @@ function voteCurrentUser() {
         success: function (vote) {
             if (vote) {
                 if (vote.vote === true) {
-                    $('.like').css({"color": "red"});
+                    $('.like').css({"color": "#007cff"});
                     $('.dislike').css({"color": "black"});
                 } else {
                     $('.like').css({"color": "black"});
@@ -68,7 +68,6 @@ function voteCurrentUser() {
             }
         }
     });
-
 }
 
 function countVoteCurrentUser() {
