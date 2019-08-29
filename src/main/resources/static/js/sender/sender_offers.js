@@ -70,12 +70,14 @@ function getTable() {
                             offerRow += '</div>';
                         } else if (value == 'COMPLETE'){
                             offerRow += '</div>' +
-                                '<div class="card-body" style="background-color: navajowhite">' +
+                                '<div class="card-body" style="background-color: #ffa9af">' +
                                 '<div class="row"> <div class="col-sm-1"></div>' +
                                 '<div class="col-sm-6"><h5 >Востановить Предложение</h5></div>' +
-                                '<div class="col-sm-5"><button class="btn btn-primary btn-icon "' +
-                                'onclick="restoreOffer(' + offerId + ')">' +
-                                '<span class="icon"><i class="fas fa-trash-restore"></i></span>востановить' +
+                                '<div class="col-sm-5">' +
+                                '<button class="btn btn-primary btn-icon " onclick="restoreOffer(' + offerId + ')">' +
+                                '<span class="icon"><i class="fas fa-trash-restore"></i></span>востановить</button>' +
+                                '<button class="btn btn-warning btn-icon" id="rateBtn" onclick="rateOffer(' + offerId + ')">' +
+                                '<span class="icon"><i class="fas fa-trash-restore"></i></span>оценить сделку' +
                                 '</button></div>' +'</div>'+
                                  '</div>';
                         } else if (value == 'TAKEN'){
@@ -111,7 +113,7 @@ function getTable() {
                             offerRow += '</div>';
                         } else {
                             offerRow += '</div>' +
-                                '<div class="card-body" style="background-color: moccasin">' +
+                                '<div class="card-body" style="background-color: #b3ffe3">' +
                                 '<h4>На предложение пока никто не откликнулся :( </h4>'
                                 + '</div>';
                         }
@@ -143,7 +145,7 @@ function getTable() {
                     '</div>' +
                     '</div>' +
                     '</div>'+
-                '</div>';
+                '</div>' + getModalWindow();
 
                 $('#senderOffersTable tbody').append(offerRow);
 
@@ -177,6 +179,12 @@ function restoreOffer(offerId) {
     });
 }
 
+function rateOffer(offer){
+    $("#takerName").text(offer.)
+    $("#rateOffer").modal("show");
+    console.log(123);
+}
+
 function makeCompleteOffer(offerId) {
     $.ajax({
         url: '/api/offer/makeCompleteOffer/' + offerId,
@@ -208,4 +216,24 @@ function confirmOffer(takerId, offerId) {
             getTable();
         }
     });
+}
+
+function getModalWindow() {
+    return "<div class=\"modal fade\" id=\"rateOffer\" role=\"dialog\">\n" +
+        "        <div class=\"modal-dialog\">\n" +
+        "            <!-- Modal content-->\n" +
+        "            <div class=\"modal-content\">\n" +
+        "                <div class=\"modal-header\">\n" +
+        "                    <h4 class=\"modal-title\">Оценка юзера <span id='takerName'></span></h4>\n" +
+        "                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>\n" +
+        "                </div>\n" +
+        "                <div class=\"modal-body\">\n" +
+        "                    <p>Оцени этого пидора</p>\n" +
+        "                </div>\n" +
+        "                <div class=\"modal-footer\">\n" +
+        "                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n" +
+        "                </div>\n" +
+        "            </div>\n" +
+        "        </div>\n" +
+        "    </div>";
 }
