@@ -59,6 +59,8 @@
                                             <span hidden id="currentProfileId" th:text="${user.id}"></span>
                                             <i class="fas fa-thumbs-up like" style="color:black" th:onclick="'putLike(' + ${user.getId()} + ', true)'" ></i>
                                             <i class="fas fa-thumbs-down dislike" style="color:black" th:onclick="'putLike(' + ${user.getId()} + ', false)'" ></i>
+                                            <div class="text-muted"><small><span id="countLike" ></span></small>
+                                            <small><span id="countDislike" ></span></small></div>
                                         </div>
 
                                         <div class="text-center text-sm-right">

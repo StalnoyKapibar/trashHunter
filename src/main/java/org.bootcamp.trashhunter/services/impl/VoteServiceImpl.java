@@ -32,6 +32,17 @@ public class VoteServiceImpl extends AbstractServiceImpl<Vote> implements VoteSe
     }
 
     @Override
+    public long[] getCountLikeDislikeByUser(long userToId) {
+        List<Vote> votes = voteDaoImpl.countVotes(userToId);
+        long countLike = votes.stream().filter(Vote::isVote).count();
+        long countDislike = votes.stream().filter(vote -> !vote.isVote()).count();
+        long[] countLikeDislike = new long[2];
+        countLikeDislike[0] = countLike;
+        countLikeDislike[1] = countDislike;
+        return countLikeDislike;
+    }
+
+    @Override
     public int getLimit(long userToId) {
         List<Vote> votes = voteDaoImpl.countVotes(userToId);
         if (votes.size() >= 4) {

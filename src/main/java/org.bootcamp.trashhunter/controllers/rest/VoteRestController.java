@@ -23,9 +23,12 @@ public class VoteRestController {
     private UserService userService;
 
     @GetMapping("/user/{userId}/vote/{vote}")
-    public int vote(@PathVariable Long userId, @PathVariable boolean vote, Principal principal) {
+    public int vote(@PathVariable long userId, @PathVariable boolean vote, Principal principal) {
         String email = principal.getName();
         User userFrom = userService.findByEmail(email);
+        if (userFrom.getId() == userId) {
+            return -1;
+        }
         Vote previousVote = voteService.getByUserFromIdAndUserToId(userFrom.getId(), userId);
         if (previousVote == null) {
             voteService.add(new Vote(userFrom.getId(), userId, vote));
@@ -43,6 +46,10 @@ public class VoteRestController {
         return voteService.getByUserFromIdAndUserToId(userFrom.getId(), userToId);
     }
 
+    @GetMapping("/count/user/{userToId}")
+    public long[] getCountLikeDislikeByUser(@PathVariable long userToId) {
+        return voteService.getCountLikeDislikeByUser(userToId);
+    }
 
     private int getUserLimit(long userIdTo) {
         return voteService.getLimit(userIdTo);

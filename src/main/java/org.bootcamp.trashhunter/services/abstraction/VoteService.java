@@ -11,4 +11,6 @@ public interface VoteService extends AbstractService<Vote> {
     List<Vote> countVotes(long userToId);
 
     int getLimit(long userToId);
+
+    long[] getCountLikeDislikeByUser(long userToId);
 }
