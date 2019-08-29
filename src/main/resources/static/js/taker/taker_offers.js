@@ -160,7 +160,7 @@ function rateSender(offerId, senderId, senderName) {
 
 function makeCompleteOffer(offerId) {
     $.ajax({
-        url: '/api/offer/makeCompleteOffer/' + offerId,
+        url: '/api/offer/makeCompleteOfferByTaker/' + offerId,
         type: 'GET',
         success: function () {
             // $('#takerOffersTable tbody').empty();

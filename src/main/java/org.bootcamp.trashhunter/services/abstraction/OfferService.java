@@ -25,6 +25,8 @@ public interface OfferService extends AbstractService<Offer>{
 
     void makeCompleteOffer(Long offerId);
 
+    void makeCompleteOfferByTaker(Long offerId);
+
     void rateOffer(Long takerId, Long offerId, Integer rating);
 
     void restoreOffer(Long offerId);

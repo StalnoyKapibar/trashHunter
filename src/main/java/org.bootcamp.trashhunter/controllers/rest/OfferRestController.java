@@ -50,6 +50,11 @@ public class OfferRestController {
         offerService.makeCompleteOffer(offerId);
     }
 
+    @GetMapping("/makeCompleteOfferByTaker/{offerId}")
+    public void makeCompleteOfferByTaker(@PathVariable Long offerId) {
+        offerService.makeCompleteOfferByTaker(offerId);
+    }
+
     @GetMapping("/cancelOffer/{offerId}")
     public void cancelOffer(@PathVariable Long offerId) {
         offerService.cancelOffer(offerId);
