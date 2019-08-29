@@ -38,8 +38,9 @@ public class OfferDaoImpl extends AbstractDAOImpl<Offer> implements OfferDao {
 
     @Override
     public List<Offer> getFilterOffersForTaker(Map<String , Object> map, String email){
-        String query = "SELECT o FROM Offer o JOIN o.respondingTakers t WHERE(o.offerStatus = 'ACTIVE' and t.email= :email) ";
+        String query = "SELECT o FROM Offer o JOIN o.respondingTakers t WHERE((o.offerStatus = 'TAKEN' OR o.offerStatus = 'ACTIVE') and t.email= :email) ";
         query += getStringForFilterQuery(map);
+        query += "ORDER BY FIELD (o.offerStatus,'TAKEN','ACTIVE')";
         return entityManager.createQuery(query,Offer.class).setParameter("email", email).getResultList();
     }
 
@@ -47,7 +48,7 @@ public class OfferDaoImpl extends AbstractDAOImpl<Offer> implements OfferDao {
     public List<Offer> getOffersByTaker(String email){
         return  entityManager
                 .createQuery( "SELECT o FROM Offer o JOIN o.respondingTakers t WHERE"+
-                        "(o.offerStatus = 'ACTIVE' and t.email= :email)", Offer.class)
+                        "((o.offerStatus = 'TAKEN' OR o.offerStatus = 'ACTIVE') and t.email= :email) ORDER BY FIELD (o.offerStatus,'TAKEN','ACTIVE')", Offer.class)
                 .setParameter("email", email)
                 .getResultList();
     }
