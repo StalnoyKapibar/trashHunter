@@ -288,7 +288,7 @@ function getModalWindow() {
         "            <!-- Modal content-->\n" +
         "            <div class=\"modal-content\">\n" +
         "                <div class=\"modal-header\">\n" +
-        "                    <h4 class=\"modal-title\">Оценка юзера <span id='takerName'></span></h4>\n" +
+        "                    <h4 class=\"modal-title\">Оценка приемщика <span id='takerName'></span></h4>\n" +
         "                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>\n" +
         "                </div>\n" +
         "                <div class=\"modal-body\">\n" +
