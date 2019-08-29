@@ -38,12 +38,17 @@ function getTable(data) {
                                             '</div>'+
                                             '<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="' +
                                                 offer.sender.email+'" disabled>' +
-                                        '</div>' +
-                                    '<button class="btn btn-primary btn-icon "' +
+                                        '</div>';
+                                    if (offer.offerStatus == 'TAKEN'){
+                                        offerRow += '<button class="btn btn-primary btn-icon "' +
                                         'onclick="makeCompleteOffer(' + offer.id +')">' +
-                                        '<span class="icon"><i class="fas fa-check"></i></span>закончить' +
-                                    '</button>' +
-                                    '<a href="/chat/?partnerId=' + offer.sender.id + '&offerId=' + offer.id + '" class="btn btn-info btn-icon " >' +
+                                        '<span class="icon"><i class="fas fa-truck-loading"></i></span>завершить' +
+                                    '</button>'; }
+                                    if (offer.offerStatus == 'ACTIVE'){
+                                        offerRow += '<button class="btn btn-warning btn-icon "disabled>' +
+                                        '<span class="icon"><i class="fas fa-spinner"></i></span>запрошено' +
+                                        '</button>'; }
+                                    offerRow += '<a href="/chat/?partnerId=' + offer.sender.id + '&offerId=' + offer.id + '" class="btn btn-info btn-icon " >' +
                                         '<span class="icon"><i class="fas fa-comments"></i></span>чат' +
                                     '</a>' +
                                     '<div class="col-sm-1"></div>' +

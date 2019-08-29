@@ -30,6 +30,10 @@ a.btn-image{
     padding-right: 0;
 }
 
+.btn-confirm{
+    width: 70px;
+}
+
 .btn-icon {
     padding-top: 0;
     padding-bottom: 0;

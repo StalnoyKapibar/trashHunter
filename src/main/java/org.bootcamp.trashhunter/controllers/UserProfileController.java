@@ -31,6 +31,7 @@ public class UserProfileController {
     public String getUserPage(@PathVariable("id") Long id, Model model, Principal principal) {
         User userFromSession = userService.findByEmail(principal.getName());
         StaticticsDto staticticsDto = null;
+        //todo
         if (id == userFromSession.getId()) {
             model.addAttribute("isHolder", true);
             model.addAttribute("user", userFromSession);

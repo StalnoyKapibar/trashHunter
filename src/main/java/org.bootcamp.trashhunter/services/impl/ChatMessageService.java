@@ -19,6 +19,4 @@ public class ChatMessageService extends AbstractServiceImpl<ChatMessage> {
     public List<ChatMessage> getChatByTakerIdAndSenderId(long takerId, long senderId) {
         return dao.getChatByTakerIdAndSenderId(takerId, senderId);
     }
-
-
 }

@@ -40,6 +40,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User> implements UserSe
                 + sep + "resources" + sep + "static" + sep + "img" + sep + "avatar" + sep + avatarName;
         File imgPath = new File(DEFAULT_AVATAR_PATH);
         BufferedImage bufferedImage = null;
+        //todo
         try {
             bufferedImage = ImageIO.read(imgPath);
         } catch (IOException e) {

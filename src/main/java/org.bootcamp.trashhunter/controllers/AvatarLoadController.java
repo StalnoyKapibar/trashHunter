@@ -25,6 +25,6 @@ public class AvatarLoadController {
         byte[] image = user.getPic();
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
-        return new ResponseEntity<byte[]>(image, headers, HttpStatus.OK);
+        return new ResponseEntity<>(image, headers, HttpStatus.OK);
     }
 }
