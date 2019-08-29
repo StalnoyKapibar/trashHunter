@@ -202,7 +202,6 @@ function getTable() {
                                 + '</div>';
                         }
                     }
-
                 });
                 offerRow +=
                     '</div>' +
@@ -214,7 +213,6 @@ function getTable() {
                 $('#senderOffersTable tbody').append(offerRow);
 
             });
-
         },
         error: function (message) {
             console.log(message);

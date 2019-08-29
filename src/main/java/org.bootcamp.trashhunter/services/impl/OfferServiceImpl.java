@@ -2,6 +2,7 @@ package org.bootcamp.trashhunter.services.impl;
 
 import org.bootcamp.trashhunter.dao.abstraction.OfferDao;
 
+import org.bootcamp.trashhunter.dao.abstraction.StatisticsDao;
 import org.bootcamp.trashhunter.models.*;
 import org.bootcamp.trashhunter.services.AbstractServiceImpl;
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
@@ -21,6 +22,9 @@ public class OfferServiceImpl extends AbstractServiceImpl<Offer> implements Offe
 
     @Autowired
     private OfferDao offerDao;
+
+    @Autowired
+    private StatisticsDao statisticsDao;
 
     @Autowired
     private TakerService takerService;
@@ -88,6 +92,11 @@ public class OfferServiceImpl extends AbstractServiceImpl<Offer> implements Offe
     @Override
     public void makeCompleteOfferByTaker(Long offerId){
         Offer offer = offerDao.getById(offerId);
+        Taker taker = offer.getRespondingTakers().get(0);
+        Statistics statistics = taker.getStatistics();
+        statistics.setNumOfDeals(statistics.getNumOfDeals()+1);
+        statistics.setSummaryWeight(statistics.getSummaryWeight()+offer.getWeight());
+        statisticsDao.update(statistics);
         offer.setOfferStatus(OfferStatus.COMPLETE);
         offerDao.update(offer);
     }

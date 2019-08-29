@@ -76,11 +76,31 @@ function getTable(data) {
                 '<div class="container-fluid cards">' +
                 '<div class="card" id="' + offer.id + '" style="margin-bottom: 1%" >' +
                 '<div class="card-header" style="color: white; background-color: #4d90fe">' +
+                '<div class="row">'+
+                '<div class="col-sm-10">'+
                 ' Заказ№ ' + offer.id + ' ' +
                 ' вес: ' + offer.weight + 'кг ' +
                 ' объем: ' + offer.volume + 'м³ ' +
-                ' цена: ' + offer.price + 'руб ' +
-                ' тип мусора: ' + offer.trashType +
+                ' цена: ' + offer.price + 'руб ';
+                offerRow += ' тип мусора: ';
+                if (offer.trashType == 'METAL') { offerRow+='Метал';}
+                if (offer.trashType == 'FOOD') { offerRow+='Оходы';}
+                if (offer.trashType == 'WOOD') { offerRow+='Дерево';}
+                if (offer.trashType == 'GLASS') { offerRow+='Стекло';}
+                if (offer.trashType == 'PAPER') { offerRow+='Бумага';}
+                if (offer.trashType == 'PLASTIC') { offerRow+='Пластик';}
+                offerRow += '</div>'+
+                '<a href="/taker/offer_page/' + offer.id + '" class="btn btn-light btn-circle"' +
+                'data-toggle="tooltip" data-placement="bottom" title="просмотреть предложение"' +
+                'style="margin-right: 1% " >' +
+                '<i class="fas fa-bars"></i>' +
+                '</a>' +
+                '<button class="btn btn-light btn-circle "' +
+                'data-toggle="tooltip" data-placement="bottom" title="отказаться"' +
+                'onclick="cancelOffer(' + offer.id + ')">' +
+                '<i class="fas fa-window-close"></i>' +
+                '</button>' +
+                '</div>' +
                 '</div>' +
                 '<div class="card-body" style="background-color: #ffffff">' +
 
@@ -105,34 +125,20 @@ function getTable(data) {
                 '</div>';
             if (offer.offerStatus == 'TAKEN') {
                 offerRow += '<button class="btn btn-primary btn-icon "' +
-                    'onclick="rateSender(' + offer.id + ', ' + offer.sender.id + ', \'' + offer.sender.name +'\')">' +
+                    // 'onclick="rateSender(' + offer.id + ', ' + offer.sender.id + ', \'' + offer.sender.name +'\')">' +
+                    'onclick="makeCompleteOffer(' + offer.id + ')">' +
                     '<span class="icon"><i class="fas fa-truck-loading"></i></span>мусор вывезен' +
                     '</button>';
             }
             if (offer.offerStatus == 'ACTIVE') {
                 offerRow += '<button class="btn btn-warning btn-icon "disabled>' +
-                    '<span class="icon"><i class="fas fa-spinner"></i></span>запрошено' +
+                    '<span class="icon"><i class="fas fa-spinner"></i></span>ожидание ответа' +
                     '</button>';
             }
             offerRow += '<a href="/chat/?partnerId=' + offer.sender.id + '&offerId=' + offer.id + '" class="btn btn-info btn-icon " >' +
                 '<span class="icon"><i class="fas fa-comments"></i></span>чат' +
                 '</a>' +
                 '<div class="col-sm-1"></div>' +
-                '</div>' +
-                '</div>' +
-                '<div class="card-footer" style="background-color: #4d90fe">' +
-                '<div class="row">' +
-                '<div class="col-sm-10"></div>' +
-                '<a href="/taker/offer_page/' + offer.id + '" class="btn btn-light btn-circle"' +
-                'data-toggle="tooltip" data-placement="bottom" title="просмотреть предложение"' +
-                'style="margin-right: 1% " >' +
-                '<i class="fas fa-bars"></i>' +
-                '</a>' +
-                '<button class="btn btn-light btn-circle "' +
-                'data-toggle="tooltip" data-placement="bottom" title="отказаться"' +
-                'onclick="cancelOffer(' + offer.id + ')">' +
-                '<i class="fas fa-window-close"></i>' +
-                '</button>' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -156,6 +162,7 @@ function rateSender(offerId, senderId, senderName) {
     senderToRateId = senderId;
     $("#takerName").text(senderName);
     $("#rateOffer").modal("show");
+    makeCompleteOffer(offerId);
 }
 
 function makeCompleteOffer(offerId) {
@@ -163,9 +170,9 @@ function makeCompleteOffer(offerId) {
         url: '/api/offer/makeCompleteOfferByTaker/' + offerId,
         type: 'GET',
         success: function () {
-            // $('#takerOffersTable tbody').empty();
-            // getTable(doFilter('TakerActive'));
-            // let offer = "#offer" + offerId;
+            $('#takerOffersTable tbody').empty();
+            getTable(doFilter('TakerActive'));
+            //let offer = "#offer" + offerId;
             // $(offer).hide();
         }
     });
