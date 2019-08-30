@@ -32,23 +32,24 @@ public class OfferDaoImpl extends AbstractDAOImpl<Offer> implements OfferDao {
     @Override
     public List<Offer> getFilterQuery(Map<String, Object> map) {
 
-        String query = "SELECT o FROM Offer o JOIN FETCH o.sender WHERE o.offerStatus<>'COMPLETE'";
+        String query ="SELECT o FROM Offer o JOIN FETCH o.sender WHERE o.offerStatus<>'COMPLETE' ";
         query += getStringForFilterQuery(map);
         return entityManager.createQuery(query, Offer.class).getResultList();
     }
 
     @Override
-    public List<Offer> getFilterOffersForTaker(Map<String, Object> map, String email) {
-        String query = "SELECT o FROM Offer o JOIN o.respondingTakers t WHERE(o.offerStatus = 'ACTIVE' and t.email= :email) ";
+    public List<Offer> getFilterOffersForTaker(Map<String , Object> map, String email){
+        String query = "SELECT o FROM Offer o JOIN o.respondingTakers t WHERE((o.offerStatus = 'TAKEN' OR o.offerStatus = 'ACTIVE') and t.email= :email) ";
         query += getStringForFilterQuery(map);
-        return entityManager.createQuery(query, Offer.class).setParameter("email", email).getResultList();
+        query += " ORDER BY FIELD (o.offerStatus,'TAKEN','ACTIVE')";
+        return entityManager.createQuery(query,Offer.class).setParameter("email", email).getResultList();
     }
 
     @Override
-    public List<Offer> getOffersByTaker(String email) {
-        return entityManager
-                .createQuery("SELECT o FROM Offer o JOIN o.respondingTakers t WHERE" +
-                        "(o.offerStatus = 'ACTIVE' and t.email= :email)", Offer.class)
+    public List<Offer> getOffersByTaker(String email){
+        return  entityManager
+                .createQuery( "SELECT o FROM Offer o JOIN o.respondingTakers t WHERE "+
+                        "((o.offerStatus = 'TAKEN' OR o.offerStatus = 'ACTIVE') and t.email= :email) ORDER BY FIELD (o.offerStatus,'TAKEN','ACTIVE')", Offer.class)
                 .setParameter("email", email)
                 .getResultList();
     }

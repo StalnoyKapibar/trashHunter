@@ -28,10 +28,9 @@ public class UserProfileController {
     }
 
     @GetMapping("/profile/{id}")
-    public String getUserPage(@PathVariable("id") Long id, Model model, Principal principal) {
+    public String getUserPage(@PathVariable("id") long id, Model model, Principal principal) {
         User userFromSession = userService.findByEmail(principal.getName());
         StaticticsDto staticticsDto = null;
-        //todo
         if (id == userFromSession.getId()) {
             model.addAttribute("isHolder", true);
             model.addAttribute("user", userFromSession);

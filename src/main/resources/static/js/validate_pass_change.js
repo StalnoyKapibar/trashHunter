@@ -17,16 +17,11 @@ function validatePass() {
         };
 
         $.ajax({
-            //todo
             url: "/api/user/change_password",
             type: 'POST',
             // dataType: "application/json; charset=utf-8",
             data: passChange,
             // contentType: "application/json",
-            beforeSend: function (request) {
-                request.setRequestHeader(header, token);
-            },
-
             success: function (e) {
                 $('#success_change').attr('class','visible alert').css("color", "green");
                 $('#not_validate').remove();

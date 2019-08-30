@@ -14,6 +14,7 @@ import org.bootcamp.trashhunter.services.abstraction.TakerService;
 import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.bootcamp.trashhunter.services.impl.UserFavoritesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,17 +31,17 @@ public class InitData {
     @Autowired
     TakerService takerService;
 
-	@Autowired
+    @Autowired
     UserFavoritesServiceImpl userFavoritesService;
 
-	@Autowired
-	UserService userService;
+    @Autowired
+    UserService userService;
 
     private void init() {
         initSenders();
         initTakers();
         initRandomOffers(40);
-		initUserFavorites();
+        initUserFavorites();
     }
 
     private void initUserFavorites() {
@@ -68,7 +69,7 @@ public class InitData {
         Sender sender1 = new Sender("sender1@mail.ru", "Михаил А.", "sender1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("mixa.jpg"));
         sender1.setStatistics(s1);
         senderService.add(sender1);
-        Sender sender2 = new Sender("sender2@mail.ru", "Максим В.", "sender2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("max.jpg") );
+        Sender sender2 = new Sender("sender2@mail.ru", "Максим В.", "sender2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("max.jpg"));
         sender2.setStatistics(s2);
         senderService.add(sender2);
         Sender sender3 = new Sender("sender3@mail.ru", "Иван Ф.", "sender3", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("ivan.jpg"));
@@ -147,9 +148,14 @@ public class InitData {
             if (randomOffer.getOfferStatus().equals(OfferStatus.ACTIVE)) {
                 randomOffer.setRespondingTakers(takerService.getAll());
             }
-            if (randomOffer.getOfferStatus().equals(OfferStatus.TAKEN)){
+            if (randomOffer.getOfferStatus().equals(OfferStatus.TAKEN)) {
                 List<Taker> takers = new ArrayList<>();
-                takers.add(takerService.getById(3 + (long) (seed1 * 3)));
+                takers.add(takerService.getById(5L));
+                randomOffer.setRespondingTakers(takers);
+            }
+            if (randomOffer.getOfferStatus().equals(OfferStatus.COMPLETE)) {
+                List<Taker> takers = new ArrayList<>();
+                takers.add(takerService.getById(6L));
                 randomOffer.setRespondingTakers(takers);
             }
             offerService.add(randomOffer);
