@@ -38,7 +38,7 @@ function initMap() {
     //Associate the styled map with the MapTypeId and set it to display.
     let styledMapType = new google.maps.StyledMapType(styledMapPropertiesArray, {name: 'Styled Map'});
     map.mapTypes.set('styled_map', styledMapType);
-    map.setMapTypeId('hybrid');
+    map.setMapTypeId('styled_map');
 
     let card = document.getElementById('pac-card');
     let input = document.getElementById('pac-input');
@@ -202,10 +202,11 @@ function drawPoints(data) {
             $.each(offer, function (key, value) {
                 let isName = false;
                 let id;
-                if (key == 'id'){
-                    id = key;
-                }
-                if (key != 'coordinates' && key != 'id' && key != 'creationDateTime' && key != 'respondingTakers' && key != 'description') {
+                // if (key == 'id'){
+                //     id = key;
+                // }
+
+                if (key != 'coordinates'  && key != 'creationDateTime' && key != 'respondingTakers' && key != 'description') {
 
                     if (key == 'sender' ) {
                         isName = true;
@@ -215,7 +216,9 @@ function drawPoints(data) {
                     }
 
                     key = key.capitalize();
-
+                    if (key == 'Id'){
+                        key = 'Заказ №:';
+                    }
                     if (key == 'Sender') {
                         key = 'Сдатчик:';
                     } else if (key ==  'Weight'){
