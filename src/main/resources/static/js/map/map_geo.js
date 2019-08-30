@@ -8,6 +8,7 @@ var longitude;
 let kilograms = ".кг";
 let price = ".руб";
 let twoPoints = ":";
+let oferid ;
 
 
 function initMap() {
@@ -180,20 +181,20 @@ function drawPoints(data) {
             let tableRef = document.getElementById('offerInfoTable');
             $("#offerInfoTable tr").remove();
             // $("#showFilePanel").action;
-             $("#div").slideToggle('slow',  function() {
+            $("#div").slideToggle('slow',  function() {
                 if ($("#div").is(":visible")) {
                     $("#div").show();
                 } else if ($("#div").is(":hidden")){
                     $("#div").show();
                 }
 
-                 window.addEventListener('click', function(e){
-                     if (document.getElementById("div").contains(e.target)){
-                         $("#div").show();
-                     } else{
-                         $("#div").hide();
-                     }
-                 })
+                window.addEventListener('click', function(e){
+                    if (document.getElementById("div").contains(e.target)){
+                        $("#div").show();
+                    } else{
+                        $("#div").hide();
+                    }
+                })
             });
             String.prototype.capitalize = function() {
                 return this.charAt(0).toUpperCase() + this.slice(1);
@@ -204,13 +205,12 @@ function drawPoints(data) {
                 if (key == 'id'){
                     id = key;
                 }
-                if (key != 'coordinates' && key != 'id' && key != 'creationDateTime' && key != 'description' && key != 'respondingTakers') {
+                if (key != 'coordinates' && key != 'id' && key != 'creationDateTime' && key != 'respondingTakers' && key != 'description') {
 
                     if (key == 'sender' ) {
                         isName = true;
                         value = value.name;
                         var name = value;
-                        // name.link("http://localhost:8080/profile/1");
                         value = "<div><a href='http://localhost:8080/profile/1'>" + name + "</a></div>";
                     }
 
@@ -230,7 +230,7 @@ function drawPoints(data) {
                     } else if (key == 'TrashType') {
                         key = 'Тип мусора:';
                     } else if (key == 'OfferStatus') {
-                        key = 'Статус предложение:';
+                        key = 'Статус:';
                     } else if (key == 'IsSorted') {
                         if (value == 'true') {
                             value = "Рассортирован"
@@ -285,9 +285,10 @@ function drawPoints(data) {
 
             let linkToChatFromTaker = document.getElementById("linkToChatFromTaker");
             if (linkToChatFromTaker) {
-                linkToChatFromTaker.href="/chat/?partnerId=" + offer.sender.id + "&offerId=" + offer.id;
+                linkToChatFromTaker.href = "/chat/" + offer.sender.id + "?offerId=" + offer.id;
                 $('#linkToChatFromTaker').show();
             }
+            oferid = offer.id;
         });
     });
 }
@@ -362,4 +363,14 @@ function setMyCoordinates() {
         infoWindow.open(map);
     }
 
+}
+
+function deleteOffer() {
+    $.ajax({
+        url: '/api/taker/add_offers/' + oferid,
+        type: 'post',
+        success: function () {
+            alert("OK")
+        }
+    });
 }

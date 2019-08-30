@@ -40,7 +40,12 @@
     </div>
 
     <div class="notification-container dismiss" id="div" style="height: 400px; margin-top: 25px" >
+        <!--        <a sec:authorize="hasAuthority('Taker')" style="display: none; margin-left: -99px"  id="linkToChatFromTaker"  href="/chat" class="btn btn-info" target="_blank">Чат</a>-->
+        <!--        <a sec:authorize="hasAuthority('Taker')" style="display: none; margin-right: 130px"  onclick="deleteOffer()"  class="btn btn-info" >Взять заказ</a>-->
+
         <table class="table table" id="offerInfoTable"></table>
+        <button sec:authorize="hasAuthority('Taker')" class="btn btn-info " data-toggle="tooltip"  style="margin-right: 40px; margin-left: -20px" title="Взять заказ" onclick="deleteOffer()">Взять заказ</button>
+        <a sec:authorize="hasAuthority('Taker')" style="display: none; margin-left: 0px"  id="linkToChatFromTaker"  href="/chat" class="btn btn-info">Чат</a>
     </div>
 
     </div>
