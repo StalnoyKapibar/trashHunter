@@ -101,7 +101,7 @@ function getTable(data) {
                 if (offer.offerStatus == 'TAKEN') {
                   offerRow+=  '<div class="card-body" style="background-color: #ffffff">';
                 } else {
-                    offerRow+=  '<div class="card-body" style="background-color: #b3ffe3">';
+                    offerRow+=  '<div class="card-body" style="background-color: papayawhip">';
                 }
                 offerRow+= '<div class="row" style="margin-bottom: 1%">' +
                 '<div class="col-sm-1"></div>' +
