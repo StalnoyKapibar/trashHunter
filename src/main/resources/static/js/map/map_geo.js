@@ -5,6 +5,11 @@ var geocoder;
 var city = $("meta[name='defined_city']").attr("content");
 var latitude;
 var longitude;
+let kilograms = ".кг";
+let price = ".руб";
+let twoPoints = ":";
+let oferid ;
+
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -16,7 +21,15 @@ function initMap() {
         mapTypeControlOptions: {
             position: google.maps.ControlPosition.BOTTOM_LEFT,
             mapTypeIds: ['hybrid', 'styled_map']
-        }
+        },
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.TOP_LEFT,
+        },
+
+        fullscreenControlOptions: {
+            position: google.maps.ControlPosition.BOTTOM_RIGHT,
+        },
+
     });
 
     geocoder = new google.maps.Geocoder();
@@ -25,7 +38,7 @@ function initMap() {
     //Associate the styled map with the MapTypeId and set it to display.
     let styledMapType = new google.maps.StyledMapType(styledMapPropertiesArray, {name: 'Styled Map'});
     map.mapTypes.set('styled_map', styledMapType);
-    map.setMapTypeId('styled_map');
+    map.setMapTypeId('hybrid');
 
     let card = document.getElementById('pac-card');
     let input = document.getElementById('pac-input');
@@ -91,7 +104,7 @@ function initMap() {
     let centerControlDiv = document.createElement('div');
     let centerControl = new CenterControl(centerControlDiv, map);
     centerControlDiv.index = 1;
-    map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(centerControlDiv);
+    map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(centerControlDiv);
 }
 
 function codeAddress() {
@@ -143,8 +156,6 @@ function drawPoints(data) {
         } else {
             url = "/img/blank.png";
         }
-
-        if (offer.offerStatus !='COMPLETE') {
         let marker = new google.maps.Marker({
             position: {lat: offer.coordinates.latitude, lng: offer.coordinates.longitude},
             map: map,
@@ -152,39 +163,132 @@ function drawPoints(data) {
                 url: url
             }
         });
+        $('#showFilePanel').click(function(event) {
+            if ($('.notification-container').hasClass('dismiss')) {
+                $('.notification-container').removeClass('dismiss').addClass('selected').show();
+            }
+            event.preventDefault();
+        });
+
+        $('#closeFilePanel').click(function(event) {
+            if ($('.notification-container').hasClass('selected')) {
+                $('.notification-container').removeClass('selected').addClass('dismiss');
+            }
+            event.preventDefault();
+        });
         markers.push(marker);
         marker.addListener('click', function () {
             let tableRef = document.getElementById('offerInfoTable');
             $("#offerInfoTable tr").remove();
-            $.each(offer, function (key, value) {
-                if (key != 'coordinates' && key != 'id') {
-                    let newRow = tableRef.insertRow();
-                    let newCell = newRow.insertCell();
-                    let newText = document.createTextNode(key);
-                    newCell.appendChild(newText);
-
-                    newCell = newRow.insertCell();
-                    newText = document.createTextNode(value);
-                    newCell.appendChild(newText);
+            // $("#showFilePanel").action;
+            $("#div").slideToggle('slow',  function() {
+                if ($("#div").is(":visible")) {
+                    $("#div").show();
+                } else if ($("#div").is(":hidden")){
+                    $("#div").show();
                 }
-                if (key == 'sender'){
+
+                window.addEventListener('click', function(e){
+                    if (document.getElementById("div").contains(e.target)){
+                        $("#div").show();
+                    } else{
+                        $("#div").hide();
+                    }
+                })
+            });
+            String.prototype.capitalize = function() {
+                return this.charAt(0).toUpperCase() + this.slice(1);
+            }
+            $.each(offer, function (key, value) {
+                let isName = false;
+                let id;
+                if (key == 'id'){
+                    id = key;
+                }
+                if (key != 'coordinates' && key != 'id' && key != 'creationDateTime' && key != 'respondingTakers' && key != 'description') {
+
+                    if (key == 'sender' ) {
+                        isName = true;
+                        value = value.name;
+                        var name = value;
+                        value = "<div><a href='http://localhost:8080/profile/1'>" + name + "</a></div>";
+                    }
+
+                    key = key.capitalize();
+
+                    if (key == 'Sender') {
+                        key = 'Сдатчик:';
+                    } else if (key ==  'Weight'){
+                        key = 'Вес:';
+                        value = value + kilograms;
+                    } else if (key == 'Volume') {
+                        key = 'Объем:';
+                        value = value + ".м³";
+                    } else if (key == 'Price') {
+                        key = 'Цена:';
+                        value = value + price;
+                    } else if (key == 'TrashType') {
+                        key = 'Тип мусора:';
+                    } else if (key == 'OfferStatus') {
+                        key = 'Статус:';
+                    } else if (key == 'IsSorted') {
+                        if (value == 'true') {
+                            value = "Рассортирован"
+                        } else {
+                            value = "Несортированн"
+                        }
+                        key = 'Рассортировка:';
+                    }
+
+
+                    if (value == 'METAL') {
+                        value = 'Метал';
+                    } else  if (value == 'PAPER') {
+                        value = 'Бумага';
+                    } else  if (value == 'FOOD') {
+                        value = 'Органика';
+                    } else  if (value == 'PLASTIC') {
+                        value = 'Пластик';
+                    } else  if (value == 'WOOD') {
+                        value = 'Дерево';
+                    } else  if (value == 'GLASS') {
+                        value = 'Стекло';
+                    }
+
+                    if (value == 'OPEN') {
+                        value = 'Открыт';
+                    } else  if (value == 'ACTIVE') {
+                        value = 'Активный';
+                    } else if (value == 'TAKEN') {
+                        value = 'Принят';
+                    } else if (value == 'COMPLETE') {
+                        value = 'Завершен';
+                    }
+
+
                     let newRow = tableRef.insertRow();
                     let newCell = newRow.insertCell();
                     let newText = document.createTextNode(key);
                     newCell.appendChild(newText);
-
                     newCell = newRow.insertCell();
-                    newText = document.createTextNode(value.name);
-                    newCell.appendChild(newText);
+                    if(isName){
+                        newText = $(value);
+                        $(newCell).append(newText);
+                    } else {
+                        newText = document.createTextNode(value);
+                        newCell.appendChild(newText);
+                    }
+
                 }
             });
 
             let linkToChatFromTaker = document.getElementById("linkToChatFromTaker");
             if (linkToChatFromTaker) {
-                linkToChatFromTaker.href="/chat/?partnerId=" + offer.sender.id + "&offerId=" + offer.id;
+                linkToChatFromTaker.href = "/chat/" + offer.sender.id + "?offerId=" + offer.id;
                 $('#linkToChatFromTaker').show();
             }
-        });}
+            oferid = offer.id;
+        });
     });
 }
 
@@ -256,4 +360,14 @@ function setMyCoordinates() {
         infoWindow.open(map);
     }
 
+}
+
+function deleteOffer() {
+    $.ajax({
+        url: '/api/taker/add_offers/' + oferid,
+        type: 'post',
+        success: function () {
+            alert("OK")
+        }
+    });
 }

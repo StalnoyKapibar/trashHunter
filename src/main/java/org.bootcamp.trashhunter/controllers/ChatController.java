@@ -2,7 +2,6 @@ package org.bootcamp.trashhunter.controllers;
 
 import org.bootcamp.trashhunter.config.WebSocketEventListener;
 import org.bootcamp.trashhunter.models.*;
-import org.bootcamp.trashhunter.models.dto.UserDto;
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.bootcamp.trashhunter.services.abstraction.SenderService;
 import org.bootcamp.trashhunter.services.abstraction.TakerService;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -98,13 +96,11 @@ public class ChatController {
     @GetMapping("/chat")
     public String chat(@RequestParam(value = "offerId", required = false) Long offerId,
                        Principal principal,
-                       Authentication authentication,
                        Model model) {
-        User user = userService.findByEmail(principal.getName());
-        UserDto chatOwner = new UserDto(user);
+        User chatOwner = userService.findByEmail(principal.getName());
         model.addAttribute("chatOwner", chatOwner);
 
-        Map<User, Collection<Offer>> companionsWithOffersMap = getCompanionsWithOffers(user);
+        Map<User, Collection<Offer>> companionsWithOffersMap = getCompanionsWithOffers(chatOwner);
         if (!companionsWithOffersMap.isEmpty()) {
             model.addAttribute("companionsWithOffersMap", companionsWithOffersMap);
         }
@@ -130,7 +126,14 @@ public class ChatController {
             model.addAttribute("username", principal.getName());
             model.addAttribute("chatRoom", companionId + "_" + ownerId);
         }
-
+        /*        if (role.equals("Taker")) {
+            model.addAttribute("username", principal.getName());
+            model.addAttribute("chatRoom", ownerId + "_" + companionId);
+        } else if (role.equals("Sender")) {
+            model.addAttribute("username", principal.getName());
+            model.addAttribute("chatRoom", companionId + "_" + ownerId);
+        }*/
+        model.addAttribute("companionId", companionId);
         model.addAttribute("chatOwner", chatOwner);
         Map<User, Collection<Offer>> companionsWithOffersMap = getCompanionsWithOffers(chatOwner);
         if (!companionsWithOffersMap.isEmpty()) {
