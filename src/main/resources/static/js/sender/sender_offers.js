@@ -166,7 +166,7 @@ function getTable() {
                             offerRow += '</div></div></div>';
                         } else if (value == 'TAKEN'){
                             offerRow += '</div>' +
-                                '<div class="card-body" style="background-color: aliceblue">';
+                                '<div class="card-body" style="background-color: papayawhip">';
                             $.each(takers, function (i, taker) {
                                 offerRow += '<div class="row" style="margin-bottom: 1%">' +
                                     '<div class="col-sm-1"></div>' +

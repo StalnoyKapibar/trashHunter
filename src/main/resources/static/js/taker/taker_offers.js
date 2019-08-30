@@ -97,9 +97,13 @@ function getTable(data) {
                 '<i class="fas fa-window-close"></i>' +
                 '</button>' +
                 '</div>' +
-                '</div>' +
-                '<div class="card-body" style="background-color: #ffffff">' +
-                '<div class="row" style="margin-bottom: 1%">' +
+                '</div>';
+                if (offer.offerStatus == 'TAKEN') {
+                  offerRow+=  '<div class="card-body" style="background-color: #ffffff">';
+                } else {
+                    offerRow+=  '<div class="card-body" style="background-color: #b3ffe3">';
+                }
+                offerRow+= '<div class="row" style="margin-bottom: 1%">' +
                 '<div class="col-sm-1"></div>' +
                 '<div class="input-group col-sm-4">' +
                 '<div class="input-group-prepend">' +
