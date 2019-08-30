@@ -130,7 +130,7 @@ function getTable(data) {
             }
             if (offer.offerStatus == 'ACTIVE') {
                 offerRow += '<button class="btn btn-warning btn-icon "disabled>' +
-                    '<span class="icon"><i class="fas fa-spinner"></i></span>ожидание ответа' +
+                    '<span class="icon"><i class="fas fa-spinner"></i></span>заявлен' +
                     '</button>';
             }
             offerRow += '<a href="/chat/' + offer.sender.id + '?offerId=' + offer.id + '" class="btn btn-info btn-icon" >' +

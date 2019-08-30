@@ -5,11 +5,11 @@ var geocoder;
 var city = $("meta[name='defined_city']").attr("content");
 var latitude;
 var longitude;
-let kilograms = ".кг";
+let kilograms = " кг";
 let price = ".руб";
 let twoPoints = ":";
-let oferid ;
-
+let oferid;
+var id;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -117,6 +117,7 @@ function codeAddress() {
         }
     });
 }
+
 function createInfoOfferTable(tableID) {
     let tableRef = document.getElementById(tableID);
     let newRow = tableRef.insertRow(0);
@@ -163,14 +164,14 @@ function drawPoints(data) {
                 url: url
             }
         });
-        $('#showFilePanel').click(function(event) {
+        $('#showFilePanel').click(function (event) {
             if ($('.notification-container').hasClass('dismiss')) {
                 $('.notification-container').removeClass('dismiss').addClass('selected').show();
             }
             event.preventDefault();
         });
 
-        $('#closeFilePanel').click(function(event) {
+        $('#closeFilePanel').click(function (event) {
             if ($('.notification-container').hasClass('selected')) {
                 $('.notification-container').removeClass('selected').addClass('dismiss');
             }
@@ -181,52 +182,47 @@ function drawPoints(data) {
             let tableRef = document.getElementById('offerInfoTable');
             $("#offerInfoTable tr").remove();
             // $("#showFilePanel").action;
-            $("#div").slideToggle('slow',  function() {
+            $("#div").slideToggle('slow', function () {
                 if ($("#div").is(":visible")) {
                     $("#div").show();
-                } else if ($("#div").is(":hidden")){
+                } else if ($("#div").is(":hidden")) {
                     $("#div").show();
                 }
 
-                window.addEventListener('click', function(e){
-                    if (document.getElementById("div").contains(e.target)){
+                window.addEventListener('click', function (e) {
+                    if (document.getElementById("div").contains(e.target)) {
                         $("#div").show();
-                    } else{
+                    } else {
                         $("#div").hide();
                     }
                 })
             });
-            String.prototype.capitalize = function() {
+            String.prototype.capitalize = function () {
                 return this.charAt(0).toUpperCase() + this.slice(1);
             }
             $.each(offer, function (key, value) {
                 let isName = false;
-                let id;
-                // if (key == 'id'){
-                //     id = key;
-                // }
+                if (key != 'coordinates' && key != 'creationDateTime' && key != 'respondingTakers' && key != 'description') {
 
-                if (key != 'coordinates'  && key != 'creationDateTime' && key != 'respondingTakers' && key != 'description') {
-
-                    if (key == 'sender' ) {
+                    if (key == 'sender') {
                         isName = true;
+                        id = value.id;
                         value = value.name;
-                        var name = value;
-                        value = "<div><a href='http://localhost:8080/profile/1'>" + name + "</a></div>";
+                        value = "<div><a href='http://localhost:8080/profile/" + id + "'>" + value + "</a></div>";
                     }
 
                     key = key.capitalize();
-                    if (key == 'Id'){
+                    if (key == 'Id') {
                         key = 'Заказ №:';
                     }
                     if (key == 'Sender') {
                         key = 'Сдатчик:';
-                    } else if (key ==  'Weight'){
+                    } else if (key == 'Weight') {
                         key = 'Вес:';
                         value = value + kilograms;
                     } else if (key == 'Volume') {
                         key = 'Объем:';
-                        value = value + ".м³";
+                        value = value + " м³";
                     } else if (key == 'Price') {
                         key = 'Цена:';
                         value = value + price;
@@ -238,29 +234,28 @@ function drawPoints(data) {
                         if (value == 'true') {
                             value = "Рассортирован"
                         } else {
-                            value = "Несортированн"
+                            value = "Неотсортирован"
                         }
-                        key = 'Рассортировка:';
+                        key = 'Сортировка:';
                     }
-
 
                     if (value == 'METAL') {
                         value = 'Метал';
-                    } else  if (value == 'PAPER') {
+                    } else if (value == 'PAPER') {
                         value = 'Бумага';
-                    } else  if (value == 'FOOD') {
+                    } else if (value == 'FOOD') {
                         value = 'Органика';
-                    } else  if (value == 'PLASTIC') {
+                    } else if (value == 'PLASTIC') {
                         value = 'Пластик';
-                    } else  if (value == 'WOOD') {
+                    } else if (value == 'WOOD') {
                         value = 'Дерево';
-                    } else  if (value == 'GLASS') {
+                    } else if (value == 'GLASS') {
                         value = 'Стекло';
                     }
 
                     if (value == 'OPEN') {
                         value = 'Открыт';
-                    } else  if (value == 'ACTIVE') {
+                    } else if (value == 'ACTIVE') {
                         value = 'Активный';
                     } else if (value == 'TAKEN') {
                         value = 'Принят';
@@ -268,20 +263,18 @@ function drawPoints(data) {
                         value = 'Завершен';
                     }
 
-
                     let newRow = tableRef.insertRow();
                     let newCell = newRow.insertCell();
                     let newText = document.createTextNode(key);
                     newCell.appendChild(newText);
                     newCell = newRow.insertCell();
-                    if(isName){
+                    if (isName) {
                         newText = $(value);
                         $(newCell).append(newText);
                     } else {
                         newText = document.createTextNode(value);
                         newCell.appendChild(newText);
                     }
-
                 }
             });
 
@@ -330,6 +323,7 @@ function CenterControl(controlDiv, map) {
         setMyCoordinates();
     });
 }
+
 function doFilterInit(urlrequest) {
     deleteMarkers();
     drawPoints(doFilter(urlrequest));

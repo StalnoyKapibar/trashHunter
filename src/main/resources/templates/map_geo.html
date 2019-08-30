@@ -21,7 +21,7 @@
 </head>
 <body>
 <th:block th:fragment="map">
-    <div class="col-sm-12" style="padding: -10px" >
+    <div class="col-sm-12" style="padding: -10px">
         <div class="pac-card" id="pac-card">
             <div id="title">
                 Поиск по адресу:
@@ -44,8 +44,11 @@
         <!--        <a sec:authorize="hasAuthority('Taker')" style="display: none; margin-right: 130px"  onclick="deleteOffer()"  class="btn btn-info" >Взять заказ</a>-->
 
         <table class="table table" id="offerInfoTable"></table>
-        <button sec:authorize="hasAuthority('Taker')" class="btn btn-info " data-toggle="tooltip"  style="margin-right: 40px; margin-left: -20px" title="Взять заказ" onclick="deleteOffer()">Взять заказ</button>
-        <a sec:authorize="hasAuthority('Taker')" style="display: none; margin-left: 0px"  id="linkToChatFromTaker"  href="/chat" class="btn btn-info">Чат</a>
+        <button sec:authorize="hasAuthority('Taker')" class="btn btn-info " data-toggle="tooltip"
+                style="margin-right: 40px; margin-left: -20px" title="Взять заказ" onclick="deleteOffer()">Взять заказ
+        </button>
+        <a sec:authorize="hasAuthority('Taker')" style="display: none; margin-left: 0px" id="linkToChatFromTaker"
+           href="/chat" class="btn btn-info">Чат</a>
     </div>
 
     </div>
