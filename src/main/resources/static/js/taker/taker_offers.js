@@ -79,8 +79,8 @@ function getTable(data) {
                 ' объем: ' + offer.volume + 'м³ ' +
                 ' цена: ' + offer.price + 'руб ';
                 offerRow += ' тип мусора: ';
-                if (offer.trashType == 'METAL') { offerRow+='Метал';}
-                if (offer.trashType == 'FOOD') { offerRow+='Оходы';}
+                if (offer.trashType == 'METAL') { offerRow+='Металл';}
+                if (offer.trashType == 'FOOD') { offerRow+='Отходы';}
                 if (offer.trashType == 'WOOD') { offerRow+='Дерево';}
                 if (offer.trashType == 'GLASS') { offerRow+='Стекло';}
                 if (offer.trashType == 'PAPER') { offerRow+='Бумага';}
@@ -97,9 +97,13 @@ function getTable(data) {
                 '<i class="fas fa-window-close"></i>' +
                 '</button>' +
                 '</div>' +
-                '</div>' +
-                '<div class="card-body" style="background-color: #ffffff">' +
-                '<div class="row" style="margin-bottom: 1%">' +
+                '</div>';
+                if (offer.offerStatus == 'TAKEN') {
+                  offerRow+=  '<div class="card-body" style="background-color: #ffffff">';
+                } else {
+                    offerRow+=  '<div class="card-body" style="background-color: papayawhip">';
+                }
+                offerRow+= '<div class="row" style="margin-bottom: 1%">' +
                 '<div class="col-sm-1"></div>' +
                 '<div class="input-group col-sm-4">' +
                 '<div class="input-group-prepend">' +

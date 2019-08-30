@@ -95,8 +95,8 @@ function getTable() {
                     }
                     if (key == "trashType") {
                         offerRow += ' тип мусора: ';
-                            if (value == 'METAL') { offerRow+='Метал';}
-                            if (value == 'FOOD') { offerRow+='Оходы';}
+                            if (value == 'METAL') { offerRow+='Металл';}
+                            if (value == 'FOOD') { offerRow+='Отходы';}
                             if (value == 'WOOD') { offerRow+='Дерево';}
                             if (value == 'GLASS') { offerRow+='Стекло';}
                             if (value == 'PAPER') { offerRow+='Бумага';}
@@ -166,7 +166,7 @@ function getTable() {
                             offerRow += '</div></div></div>';
                         } else if (value == 'TAKEN'){
                             offerRow += '</div>' +
-                                '<div class="card-body" style="background-color: aliceblue">';
+                                '<div class="card-body" style="background-color: papayawhip">';
                             $.each(takers, function (i, taker) {
                                 offerRow += '<div class="row" style="margin-bottom: 1%">' +
                                     '<div class="col-sm-1"></div>' +
