@@ -19,7 +19,7 @@ $(document).ready(function () {
     if (window.location.pathname.endsWith('new_offer')) {
         path+='newoffernav';
     }
-    $(path).css("text-shadow", " 20px 20px 40px black, 0 0 2em black");
+    $(path).css("text-shadow", "0 0 5px black, 0 0 10px black, 0 0 15px black, 0 0 20px black, 0 0 35px black, 0 0 40px black, 0 0 50px black, 0 0 75px black");
     $(path).css("color", "white");
     $(path).css("font-size", "1.2em");
 });

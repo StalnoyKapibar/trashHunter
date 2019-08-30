@@ -3,6 +3,9 @@ var markers = [];
 var infoWindow;
 var geocoder;
 var city = $("meta[name='defined_city']").attr("content");
+let authMap = $("meta[name='auth_map']").attr("content");
+// let authId = $("meta[name='auth_id']").attr("content");
+var authId =  $("meta[name='authId']").attr("content");
 var latitude;
 var longitude;
 let kilograms = " кг";
@@ -178,7 +181,11 @@ function drawPoints(data) {
             event.preventDefault();
         });
         markers.push(marker);
+
+
         marker.addListener('click', function () {
+            $('#takeOfferButton').slideDown({opacity: "show"}, "slow");
+            $('#sup_message').hide();
             let tableRef = document.getElementById('offerInfoTable');
             $("#offerInfoTable tr").remove();
             // $("#showFilePanel").action;
@@ -203,12 +210,15 @@ function drawPoints(data) {
             $.each(offer, function (key, value) {
                 let isName = false;
                 if (key != 'coordinates' && key != 'creationDateTime' && key != 'respondingTakers' && key != 'description') {
-
                     if (key == 'sender') {
                         isName = true;
                         id = value.id;
                         value = value.name;
-                        value = "<div><a href='http://localhost:8080/profile/" + id + "'>" + value + "</a></div>";
+                        if ((authMap == 'Taker')|(authMap == 'Sender')) {
+                            value = "<div><a href='http://localhost:8080/profile/" + id + "'>" + value + "</a></div>";
+                        } else {
+                            value = "<div>"+ value +"</div>";
+                        }
                     }
 
                     key = key.capitalize();
@@ -232,9 +242,9 @@ function drawPoints(data) {
                         key = 'Статус:';
                     } else if (key == 'IsSorted') {
                         if (value == 'true') {
-                            value = "Рассортирован"
+                            value = "Есть"
                         } else {
-                            value = "Неотсортирован"
+                            value = "Нет"
                         }
                         key = 'Сортировка:';
                     }
@@ -256,8 +266,15 @@ function drawPoints(data) {
                     if (value == 'OPEN') {
                         value = 'Открыт';
                     } else if (value == 'ACTIVE') {
+                        $.each(offer.respondingTakers , function (i, taker){
+                            console.log(taker);
+                            if (taker.id == authId ) {
+                                $('#takeOfferButton').hide();
+                            }
+                        });
                         value = 'Активный';
                     } else if (value == 'TAKEN') {
+                        $('#takeOfferButton').hide();
                         value = 'Принят';
                     } else if (value == 'COMPLETE') {
                         value = 'Завершен';
@@ -359,12 +376,14 @@ function setMyCoordinates() {
 
 }
 
-function deleteOffer() {
+function takeOfferFromMap() {
     $.ajax({
         url: '/api/taker/add_offers/' + oferid,
         type: 'post',
         success: function () {
-            alert("OK")
+            $('#sup_message').slideDown({opacity: "show"}, "slow");
+            $('#takeOfferButton').hide();
+
         }
     });
 }
