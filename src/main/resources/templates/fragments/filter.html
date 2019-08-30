@@ -63,9 +63,9 @@
                 <form class="form-inline">
                     <label class="mr-sm-2" for="isSorted" style="width: 25%">Вес: </label>
                     <input name="weightFrom" style="width: 25%" id="weightFrom"
-                           class="form-control" type="number" placeholder="от">
+                           class="form-control" type="number" placeholder="от" onfocusout="numberCheck('weightFrom')">
                     <input name="weightTo" style="width: 25%" id="weightTo"
-                           class="form-control ml-2" type="number" placeholder="до">
+                           class="form-control ml-2" type="number" placeholder="до" onfocusout="numberCheck('weightTo')">
                     <label class="mr-sm-2 ml-1" style="width: 15%"> кг </label>
                 </form>
             </div>
@@ -74,10 +74,10 @@
                 <form class="form-inline">
                     <label class="mr-sm-2" for="isSorted" style="width: 25%">Объем: </label>
                     <input name="volumeFrom" style="width: 25%" id="volumeFrom"
-                           class="form-control" type="number" placeholder="от">
+                           class="form-control" type="number" placeholder="от" onfocusout="numberCheck('volumeFrom')">
 
                     <input name="volumeFrom" style="width: 25%" id="volumeTo"
-                           class="form-control ml-2" type="number" placeholder="до">
+                           class="form-control ml-2" type="number" placeholder="до" onfocusout="numberCheck('volumeTo')">
                     <label class="mr-sm-2 ml-1" style="width: 15%"> м³ </label>
                 </form>
             </div>

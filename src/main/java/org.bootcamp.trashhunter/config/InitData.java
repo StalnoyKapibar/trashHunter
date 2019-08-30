@@ -1,19 +1,15 @@
 package org.bootcamp.trashhunter.config;
 
-import org.bootcamp.trashhunter.models.Sender;
-import org.bootcamp.trashhunter.models.OfferStatus;
-import org.bootcamp.trashhunter.models.Offer;
-import org.bootcamp.trashhunter.models.Taker;
-import org.bootcamp.trashhunter.models.TrashType;
-import org.bootcamp.trashhunter.models.UserFavorites;
-import org.bootcamp.trashhunter.models.Statistics;
+import org.bootcamp.trashhunter.models.*;
 import org.bootcamp.trashhunter.models.embedded.Coordinates;
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.bootcamp.trashhunter.services.abstraction.SenderService;
 import org.bootcamp.trashhunter.services.abstraction.TakerService;
 import org.bootcamp.trashhunter.services.abstraction.UserService;
+import org.bootcamp.trashhunter.services.abstraction.VoteService;
 import org.bootcamp.trashhunter.services.impl.UserFavoritesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,17 +26,21 @@ public class InitData {
     @Autowired
     TakerService takerService;
 
-	@Autowired
+    @Autowired
     UserFavoritesServiceImpl userFavoritesService;
 
-	@Autowired
-	UserService userService;
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    VoteService voteService;
 
     private void init() {
         initSenders();
         initTakers();
         initRandomOffers(40);
-		initUserFavorites();
+        initUserFavorites();
+        initVotes();
     }
 
     private void initUserFavorites() {
@@ -61,14 +61,14 @@ public class InitData {
     }
 
     private void initSenders() {
-        Statistics s1 = new Statistics(10, 50, 12, 240);
+        Statistics s1 = new Statistics(0, 0, 0, 0);
         Statistics s2 = new Statistics(20, 100, 28, 860);
         Statistics s3 = new Statistics(30, 200, 22, 121);
         Statistics s4 = new Statistics(300, 2000, 2203, 1211);
         Sender sender1 = new Sender("sender1@mail.ru", "Михаил А.", "sender1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("mixa.jpg"));
         sender1.setStatistics(s1);
         senderService.add(sender1);
-        Sender sender2 = new Sender("sender2@mail.ru", "Максим В.", "sender2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("max.jpg") );
+        Sender sender2 = new Sender("sender2@mail.ru", "Максим В.", "sender2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("max.jpg"));
         sender2.setStatistics(s2);
         senderService.add(sender2);
         Sender sender3 = new Sender("sender3@mail.ru", "Иван Ф.", "sender3", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("ivan.jpg"));
@@ -80,7 +80,7 @@ public class InitData {
     }
 
     private void initTakers() {
-        Statistics s1 = new Statistics(10, 50, 12, 240);
+        Statistics s1 = new Statistics(0, 0, 0, 0);
         Statistics s2 = new Statistics(20, 100, 28, 860);
         Statistics s3 = new Statistics(30, 200, 22, 121);
 
@@ -98,9 +98,9 @@ public class InitData {
     }
 
     private void initRandomOffers(int quantity) {
-        double seed;
         double seed1;
         double seed2;
+        double seed3;
 
         Sender randomSender;
         long randomWeight;
@@ -125,21 +125,21 @@ public class InitData {
         double minLongitude = 28.728941036284482;
 
         for (int i = 0; i < quantity; i++) {
-            seed = Math.random();
             seed1 = Math.random();
             seed2 = Math.random();
+            seed3 = Math.random();
 
-            randomSender = senderService.getById(1 + (long) (seed * numOfSenders));
-            randomWeight = (long) (seed * maxWeight);
-            randomVolume = (long) (seed * maxVolume);
-            randomPrice = (long) (seed * maxPrice);
+            randomSender = senderService.getById(1 + (long) (seed1 * numOfSenders));
+            randomWeight = (long) (seed1 * maxWeight);
+            randomVolume = (long) (seed2 * maxVolume);
+            randomPrice = (long) (seed3 * maxPrice);
             randomTrashType = TrashType.getRandom();
-            randomIsSorted = seed < 0.5;
+            randomIsSorted = seed1 < 0.5;
             randomStatus = OfferStatus.getRandom();
             randomDate = LocalDateTime.now();
             randomDescription = "this is offer number " + i;
-            randomLatitude = minLatitude + seed * (maxLatitude - minLatitude);
-            randomLongitude = minLongitude + seed1 * (maxLongitude - minLongitude);
+            randomLatitude = minLatitude + seed2 * (maxLatitude - minLatitude);
+            randomLongitude = minLongitude + seed3 * (maxLongitude - minLongitude);
             randomCoordinates = new Coordinates(randomLatitude, randomLongitude);
 
             Offer randomOffer = new Offer(randomSender, randomWeight, randomVolume, randomPrice, randomTrashType,
@@ -147,12 +147,33 @@ public class InitData {
             if (randomOffer.getOfferStatus().equals(OfferStatus.ACTIVE)) {
                 randomOffer.setRespondingTakers(takerService.getAll());
             }
-            if (randomOffer.getOfferStatus().equals(OfferStatus.TAKEN)){
+            if (randomOffer.getOfferStatus().equals(OfferStatus.TAKEN)) {
                 List<Taker> takers = new ArrayList<>();
                 takers.add(takerService.getById(5L));
                 randomOffer.setRespondingTakers(takers);
             }
+            if (randomOffer.getOfferStatus().equals(OfferStatus.COMPLETE)) {
+                List<Taker> takers = new ArrayList<>();
+                takers.add(takerService.getById(6L));
+                randomOffer.setRespondingTakers(takers);
+            }
             offerService.add(randomOffer);
+        }
+    }
+
+    private void initVotes() {
+        Vote vote;
+        for (int i=5; i<=7; i++) {
+            vote = new Vote(i, 4, Math.random() > 0.5);
+            voteService.add(vote);
+            vote = new Vote(4, i, Math.random() > 0.5);
+            voteService.add(vote);
+            for (int j=1; j<=3; j++) {
+                vote = new Vote(i, j, Math.random() > 0.35);
+                voteService.add(vote);
+                vote = new Vote(j, i, Math.random() > 0.35);
+                voteService.add(vote);
+            }
         }
     }
 }

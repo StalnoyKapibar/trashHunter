@@ -17,7 +17,7 @@ public class MainController {
 
     @GetMapping("/")
     public String main(@RequestParam(value = "city", required = false) String city, Model model,
-                       @RequestParam(value = "error", required = false) boolean error, Principal principal){
+                       Principal principal){
         if (principal != null) {
             String userCity = userService.findByEmail(principal.getName()).getCity();
             model.addAttribute("city", !userCity.isEmpty() ? userCity : "Москва, Россия" );
@@ -25,10 +25,6 @@ public class MainController {
         }
         if (city == null) {
             return "welcome";
-        }
-        //todo
-        if (error) {
-            model.addAttribute("error", true);
         }
         model.addAttribute("city", city);
         return "index";

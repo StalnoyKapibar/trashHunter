@@ -50,8 +50,12 @@ public abstract class User {
     @Column
     private boolean enabled;
 
+    @Column(name = "limitation")
+    private int limit = 0;
+
     public User() {
         this.enabled = false;
+        this.limit = 0;
     }
 
     public byte[] getPic() {
@@ -69,6 +73,7 @@ public abstract class User {
         this.registrationDate = registrationDate;
         this.city = city;
         this.pic = pic;
+        this.limit = 0;
     }
 
     public String getAboutUser() {
@@ -157,5 +162,13 @@ public abstract class User {
 
     public void setStatistics(Statistics statistics) {
         this.statistics = statistics;
+    }
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
     }
 }

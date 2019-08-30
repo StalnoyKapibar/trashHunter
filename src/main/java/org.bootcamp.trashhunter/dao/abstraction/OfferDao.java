@@ -1,6 +1,7 @@
 package org.bootcamp.trashhunter.dao.abstraction;
 
 import org.bootcamp.trashhunter.models.Offer;
+import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.Taker;
 
 import java.util.List;
@@ -21,5 +22,10 @@ public interface OfferDao extends AbstractDao<Offer> {
 
     List<Offer> getOffersByTaker(String email);
 
+    List<Offer> getTakenOffersByTaker(Taker taker);
+
+    List<Offer> getTakenOffersBySender(Sender sender);
+
     List<Offer> getFilterOffersForTaker(Map<String , Object> map, String email);
+
 }

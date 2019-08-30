@@ -13,4 +13,6 @@ public interface UserDao extends AbstractDao<User> {
     User findById(long id);
 
     String base64Encoder(String string);
+
+    void setLimit(long id, int limit);
 }

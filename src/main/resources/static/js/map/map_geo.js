@@ -268,7 +268,6 @@ function drawPoints(data) {
 
                     let newRow = tableRef.insertRow();
                     let newCell = newRow.insertCell();
-
                     let newText = document.createTextNode(key);
                     newCell.appendChild(newText);
                     newCell = newRow.insertCell();
@@ -327,7 +326,6 @@ function CenterControl(controlDiv, map) {
     controlUI.addEventListener('click', function () {
         setMyCoordinates();
     });
-
 }
 function doFilterInit(urlrequest) {
     deleteMarkers();
@@ -346,7 +344,6 @@ function setMyCoordinates() {
             infoWindow.setContent('Location found.');
             infoWindow.open(map);
             map.setCenter(pos);
-
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
         });
