@@ -81,6 +81,7 @@ function getTable() {
                             '<div class="container-fluid cards">' +
                             '<div class="card" id="'+ offerId +'" style="margin-bottom: 1%" >' +
                             '<div class="card-header" style="color: white; background-color: #4d90fe">'+
+                            '<div class="row">'+'<div class="col-sm-10">' +
                             ' Заказ№ ' + value + ' ';
                     }
                     if (key == "weight") {
@@ -93,9 +94,31 @@ function getTable() {
                         offerRow += ' цена: ' + value + 'руб ';
                     }
                     if (key == "trashType") {
-                        offerRow += ' тип мусора: ' + value;
+                        offerRow += ' тип мусора: ';
+                            if (value == 'METAL') { offerRow+='Метал';}
+                            if (value == 'FOOD') { offerRow+='Оходы';}
+                            if (value == 'WOOD') { offerRow+='Дерево';}
+                            if (value == 'GLASS') { offerRow+='Стекло';}
+                            if (value == 'PAPER') { offerRow+='Бумага';}
+                            if (value == 'PLASTIC') { offerRow+='Пластик';}
                     }
                     if (key == "offerStatus") {
+                        offerRow+= '</div>' +
+                            '<a href="/sender/edit_offer/' + offerId + '" class="btn btn-light btn-circle"' +
+                            'data-toggle="tooltip" data-placement="bottom" title="Радактировать предложение"' +
+                            'style="margin-right: 2% " >' +
+                            '<i class="fas fa-edit"></i>' +
+                            '</a>' +
+                            '<button class="btn btn-light btn-circle "'+
+                            'data-toggle="tooltip" data-placement="bottom" title="сделать шаблоном"'+
+                            'onclick="makeCompleteOffer(' + offerId + ')">'+
+                            '<i class="fas fa-download"></i>' +
+                            '</button>' +
+                            '<button class="btn btn-light btn-circle "'+
+                            'data-toggle="tooltip" data-placement="bottom" title="удалить предложение"'+
+                            'onclick="deleteOffer(' + offerId + ')">'+
+                            '<i class="fas fa-trash"></i>' +
+                            '</button>'+'</div>';
                         if (value == "ACTIVE") {
                             offerRow += '</div>' +
                                 '<div class="card-body" style="background-color: aliceblue">';
@@ -138,7 +161,7 @@ function getTable() {
                             if(takers.length !== 0){
                                 offerRow += '<button class="btn btn-warning btn-icon" id="rateBtn' + offerId + '"' +
                                     ' onclick="rateOffer(' + offerId + ', ' + takers[0].id + ', \'' + takers[0].name +'\')">' +
-                                    '<span class="icon"><i class="fas fa-trash-restore"></i></span>оценить сделку</button>';
+                                    '<span class="icon"><i class="fas fa-award"></i></span>оценить</button>';
                             }
                             offerRow += '</div></div></div>';
                         } else if (value == 'TAKEN'){
@@ -179,28 +202,7 @@ function getTable() {
                                 + '</div>';
                         }
                     }
-
                 });
-                offerRow += '<div class="card-footer" style="background-color: #4d90fe">'+
-                    '<div class="row">' +
-                    '<div class="col-sm-10"></div>'+
-                    '<a href="/sender/edit_offer/' + offerId + '" class="btn btn-light btn-circle"' +
-                    'data-toggle="tooltip" data-placement="bottom" title="Радактировать предложение"' +
-                    'style="margin-right: 1% " >' +
-                    '<i class="fas fa-edit"></i>' +
-                    '</a>' +
-                    '<button class="btn btn-light btn-circle "'+
-                    'data-toggle="tooltip" data-placement="bottom" title="сделать шаблоном"'+
-                    'onclick="makeCompleteOffer(' + offerId + ')">'+
-                    '<i class="fas fa-download"></i>' +
-                    '</button>' +
-                    '<button class="btn btn-light btn-circle "'+
-                    'data-toggle="tooltip" data-placement="bottom" title="удалить предложение"'+
-                    'onclick="deleteOffer(' + offerId + ')">'+
-                    '<i class="fas fa-trash"></i>' +
-                    '</button>' +
-                    '</div>'+
-                    '</div>';
                 offerRow +=
                     '</div>' +
                     '</div>' +
@@ -211,7 +213,6 @@ function getTable() {
                 $('#senderOffersTable tbody').append(offerRow);
 
             });
-
         },
         error: function (message) {
             console.log(message);
@@ -288,11 +289,11 @@ function getModalWindow() {
         "            <!-- Modal content-->\n" +
         "            <div class=\"modal-content\">\n" +
         "                <div class=\"modal-header\">\n" +
-        "                    <h4 class=\"modal-title\">Оценка юзера <span id='takerName'></span></h4>\n" +
+        "                    <h4 class=\"modal-title\">Оценка приемщика <span id='takerName'></span></h4>\n" +
         "                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>\n" +
         "                </div>\n" +
         "                <div class=\"modal-body\">\n" +
-        "                    <p>Оцени этого пидора</p>\n" +
+        "                    <p>Оцени этого уважаемого пидора</p>\n" +
         "                    <div class='rating-stars text-center'>\n" +
         "                       <ul id='stars'>\n" +
         "                         <li class='star' title='Poor' data-value='1'>\n" +
