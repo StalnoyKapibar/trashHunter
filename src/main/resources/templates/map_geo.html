@@ -6,6 +6,11 @@
       lang="en">
 <head>
     <title>Map</title>
+    <style>
+        #s_message {
+             display: none;
+         }
+    </style>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 
     <th:block th:fragment="map_scripts">
@@ -23,12 +28,12 @@
 <th:block th:fragment="map">
     <div class="col-sm-12" style="padding: -10px">
         <div class="pac-card" id="pac-card">
-            <div id="title">
-                Поиск по адресу:
-            </div>
-            <div id="pac-container">
-                <input id="pac-input" type="text" placeholder="Введите адрес">
-            </div>
+            <!--<div id="title">-->
+                <!--Поиск по адресу:-->
+            <!--</div>-->
+            <!--<div id="pac-container">-->
+                <!--<input id="pac-input" type="text" placeholder="Введите адрес">-->
+            <!--</div>-->
         </div>
         <div id="infowindow-content">
             <img src="" width="16" height="16" id="place-icon">
@@ -44,11 +49,27 @@
         <!--        <a sec:authorize="hasAuthority('Taker')" style="display: none; margin-right: 130px"  onclick="deleteOffer()"  class="btn btn-info" >Взять заказ</a>-->
 
         <table class="table table" id="offerInfoTable"></table>
+
         <button sec:authorize="hasAuthority('Taker')" class="btn btn-info " data-toggle="tooltip"
                 style="margin-right: 40px; margin-left: -20px" title="Взять заказ" onclick="deleteOffer()">Взять заказ
         </button>
         <a sec:authorize="hasAuthority('Taker')" style="display: none; margin-left: 0px" id="linkToChatFromTaker"
            href="/chat" class="btn btn-info">Чат</a>
+        <div sec:authorize="!isAuthenticated()">
+            <h5>Пройдите регистрацию или авторизуйтесь</h5>
+        </div>
+        <div class="form-group">
+            <div class="alert alert-danger" role="alert" id="ups_message">
+                Форма заполнена не верно<i
+                    class="fas fa-exclamation-circle"></i><br/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="alert alert-success" role="alert" id="s_message">
+                Заказ добавлен<i
+                    class="fas fa-exclamation-circle"></i><br/>
+            </div>
+        </div>
     </div>
 
     </div>

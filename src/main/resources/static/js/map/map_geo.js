@@ -43,9 +43,11 @@ function initMap() {
     let card = document.getElementById('pac-card');
     let input = document.getElementById('pac-input');
     let filter = document.getElementById('filter-container');
+    let offerinfo = document.getElementById('offerinfo-container');
 
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
+    // map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(filter);
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(offerinfo);
 
     let options = {
         types: ['(cities)'],
@@ -208,7 +210,7 @@ function drawPoints(data) {
                         isName = true;
                         id = value.id;
                         value = value.name;
-                        value = "<div><a href='http://localhost:8080/profile/" + id + "'>" + value + "</a></div>";
+                        value = "<div><a sec:authorize=\"isAuthenticated()\" href='http://localhost:8080/profile/" + id + "'>" + value + "</a></div>";
                     }
 
                     key = key.capitalize();
@@ -364,7 +366,7 @@ function deleteOffer() {
         url: '/api/taker/add_offers/' + oferid,
         type: 'post',
         success: function () {
-            alert("OK")
+            $('#s_message').slideDown({opacity: "show"}, "slow");
         }
     });
 }

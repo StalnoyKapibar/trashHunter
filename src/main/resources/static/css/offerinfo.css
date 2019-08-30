@@ -1,0 +1,51 @@
+.offerinfo-container {
+    width: 350px;
+    /*height: 1000px;*/
+    margin: 10px 0 0 10px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.offerinfo-open-btn {
+    height: 50px;
+    width: inherit;
+    font-size: 20px;
+    cursor: pointer;
+    /*position: inherit;*/
+    background-color: #4d90fe;
+    color: white;
+    padding: 0px;
+    border: none;
+    outline: 0 !important;
+}
+
+.offerinfo {
+    width: inherit;
+    position: relative;
+    z-index: inherit;
+    height: 0;
+    top: 0;
+    left: 0;
+    background-color: #4d90fe;
+    overflow-x: hidden;
+    transition: 0.5s;
+    font-size: 16px;
+    /*padding-top: 60px;*/
+}
+
+.offerinfo-open-btn:hover {
+    background-color: #285196;
+}
+
+#offerinfo-container a {
+    padding: 5px 5px 5px 5px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
