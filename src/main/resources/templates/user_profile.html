@@ -87,7 +87,7 @@
                                                 </div>
                                                 <div th:if="!${isHolder}">
                                                     <!--need to be done-->
-                                                    <a href="#" class="btn btn-info btn-icon " target="_blank">
+                                                    <a th:href="'/chat/' + ${user.getId()}" class="btn btn-info btn-icon">
                                                         <span class="icon"><i class="fas fa-comments"></i></span>чат</a>
                                                 </div>
                                             </div>
@@ -147,16 +147,14 @@
                                                                     <label><b>Дополнительная информация</b></label>
                                                                     <textarea
                                                                             style="background-color: white; resize: none;"
-                                                                            readonly class="form-control" rows="5"
+                                                                            readonly disabled class="form-control" rows="5"
                                                                             th:field="${user.aboutUser}">не указана</textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </form>
-
                                         </div>
                                     </div>
                                 </div>
