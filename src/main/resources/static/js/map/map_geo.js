@@ -143,6 +143,8 @@ function drawPoints(data) {
         } else {
             url = "/img/blank.png";
         }
+
+        if (offer.offerStatus !='COMPLETE') {
         let marker = new google.maps.Marker({
             position: {lat: offer.coordinates.latitude, lng: offer.coordinates.longitude},
             map: map,
@@ -182,7 +184,7 @@ function drawPoints(data) {
                 linkToChatFromTaker.href="/chat/?partnerId=" + offer.sender.id + "&offerId=" + offer.id;
                 $('#linkToChatFromTaker').show();
             }
-        });
+        });}
     });
 }
 
