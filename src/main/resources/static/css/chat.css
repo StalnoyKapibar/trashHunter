@@ -323,6 +323,7 @@ button.accent {
 
 /*Sidebar*/
 #sidebar-container {
+    width: 200px;
     position: absolute;
     min-height: 100%;
     margin-left: -15rem;
@@ -332,9 +333,16 @@ button.accent {
     transition: margin .25s ease-out;
 }
 
+.sidebar-companions {
+    height: 540px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
 #sidebar-container .sidebar-heading {
     padding: 0.875rem 1.25rem;
     font-size: 1.2rem;
+    font-weight: bold;
 }
 
 #sidebar-container .list-group {

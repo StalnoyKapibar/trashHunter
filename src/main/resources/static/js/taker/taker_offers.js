@@ -104,7 +104,7 @@ function getTable(data) {
                     offerRow+=  '<div class="card-body" style="background-color: papayawhip">';
                 }
                 offerRow+= '<div class="row" style="margin-bottom: 1%">' +
-                '<div class="col-sm-1"></div>' +
+                // '<div class="col-sm-1"></div>' +
                 '<div class="input-group col-sm-4">' +
                 '<div class="input-group-prepend">' +
                 '<a href="/profile/' + offer.sender.id + '" class="btn-image" ' +
@@ -125,7 +125,7 @@ function getTable(data) {
             if (offer.offerStatus == 'TAKEN') {
                 offerRow += '<button class="btn btn-primary btn-icon "' +
                     'onclick="rateSender(' + offer.id + ', ' + offer.sender.id + ', \'' + offer.sender.name +'\')">' +
-                    '<span class="icon"><i class="fas fa-truck-loading"></i></span>мусор вывезен' +
+                    '<span class="icon"><i class="fas fa-truck-loading"></i></span>завершить' +
                     '</button>';
             }
             if (offer.offerStatus == 'ACTIVE') {
@@ -193,7 +193,7 @@ function getModalWindow() {
         "                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>\n" +
         "                </div>\n" +
         "                <div class=\"modal-body\">\n" +
-        "                    <p>Оцени этого уважаемого пидора</p>\n" +
+        "                    <p>Оцените работу партнёра</p>\n" +
         "                    <div class='rating-stars text-center'>\n" +
         "                       <ul id='stars'>\n" +
         "                         <li class='star' title='Poor' data-value='1'>\n" +

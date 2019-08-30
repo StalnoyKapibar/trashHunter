@@ -128,7 +128,7 @@ function createInfoOfferTable(tableID) {
 
 function setMarkers() {
     $.ajax({
-        url: "/api/offer",
+        url: "/api/offer/activeAndOpen",
         dataType: "json",
         type: "GET",
         contentType: "application/json; charset=utf-8",
@@ -232,9 +232,9 @@ function drawPoints(data) {
                         key = 'Статус:';
                     } else if (key == 'IsSorted') {
                         if (value == 'true') {
-                            value = "Рассортирован"
+                            value = "Есть"
                         } else {
-                            value = "Неотсортирован"
+                            value = "Нет"
                         }
                         key = 'Сортировка:';
                     }
