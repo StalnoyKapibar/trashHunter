@@ -1,11 +1,14 @@
 package org.bootcamp.trashhunter.controllers.rest;
 
 import org.bootcamp.trashhunter.models.Offer;
+import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
+import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +19,8 @@ public class TakerRestController {
     @Autowired
     OfferService offerService;
 
+    @Autowired
+    UserService userService;
     @PostMapping("/my_offers")
     public List<Offer> getOffersWithFilterMap(@RequestBody(required = false) Map<String, Object> map) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -23,5 +28,13 @@ public class TakerRestController {
             return offerService.getOffersByTaker(email);
         }
         return offerService.getFilterOffersForTaker(map, email);
+    }
+
+    @PostMapping("/add_offers/{offerId}")
+    public void addOfferToTaker(@PathVariable Long offerId, Principal principal) {
+        String name = principal.getName();
+        User user = userService.findByEmail(name);
+        long takerId = user.getId();
+        offerService.takingOfferByTaker(takerId, offerId);
     }
 }

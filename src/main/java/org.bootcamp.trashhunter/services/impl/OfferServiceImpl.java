@@ -58,6 +58,17 @@ public class OfferServiceImpl extends AbstractServiceImpl<Offer> implements Offe
     }
 
     @Override
+    public void takingOfferByTaker(Long takerId, Long offerId) {
+        Offer offer = offerDao.getById(offerId);
+        offer.setOfferStatus(OfferStatus.ACTIVE);
+        List<Taker> takers = offer.getRespondingTakers();
+        takers.add(takerService.getById(takerId));
+        offer.setRespondingTakers(takers);
+        offerDao.update(offer);
+
+    }
+
+    @Override
     public Map<Offer,List<Taker>> getOffersBySenderIdActiveFirst(String email) {
         return offerDao.getOffersBySenderIdActiveFirst(email);
     }
