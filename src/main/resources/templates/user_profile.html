@@ -145,10 +145,9 @@
                                                             <div class="col mb-3">
                                                                 <div class="form-group">
                                                                     <label><b>Дополнительная информация</b></label>
-                                                                    <textarea
-                                                                            style="background-color: white; resize: none;"
-                                                                            readonly disabled class="form-control" rows="5"
-                                                                            th:field="${user.aboutUser}">не указана</textarea>
+                                                                    <p th:text="${user.aboutUser}"
+                                                                       style="text-align: left">
+                                                                    </p>
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -29,6 +29,9 @@ public class UserProfileController {
 
     @GetMapping("/profile/{id}")
     public String getUserPage(@PathVariable("id") long id, Model model, Principal principal) {
+        if (principal == null) {
+            return "error";
+        }
         User userFromSession = userService.findByEmail(principal.getName());
         StaticticsDto staticticsDto = null;
         if (id == userFromSession.getId()) {
