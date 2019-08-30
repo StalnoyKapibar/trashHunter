@@ -79,8 +79,8 @@ function getTable(data) {
                 ' объем: ' + offer.volume + 'м³ ' +
                 ' цена: ' + offer.price + 'руб ';
                 offerRow += ' тип мусора: ';
-                if (offer.trashType == 'METAL') { offerRow+='Метал';}
-                if (offer.trashType == 'FOOD') { offerRow+='Оходы';}
+                if (offer.trashType == 'METAL') { offerRow+='Металл';}
+                if (offer.trashType == 'FOOD') { offerRow+='Отходы';}
                 if (offer.trashType == 'WOOD') { offerRow+='Дерево';}
                 if (offer.trashType == 'GLASS') { offerRow+='Стекло';}
                 if (offer.trashType == 'PAPER') { offerRow+='Бумага';}
