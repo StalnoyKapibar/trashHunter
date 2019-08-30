@@ -1,17 +1,12 @@
 package org.bootcamp.trashhunter.config;
 
-import org.bootcamp.trashhunter.models.Sender;
-import org.bootcamp.trashhunter.models.OfferStatus;
-import org.bootcamp.trashhunter.models.Offer;
-import org.bootcamp.trashhunter.models.Taker;
-import org.bootcamp.trashhunter.models.TrashType;
-import org.bootcamp.trashhunter.models.UserFavorites;
-import org.bootcamp.trashhunter.models.Statistics;
+import org.bootcamp.trashhunter.models.*;
 import org.bootcamp.trashhunter.models.embedded.Coordinates;
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.bootcamp.trashhunter.services.abstraction.SenderService;
 import org.bootcamp.trashhunter.services.abstraction.TakerService;
 import org.bootcamp.trashhunter.services.abstraction.UserService;
+import org.bootcamp.trashhunter.services.abstraction.VoteService;
 import org.bootcamp.trashhunter.services.impl.UserFavoritesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -37,11 +32,15 @@ public class InitData {
     @Autowired
     UserService userService;
 
+    @Autowired
+    VoteService voteService;
+
     private void init() {
         initSenders();
         initTakers();
         initRandomOffers(40);
         initUserFavorites();
+        initVotes();
     }
 
     private void initUserFavorites() {
@@ -159,6 +158,22 @@ public class InitData {
                 randomOffer.setRespondingTakers(takers);
             }
             offerService.add(randomOffer);
+        }
+    }
+
+    private void initVotes() {
+        Vote vote;
+        for (int i=5; i<=7; i++) {
+            vote = new Vote(i, 4, Math.random() > 0.5);
+            voteService.add(vote);
+            vote = new Vote(4, i, Math.random() > 0.5);
+            voteService.add(vote);
+            for (int j=1; j<=3; j++) {
+                vote = new Vote(i, j, Math.random() > 0.35);
+                voteService.add(vote);
+                vote = new Vote(j, i, Math.random() > 0.35);
+                voteService.add(vote);
+            }
         }
     }
 }
