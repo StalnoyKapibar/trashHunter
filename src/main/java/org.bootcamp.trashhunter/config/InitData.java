@@ -1,5 +1,6 @@
 package org.bootcamp.trashhunter.config;
 
+import com.github.javafaker.Faker;
 import org.bootcamp.trashhunter.models.Sender;
 import org.bootcamp.trashhunter.models.OfferStatus;
 import org.bootcamp.trashhunter.models.Offer;
@@ -15,8 +16,7 @@ import org.bootcamp.trashhunter.services.impl.UserFavoritesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class InitData {
 
@@ -35,10 +35,13 @@ public class InitData {
 	@Autowired
 	UserService userService;
 
+    private Faker faker = new Faker(new Locale("ru"));
+
+
     private void init() {
         initSenders();
         initTakers();
-        initRandomOffers(40);
+        initRandomOffers(100);
 		initUserFavorites();
     }
 
@@ -61,25 +64,49 @@ public class InitData {
 
     private void initSenders() {
         Sender sender1 = new Sender("sender1@mail.ru", "Михаил А.", "sender1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("mixa.jpg"));
+        sender1.setAddress(faker.address().streetName());
+        sender1.setAboutUser(faker.hipster().word());
         senderService.add(sender1);
         Sender sender2 = new Sender("sender2@mail.ru", "Максим В.", "sender2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("max.jpg") );
+        sender2.setAddress(faker.address().streetName());
         senderService.add(sender2);
         Sender sender3 = new Sender("sender3@mail.ru", "Иван Ф.", "sender3", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("ivan.jpg"));
+        sender3.setAddress(faker.address().streetName());
         senderService.add(sender3);
         Sender sender4 = new Sender("sender4@mail.ru", "Юрий П.", "sender4", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("iura.jpg"));
+        sender4.setAddress(faker.address().streetName());
         senderService.add(sender4);
+        for (int i = 0; i < 15; i++) {
+            Sender sender = new Sender("send" + i + "mail.ru",faker.name().firstName() + " " + faker.name().lastName(),
+                    "sender" + i, LocalDate.now(),"Viborg, Russia",
+                    userService.extractBytesDefaultAvatar("l" + i + ".jpg"));
+                    sender.setAddress(faker.address().streetAddress());
+                    sender.setAboutUser(faker.lebowski().quote());
+                    senderService.add(sender);
+        }
     }
 
     private void initTakers() {
         Taker taker1 = new Taker("taker1@mail.ru", "Юра З.", "taker1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("yura.jpg"));
+        taker1.setAddress(faker.address().streetName());
         takerService.add(taker1);
         Taker taker2 = new Taker("taker2@mail.ru", "Матвей О.", "taker2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("matey.jpg"));
+        taker2.setAddress(faker.address().streetName());
         takerService.add(taker2);
         Taker taker3 = new Taker("taker3@mail.ru", "Денис Т.", "taker3", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("denis.jpg"));
+        taker3.setAddress(faker.address().streetName());
         takerService.add(taker3);
+        for (int i = 0; i < 15; i++) {
+            Taker taker = new Taker("take" + i + "mail.ru",faker.name().firstName() + " " + faker.name().lastName(),
+                                    "taker" + i, LocalDate.now(),"Viborg, Russia",
+                                    userService.extractBytesDefaultAvatar(i+".jpg"));
+
+              taker.setAddress(faker.address().streetName());
+              takerService.add(taker);
+        }
 //        Taker taker4 = new Taker("taker4@mail.ru", "Владислав Ы.", "taker4", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("vlad.png"));
 //        takerService.add(taker4);
-    }
+  }
 
     private void initRandomOffers(int quantity) {
         double seed;
@@ -118,18 +145,27 @@ public class InitData {
             randomVolume = (long) (seed * maxVolume);
             randomPrice = (long) (seed * maxPrice);
             randomTrashType = TrashType.getRandom();
-            randomIsSorted = seed < 0.5;
+            randomIsSorted = seed < 0.8;
             randomStatus = OfferStatus.getRandom();
             randomDate = LocalDateTime.now();
             randomDescription = "this is offer number " + i;
             randomLatitude = minLatitude + seed * (maxLatitude - minLatitude);
             randomLongitude = minLongitude + seed1 * (maxLongitude - minLongitude);
             randomCoordinates = new Coordinates(randomLatitude, randomLongitude);
+            Random random = new Random();
 
             Offer randomOffer = new Offer(randomSender, randomWeight, randomVolume, randomPrice, randomTrashType,
                     randomIsSorted, randomStatus, randomDate, randomDescription, randomCoordinates);
             if (randomOffer.getOfferStatus().equals(OfferStatus.ACTIVE)) {
-                randomOffer.setRespondingTakers(takerService.getAll());
+
+                List<Taker> allTakers = takerService.getAll();
+                Collections.shuffle(allTakers);
+                List<Taker> takersForRandomOffer = new ArrayList<>();
+                for (int j = 0; j < 6; j++) {
+                    takersForRandomOffer.add(allTakers.get(j));
+
+                }
+                randomOffer.setRespondingTakers(takersForRandomOffer);
             }
             if (randomOffer.getOfferStatus().equals(OfferStatus.TAKEN)){
                 List<Taker> takers = new ArrayList<>();
