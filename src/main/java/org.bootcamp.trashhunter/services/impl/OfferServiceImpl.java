@@ -3,7 +3,12 @@ package org.bootcamp.trashhunter.services.impl;
 import org.bootcamp.trashhunter.dao.abstraction.OfferDao;
 
 import org.bootcamp.trashhunter.dao.abstraction.StatisticsDao;
-import org.bootcamp.trashhunter.models.*;
+import org.bootcamp.trashhunter.models.Offer;
+import org.bootcamp.trashhunter.models.OfferStatus;
+import org.bootcamp.trashhunter.models.Sender;
+import org.bootcamp.trashhunter.models.Taker;
+import org.bootcamp.trashhunter.models.User;
+import org.bootcamp.trashhunter.models.Statistics;
 import org.bootcamp.trashhunter.services.AbstractServiceImpl;
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.bootcamp.trashhunter.services.abstraction.TakerService;
