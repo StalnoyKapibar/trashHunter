@@ -76,7 +76,7 @@ public class OfferDaoImpl extends AbstractDAOImpl<Offer> implements OfferDao {
     public Map<Offer, List<Taker>> getOffersBySenderIdActiveFirst(String email) {
         Map<Offer, List<Taker>> map = new LinkedHashMap<>();
         List<Offer> offers = entityManager
-                .createQuery("SELECT o FROM Offer o WHERE o.sender.email = :email ORDER BY FIELD (o.offerStatus,'ACTIVE','TAKEN','OPEN','COMPLETE')", Offer.class)
+                .createQuery("SELECT o FROM Offer o JOIN o.respondingTakers t WHERE o.sender.email = :email ORDER BY FIELD (o.offerStatus,'ACTIVE','TAKEN','OPEN','COMPLETE'), t.email", Offer.class)
                 .setParameter("email", email)
                 .getResultList();
         for (Offer offer : offers) {
