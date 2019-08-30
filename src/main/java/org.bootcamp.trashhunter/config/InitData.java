@@ -47,7 +47,7 @@ public class InitData {
     private void init() {
         initSenders();
         initTakers();
-        initRandomOffers(100);
+      //  initRandomOffers(100);
 		initUserFavorites();
         initRandomOffers(40);
         initUserFavorites();

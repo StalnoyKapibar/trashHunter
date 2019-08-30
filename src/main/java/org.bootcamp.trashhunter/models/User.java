@@ -34,18 +34,19 @@ public abstract class User {
     private String city;
 
     @Lob
+    @JsonIgnore
     @Column(name = "pic")
     private byte[] pic;
 
     @Column
-    String phoneNumber;
+    private String phoneNumber;
 
     @Column
-    String address;
+    private String address;
 
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    Statistics statistics;
+    private Statistics statistics;
 
     @Column
     private boolean enabled;
