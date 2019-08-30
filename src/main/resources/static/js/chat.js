@@ -1,6 +1,7 @@
 var nameInput = $('#name');
 var roomInput = $('#room-id');
 var offerId = $('#offerId');
+var companionId = $('#companionId');
 var usernamePage = document.querySelector('#username-page');
 var chatPage = document.querySelector('#chat-page');
 var usernameForm = document.querySelector('#usernameForm');
@@ -112,7 +113,7 @@ function enterRoom(newRoomId) {
         JSON.stringify({sender: username, type: 'JOIN'})
     );
 
-    setChatHeader(newRoomId.split('_')[0], newRoomId.split('_')[1]);
+    setChatHeader(companionId.val());
     showPreviousMessages(newRoomId.split('_')[0], newRoomId.split('_')[1]);
     showOffer();
 }
@@ -229,8 +230,7 @@ function getAvatarColor(message) {
     }
 }
 
-function setChatHeader(ownerId, companionId) {
-    ownerName = getUserNameById(ownerId);
+function setChatHeader(companionId) {
     companionName = getUserNameById(companionId);
     roomIdDisplay.textContent = companionName ? companionName + ", заказ " + offerId.val() : "Выберите собеседника";
     // roomIdDisplay.textContent = (takerEmail && senderEmail) ? takerEmail + "-" + senderEmail : "Выберите собеседника";
