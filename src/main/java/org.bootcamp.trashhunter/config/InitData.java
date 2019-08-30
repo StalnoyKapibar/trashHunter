@@ -62,7 +62,7 @@ public class InitData {
     }
 
     private void initSenders() {
-        Statistics s1 = new Statistics(10, 50, 12, 240);
+        Statistics s1 = new Statistics(0, 0, 0, 0);
         Statistics s2 = new Statistics(20, 100, 28, 860);
         Statistics s3 = new Statistics(30, 200, 22, 121);
         Statistics s4 = new Statistics(300, 2000, 2203, 1211);
@@ -81,7 +81,7 @@ public class InitData {
     }
 
     private void initTakers() {
-        Statistics s1 = new Statistics(10, 50, 12, 240);
+        Statistics s1 = new Statistics(0, 0, 0, 0);
         Statistics s2 = new Statistics(20, 100, 28, 860);
         Statistics s3 = new Statistics(30, 200, 22, 121);
 

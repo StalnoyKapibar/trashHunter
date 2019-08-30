@@ -1,6 +1,7 @@
 package org.bootcamp.trashhunter.controllers;
 
 import org.bootcamp.trashhunter.models.Sender;
+import org.bootcamp.trashhunter.models.Statistics;
 import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.token.VerificationToken;
@@ -44,6 +45,7 @@ public class RegistrationController {
         } else if ("SENDER".equals(role)) {
             registeredUser = new Sender(email, name, password, LocalDate.now() ,city, pic);
         }
+        registeredUser.setStatistics(new Statistics(0,0,0,0));
         userService.add(registeredUser);
         verificationTokenService.sendToken(registeredUser);
         model.addAttribute("isSuccess", true);
