@@ -95,7 +95,7 @@ function getTable() {
                     }
                     if (key == "trashType") {
                         offerRow += ' тип мусора: ';
-                            if (value == 'METAL') { offerRow+='Метал';}
+                            if (value == 'METAL') { offerRow+='Металл';}
                             if (value == 'FOOD') { offerRow+='Отходы';}
                             if (value == 'WOOD') { offerRow+='Дерево';}
                             if (value == 'GLASS') { offerRow+='Стекло';}

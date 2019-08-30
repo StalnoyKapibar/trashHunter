@@ -20,3 +20,8 @@ function resend() {
         }
     });
 };
+
+function showButton() {
+    $("#div1").hide();
+    $(".dropdown-toggle").next().toggle();
+}
