@@ -22,7 +22,7 @@ public class StaticticsDto {
         this.numOfRatings = numOfRatings;
         this.summaryScore = summaryScore;
         this.numOfDeals = numOfDeals;
-        this.rating = summaryScore / numOfDeals;
+        this.rating = summaryScore / numOfRatings;
         this.summaryWeight = summaryWeight;
     }
 

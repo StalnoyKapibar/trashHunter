@@ -5,30 +5,49 @@ $(document).ready(function () {
 });
 
 function isStar(rating) {
-    if (rating >= 1 && rating <= 2) {
+    if (rating <= 1) {
+        $("#stars").append("<span class=\"fa fa-star\"></span>\n" +
+            "                                <span class=\"fa fa-star\"></span>\n" +
+            "                                <span class=\"fa fa-star\"></span>\n" +
+            "                                <span class=\"fa fa-star\"></span>\n" +
+            "                                <span class=\"fa fa-star\"></span>");
+    } else if (rating > 1 && rating <= 1.5) {
         $("#stars").append("<span class=\"fa fa-star checked\"></span>\n" +
-            "                                <span class=\"fa fa-star checked\"></span>\n" +
+            "                                <span class=\"fa fa-star\"></span>\n" +
             "                                <span class=\"fa fa-star\"></span>\n" +
             "                                <span class=\"fa fa-star\"></span>\n" +
             "                                <span class=\"fa fa-star\"></span>")
-    } else if (rating >= 2 && rating <= 3) {
+    } else if (rating > 1.5  && rating <= 2.5) {
+        $("#stars").append("<span class=\"fa fa-star checked\"></span>\n" +
+            "                                <span class=\"fa fa-star checked\"></span>\n" +
+            "                                <span class=\"fa fa-star\"></span>\n" +
+            "                                <span class=\"fa fa-star\"></span>\n" +
+            "                                <span class=\"fa fa-star\"></span>");
+    } else if (rating > 2.5 && rating <= 3.5) {
         $("#stars").append("<span class=\"fa fa-star checked\"></span>\n" +
             "                                <span class=\"fa fa-star checked\"></span>\n" +
             "                                <span class=\"fa fa-star checked\"></span>\n" +
             "                                <span class=\"fa fa-star\"></span>\n" +
             "                                <span class=\"fa fa-star\"></span>");
-    } else if (rating >= 3 && rating <= 4) {
+    } else if (rating > 3.5 && rating <= 4.5)  {
         $("#stars").append("<span class=\"fa fa-star checked\"></span>\n" +
             "                                <span class=\"fa fa-star checked\"></span>\n" +
             "                                <span class=\"fa fa-star checked\"></span>\n" +
             "                                <span class=\"fa fa-star checked\"></span>\n" +
             "                                <span class=\"fa fa-star\"></span>");
-    } else {
+    } else if (rating > 4.5 && rating <= 5) {
         $("#stars").append("<span class=\"fa fa-star checked\"></span>\n" +
             "                                <span class=\"fa fa-star checked\"></span>\n" +
             "                                <span class=\"fa fa-star checked\"></span>\n" +
             "                                <span class=\"fa fa-star checked\"></span>\n" +
             "                                <span class=\"fa fa-star checked\"></span>");
+    } else {
+        $("#stars").append("<span class=\"fa fa-star\"></span>\n" +
+        "                                <span class=\"fa fa-star\"></span>\n" +
+        "                                <span class=\"fa fa-star\"></span>\n" +
+        "                                <span class=\"fa fa-star\"></span>\n" +
+        "                                <span class=\"fa fa-star\"></span>");
+
     }
 }
 

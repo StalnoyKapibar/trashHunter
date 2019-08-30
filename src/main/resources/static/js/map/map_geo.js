@@ -131,7 +131,7 @@ function createInfoOfferTable(tableID) {
 
 function setMarkers() {
     $.ajax({
-        url: "/api/offer",
+        url: "/api/offer/activeAndOpen",
         dataType: "json",
         type: "GET",
         contentType: "application/json; charset=utf-8",

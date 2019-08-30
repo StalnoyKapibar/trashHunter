@@ -1,6 +1,7 @@
 package org.bootcamp.trashhunter.controllers.rest;
 
 import org.bootcamp.trashhunter.models.Offer;
+import org.bootcamp.trashhunter.models.OfferStatus;
 import org.bootcamp.trashhunter.models.Statistics;
 import org.bootcamp.trashhunter.models.dto.StaticticsDto;
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/offer")
@@ -28,6 +30,15 @@ public class OfferRestController {
     @GetMapping
     public List<Offer> getMeeting() {
         return offerService.getAll();
+    }
+
+    @GetMapping("/activeAndOpen")
+    public List<Offer> getActiveAndOpenOffers() {
+        List<Offer> allOffersList = offerService.getAll();
+        return allOffersList.stream()
+                .filter(offer -> !offer.getOfferStatus().equals(OfferStatus.COMPLETE))
+                .filter(offer -> !offer.getOfferStatus().equals(OfferStatus.TAKEN))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/confirmOffer/{takerId}/{offerId}")

@@ -119,20 +119,13 @@ public class ChatController {
         User chatOwner = userService.findByEmail(principal.getName());
         long ownerId = chatOwner.getId();
         String role = authentication.getAuthorities().iterator().next().getAuthority();
+        model.addAttribute("username", principal.getName());
         if (role.equals("Taker")) {
-            model.addAttribute("username", principal.getName());
             model.addAttribute("chatRoom", ownerId + "_" + companionId);
         } else if (role.equals("Sender")) {
-            model.addAttribute("username", principal.getName());
             model.addAttribute("chatRoom", companionId + "_" + ownerId);
         }
-        /*        if (role.equals("Taker")) {
-            model.addAttribute("username", principal.getName());
-            model.addAttribute("chatRoom", ownerId + "_" + companionId);
-        } else if (role.equals("Sender")) {
-            model.addAttribute("username", principal.getName());
-            model.addAttribute("chatRoom", companionId + "_" + ownerId);
-        }*/
+
         model.addAttribute("companionId", companionId);
         model.addAttribute("chatOwner", chatOwner);
         Map<User, Collection<Offer>> companionsWithOffersMap = getCompanionsWithOffers(chatOwner);
