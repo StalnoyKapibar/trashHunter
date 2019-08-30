@@ -15,152 +15,175 @@
 </head>
 <body>
 <div layout:fragment="content">
-<div class="container">
-    <div class="row flex-lg-nowrap">
-        <div class="col-12 col-lg-auto mb-3" style="width: 220px;">
-            <div th:if="${isHolder}" class="card p-3">
-                <div class="e-navlist e-navlist--active-bg">
-                    <ul class="nav">
-                        <li class="nav-item"><a class="nav-link px-2 active" href="#"><i class="fa fa-fw fa-bar-chart mr-1"></i><span>Overview</span></a></li>
-                        <li class="nav-item"><a class="nav-link px-2" href="#"><i class="fa fa-fw fa-th mr-1"></i><span>CRUD</span></a></li>
-                        <li class="nav-item"><a class="nav-link px-2" th:href="@{/profile/edit/{id}(id = ${user.id})}"><i class="fa fa-fw fa-cog mr-1"></i><span>Настройки</span></a></li>
-                    </ul>
+    <div class="container">
+        <div class="row flex-lg-nowrap">
+            <div class="col-12 col-lg-auto mb-3" style="width: 220px;">
+                <div th:if="${isHolder}" class="card p-3">
+                    <div class="e-navlist e-navlist--active-bg">
+                        <ul class="nav">
+                            <li class="nav-item"><a class="nav-link px-2 active" href="#"><i
+                                    class="fa fa-fw fa-bar-chart mr-1"></i><span>Overview</span></a></li>
+                            <li class="nav-item"><a class="nav-link px-2" href="#"><i
+                                    class="fa fa-fw fa-th mr-1"></i><span>CRUD</span></a></li>
+                            <li class="nav-item"><a class="nav-link px-2"
+                                                    th:href="@{/profile/edit/{id}(id = ${user.id})}"><i
+                                    class="fa fa-fw fa-cog mr-1"></i><span>Настройки</span></a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <!--<div class="card" style="height: 33rem;">-->
+                <!--<div class="card" style="height: 33rem;">-->
                 <!--<div class="card-body">-->
-                    <!--<h6 class="card-title font-weight-bold">Советы по безопасности</h6>-->
-                    <!--<p class="card-text">Вместо <b>trashhunter.ru</b> вполне можно увидеть <b>trashunter.ru</b> или даже <b>trashhhunter.ru</b>: разница всего в одной букве, и многие этого даже не замечают.-->
-                        <!--Если вы проследуете по этой ссылке, то в худшем случае можете подцепить серьезный вирус, а в лучшем – просто лишитесь своего аккаунта на сайте.</p>-->
+                <!--<h6 class="card-title font-weight-bold">Советы по безопасности</h6>-->
+                <!--<p class="card-text">Вместо <b>trashhunter.ru</b> вполне можно увидеть <b>trashunter.ru</b> или даже <b>trashhhunter.ru</b>: разница всего в одной букве, и многие этого даже не замечают.-->
+                <!--Если вы проследуете по этой ссылке, то в худшем случае можете подцепить серьезный вирус, а в лучшем – просто лишитесь своего аккаунта на сайте.</p>-->
                 <!--</div>-->
-            <!--</div>-->
+                <!--</div>-->
 
-        </div>
+            </div>
 
-        <div class="col">
-            <div class="row">
-                <div class="col mb-9" >
-                    <div class="card">
-                        <div class="card-body" >
-                            <div class="e-profile">
-                                <div class="row">
-                                    <div class="col-12 col-sm-auto mb-3">
-                                        <div class="mx-auto" style="width: 140px;">
-                                            <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
-                                                <img th:src="@{/image/avatar/{id} (id = ${user.getId()})}" height="160" width="160" class="img-circle profile-avatar" />
+            <div class="col">
+                <div class="row">
+                    <div class="col mb-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="e-profile">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-auto mb-3">
+                                            <div class="mx-auto" style="width: 140px;">
+                                                <div class="d-flex justify-content-center align-items-center rounded"
+                                                     style="height: 140px; background-color: rgb(233, 236, 239);">
+                                                    <img th:src="@{/image/avatar/{id} (id = ${user.getId()})}"
+                                                         height="160" width="160" class="img-circle profile-avatar"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                                            <div class="text-center text-sm-left mb-2 mb-sm-0">
+                                                <h4 class="pb-1 mb-0 text-nowrap"><span th:text="${user.name}"></span>
+                                                </h4>
+                                                <p class="mb-0"><span th:text="${user.email}"></span></p>
+                                                <div><br/></div>
+                                                <div class="text-center text-sm-center">
+                                                    <span hidden id="currentProfileId" th:text="${user.id}"></span>
+                                                    <i class="fas fa-thumbs-up like" style="color:black;font-size:24px"
+                                                       th:onclick="'putLike(' + ${user.getId()} + ', true)'"></i>
+                                                    <i class="fas fa-thumbs-down dislike"
+                                                       style="color:black;font-size:24px"
+                                                       th:onclick="'putLike(' + ${user.getId()} + ', false)'"></i>
+                                                    <div class="text-muted">
+                                                        <small><span id="countLike"></span></small>
+                                                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                                        <small><span id="countDislike"></span></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center text-sm-right">
+                                                <span class="badge badge-secondary"
+                                                      th:if="${user.getClass().getSimpleName()=='Sender'}">Сдатчик</span>
+                                                <span class="badge badge-secondary"
+                                                      th:if="${user.getClass().getSimpleName()=='Taker'}">Приемщик</span>
+                                                <div class="text-muted">
+                                                    <small><span th:text="${user.registrationDate}"></span></small>
+                                                </div>
+                                                <div th:if="!${isHolder}">
+                                                    <!--need to be done-->
+                                                    <a th:href="'/chat/' + ${user.getId()}" class="btn btn-info btn-icon">
+                                                        <span class="icon"><i class="fas fa-comments"></i></span>чат</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                                        <div class="text-center text-sm-left mb-2 mb-sm-0">
-                                            <h4 class="pb-1 mb-0 text-nowrap"><span th:text="${user.name}"></span></h4>
-                                            <p class="mb-0"><span th:text="${user.email}"></span></p>
-                                            <div><br/></div>
-                                            <div class="text-center text-sm-center">
-                                            <span hidden id="currentProfileId" th:text="${user.id}"></span>
-                                            <i class="fas fa-thumbs-up like" style="color:black;font-size:24px" th:onclick="'putLike(' + ${user.getId()} + ', true)'" ></i>
-                                            <i class="fas fa-thumbs-down dislike" style="color:black;font-size:24px" th:onclick="'putLike(' + ${user.getId()} + ', false)'" ></i>
-                                            <div class="text-muted"><small><span id="countLike" ></span></small><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                            <small><span id="countDislike"></span></small></div>
-                                            </div>
-                                        </div>
-                                        <div class="text-center text-sm-right">
-                                            <span class="badge badge-secondary" th:if="${user.getClass().getSimpleName()=='Sender'}">Сдатчик</span>
-                                            <span class="badge badge-secondary" th:if="${user.getClass().getSimpleName()=='Taker'}">Приемщик</span>
-                                            <div class="text-muted"><small><span th:text="${user.registrationDate}"></span></small></div>
-                                            <div th:if="!${isHolder}">
-                                                <!--need to be done-->
-                                                <a href="#" class="btn btn-info btn-icon " target="_blank">
-                                            <span class="icon"><i class="fas fa-comments"></i></span>чат</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <ul class="nav nav-tabs">
-                                    <li class="nav-item"><a href="" class="active nav-link">Информация пользователя</a></li>
-                                </ul>
-<!--                                <div sec:authorize="hasAuthority('Sender')">-->
-<!--                                    <ul class="nav nav-tabs">-->
-<!--                                        <li class="nav-item"><a href="" class="active nav-link">Информация пользователя</a></li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-                                <div class="tab-content pt-3">
-                                    <div class="tab-pane active">
-                                        <form class="form" novalidate="">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="row">
-                                                        <div class="col"  style="height:50px;" >
-                                                            <div class="form-group">
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <label><b>Полное имя</b></label>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <label><p><span th:text="${user.name}"></span></p></label>
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item"><a href="" class="active nav-link">Информация
+                                            пользователя</a></li>
+                                    </ul>
+                                    <!--                                <div sec:authorize="hasAuthority('Sender')">-->
+                                    <!--                                    <ul class="nav nav-tabs">-->
+                                    <!--                                        <li class="nav-item"><a href="" class="active nav-link">Информация пользователя</a></li>-->
+                                    <!--                                    </ul>-->
+                                    <!--                                </div>-->
+                                    <div class="tab-content pt-3">
+                                        <div class="tab-pane active">
+                                            <form class="form" novalidate="">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="row">
+                                                            <div class="col" style="height:50px;">
+                                                                <div class="form-group">
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <label><b>Полное имя</b></label>
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <label><p><span
+                                                                                    th:text="${user.name}"></span></p>
+                                                                            </label>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row"  style="height:50px;">
-                                                        <div class="col-md-6">
-                                                            <label><b>Номер телефона</b></label>
+                                                        <div class="row" style="height:50px;">
+                                                            <div class="col-md-6">
+                                                                <label><b>Номер телефона</b></label>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label><p><span
+                                                                        th:text="${user.phoneNumber}">Не указан</span>
+                                                                </p></label>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <label><p><span th:text="${user.phoneNumber}">Не указан</span></p></label>
+                                                        <div class="row" style="height:50px;">
+                                                            <div class="col-md-6">
+                                                                <label><b>Адрес проживания</b></label>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <p><span th:text="${user.address}">не указано</span></p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row" style="height:50px;">
-                                                        <div class="col-md-6">
-                                                            <label><b>Адрес проживания</b></label>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <p><span th:text="${user.address}">не указано</span></p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col mb-3">
-                                                            <div class="form-group">
-                                                                <label><b>Дополнительная информация</b></label>
-                                                                <p th:text="${user.aboutUser}" style="text-align: left; height: 150px; border:1px; border-style:solid;
-                                                                 border-color:#DCDCDC; padding: 1em;"> </p>
+                                                        <div class="row">
+                                                            <div class="col mb-3">
+                                                                <div class="form-group">
+                                                                    <label><b>Дополнительная информация</b></label>
+                                                                    <textarea
+                                                                            style="background-color: white; resize: none;"
+                                                                            readonly disabled class="form-control" rows="5"
+                                                                            th:field="${user.aboutUser}">не указана</textarea>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                        </form>
-
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-12 col-md-4 mb-3">
-                    <div class="card" style="height: 12rem;">
-                        <div class="card-body">
-                            <h6 class="card-title font-weight-bold" > Статистика</h6>
-                            <p>Сделок произведено: <strong th:text="${statistic.numOfDeals}"></strong></p>
-                            <p>Средний рейтинг: <span id="a_rating" hidden="hidden" th:text="${statistic.rating}"></span></p>
-                            <div id="stars">
+                    <div class="col-12 col-md-4 mb-3">
+                        <div class="card" style="height: 12rem;">
+                            <div class="card-body">
+                                <h6 class="card-title font-weight-bold"> Статистика</h6>
+                                <p>Сделок произведено: <strong th:text="${statistic.numOfDeals}"></strong></p>
+                                <p>Средний рейтинг: <span id="a_rating" hidden="hidden"
+                                                          th:text="${statistic.rating}"></span></p>
+                                <div id="stars">
 
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <th:block th:replace="fragments/counter_fragment:: counter"></th:block>
+                        <div class="card">
+                            <div class="card-body">
+                                <th:block th:replace="fragments/counter_fragment:: counter"></th:block>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
     <th:block th:replace="fragments/commonfragments :: scripts"></th:block>
     <script type="text/javascript" src="/js/avatar.js"></script>
     <script type="text/javascript" src="/js/star_definer.js"></script>

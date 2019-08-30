@@ -135,7 +135,7 @@ function getTable(data) {
                     '<span class="icon"><i class="fas fa-spinner"></i></span>ожидание ответа' +
                     '</button>';
             }
-            offerRow += '<a href="/chat/?partnerId=' + offer.sender.id + '&offerId=' + offer.id + '" class="btn btn-info btn-icon " >' +
+            offerRow += '<a href="/chat/' + offer.sender.id + '?offerId=' + offer.id + '" class="btn btn-info btn-icon" >' +
                 '<span class="icon"><i class="fas fa-comments"></i></span>чат' +
                 '</a>' +
                 '<div class="col-sm-1"></div>' +

@@ -54,8 +54,6 @@ function initMap() {
         marker.setVisible(false);
         let place = autocomplete.getPlace();
         if (!place.geometry) {
-            // User entered the name of a Place that was not suggested and
-            // pressed the Enter key, or the Place Details request failed.
             window.alert("По адресу ничего не найдено: '" + place.name + "'");
             return;
         }
@@ -181,7 +179,7 @@ function drawPoints(data) {
 
             let linkToChatFromTaker = document.getElementById("linkToChatFromTaker");
             if (linkToChatFromTaker) {
-                linkToChatFromTaker.href="/chat/?partnerId=" + offer.sender.id + "&offerId=" + offer.id;
+                linkToChatFromTaker.href="/chat/" + offer.sender.id + "?offerId=" + offer.id;
                 $('#linkToChatFromTaker').show();
             }
         });}
@@ -255,5 +253,4 @@ function setMyCoordinates() {
             'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
     }
-
 }
