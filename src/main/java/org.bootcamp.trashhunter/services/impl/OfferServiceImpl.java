@@ -58,6 +58,17 @@ public class OfferServiceImpl extends AbstractServiceImpl<Offer> implements Offe
     }
 
     @Override
+    public void takingOfferByTaker(Long takerId, Long offerId) {
+        Offer offer = offerDao.getById(offerId);
+        offer.setOfferStatus(OfferStatus.ACTIVE);
+        List<Taker> takers = offer.getRespondingTakers();
+        takers.add(takerService.getById(takerId));
+        offer.setRespondingTakers(takers);
+        offerDao.update(offer);
+
+    }
+
+    @Override
     public Map<Offer,List<Taker>> getOffersBySenderIdActiveFirst(String email) {
         return offerDao.getOffersBySenderIdActiveFirst(email);
     }
@@ -91,12 +102,16 @@ public class OfferServiceImpl extends AbstractServiceImpl<Offer> implements Offe
 
     @Override
     public void makeCompleteOfferByTaker(Long offerId){
+        List<User> users = new ArrayList<>();
         Offer offer = offerDao.getById(offerId);
-        Taker taker = offer.getRespondingTakers().get(0);
-        Statistics statistics = taker.getStatistics();
-        statistics.setNumOfDeals(statistics.getNumOfDeals()+1);
-        statistics.setSummaryWeight(statistics.getSummaryWeight()+offer.getWeight());
-        statisticsDao.update(statistics);
+        users.add(offer.getRespondingTakers().get(0));
+        users.add(offer.getSender());
+        for (User user : users) {
+            Statistics statistics = user.getStatistics();
+            statistics.setNumOfDeals(statistics.getNumOfDeals() + 1);
+            statistics.setSummaryWeight(statistics.getSummaryWeight()+offer.getWeight());
+            statisticsDao.update(statistics);
+        }
         offer.setOfferStatus(OfferStatus.COMPLETE);
         offerDao.update(offer);
     }

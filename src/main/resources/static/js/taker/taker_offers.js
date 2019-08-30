@@ -1,14 +1,12 @@
 var senderToRateId;
 var offerToRateId;
-var ratingValue;
+var ratingValue = 0;
 
 $(document).ready(function () {
    getTable(doFilter('TakerActive'));
 
     $("body").on('mouseover', '#stars li', function(){
-        var onStar = parseInt($(this).data('value'), 10); // The star currently mouse on
-
-        // Now highlight all the stars that's not after the current hovered star
+        var onStar = parseInt($(this).data('value'), 10);
         $(this).parent().children('li.star').each(function(e){
             if (e < onStar) {
                 $(this).addClass('hover');
@@ -24,23 +22,16 @@ $(document).ready(function () {
         });
     });
 
-
-    /* 2. Action to perform on click */
     $("body").on('click', '#stars li', function(){
-        var onStar = parseInt($(this).data('value'), 10); // The star currently selected
+        var onStar = parseInt($(this).data('value'), 10);
         var stars = $(this).parent().children('li.star');
-
         for (i = 0; i < stars.length; i++) {
             $(stars[i]).removeClass('selected');
         }
-
         for (i = 0; i < onStar; i++) {
             $(stars[i]).addClass('selected');
         }
-
-        // JUST RESPONSE (Not needed)
         ratingValue = parseInt($('#stars li.selected').last().data('value'), 10);
-        //responseMessage(msg);
     });
 
     $("body").on('click', '#sendRatedUser', function() {
@@ -50,7 +41,6 @@ $(document).ready(function () {
             success: function () {
                 $("#sendRatedUser").hide();
                 $("#completeOffer").hide();
-                makeCompleteOffer(offerToRateId);
             }
         });
         $("#successBlock").html("<div style='width: 300px' class=\"alert alert-success\" role=\"alert\">\n" +
@@ -60,8 +50,14 @@ $(document).ready(function () {
 
     $("body").on('click', '#completeOffer', function() {
         $("#sendRatedUser").hide();
-        makeCompleteOffer(offerToRateId);
+        $("#completeOffer").hide();
     });
+
+    $("body").on('hidden.bs.modal', "#rateOffer",  function () {
+        if ( $("#sendRatedUser").css('display') == 'none' || $("#sendRatedUser").css("visibility") == "hidden") {
+            makeCompleteOffer(offerToRateId);
+        }
+    })
 });
 
 function getTable(data) {
@@ -101,10 +97,13 @@ function getTable(data) {
                 '<i class="fas fa-window-close"></i>' +
                 '</button>' +
                 '</div>' +
-                '</div>' +
-                '<div class="card-body" style="background-color: #ffffff">' +
-
-                '<div class="row" style="margin-bottom: 1%">' +
+                '</div>';
+                if (offer.offerStatus == 'TAKEN') {
+                  offerRow+=  '<div class="card-body" style="background-color: #ffffff">';
+                } else {
+                    offerRow+=  '<div class="card-body" style="background-color: #b3ffe3">';
+                }
+                offerRow+= '<div class="row" style="margin-bottom: 1%">' +
                 '<div class="col-sm-1"></div>' +
                 '<div class="input-group col-sm-4">' +
                 '<div class="input-group-prepend">' +
@@ -125,8 +124,7 @@ function getTable(data) {
                 '</div>';
             if (offer.offerStatus == 'TAKEN') {
                 offerRow += '<button class="btn btn-primary btn-icon "' +
-                    // 'onclick="rateSender(' + offer.id + ', ' + offer.sender.id + ', \'' + offer.sender.name +'\')">' +
-                    'onclick="makeCompleteOffer(' + offer.id + ')">' +
+                    'onclick="rateSender(' + offer.id + ', ' + offer.sender.id + ', \'' + offer.sender.name +'\')">' +
                     '<span class="icon"><i class="fas fa-truck-loading"></i></span>мусор вывезен' +
                     '</button>';
             }
@@ -157,12 +155,12 @@ function doFilterInit() {
 
 function rateSender(offerId, senderId, senderName) {
     $("#sendRatedUser").show();
+    $("#completeOffer").show();
     $("#successBlock").empty();
     offerToRateId = offerId;
     senderToRateId = senderId;
     $("#takerName").text(senderName);
     $("#rateOffer").modal("show");
-    makeCompleteOffer(offerId);
 }
 
 function makeCompleteOffer(offerId) {
@@ -172,8 +170,6 @@ function makeCompleteOffer(offerId) {
         success: function () {
             $('#takerOffersTable tbody').empty();
             getTable(doFilter('TakerActive'));
-            //let offer = "#offer" + offerId;
-            // $(offer).hide();
         }
     });
 }
@@ -191,7 +187,6 @@ function cancelOffer(offerId) {
 function getModalWindow() {
     return "<div class=\"modal fade\" id=\"rateOffer\" role=\"dialog\">\n" +
         "        <div class=\"modal-dialog\">\n" +
-        "            <!-- Modal content-->\n" +
         "            <div class=\"modal-content\">\n" +
         "                <div class=\"modal-header\">\n" +
         "                    <h4 class=\"modal-title\">Оценка сдатчика <span id='takerName'></span></h4>\n" +
