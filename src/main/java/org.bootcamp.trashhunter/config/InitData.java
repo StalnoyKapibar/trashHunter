@@ -7,13 +7,16 @@ import org.bootcamp.trashhunter.models.Offer;
 import org.bootcamp.trashhunter.models.Taker;
 import org.bootcamp.trashhunter.models.TrashType;
 import org.bootcamp.trashhunter.models.UserFavorites;
+import org.bootcamp.trashhunter.models.*;
 import org.bootcamp.trashhunter.models.embedded.Coordinates;
 import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.bootcamp.trashhunter.services.abstraction.SenderService;
 import org.bootcamp.trashhunter.services.abstraction.TakerService;
 import org.bootcamp.trashhunter.services.abstraction.UserService;
+import org.bootcamp.trashhunter.services.abstraction.VoteService;
 import org.bootcamp.trashhunter.services.impl.UserFavoritesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -29,20 +32,26 @@ public class InitData {
     @Autowired
     TakerService takerService;
 
-	@Autowired
+    @Autowired
     UserFavoritesServiceImpl userFavoritesService;
 
-	@Autowired
-	UserService userService;
+    @Autowired
+    UserService userService;
 
     private Faker faker = new Faker(new Locale("ru"));
 
+
+    @Autowired
+    VoteService voteService;
 
     private void init() {
         initSenders();
         initTakers();
         initRandomOffers(100);
 		initUserFavorites();
+        initRandomOffers(40);
+        initUserFavorites();
+        initVotes();
     }
 
     private void initUserFavorites() {
@@ -63,18 +72,27 @@ public class InitData {
     }
 
     private void initSenders() {
+        Statistics s1 = new Statistics(10, 50, 12, 240);
+        Statistics s2 = new Statistics(20, 100, 28, 860);
+        Statistics s3 = new Statistics(30, 200, 22, 121);
+        Statistics s4 = new Statistics(300, 2000, 2203, 1211);
         Sender sender1 = new Sender("sender1@mail.ru", "Михаил А.", "sender1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("mixa.jpg"));
         sender1.setAddress(faker.address().streetName());
         sender1.setAboutUser(faker.hipster().word());
+        sender1.setStatistics(s1);
         senderService.add(sender1);
         Sender sender2 = new Sender("sender2@mail.ru", "Максим В.", "sender2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("max.jpg") );
         sender2.setAddress(faker.address().streetName());
+        Sender sender2 = new Sender("sender2@mail.ru", "Максим В.", "sender2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("max.jpg"));
+        sender2.setStatistics(s2);
         senderService.add(sender2);
         Sender sender3 = new Sender("sender3@mail.ru", "Иван Ф.", "sender3", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("ivan.jpg"));
         sender3.setAddress(faker.address().streetName());
+        sender3.setStatistics(s3);
         senderService.add(sender3);
         Sender sender4 = new Sender("sender4@mail.ru", "Юрий П.", "sender4", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("iura.jpg"));
         sender4.setAddress(faker.address().streetName());
+        sender4.setStatistics(s4);
         senderService.add(sender4);
         for (int i = 0; i < 15; i++) {
             Sender sender = new Sender("send" + i + "mail.ru",faker.name().firstName() + " " + faker.name().lastName(),
@@ -87,14 +105,21 @@ public class InitData {
     }
 
     private void initTakers() {
+        Statistics s1 = new Statistics(10, 50, 12, 240);
+        Statistics s2 = new Statistics(20, 100, 28, 860);
+        Statistics s3 = new Statistics(30, 200, 22, 121);
+
         Taker taker1 = new Taker("taker1@mail.ru", "Юра З.", "taker1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("yura.jpg"));
         taker1.setAddress(faker.address().streetName());
+        taker1.setStatistics(s1);
         takerService.add(taker1);
         Taker taker2 = new Taker("taker2@mail.ru", "Матвей О.", "taker2", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("matey.jpg"));
         taker2.setAddress(faker.address().streetName());
+        taker2.setStatistics(s2);
         takerService.add(taker2);
         Taker taker3 = new Taker("taker3@mail.ru", "Денис Т.", "taker3", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("denis.jpg"));
         taker3.setAddress(faker.address().streetName());
+        taker3.setStatistics(s3);
         takerService.add(taker3);
         for (int i = 0; i < 15; i++) {
             Taker taker = new Taker("take" + i + "mail.ru",faker.name().firstName() + " " + faker.name().lastName(),
@@ -106,12 +131,13 @@ public class InitData {
         }
 //        Taker taker4 = new Taker("taker4@mail.ru", "Владислав Ы.", "taker4", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("vlad.png"));
 //        takerService.add(taker4);
-  }
+    }
 
     private void initRandomOffers(int quantity) {
-        double seed;
+
         double seed1;
         double seed2;
+        double seed3;
 
         Sender randomSender;
         long randomWeight;
@@ -136,21 +162,21 @@ public class InitData {
         double minLongitude = 28.728941036284482;
 
         for (int i = 0; i < quantity; i++) {
-            seed = Math.random();
             seed1 = Math.random();
             seed2 = Math.random();
+            seed3 = Math.random();
 
-            randomSender = senderService.getById(1 + (long) (seed * numOfSenders));
-            randomWeight = (long) (seed * maxWeight);
-            randomVolume = (long) (seed * maxVolume);
-            randomPrice = (long) (seed * maxPrice);
+            randomSender = senderService.getById(1 + (long) (seed1 * numOfSenders));
+            randomWeight = (long) (seed1 * maxWeight);
+            randomVolume = (long) (seed2 * maxVolume);
+            randomPrice = (long) (seed3 * maxPrice);
             randomTrashType = TrashType.getRandom();
-            randomIsSorted = seed < 0.8;
+            randomIsSorted = seed1 < 0.5;
             randomStatus = OfferStatus.getRandom();
             randomDate = LocalDateTime.now();
             randomDescription = "this is offer number " + i;
-            randomLatitude = minLatitude + seed * (maxLatitude - minLatitude);
-            randomLongitude = minLongitude + seed1 * (maxLongitude - minLongitude);
+            randomLatitude = minLatitude + seed2 * (maxLatitude - minLatitude);
+            randomLongitude = minLongitude + seed3 * (maxLongitude - minLongitude);
             randomCoordinates = new Coordinates(randomLatitude, randomLongitude);
             Random random = new Random();
 
@@ -167,12 +193,33 @@ public class InitData {
                 }
                 randomOffer.setRespondingTakers(takersForRandomOffer);
             }
-            if (randomOffer.getOfferStatus().equals(OfferStatus.TAKEN)){
+            if (randomOffer.getOfferStatus().equals(OfferStatus.TAKEN)) {
                 List<Taker> takers = new ArrayList<>();
-                takers.add(takerService.getById(4L));
+                takers.add(takerService.getById(5L));
+                randomOffer.setRespondingTakers(takers);
+            }
+            if (randomOffer.getOfferStatus().equals(OfferStatus.COMPLETE)) {
+                List<Taker> takers = new ArrayList<>();
+                takers.add(takerService.getById(6L));
                 randomOffer.setRespondingTakers(takers);
             }
             offerService.add(randomOffer);
+        }
+    }
+
+    private void initVotes() {
+        Vote vote;
+        for (int i=5; i<=7; i++) {
+            vote = new Vote(i, 4, Math.random() > 0.5);
+            voteService.add(vote);
+            vote = new Vote(4, i, Math.random() > 0.5);
+            voteService.add(vote);
+            for (int j=1; j<=3; j++) {
+                vote = new Vote(i, j, Math.random() > 0.35);
+                voteService.add(vote);
+                vote = new Vote(j, i, Math.random() > 0.35);
+                voteService.add(vote);
+            }
         }
     }
 }

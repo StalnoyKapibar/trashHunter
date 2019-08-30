@@ -1,7 +1,8 @@
 package org.bootcamp.trashhunter.controllers;
 
 import org.bootcamp.trashhunter.config.WebSocketEventListener;
-import org.bootcamp.trashhunter.models.ChatMessage;
+import org.bootcamp.trashhunter.models.*;
+import org.bootcamp.trashhunter.services.abstraction.OfferService;
 import org.bootcamp.trashhunter.services.abstraction.SenderService;
 import org.bootcamp.trashhunter.services.abstraction.TakerService;
 import org.bootcamp.trashhunter.services.abstraction.UserService;
@@ -18,9 +19,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.*;
+
 import static java.lang.String.format;
 
 @Controller
@@ -33,16 +38,18 @@ public class ChatController {
     private final ChatMessageService chatMessageService;
     private final SenderService senderService;
     private final TakerService takerService;
+    private final OfferService offerService;
 
     @Autowired
     public ChatController(SimpMessageSendingOperations messagingTemplate,
                           UserService userService, ChatMessageService chatMessageService,
-                          SenderService senderService, TakerService takerService) {
+                          SenderService senderService, TakerService takerService, OfferService offerService) {
         this.messagingTemplate = messagingTemplate;
         this.userService = userService;
         this.chatMessageService = chatMessageService;
         this.senderService = senderService;
         this.takerService = takerService;
+        this.offerService = offerService;
     }
 
     @MessageMapping("/chat/{roomId}/sendMessage")
@@ -87,26 +94,87 @@ public class ChatController {
     }
 
     @GetMapping("/chat")
-    public String chat(@RequestParam("partnerId") long partnerId,
+    public String chat(@RequestParam(value = "offerId", required = false) Long offerId,
+                       Principal principal,
+                       Model model) {
+        User chatOwner = userService.findByEmail(principal.getName());
+        model.addAttribute("chatOwner", chatOwner);
+
+        Map<User, Collection<Offer>> companionsWithOffersMap = getCompanionsWithOffers(chatOwner);
+        if (!companionsWithOffersMap.isEmpty()) {
+            model.addAttribute("companionsWithOffersMap", companionsWithOffersMap);
+        }
+        if (offerId != null) {
+            model.addAttribute("offerId", offerId);
+        }
+        return "chat";
+    }
+
+    @GetMapping("/chat/{companionId}")
+    public String chat(@PathVariable long companionId,
                        @RequestParam(value = "offerId", required = false) Long offerId,
                        Principal principal,
                        Authentication authentication,
                        Model model) {
-        if (authentication.isAuthenticated()) {
-            long currentPrincipalId = userService.findByEmail(principal.getName()).getId();
-            String role = authentication.getAuthorities().iterator().next().getAuthority();
-            if (role.equals("Taker")) {
-                model.addAttribute("username", principal.getName());
-                model.addAttribute("chatRoom", currentPrincipalId + "_" + partnerId);
-            } else if (role.equals("Sender")) {
-                model.addAttribute("username", principal.getName());
-                model.addAttribute("chatRoom", partnerId + "_" + currentPrincipalId);
-            }
-            if (offerId != null) {
-                model.addAttribute("offerId", offerId);
-            }
+        User chatOwner = userService.findByEmail(principal.getName());
+        long ownerId = chatOwner.getId();
+        String role = authentication.getAuthorities().iterator().next().getAuthority();
+        if (role.equals("Taker")) {
+            model.addAttribute("username", principal.getName());
+            model.addAttribute("chatRoom", ownerId + "_" + companionId);
+        } else if (role.equals("Sender")) {
+            model.addAttribute("username", principal.getName());
+            model.addAttribute("chatRoom", companionId + "_" + ownerId);
+        }
+        /*        if (role.equals("Taker")) {
+            model.addAttribute("username", principal.getName());
+            model.addAttribute("chatRoom", ownerId + "_" + companionId);
+        } else if (role.equals("Sender")) {
+            model.addAttribute("username", principal.getName());
+            model.addAttribute("chatRoom", companionId + "_" + ownerId);
+        }*/
+        model.addAttribute("companionId", companionId);
+        model.addAttribute("chatOwner", chatOwner);
+        Map<User, Collection<Offer>> companionsWithOffersMap = getCompanionsWithOffers(chatOwner);
+        if (!companionsWithOffersMap.isEmpty()) {
+            model.addAttribute("companionsWithOffersMap", companionsWithOffersMap);
+        }
+        if (offerId != null) {
+            model.addAttribute("offerId", offerId);
         }
         return "chat";
+    }
+
+    private Map<User, Collection<Offer>> getCompanionsWithOffers(User chatOwner) {
+        String chatOwnerRole = chatOwner.getClass().getSimpleName();
+        Map<User, Collection<Offer>> companionsWithOffersMap = new HashMap<>();
+
+        if (chatOwnerRole.equals("Taker")) {
+            List<Offer> takerTakenOffersList = offerService.getTakenOffersByTaker((Taker) chatOwner);
+            takerTakenOffersList.forEach(x -> {
+                Sender sender = x.getSender();
+                if (!companionsWithOffersMap.containsKey(x.getSender())) {
+                    List<Offer> offerList = new ArrayList<>();
+                    offerList.add(x);
+                    companionsWithOffersMap.put(sender, offerList);
+                } else {
+                    companionsWithOffersMap.get(sender).add(x);
+                }
+            });
+        } else if (chatOwnerRole.equals("Sender")) {
+            List<Offer> senderTakenOffersList = offerService.getTakenOffersBySender((Sender) chatOwner);
+            senderTakenOffersList.forEach(x -> {
+                Taker taker = x.getRespondingTakers().get(0);
+                if (!companionsWithOffersMap.containsKey(taker)) {
+                    List<Offer> offerList = new ArrayList<>();
+                    offerList.add(x);
+                    companionsWithOffersMap.put(taker, offerList);
+                } else {
+                    companionsWithOffersMap.get(taker).add(x);
+                }
+            });
+        }
+        return companionsWithOffersMap;
     }
 
     private boolean isRightPrincipal(long senderId, long takerId, Principal principal, String role) {

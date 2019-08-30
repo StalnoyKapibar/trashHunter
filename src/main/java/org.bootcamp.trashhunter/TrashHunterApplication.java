@@ -13,12 +13,13 @@ public class TrashHunterApplication {
         SpringApplication.run(TrashHunterApplication.class, args);
     }
 
-    //нужно раскоментить @Bean для создания таблиц
-    // Теперь с интерфейсами
+//    нужно раскоментить @Bean для создания таблиц
+/*
     @Bean(initMethod = "init")
     @PostConstruct
     public InitData initData() {
         return new InitData();
     }
+*/
 
 }

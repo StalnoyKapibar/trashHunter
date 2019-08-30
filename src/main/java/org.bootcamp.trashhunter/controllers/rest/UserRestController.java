@@ -1,6 +1,7 @@
 package org.bootcamp.trashhunter.controllers.rest;
 
 import org.bootcamp.trashhunter.models.User;
+import org.bootcamp.trashhunter.models.dto.UserDto;
 import org.bootcamp.trashhunter.models.token.VerificationToken;
 import org.bootcamp.trashhunter.services.abstraction.MailService;
 import org.bootcamp.trashhunter.services.abstraction.UserService;
@@ -36,7 +37,7 @@ public class UserRestController {
             user.setPassword(password);
             userService.update(user);
             return new ResponseEntity(HttpStatus.OK);
-        } else{
+        } else {
             return new ResponseEntity(HttpStatus.BAD_GATEWAY);
         }
     }
@@ -57,7 +58,7 @@ public class UserRestController {
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable("id") long id) {
-        return userService.getById(id);
+    public UserDto getUserById(@PathVariable("id") long id) {
+        return new UserDto(userService.getById(id));
     }
 }

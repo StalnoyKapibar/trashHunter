@@ -4,7 +4,7 @@ import org.bootcamp.trashhunter.dao.abstraction.UserDao;
 import org.bootcamp.trashhunter.dao.abstraction.UserFavoritesDao;
 import org.bootcamp.trashhunter.models.User;
 import org.bootcamp.trashhunter.models.UserFavorites;
-import org.bootcamp.trashhunter.models.UserFavoritesDTO;
+import org.bootcamp.trashhunter.models.dto.UserFavoritesDTO;
 import org.bootcamp.trashhunter.services.abstraction.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,7 +33,9 @@ public class FavoritesController {
 		String email = SecurityContextHolder.getContext().getAuthentication().getName();
 		User userBossFromEmail = userService.findByEmail(email);
 
-		if (userBossFromEmail == null) return new ModelAndView("index");
+		if (userBossFromEmail == null) {
+		    return new ModelAndView("index");
+        }
 
 		Long numBoss = userBossFromEmail.getId();
 		List<UserFavorites> listUsersFav = userFavoritesDao.getAllUserFavById(numBoss);

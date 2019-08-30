@@ -26,7 +26,7 @@ public class EditUserController {
     private VerificationTokenService verificationTokenService;
 
     @RequestMapping(value = "/profile/edit/{id}", method = RequestMethod.GET)
-    public String edit(@PathVariable("id") Long id, Model model, Principal principal) {
+    public String edit(@PathVariable("id") long id, Model model, Principal principal) {
         String email = principal.getName();
         User user = userService.findByEmail(email);
         if (user.getId() != id) {

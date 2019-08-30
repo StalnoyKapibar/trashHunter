@@ -54,8 +54,6 @@ function initMap() {
         marker.setVisible(false);
         let place = autocomplete.getPlace();
         if (!place.geometry) {
-            // User entered the name of a Place that was not suggested and
-            // pressed the Enter key, or the Place Details request failed.
             window.alert("По адресу ничего не найдено: '" + place.name + "'");
             return;
         }
@@ -143,6 +141,8 @@ function drawPoints(data) {
         } else {
             url = "/img/blank.png";
         }
+
+        if (offer.offerStatus !='COMPLETE') {
         let marker = new google.maps.Marker({
             position: {lat: offer.coordinates.latitude, lng: offer.coordinates.longitude},
             map: map,
@@ -165,14 +165,24 @@ function drawPoints(data) {
                     newText = document.createTextNode(value);
                     newCell.appendChild(newText);
                 }
+                if (key == 'sender'){
+                    let newRow = tableRef.insertRow();
+                    let newCell = newRow.insertCell();
+                    let newText = document.createTextNode(key);
+                    newCell.appendChild(newText);
+
+                    newCell = newRow.insertCell();
+                    newText = document.createTextNode(value.name);
+                    newCell.appendChild(newText);
+                }
             });
 
             let linkToChatFromTaker = document.getElementById("linkToChatFromTaker");
             if (linkToChatFromTaker) {
-                linkToChatFromTaker.href="/chat/?partnerId=" + offer.sender.id + "&offerId=" + offer.id;
+                linkToChatFromTaker.href="/chat/" + offer.sender.id + "?offerId=" + offer.id;
                 $('#linkToChatFromTaker').show();
             }
-        });
+        });}
     });
 }
 
@@ -243,5 +253,4 @@ function setMyCoordinates() {
             'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
     }
-
 }

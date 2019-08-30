@@ -1,6 +1,7 @@
 var nameInput = $('#name');
 var roomInput = $('#room-id');
 var offerId = $('#offerId');
+var companionId = $('#companionId');
 var usernamePage = document.querySelector('#username-page');
 var chatPage = document.querySelector('#chat-page');
 var usernameForm = document.querySelector('#usernameForm');
@@ -10,8 +11,8 @@ var messageArea = document.querySelector('#messageArea');
 var connectingElement = document.querySelector('.connecting');
 var roomIdDisplay = document.querySelector('#room-id-display');
 var dataFromOffer;
-var takerEmail;
-var senderEmail;
+var ownerName;
+var companionName;
 var lastOffer;
 
 var stompClient = null;
@@ -26,6 +27,12 @@ let colors = [
     '#e41032', '#f2d4e8'
 ];
 
+$(document).ready(function () {
+    usernamePage.classList.remove('hidden');
+    usernameForm.addEventListener('submit', connect, true);
+    messageForm.addEventListener('submit', sendMessage, true);
+    connect();
+});
 
 function connect(event) {
     username = nameInput.val().trim();
@@ -106,7 +113,7 @@ function enterRoom(newRoomId) {
         JSON.stringify({sender: username, type: 'JOIN'})
     );
 
-    setChatHeader(newRoomId.split('_')[0], newRoomId.split('_')[1]);
+    setChatHeader(companionId.val());
     showPreviousMessages(newRoomId.split('_')[0], newRoomId.split('_')[1]);
     showOffer();
 }
@@ -116,9 +123,9 @@ function showOffer() {
     let chatMessage = {
         sender: "Offer",
         content: "Вид отходов:" + dataFromOffer.trashType + " " +
-            "Вес:" + dataFromOffer.weight + " " +
-            "Объем:" + dataFromOffer.volume + " " +
-            "Описание:" + dataFromOffer.description,
+        "Вес:" + dataFromOffer.weight + " " +
+        "Объем:" + dataFromOffer.volume + " " +
+        "Описание:" + dataFromOffer.description,
         type: "OFFER",
         trashType: dataFromOffer.trashType
     };
@@ -223,14 +230,14 @@ function getAvatarColor(message) {
     }
 }
 
-function setChatHeader(takerId, senderId) {
-    getTakerEmailById(takerId);
-    getSenderEmailById(senderId);
-    roomIdDisplay.textContent = takerEmail + "-" + senderEmail;
+function setChatHeader(companionId) {
+    companionName = getUserNameById(companionId);
+    roomIdDisplay.textContent = companionName ? companionName + ", заказ " + offerId.val() : "Выберите собеседника";
+    // roomIdDisplay.textContent = (takerEmail && senderEmail) ? takerEmail + "-" + senderEmail : "Выберите собеседника";
 }
 
-/*
-function getEmailById(id) {
+function getUserNameById(id) {
+    let name;
     $.ajax({
         url: '/api/user/' + id,
         dataType: "json",
@@ -238,37 +245,10 @@ function getEmailById(id) {
         contentType: "application/json; charset=utf-8",
         async: false,
         success: function (user) {
-
-            takerEmail = user.email;
+            name = user.name;
         }
     });
-}
-*/
-
-function getTakerEmailById(id) {
-    $.ajax({
-        url: '/api/user/' + id,
-        dataType: "json",
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        async: false,
-        success: function (user) {
-            takerEmail = user.email;
-        }
-    });
-}
-
-function getSenderEmailById(id) {
-    $.ajax({
-        url: '/api/user/' + id,
-        dataType: "json",
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        async: false,
-        success: function (user) {
-            senderEmail = user.email;
-        }
-    });
+    return name;
 }
 
 function getImageForOffer(trashType) {
@@ -289,9 +269,19 @@ function getImageForOffer(trashType) {
     }
 }
 
-$(document).ready(function () {
-    usernamePage.classList.remove('hidden');
-    usernameForm.addEventListener('submit', connect, true);
-    messageForm.addEventListener('submit', sendMessage, true);
-    connect();
-});
+var dropdown = document.getElementsByClassName("dropdown-btn");
+var i;
+
+for (i = 0; i < dropdown.length; i++) {
+    dropdown[i].addEventListener("click", function () {
+        // this.classList.toggle("active");
+        var dropdownContent = this.nextElementSibling;
+        if (dropdownContent.style.display === "block") {
+            this.classList.remove("active");
+            dropdownContent.style.display = "none";
+        } else {
+            this.classList.add("active");
+            dropdownContent.style.display = "block";
+        }
+    });
+}
