@@ -14,6 +14,7 @@ var dataFromOffer;
 var ownerName;
 var companionName;
 var lastOffer;
+var previousSenderName;
 
 var stompClient = null;
 var currentSubscription;
@@ -108,10 +109,12 @@ function enterRoom(newRoomId) {
     }
     currentSubscription = stompClient.subscribe(`/channel/${roomId}`, onMessageReceived);
 
+/*
     stompClient.send(`${topic}/addUser`,
         {},
         JSON.stringify({sender: username, type: 'JOIN'})
     );
+*/
 
     setChatHeader(companionId.val());
     showPreviousMessages(newRoomId.split('_')[0], newRoomId.split('_')[1]);
@@ -120,9 +123,27 @@ function enterRoom(newRoomId) {
 
 function showOffer() {
     getSelectedOffer();
+    // let treshTypeLocalized =
     let chatMessage = {
         sender: "Offer",
-        content: "Вид отходов:" + dataFromOffer.trashType + " " +
+        content: "Отходы:" + dataFromOffer.trashType + " " +
+        "Вес:" + dataFromOffer.weight + " " +
+        "Объем:" + dataFromOffer.volume + " " +
+        "Описание:" + dataFromOffer.description,
+        type: "OFFER",
+        trashType: dataFromOffer.trashType
+    };
+    if (chatMessage.content === lastOffer) {
+        chatMessage.type = 'LASTOFFER';
+    }
+    // stompClient.send(`${topic}/sendMessage`, {}, JSON.stringify(chatMessage));
+}
+/*
+function showOffer() {
+    getSelectedOffer();
+    let chatMessage = {
+        sender: "Offer",
+        content: "Отходы:" + dataFromOffer.trashType + " " +
         "Вес:" + dataFromOffer.weight + " " +
         "Объем:" + dataFromOffer.volume + " " +
         "Описание:" + dataFromOffer.description,
@@ -134,6 +155,7 @@ function showOffer() {
     }
     stompClient.send(`${topic}/sendMessage`, {}, JSON.stringify(chatMessage));
 }
+*/
 
 function getSelectedOffer() {
     if (offerId.val()) {
@@ -184,6 +206,23 @@ function onMessageReceived(payload) {
     let message = JSON.parse(payload.body);
     let messageElement = document.createElement('li');
 
+    /*
+        messageElement.classList.add('chat-message');
+        let avatarElement = document.createElement('i');
+        let avatarText = document.createTextNode(message.sender[0]);
+        avatarElement.appendChild(avatarText);
+        avatarElement.style['background-color'] = getAvatarColor(message.sender);
+        if ((message.type === 'LASTOFFER') || (message.type === 'OFFER')) {
+            avatarElement = document.createElement("img");
+            avatarElement.setAttribute("src", getImageForOffer(message.trashType));
+        }
+        messageElement.appendChild(avatarElement);
+        let usernameElement = document.createElement('span');
+        let usernameText = document.createTextNode(message.sender + "(" + message.created + ")");
+        usernameElement.appendChild(usernameText);
+        messageElement.appendChild(usernameElement);
+    */
+
     if (message.type === 'JOIN') {
         messageElement.classList.add('event-message');
         message.content = message.sender + ' joined!';
@@ -221,6 +260,20 @@ function onMessageReceived(payload) {
 
 function getAvatarColor(message) {
     let senderName = message.sender || message;
+    if (ownerName === undefined) {
+        ownerName = senderName;
+    }
+    if (senderName === ownerName) {
+        return colors[0];
+    } else if (senderName.indexOf("Offer") !== -1) {
+        return colors[8];
+    } else {
+        return colors[1];
+    }
+}
+/*
+function getAvatarColor(message) {
+    let senderName = message.sender || message;
     if (senderName.indexOf("sender") !== -1) {
         return colors[0];
     } else if (senderName.indexOf("Offer") !== -1) {
@@ -229,11 +282,11 @@ function getAvatarColor(message) {
         return colors[1];
     }
 }
+*/
 
 function setChatHeader(companionId) {
     companionName = getUserNameById(companionId);
     roomIdDisplay.textContent = companionName ? companionName + ", заказ " + offerId.val() : "Выберите собеседника";
-    // roomIdDisplay.textContent = (takerEmail && senderEmail) ? takerEmail + "-" + senderEmail : "Выберите собеседника";
 }
 
 function getUserNameById(id) {

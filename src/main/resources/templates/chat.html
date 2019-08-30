@@ -56,9 +56,8 @@
     <div class="chat-container">
         <div id="sidebar-container" class="bg-light border-right">
             <div class="sidebar-heading">Доступные чаты</div>
-            <div th:if="${companionsWithOffersMap}">
+            <div class="sidebar-companions" th:if="${companionsWithOffersMap}">
                 <th:block th:each="entry : ${companionsWithOffersMap.entrySet()}">
-                    <!--<button th:text="${entry.getKey().getName()}" th:id="${companionId}" class="dropdown-btn">-->
                     <button th:text="${entry.getKey().getName()}" th:id="${companionId}"
                             th:class="${companionId == entry.getKey().getId() ? 'active' : ''} + ' dropdown-btn'">
                         <i class="fa fa-caret-down"></i>
