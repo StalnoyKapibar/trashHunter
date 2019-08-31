@@ -76,7 +76,7 @@ public class InitData {
         Statistics s2 = new Statistics(20, 100, 28, 860);
         Statistics s3 = new Statistics(30, 200, 22, 121);
         Statistics s4 = new Statistics(300, 2000, 2203, 1211);
-        Sender sender1 = new Sender("sender1@mail.ru", "Михаил А.", "sender1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("mixa.jpg"));
+        Sender sender1 = new Sender("mixa10@mail.ru", "Михаил А.", "1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("mixa.jpg"));
         sender1.setAddress(faker.address().streetName());
         sender1.setAboutUser(faker.lebowski().quote());
         sender1.setStatistics(s1);
@@ -113,7 +113,7 @@ public class InitData {
         Statistics s2 = new Statistics(20, 100, 28, 860);
         Statistics s3 = new Statistics(30, 200, 22, 121);
 
-        Taker taker1 = new Taker("taker1@mail.ru", "Юра З.", "taker1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("yura.jpg"));
+        Taker taker1 = new Taker("yura1960@mail.ru", "Юра З.", "1", LocalDate.now(), "Viborg, Russia", userService.extractBytesDefaultAvatar("yura.jpg"));
         taker1.setAddress(faker.address().streetName());
         taker1.setAboutUser(faker.lebowski().quote());
         taker1.setStatistics(s1);
@@ -143,7 +143,8 @@ public class InitData {
     }
 
     private void initRandomOffers(int quantity) {
-
+        Offer offer = new Offer(senderService.getById(1L),100, 10, 0, TrashType.FOOD, true, OfferStatus.OPEN, LocalDateTime.now(),"Пищевые отходы", new Coordinates(60.72798988564446,28.791043052143436));
+        offerService.add(offer);
         double seed1;
         double seed2;
         double seed3;

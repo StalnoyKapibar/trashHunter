@@ -44,7 +44,7 @@
         <!--        <a sec:authorize="hasAuthority('Taker')" style="display: none; margin-right: 130px"  onclick="deleteOffer()"  class="btn btn-info" >Взять заказ</a>-->
 
         <table class="table table" id="offerInfoTable"></table>
-        <button sec:authorize="hasAuthority('Taker')" class="btn btn-info " data-toggle="tooltip"
+        <button id="respondOffer" sec:authorize="hasAuthority('Taker')" class="btn btn-info " data-toggle="tooltip"
                 style="margin-right: 40px; margin-left: -20px" title="Взять заказ" onclick="deleteOffer()">Взять заказ
         </button>
         <a sec:authorize="hasAuthority('Taker')" style="display: none; margin-left: 0px" id="linkToChatFromTaker"

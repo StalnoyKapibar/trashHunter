@@ -179,6 +179,7 @@ function drawPoints(data) {
         });
         markers.push(marker);
         marker.addListener('click', function () {
+            $("#respondOffer").show();
             let tableRef = document.getElementById('offerInfoTable');
             $("#offerInfoTable tr").remove();
             // $("#showFilePanel").action;
@@ -364,7 +365,7 @@ function deleteOffer() {
         url: '/api/taker/add_offers/' + oferid,
         type: 'post',
         success: function () {
-            alert("OK")
+            $("#respondOffer").hide();
         }
     });
 }

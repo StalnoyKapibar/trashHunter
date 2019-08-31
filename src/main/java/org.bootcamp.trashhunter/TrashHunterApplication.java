@@ -8,19 +8,19 @@ import javax.annotation.PostConstruct;
 
 @SpringBootApplication
 public class TrashHunterApplication {
+    //    нужно раскоментить @Bean для создания таблиц
 
-    public static void main(String[] args) {
-        SpringApplication.run(TrashHunterApplication.class, args);
-    }
-
-//    нужно раскоментить @Bean для создания таблиц
-/*
     @Bean(initMethod = "init")
     @PostConstruct
+
 
     public InitData initData() {
         return new InitData();
     }
-*/
+
+
+    public static void main(String[] args) {
+        SpringApplication.run(TrashHunterApplication.class, args);
+    }
 
 }
