@@ -32,9 +32,6 @@ public class TakerRestController {
 
     @PostMapping("/add_offers/{offerId}")
     public void addOfferToTaker(@PathVariable Long offerId, Principal principal) {
-        String name = principal.getName();
-        User user = userService.findByEmail(name);
-        long takerId = user.getId();
-        offerService.takingOfferByTaker(takerId, offerId);
+        offerService.takingOfferByTaker(userService.findByEmail(principal.getName()).getId(), offerId);
     }
 }
